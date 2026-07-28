@@ -2,6 +2,7 @@ import {
   ArrowDown,
   BookOpenCheck,
   Compass,
+  FileText,
   Gauge,
   Layers3,
   Linkedin,
@@ -164,15 +165,26 @@ export function LandingPage() {
               <p className="eyebrow eyebrow--dark">QUEM ESTÁ POR TRÁS</p>
               <div className="about__name">
                 <h2>Patrick Naufel</h2>
-                <a
-                  href="https://www.linkedin.com/in/patricknaufel"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn de Patrick Naufel, abre em uma nova aba"
-                >
-                  <Linkedin aria-hidden="true" />
-                  <span>LinkedIn</span>
-                </a>
+                <div className="about__links">
+                  <a
+                    href="https://www.linkedin.com/in/patricknaufel"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn de Patrick Naufel, abre em uma nova aba"
+                  >
+                    <Linkedin aria-hidden="true" />
+                    <span>LinkedIn</span>
+                  </a>
+                  <a
+                    href="http://lattes.cnpq.br/0026328778886854"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Currículo Lattes de Patrick Naufel, abre em uma nova aba"
+                  >
+                    <FileText aria-hidden="true" />
+                    <span>Currículo Lattes</span>
+                  </a>
+                </div>
               </div>
               <p className="about__role">Professor, pesquisador e mentor.</p>
               <p>A PráxIA nasce da vontade de aproximar tecnologia, inteligência artificial e prática pedagógica sem perder de vista o que importa: as pessoas, o contexto e a aprendizagem.</p>
