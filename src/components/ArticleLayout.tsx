@@ -8,6 +8,7 @@ type TocItem = { id: string; label: string }
 
 interface ArticleLayoutProps {
   category: string
+  categoryPath?: string
   title: string
   description: string
   date: string
@@ -17,7 +18,7 @@ interface ArticleLayoutProps {
   children: ReactNode
 }
 
-export function ArticleLayout({ category, title, description, date, readingTime, author, toc, children }: ArticleLayoutProps) {
+export function ArticleLayout({ category, categoryPath, title, description, date, readingTime, author, toc, children }: ArticleLayoutProps) {
   return (
     <>
       <a className="skip-link" href="#conteudo-artigo">Pular para o artigo</a>
@@ -26,7 +27,7 @@ export function ArticleLayout({ category, title, description, date, readingTime,
         <header className="article-hero">
           <div className="shell">
             <nav className="breadcrumb" aria-label="Navegação estrutural">
-              <Link to="/">Início</Link><span>/</span><Link to="/blog">Blog</Link><span>/</span><span aria-current="page">{category}</span>
+              <Link to="/">Início</Link><span>/</span><Link to="/blog">Blog</Link><span>/</span>{categoryPath ? <Link to={categoryPath}>{category}</Link> : <span>{category}</span>}<span>/</span><span aria-current="page">{title}</span>
             </nav>
             <p className="method-kicker">{category}</p>
             <h1>{title}</h1>

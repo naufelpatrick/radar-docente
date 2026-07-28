@@ -6,6 +6,8 @@ import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { Seo } from '../components/Seo'
 
 const articlePath = '/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta'
+const planningArticlePath = '/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem'
+const ethicsArticlePath = '/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia'
 
 const categories = {
   'ia-para-professores': {
@@ -28,13 +30,25 @@ const categories = {
     name: 'Ferramentas', eyebrow: 'PROPÓSITO ANTES DA NOVIDADE', description: 'Análises de recursos digitais e de IA orientadas por objetivo pedagógico, contexto, dados e condições de uso.', questions: ['Que problema a ferramenta ajuda a resolver?', 'Que complexidade ela acrescenta?', 'Quais dados e termos precisam ser verificados?'], articles: [],
   },
   planejamento: {
-    name: 'Planejamento', eyebrow: 'INTENÇÃO E CURADORIA', description: 'Critérios para selecionar recursos, organizar percursos e conectar escolhas digitais aos objetivos de aprendizagem.', questions: ['Qual é o objetivo de aprendizagem?', 'Que evidência será observada?', 'A tecnologia amplia ou apenas substitui o suporte?'], articles: [],
+    name: 'Planejamento', eyebrow: 'INTENÇÃO E CURADORIA', description: 'Critérios para selecionar recursos, organizar percursos e conectar escolhas digitais aos objetivos de aprendizagem.', questions: ['Qual é o objetivo de aprendizagem?', 'Que evidência será observada?', 'A tecnologia amplia ou apenas substitui o suporte?'], articles: [{
+      title: 'Da possibilidade tecnológica ao objetivo de aprendizagem',
+      description: 'Um caminho para transformar possibilidades da IA em atividades coerentes com objetivos, evidências e decisões de aprendizagem.',
+      path: planningArticlePath,
+      readingTime: '9 min de leitura',
+      date: '28 jul. 2026',
+    }],
   },
   avaliacao: {
     name: 'Avaliação', eyebrow: 'EVIDÊNCIAS E FEEDBACK', description: 'Caminhos para acompanhar processos, oferecer devolutivas e preservar autoria em experiências digitais e com IA.', questions: ['Que evidências mostram aprendizagem?', 'Como tornar critérios visíveis?', 'Onde a revisão humana é indispensável?'], articles: [],
   },
   etica: {
-    name: 'Ética', eyebrow: 'CUIDADO E RESPONSABILIDADE', description: 'Privacidade, vieses, transparência, segurança, autoria e responsabilidade nas decisões educacionais com tecnologia.', questions: ['Quais dados estão envolvidos?', 'Como comunicar o uso de IA?', 'Quem pode revisar ou contestar o resultado?'], articles: [],
+    name: 'Ética', eyebrow: 'CUIDADO E RESPONSABILIDADE', description: 'Privacidade, vieses, transparência, segurança, autoria e responsabilidade nas decisões educacionais com tecnologia.', questions: ['Quais dados estão envolvidos?', 'Como comunicar o uso de IA?', 'Quem pode revisar ou contestar o resultado?'], articles: [{
+      title: 'Como conversar sobre autoria em atividades com IA',
+      description: 'Critérios e modelos práticos para orientar transparência, contribuição humana e responsabilidade em trabalhos com apoio de IA.',
+      path: ethicsArticlePath,
+      readingTime: '10 min de leitura',
+      date: '28 jul. 2026',
+    }],
   },
   pesquisa: {
     name: 'Pesquisa', eyebrow: 'EVIDÊNCIA COM CONTEXTO', description: 'Sínteses acessíveis de documentos, estudos e debates que ajudam professores a interpretar mudanças sem generalizações.', questions: ['O que a fonte realmente permite afirmar?', 'Em que contexto o estudo foi realizado?', 'Como traduzir evidência em pergunta para a prática?'], articles: [],

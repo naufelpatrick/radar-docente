@@ -20,6 +20,12 @@ const DemoResultPage = lazy(() =>
 const AiBeforeToolArticlePage = lazy(() =>
   import('./pages/articles/AiBeforeToolArticlePage').then((module) => ({ default: module.AiBeforeToolArticlePage })),
 )
+const TechnologyToLearningArticlePage = lazy(() =>
+  import('./pages/articles/TechnologyToLearningArticlePage').then((module) => ({ default: module.TechnologyToLearningArticlePage })),
+)
+const AuthorshipWithAiArticlePage = lazy(() =>
+  import('./pages/articles/AuthorshipWithAiArticlePage').then((module) => ({ default: module.AuthorshipWithAiArticlePage })),
+)
 const BlogCategoryPage = lazy(() =>
   import('./pages/BlogCategoryPage').then((module) => ({ default: module.BlogCategoryPage })),
 )
@@ -54,6 +60,8 @@ export default function App() {
           <Route path="/contato" element={<ContactPage />} />
           <Route path="/resultado" element={<DemoResultPage />} />
           <Route path="/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta" element={<AiBeforeToolArticlePage />} />
+          <Route path="/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem" element={<TechnologyToLearningArticlePage />} />
+          <Route path="/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia" element={<AuthorshipWithAiArticlePage />} />
           <Route path="/blog/categoria/:slug" element={<BlogCategoryPage />} />
           <Route path="/guias" element={<GuidesPage />} />
           <Route path="/competencias" element={<CompetenciesPage />} />
