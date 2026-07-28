@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 import {
   ArrowRight,
   BookOpenCheck,
+  CheckCircle2,
   ChevronRight,
   CircleHelp,
   GraduationCap,
@@ -17,6 +18,8 @@ import { Footer } from '../components/Footer'
 import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { Seo } from '../components/Seo'
 import { useScrollMotion } from '../hooks/useScrollMotion'
+import { contactLeadService, validateContactLead } from '../services/publicLeadService'
+import type { ContactLead, LeadErrors } from '../types/publicLead'
 
 const contactEmail = 'praxia@radarpraxia.com'
 
@@ -55,7 +58,7 @@ const contactReasons = [
 const contactFaq = [
   {
     question: 'O formulário envia minha mensagem diretamente pelo site?',
-    answer: 'Não. Ao continuar, o site abre seu aplicativo de e-mail com destinatário, assunto e mensagem preenchidos. Você poderá revisar o conteúdo antes de enviar.',
+    answer: 'Sim. A mensagem é registrada de forma segura para que a equipe PráxIA possa responder pelo e-mail informado.',
   },
   {
     question: 'Posso enviar dúvidas sobre meu resultado?',
@@ -114,14 +117,30 @@ const contactSchema = {
 export function ContactPage() {
   useScrollMotion()
   const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
   const [subject, setSubject] = useState(subjects[0].value)
   const [message, setMessage] = useState('')
+  const [privacyConsent, setPrivacyConsent] = useState(false)
+  const [errors, setErrors] = useState<LeadErrors<ContactLead>>({})
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const subjectLabel = subjects.find((item) => item.value === subject)?.label ?? 'Contato pelo site'
-    const body = [`Olá, equipe PráxIA.`, '', message.trim(), '', `Nome: ${name.trim()}`].join('\n')
-    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(`[PráxIA] ${subjectLabel}`)}&body=${encodeURIComponent(body)}`
+    if (status === 'submitting' || status === 'success') return
+    const lead = { name, email, subject, message, privacyConsent }
+    const nextErrors = validateContactLead(lead)
+    if (Object.keys(nextErrors).length) {
+      setErrors(nextErrors)
+      document.getElementById(`contact-${Object.keys(nextErrors)[0]}`)?.focus()
+      return
+    }
+    setStatus('submitting')
+    try {
+      await contactLeadService.submit(lead)
+      setStatus('success')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -189,27 +208,44 @@ export function ContactPage() {
             <div data-reveal="left">
               <p className="method-kicker">ESCREVA SUA MENSAGEM</p>
               <h2>Conte o suficiente para situar a conversa.</h2>
-              <p>O formulário não envia nem armazena dados no site. Ao clicar no botão, seu aplicativo de e-mail será aberto com a mensagem preparada para revisão.</p>
+              <p>Sua mensagem será registrada para que a equipe PráxIA possa responder pelo e-mail informado. Compartilhe apenas os dados necessários para contextualizar a conversa.</p>
               <div className="contact-compose__tip"><Lightbulb aria-hidden="true" /><span>Para dúvidas sobre resultado, indique a dimensão ou seção do relatório sem compartilhar respostas individuais.</span></div>
             </div>
             <form className="contact-form" onSubmit={handleSubmit}>
               <div className="contact-form__field">
                 <label htmlFor="contact-name">Seu nome</label>
-                <input id="contact-name" name="name" type="text" autoComplete="name" required value={name} onChange={(event) => setName(event.target.value)} />
+                <input id="contact-name" name="name" type="text" autoComplete="name" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'contact-error-name' : undefined} value={name} onChange={(event) => { setName(event.target.value); setErrors((current) => ({ ...current, name: undefined })) }} />
+                {errors.name && <span className="form-error" id="contact-error-name">{errors.name}</span>}
+              </div>
+              <div className="contact-form__field">
+                <label htmlFor="contact-email">Seu e-mail</label>
+                <input id="contact-email" name="email" type="email" autoComplete="email" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'contact-error-email' : undefined} value={email} onChange={(event) => { setEmail(event.target.value); setErrors((current) => ({ ...current, email: undefined })) }} />
+                {errors.email && <span className="form-error" id="contact-error-email">{errors.email}</span>}
               </div>
               <div className="contact-form__field">
                 <label htmlFor="contact-subject">Assunto</label>
-                <select id="contact-subject" name="subject" value={subject} onChange={(event) => setSubject(event.target.value)}>
+                <select id="contact-subject" name="subject" value={subject} onChange={(event) => { setSubject(event.target.value); setErrors((current) => ({ ...current, subject: undefined })) }}>
                   {subjects.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
                 </select>
               </div>
               <div className="contact-form__field">
                 <label htmlFor="contact-message">Mensagem</label>
-                <textarea id="contact-message" name="message" rows={7} required minLength={20} value={message} onChange={(event) => setMessage(event.target.value)} aria-describedby="contact-message-help" />
+                <textarea id="contact-message" name="message" rows={7} minLength={20} value={message} onChange={(event) => { setMessage(event.target.value); setErrors((current) => ({ ...current, message: undefined })) }} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'contact-message-help contact-error-message' : 'contact-message-help'} />
                 <small id="contact-message-help">Inclua contexto e sua principal pergunta. Mínimo de 20 caracteres.</small>
+                {errors.message && <span className="form-error" id="contact-error-message">{errors.message}</span>}
               </div>
-              <button type="submit">Preparar e-mail <ArrowRight aria-hidden="true" /></button>
-              <p><Mail aria-hidden="true" /> Destinatário: <strong>{contactEmail}</strong></p>
+              <label className="lead-consent">
+                <input id="contact-privacyConsent" type="checkbox" checked={privacyConsent} aria-invalid={Boolean(errors.privacyConsent)} aria-describedby={errors.privacyConsent ? 'contact-error-privacyConsent' : undefined} onChange={(event) => { setPrivacyConsent(event.target.checked); setErrors((current) => ({ ...current, privacyConsent: undefined })) }} />
+                <span>Concordo com o uso destes dados exclusivamente para que a PráxIA responda a esta mensagem.</span>
+              </label>
+              {errors.privacyConsent && <span className="form-error" id="contact-error-privacyConsent">{errors.privacyConsent}</span>}
+              <button type="submit" disabled={status === 'submitting' || status === 'success'}>
+                {status === 'submitting' ? 'Enviando…' : status === 'success' ? 'Mensagem enviada' : 'Enviar mensagem'} <ArrowRight aria-hidden="true" />
+              </button>
+              <div className="form-submit-status" role="status" aria-live="polite">
+                {status === 'success' && <p><CheckCircle2 aria-hidden="true" /> Mensagem recebida. Responderemos pelo e-mail informado.</p>}
+                {status === 'error' && <p>Não foi possível enviar agora. Tente novamente ou escreva para <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>}
+              </div>
             </form>
           </div>
         </section>
@@ -226,7 +262,7 @@ export function ContactPage() {
               <ul>
                 <li><span>01</span>Descreva o contexto sem identificar estudantes ou terceiros.</li>
                 <li><span>02</span>Em dúvidas sobre o Radar, mencione a dimensão e a interpretação, não suas respostas.</li>
-                <li><span>03</span>Revise destinatário e conteúdo no aplicativo de e-mail antes de enviar.</li>
+                <li><span>03</span>Revise sua mensagem antes de enviar e mantenha uma cópia apenas quando necessário.</li>
               </ul>
             </div>
           </div>
