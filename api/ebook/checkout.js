@@ -89,7 +89,10 @@ export default async function handler(request, response) {
     if (!updated.ok) throw new Error('Unable to save checkout')
 
     const checkoutUrl = checkout.link || `https://asaas.com/checkoutSession/show?id=${encodeURIComponent(checkout.id)}`
-    return json(response, 201, { checkoutUrl })
+    return json(response, 201, {
+      checkoutUrl,
+      orderUrl: `/ebook/obrigado?${query}`,
+    })
   } catch (error) {
     console.error('ebook checkout error', error)
     return json(response, 500, { error: 'Não foi possível iniciar o pagamento agora.' })

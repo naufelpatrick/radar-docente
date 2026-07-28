@@ -9,6 +9,8 @@ export function EbookCheckoutForm() {
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const form = new FormData(event.currentTarget)
+    const checkoutWindow = window.open('about:blank', '_blank')
+    if (checkoutWindow) checkoutWindow.opener = null
     setStatus('sending')
     setError('')
     try {
@@ -18,9 +20,17 @@ export function EbookCheckoutForm() {
         body: JSON.stringify({ name: form.get('name'), email: form.get('email') }),
       })
       const body = await response.json()
-      if (!response.ok || !body.checkoutUrl) throw new Error(body.error || 'Falha ao iniciar pagamento.')
-      window.location.assign(body.checkoutUrl)
+      if (!response.ok || !body.checkoutUrl || !body.orderUrl) {
+        throw new Error(body.error || 'Falha ao iniciar pagamento.')
+      }
+      if (checkoutWindow) {
+        checkoutWindow.location.assign(body.checkoutUrl)
+        window.location.assign(body.orderUrl)
+      } else {
+        window.location.assign(body.checkoutUrl)
+      }
     } catch (caught) {
+      checkoutWindow?.close()
       setError(caught instanceof Error ? caught.message : 'Não foi possível iniciar o pagamento.')
       setStatus('error')
     }
@@ -45,7 +55,7 @@ export function EbookCheckoutForm() {
         {status === 'sending' ? 'Preparando pagamento…' : 'Comprar por R$ 19,90'}
         {status !== 'sending' && <ArrowRight aria-hidden="true" />}
       </button>
-      <small>Pagamento único. O arquivo é liberado após a confirmação do ASAAS.</small>
+      <small>O ASAAS abrirá em uma nova guia. Mantenha esta página aberta para receber o download após a confirmação.</small>
       <div className="form-submit-status" role="status" aria-live="polite">{error && <p>{error}</p>}</div>
     </form>
   )

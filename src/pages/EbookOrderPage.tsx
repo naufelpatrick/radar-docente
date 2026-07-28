@@ -36,6 +36,10 @@ export function EbookOrderPage() {
   }, [pedido, query, token])
 
   const paid = status === 'paid'
+
+  function returnHomeAfterDownload() {
+    window.setTimeout(() => window.location.assign('/'), 1200)
+  }
   return (
     <>
       <Seo title="Acesso ao e-book | PráxIA" description="Confirmação e acesso ao e-book IA na prática docente." path="/ebook/obrigado" />
@@ -50,14 +54,21 @@ export function EbookOrderPage() {
             ? 'O link abaixo é temporário e protege o acesso ao material adquirido.'
             : 'Pix costuma ser confirmado em poucos instantes. Esta página será atualizada automaticamente.'}</p>
           {paid ? (
-            <a className="button-link button-link--primary" href={`/api/ebook/download?${query}`}>
-              <Download aria-hidden="true" />Baixar o e-book em PDF
+            <a
+              className="button-link button-link--primary"
+              href={`/api/ebook/download?${query}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={returnHomeAfterDownload}
+            >
+              <Download aria-hidden="true" />Baixar meu e-book
             </a>
           ) : (
             <button className="button-link button-link--primary" type="button" onClick={() => window.location.reload()}>
               <RefreshCw aria-hidden="true" />Verificar novamente
             </button>
           )}
+          {paid && <small>Após iniciar o download, você voltará à página inicial da PráxIA.</small>}
           {(status === 'invalid' || status === 'failed' || status === 'canceled' || status === 'expired') && (
             <p className="ebook-order-card__alert">Não foi possível liberar o arquivo. <Link to="/contato">Fale com a PráxIA</Link> informando o e-mail usado na compra.</p>
           )}
