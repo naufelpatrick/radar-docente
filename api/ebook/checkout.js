@@ -68,11 +68,22 @@ export default async function handler(request, response) {
     })
     const checkout = await asaasResponse.json()
     if (!asaasResponse.ok || !checkout.id) {
+      console.error('asaas checkout rejected', {
+        status: asaasResponse.status,
+        errors: Array.isArray(checkout.errors)
+          ? checkout.errors.map(({ code, description }) => ({ code, description }))
+          : [],
+      })
       await supabase(`/rest/v1/ebook_orders?id=eq.${id}`, {
         method: 'PATCH',
         body: JSON.stringify({ status: 'failed' }),
       })
-      return json(response, 502, { error: 'Não foi possível iniciar o pagamento. Tente novamente.' })
+      return json(response, 502, {
+        error: 'Não foi possível iniciar o pagamento. Tente novamente.',
+        diagnostic: Array.isArray(checkout.errors)
+          ? checkout.errors.map(({ code }) => code).filter(Boolean)
+          : [],
+      })
     }
 
     const updated = await supabase(`/rest/v1/ebook_orders?id=eq.${id}`, {
