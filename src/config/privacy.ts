@@ -34,6 +34,13 @@ export const privacyConfig = {
       privacyUrl: 'https://policies.google.com/privacy',
       internationalProcessing: true,
     },
+    {
+      name: 'ASAAS',
+      purpose: 'Processamento do pagamento do e-book e confirmação da compra',
+      data: 'Dados de identificação, contato e pagamento informados no checkout',
+      privacyUrl: 'https://www.asaas.com/privacidade',
+      internationalProcessing: false,
+    },
   ],
 } as const
 

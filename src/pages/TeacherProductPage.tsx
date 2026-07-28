@@ -1,6 +1,7 @@
 import { ArrowRight, Check, ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Footer } from '../components/Footer'
+import { EbookCheckoutForm } from '../components/EbookCheckoutForm'
 import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { MentoringLeadForm } from '../components/MentoringLeadForm'
 import { Seo } from '../components/Seo'
@@ -30,14 +31,32 @@ export function TeacherProductPage({ productId }: TeacherProductPageProps) {
               <p className="eyebrow">{isEbook ? 'GUIA PARA PROFESSORES' : 'ACOMPANHAMENTO INDIVIDUAL'}</p>
               <h1>{product.name}</h1>
               <p>{product.description}</p>
-              <a className="button-link button-link--light" href={isEbook ? '/contato' : '#manifestar-interesse'}>
-                {isEbook ? 'Entrar em contato' : 'Manifestar interesse'}<ArrowRight aria-hidden="true" />
+              <a className="button-link button-link--light" href={isEbook ? '#comprar' : '#manifestar-interesse'}>
+                {isEbook ? 'Comprar por R$ 19,90' : 'Manifestar interesse'}<ArrowRight aria-hidden="true" />
               </a>
-              <small>Os detalhes de disponibilização estão em preparação. Não há pagamento nesta etapa.</small>
+              <small>{isEbook ? 'Pagamento único via Pix ou cartão no ambiente seguro do ASAAS.' : 'Os detalhes de disponibilização estão em preparação. Não há pagamento nesta etapa.'}</small>
             </div>
-            <div className="teacher-product-visual" aria-hidden="true"><span>{isEbook ? 'IA' : '1:1'}</span><i /><i /><i /></div>
+            {isEbook
+              ? <img className="ebook-cover" src="/ebook-cover.jpg" alt="Capa do caderno IA na prática docente" width="540" height="720" />
+              : <div className="teacher-product-visual" aria-hidden="true"><span>1:1</span><i /><i /><i /></div>}
           </div>
         </section>
+        {isEbook && (
+          <section className="section ebook-purchase" id="comprar">
+            <div className="shell ebook-purchase__grid">
+              <div>
+                <p className="eyebrow eyebrow--dark">O QUE VEM NO CADERNO</p>
+                <h2>32 páginas para levar a IA da intenção à prática.</h2>
+                <ul>
+                  <li><strong>12 atividades</strong><span>Propostas que podem ser adaptadas a diferentes contextos.</span></li>
+                  <li><strong>3 sequências didáticas</strong><span>Percursos completos para planejar, criar e avaliar.</span></li>
+                  <li><strong>Instrumentos aplicáveis</strong><span>Rubricas, perguntas e páginas de trabalho para apoiar decisões.</span></li>
+                </ul>
+              </div>
+              <EbookCheckoutForm />
+            </div>
+          </section>
+        )}
         <section className="section teacher-product-content">
           <div className="shell teacher-product-content__grid">
             <div><p className="eyebrow eyebrow--dark">O QUE VOCÊ ENCONTRA</p><h2>{isEbook ? 'Decisões pedagógicas traduzidas em prática.' : 'Uma conversa orientada pelo seu contexto.'}</h2></div>

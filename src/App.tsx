@@ -57,6 +57,9 @@ const TeacherProductPage = lazy(() =>
 const PrivacyPage = lazy(() =>
   import('./pages/PrivacyPage').then((module) => ({ default: module.PrivacyPage })),
 )
+const EbookOrderPage = lazy(() =>
+  import('./pages/EbookOrderPage').then((module) => ({ default: module.EbookOrderPage })),
+)
 
 export default function App() {
   return (
@@ -82,6 +85,7 @@ export default function App() {
           <Route path="/metodologia" element={<MethodologyPage />} />
           <Route path="/radar-docente" element={<RadarDocentePage />} />
           <Route path="/ebook" element={<TeacherProductPage productId="ebook" />} />
+          <Route path="/ebook/obrigado" element={<EbookOrderPage />} />
           <Route path="/mentoria" element={<TeacherProductPage productId="mentoring" />} />
           <Route path="/para-instituicoes" element={<InstitutionsPage />} />
           <Route path="/radar/*" element={<RadarFlow />} />

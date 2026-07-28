@@ -88,3 +88,10 @@ Procedimento disponível no Supabase:
 - definição de rotina e responsáveis internos para solicitações de titulares.
 
 Canal de privacidade configurado: `praxia@radarpraxia.com`.
+# Venda do e-book
+
+- Finalidade: criar o pedido, processar o pagamento e liberar o arquivo adquirido.
+- Dados: nome, e-mail, identificadores do pedido e checkout, status e data de pagamento.
+- Operadores: ASAAS (pagamento), Supabase (pedido e arquivo privado) e Vercel (API).
+- Acesso ao arquivo: URL assinada com validade de cinco minutos, emitida apenas para pedido confirmado.
+- Retenção: pendente de definição formal.
