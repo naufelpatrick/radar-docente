@@ -12,10 +12,12 @@ import {
   UserRoundSearch,
 } from 'lucide-react'
 import { ButtonLink } from '../components/ButtonLink'
+import { FaqSection } from '../components/FaqSection'
 import { Footer } from '../components/Footer'
 import { RadarGraphic } from '../components/RadarGraphic'
 import { ScorePraxia } from '../components/ScorePraxia'
 import { SiteHeader } from '../components/SiteHeader'
+import { Seo } from '../components/Seo'
 import { useScrollMotion } from '../hooks/useScrollMotion'
 
 const benefits = [
@@ -40,18 +42,76 @@ const steps = [
   ['03', 'Escolha o próximo passo', 'Parta de uma recomendação viável e conheça conteúdos ou mentorias alinhados ao resultado.'],
 ]
 
+const homeFaq = [
+  {
+    question: 'O que o Radar Docente avalia?',
+    answer: 'O Radar organiza um autorrelato sobre seis dimensões da fluência digital e em IA: planejamento e curadoria, criação de experiências, mediação e colaboração, avaliação e feedback, integração pedagógica da IA e ética, segurança e autoria.',
+  },
+  {
+    question: 'Preciso conhecer ferramentas de inteligência artificial?',
+    answer: 'Não. As perguntas partem de decisões pedagógicas e situações do cotidiano. O Radar acolhe tanto quem está começando quanto quem já utiliza recursos digitais e IA com frequência.',
+  },
+  {
+    question: 'O resultado é uma avaliação do meu desempenho?',
+    answer: 'Não. O resultado é orientativo e baseado em autorrelato. Ele não constitui prova, ranking, diagnóstico ou certificação e não compara você com outros professores.',
+  },
+  {
+    question: 'Quanto tempo leva e o que recebo ao final?',
+    answer: 'A experiência leva aproximadamente oito minutos. Ao final, você recebe o Score PráxIA, um radar com seis dimensões, interpretações contextualizadas e um próximo experimento, além da opção de exportar o relatório completo em PDF.',
+  },
+  {
+    question: 'Minhas respostas ficam armazenadas?',
+    answer: 'Nesta versão, a sessão permanece no seu navegador e nada é transmitido para um servidor. Você pode reiniciar o Radar e apagar o progresso quando quiser.',
+  },
+]
+
+const homeSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      name: 'PráxIA',
+      url: 'https://radar-docente-pi.vercel.app/',
+      inLanguage: 'pt-BR',
+      description: 'Radar de Fluência Digital e IA para professores.',
+    },
+    {
+      '@type': 'WebPage',
+      name: 'PráxIA — Radar de Fluência Digital e IA',
+      url: 'https://radar-docente-pi.vercel.app/',
+      inLanguage: 'pt-BR',
+      isPartOf: { '@type': 'WebSite', name: 'PráxIA', url: 'https://radar-docente-pi.vercel.app/' },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: homeFaq.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    },
+  ],
+}
+
 export function LandingPage() {
   useScrollMotion()
 
   return (
     <>
-      <main>
+      <Seo
+        title="PráxIA: Radar de Fluência Digital e IA para professores"
+        description="Reconheça como tecnologia e IA aparecem na sua prática docente. Receba um score explicado, radar de seis dimensões e próximo passo gratuito."
+        path="/"
+        jsonLd={homeSchema}
+      />
+      <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+      <main id="conteudo-principal">
         <section className="hero" id="inicio">
           <div className="hero__glow" aria-hidden="true" />
           <div className="shell">
             <SiteHeader />
             <div className="hero__grid">
-              <div className="hero__content" data-reveal="up">
+              <div className="hero__content">
                 <p className="eyebrow"><span /> Radar gratuito <i /> aproximadamente 8 minutos</p>
                 <h1>Como sua fluência digital aparece na <em>prática docente?</em></h1>
                 <p className="hero__lead">Descubra forças, pontos de atenção e um próximo passo possível — com IA incluída, sem tecnicismo.</p>
@@ -103,7 +163,10 @@ export function LandingPage() {
               <p className="eyebrow eyebrow--dark">PRÉVIA DO RESULTADO</p>
               <h2>Seis dimensões.<br /><em>Uma leitura integrada.</em></h2>
               <p>Mais que um número, você recebe contexto para compreender o que já faz bem e onde pode avançar.</p>
-              <ButtonLink href="/radar" showArrow>Fazer o Radar gratuito</ButtonLink>
+              <div className="result-preview__actions">
+                <ButtonLink href="/radar" showArrow>Fazer o Radar gratuito</ButtonLink>
+                <ButtonLink href="/resultado" variant="secondary">Ver exemplo completo</ButtonLink>
+              </div>
             </div>
             <ScorePraxia />
           </div>
@@ -159,6 +222,22 @@ export function LandingPage() {
           </div>
         </section>
 
+        <section className="section home-trust" id="por-que-confiar">
+          <div className="shell home-trust__grid">
+            <div data-reveal="left">
+              <p className="eyebrow eyebrow--dark">POR QUE CONFIAR</p>
+              <h2>Critérios claros.<br />Limites <em>explícitos.</em></h2>
+              <p>O Radar foi construído para apoiar reflexão, não para produzir uma aparência de precisão que o instrumento não pode sustentar.</p>
+              <ButtonLink href="/metodologia" showArrow>Conhecer a metodologia</ButtonLink>
+            </div>
+            <div className="home-trust__principles">
+              <article data-reveal="up"><span>01</span><h3>Cálculo transparente</h3><p>A pontuação segue regras determinísticas e documentadas. Nenhuma resposta é interpretada por uma IA generativa.</p></article>
+              <article data-reveal="up"><span>02</span><h3>Instrumento em validação</h3><p>A versão atual é beta. O resultado não é apresentado como diagnóstico, certificação ou evidência científica concluída.</p></article>
+              <article data-reveal="up"><span>03</span><h3>Privacidade desde o início</h3><p>Nesta etapa, respostas e resultado permanecem no navegador. Você mantém controle sobre seu progresso.</p></article>
+            </div>
+          </div>
+        </section>
+
         <section className="section about" id="sobre">
           <div className="shell about__grid">
             <div className="about__portrait" aria-hidden="true" data-reveal="left">
@@ -197,6 +276,10 @@ export function LandingPage() {
             </div>
           </div>
         </section>
+
+        <div id="perguntas">
+          <FaqSection items={homeFaq} title="Perguntas antes de começar" />
+        </div>
 
         <section className="final-cta">
           <div className="final-cta__orbit" aria-hidden="true"><Sparkles /><MessageCircleMore /></div>
