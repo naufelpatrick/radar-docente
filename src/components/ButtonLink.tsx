@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { MouseEventHandler, ReactNode } from 'react'
 import { ArrowRight } from 'lucide-react'
 
 type ButtonLinkProps = {
@@ -6,6 +6,7 @@ type ButtonLinkProps = {
   href: string
   variant?: 'primary' | 'secondary' | 'light'
   showArrow?: boolean
+  onClick?: MouseEventHandler<HTMLAnchorElement>
 }
 
 export function ButtonLink({
@@ -13,11 +14,12 @@ export function ButtonLink({
   href,
   variant = 'primary',
   showArrow = false,
+  onClick,
 }: ButtonLinkProps) {
   const className = `button-link button-link--${variant}`
 
   return (
-    <a className={className} href={href}>
+    <a className={className} href={href} onClick={onClick}>
       {children}
       {showArrow && <ArrowRight aria-hidden="true" size={18} />}
     </a>

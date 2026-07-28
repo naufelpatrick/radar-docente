@@ -1,6 +1,6 @@
 import { Menu, X } from 'lucide-react'
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useMobileNavigation } from '../hooks/useMobileNavigation'
 import { BrandMark } from './BrandMark'
 import { ButtonLink } from './ButtonLink'
 
@@ -9,10 +9,10 @@ interface InstitutionalHeaderProps {
 }
 
 export function InstitutionalHeader({ currentPage }: InstitutionalHeaderProps) {
-  const [open, setOpen] = useState(false)
+  const { open, setOpen, close, rootRef } = useMobileNavigation()
 
   return (
-    <header className="institutional-header">
+    <header className="institutional-header" ref={rootRef}>
       <div className="shell institutional-header__inner">
         <Link to="/" className="institutional-header__brand" aria-label="PráxIA, página inicial">
           <BrandMark inverse />
@@ -32,12 +32,12 @@ export function InstitutionalHeader({ currentPage }: InstitutionalHeaderProps) {
           className={open ? 'is-open' : ''}
           aria-label="Navegação principal"
         >
-          <Link to="/radar-docente" aria-current={currentPage === 'radar' ? 'page' : undefined}>Diagnóstico</Link>
-          <Link to="/ebook" aria-current={currentPage === 'ebook' ? 'page' : undefined}>E-book</Link>
-          <Link to="/mentoria" aria-current={currentPage === 'mentoring' ? 'page' : undefined}>Mentoria</Link>
-          <Link to="/para-instituicoes" aria-current={currentPage === 'institutions' ? 'page' : undefined}>Para instituições</Link>
-          <Link to="/blog" aria-current={currentPage === 'blog' ? 'page' : undefined}>Blog</Link>
-          <ButtonLink href="/radar" variant="light">Fazer o Radar</ButtonLink>
+          <Link to="/radar-docente" onClick={close} aria-current={currentPage === 'radar' ? 'page' : undefined}>Diagnóstico</Link>
+          <Link to="/ebook" onClick={close} aria-current={currentPage === 'ebook' ? 'page' : undefined}>E-book</Link>
+          <Link to="/mentoria" onClick={close} aria-current={currentPage === 'mentoring' ? 'page' : undefined}>Mentoria</Link>
+          <Link to="/para-instituicoes" onClick={close} aria-current={currentPage === 'institutions' ? 'page' : undefined}>Para instituições</Link>
+          <Link to="/blog" onClick={close} aria-current={currentPage === 'blog' ? 'page' : undefined}>Blog</Link>
+          <ButtonLink href="/radar" variant="light" onClick={close}>Fazer o Radar</ButtonLink>
         </nav>
       </div>
     </header>
