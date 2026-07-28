@@ -44,6 +44,8 @@ O resultado principal usa uma escala de 0 a 100, apresentada por um medidor semi
 
 O radar hexagonal das seis dimensões aparece abaixo do score como explicação complementar da pontuação.
 
+A devolutiva também relaciona a combinação das dimensões a manifestações possíveis na docência, apresenta interpretações específicas por faixa dimensional e propõe um pequeno experimento com critérios, evidência observável, tempo de preparação e pergunta de reflexão.
+
 ## Escopo desta etapa
 
 - landing page responsiva;

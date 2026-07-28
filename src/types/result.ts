@@ -34,3 +34,42 @@ export type ScoreResult = {
   completedAt: string
   completionTimeSeconds: number
 }
+
+export type DimensionInterpretation = {
+  evaluates: string
+  suggests: string
+  inPractice: string
+  impact: string
+  practiceToMaintain: string
+  actionToAdvance: string
+}
+
+export type TeachingImplication = {
+  title: string
+  manifestation: string
+  impact: string
+}
+
+export type DevelopmentPlan = {
+  dimensionId: DimensionId
+  whyPrioritized: string
+  objective: string
+  nextActivityAction: string
+  criteria: string[]
+  observableEvidence: string
+  preparationTime: string
+  reflection: string
+}
+
+export type ResultNarrative = {
+  summary: string
+  implications: TeachingImplication[]
+  dimensionInterpretations: Array<DimensionScore & {
+    bandId: ScoreBandId
+    bandName: string
+    content: DimensionInterpretation
+  }>
+  balancedExplanation: string | null
+  developmentPlan: DevelopmentPlan
+  reflectionQuestion: string
+}
