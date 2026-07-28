@@ -80,7 +80,7 @@ export default async function handler(request, response) {
       return json(response, 502, {
         error: 'Não foi possível iniciar o pagamento. Tente novamente.',
         diagnostic: Array.isArray(checkout.errors)
-          ? checkout.errors.map(({ code }) => code).filter(Boolean)
+          ? checkout.errors.map(({ code, description }) => ({ code, description }))
           : [],
       })
     }
