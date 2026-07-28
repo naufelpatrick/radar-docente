@@ -1,3 +1,6 @@
+import logoNegative from '../assets/logo-praxia-negative.svg'
+import logoPositive from '../assets/logo-praxia.svg'
+
 type BrandMarkProps = {
   compact?: boolean
   inverse?: boolean
@@ -5,12 +8,12 @@ type BrandMarkProps = {
 
 export function BrandMark({ compact = false, inverse = false }: BrandMarkProps) {
   return (
-    <span
-      className={`brand-mark ${inverse ? 'brand-mark--inverse' : ''}`}
-      aria-label="PráxIA"
-    >
-      Práx<span className="brand-mark__ia">IA</span>
-      {!compact && <span className="brand-mark__dot" aria-hidden="true" />}
-    </span>
+    <img
+      className={`brand-mark ${compact ? 'brand-mark--compact' : ''}`}
+      src={inverse ? logoNegative : logoPositive}
+      alt="PráxIA"
+      width={inverse ? 500 : 408}
+      height="136"
+    />
   )
 }
