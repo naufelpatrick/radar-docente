@@ -4,6 +4,7 @@ import {
   Compass,
   Gauge,
   Layers3,
+  Linkedin,
   MessageCircleMore,
   Route,
   Sparkles,
@@ -152,7 +153,7 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="section about">
+        <section className="section about" id="sobre">
           <div className="shell about__grid">
             <div className="about__portrait" aria-hidden="true">
               <BookOpenCheck />
@@ -161,7 +162,18 @@ export function LandingPage() {
             </div>
             <div>
               <p className="eyebrow eyebrow--dark">QUEM ESTÁ POR TRÁS</p>
-              <h2>Patrick Naufel</h2>
+              <div className="about__name">
+                <h2>Patrick Naufel</h2>
+                <a
+                  href="https://www.linkedin.com/in/patricknaufel"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn de Patrick Naufel, abre em uma nova aba"
+                >
+                  <Linkedin aria-hidden="true" />
+                  <span>LinkedIn</span>
+                </a>
+              </div>
               <p className="about__role">Professor, pesquisador e mentor.</p>
               <p>A PráxIA nasce da vontade de aproximar tecnologia, inteligência artificial e prática pedagógica sem perder de vista o que importa: as pessoas, o contexto e a aprendizagem.</p>
               <p>Uma iniciativa independente para ajudar professores a transformar curiosidade em escolha consciente — e fluência em prática.</p>
