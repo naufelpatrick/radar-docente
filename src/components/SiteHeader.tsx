@@ -9,12 +9,11 @@ export function SiteHeader() {
         <BrandMark inverse />
       </Link>
       <nav aria-label="Navegação principal">
-        <Link to="/" aria-current="page">Início</Link>
-        <Link to="/radar-docente">Radar Docente</Link>
-        <Link to="/metodologia">Metodologia</Link>
-        <Link to="/sobre">Sobre</Link>
+        <Link to="/radar-docente">Diagnóstico</Link>
+        <Link to="/ebook">E-book</Link>
+        <Link to="/mentoria">Mentoria</Link>
+        <Link to="/para-instituicoes">Para instituições</Link>
         <Link to="/blog">Blog</Link>
-        <Link to="/contato">Contato</Link>
         <ButtonLink href="/radar" variant="light">Fazer o Radar</ButtonLink>
       </nav>
     </header>

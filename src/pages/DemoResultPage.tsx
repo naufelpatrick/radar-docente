@@ -14,6 +14,7 @@ import { FaqSection } from '../components/FaqSection'
 import { Footer } from '../components/Footer'
 import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { Seo } from '../components/Seo'
+import { ResultCommercialOffers } from '../components/ResultCommercialOffers'
 import type { DimensionId } from '../types/instrument'
 import type { ScoreResult } from '../types/result'
 import { useScrollMotion } from '../hooks/useScrollMotion'
@@ -301,6 +302,8 @@ export function DemoResultPage() {
             <ButtonLink href="/radar" variant="light" showArrow>Gerar meu Score PráxIA</ButtonLink>
           </div>
         </section>
+
+        <ResultCommercialOffers bandId={demoResult.band.id} sourcePage="demo_result" />
 
         <FaqSection items={demoFaq} title="Sobre esta demonstração" />
       </main>

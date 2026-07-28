@@ -5,7 +5,7 @@ import { BrandMark } from './BrandMark'
 import { ButtonLink } from './ButtonLink'
 
 interface InstitutionalHeaderProps {
-  currentPage?: 'home' | 'methodology' | 'radar' | 'about' | 'blog' | 'contact'
+  currentPage?: 'home' | 'methodology' | 'radar' | 'about' | 'blog' | 'contact' | 'ebook' | 'mentoring' | 'institutions'
 }
 
 export function InstitutionalHeader({ currentPage }: InstitutionalHeaderProps) {
@@ -32,12 +32,11 @@ export function InstitutionalHeader({ currentPage }: InstitutionalHeaderProps) {
           className={open ? 'is-open' : ''}
           aria-label="Navegação principal"
         >
-          <Link to="/" aria-current={currentPage === 'home' ? 'page' : undefined}>Início</Link>
-          <Link to="/radar-docente" aria-current={currentPage === 'radar' ? 'page' : undefined}>Radar Docente</Link>
-          <Link to="/metodologia" aria-current={currentPage === 'methodology' ? 'page' : undefined}>Metodologia</Link>
-          <Link to="/sobre" aria-current={currentPage === 'about' ? 'page' : undefined}>Sobre</Link>
+          <Link to="/radar-docente" aria-current={currentPage === 'radar' ? 'page' : undefined}>Diagnóstico</Link>
+          <Link to="/ebook" aria-current={currentPage === 'ebook' ? 'page' : undefined}>E-book</Link>
+          <Link to="/mentoria" aria-current={currentPage === 'mentoring' ? 'page' : undefined}>Mentoria</Link>
+          <Link to="/para-instituicoes" aria-current={currentPage === 'institutions' ? 'page' : undefined}>Para instituições</Link>
           <Link to="/blog" aria-current={currentPage === 'blog' ? 'page' : undefined}>Blog</Link>
-          <Link to="/contato" aria-current={currentPage === 'contact' ? 'page' : undefined}>Contato</Link>
           <ButtonLink href="/radar" variant="light">Fazer o Radar</ButtonLink>
         </nav>
       </div>

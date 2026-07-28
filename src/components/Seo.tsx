@@ -41,12 +41,12 @@ export function Seo({ title, description, path, type = 'website', jsonLd }: SeoP
     setMeta('meta[property="og:image:type"]', { property: 'og:image:type', content: 'image/png' })
     setMeta('meta[property="og:image:width"]', { property: 'og:image:width', content: '1200' })
     setMeta('meta[property="og:image:height"]', { property: 'og:image:height', content: '630' })
-    setMeta('meta[property="og:image:alt"]', { property: 'og:image:alt', content: 'PráxIA — descubra sua maturidade para ensinar com inteligência artificial' })
+    setMeta('meta[property="og:image:alt"]', { property: 'og:image:alt', content: 'PráxIA — descubra sua fluência digital e em inteligência artificial para a prática docente' })
     setMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' })
     setMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: title })
     setMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description })
     setMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: socialImage })
-    setMeta('meta[name="twitter:image:alt"]', { name: 'twitter:image:alt', content: 'PráxIA — descubra sua maturidade para ensinar com inteligência artificial' })
+    setMeta('meta[name="twitter:image:alt"]', { name: 'twitter:image:alt', content: 'PráxIA — descubra sua fluência digital e em inteligência artificial para a prática docente' })
 
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
     if (!canonical) {

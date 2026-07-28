@@ -16,6 +16,7 @@ export function Footer() {
               <Link to="/">Início</Link>
               <Link to="/sobre">Sobre</Link>
               <Link to="/contato">Contato</Link>
+              <Link to="/para-instituicoes">Para instituições</Link>
             </div>
             <div>
               <strong>Radar</strong>
@@ -28,11 +29,13 @@ export function Footer() {
               <Link to="/blog">Blog</Link>
               <Link to="/guias">Guias</Link>
               <Link to="/ferramentas">Ferramentas</Link>
+              <Link to="/ebook">E-book</Link>
+              <Link to="/mentoria">Mentoria</Link>
             </div>
           </nav>
         </div>
         <div className="footer__bottom">
-          <span>Projeto independente de Patrick Naufel.</span>
+          <span>Projeto independente de Patrick Naufel e Giovani Letti.</span>
           <span>Suas respostas são tratadas com privacidade e usadas apenas para gerar sua leitura orientativa.</span>
           <span>© {new Date().getFullYear()} PráxIA.</span>
         </div>
