@@ -18,7 +18,7 @@ export function PdfExportButton({ result, narrative }: { result: ScoreResult; na
   return (
     <button type="button" className="pdf-export-button" onClick={handleExport} disabled={isExporting}>
       <Download aria-hidden="true" />
-      {isExporting ? 'Gerando PDF…' : 'Exportar PDF'}
+      {isExporting ? 'Gerando relatório…' : 'Exportar PDF'}
     </button>
   )
 }
