@@ -1,8 +1,9 @@
-import { AlertTriangle, ArrowRight, BookOpen, CalendarClock, CheckCircle2, ChevronDown, Clock3, Compass, Eye, Sparkles, Target } from 'lucide-react'
+import { AlertTriangle, ArrowRight, CheckCircle2, ChevronDown, Clock3, Compass, Eye, Sparkles, Target } from 'lucide-react'
 import { Link, Navigate } from 'react-router-dom'
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart, ResponsiveContainer } from 'recharts'
 import { DynamicScoreGauge } from '../../components/DynamicScoreGauge'
 import { PdfExportButton } from '../../components/PdfExportButton'
+import { ResultCommercialOffers } from '../../components/ResultCommercialOffers'
 import { dimensions, instrument } from '../../data/instrument'
 import { useRadarSession } from '../../context/radarSessionContextValue'
 import { buildResultNarrative } from '../../services/resultNarrativeService'
@@ -207,10 +208,7 @@ export function RadarResultPage() {
         <span>{getDimensionName(result.recommendationDimension)}</span>
       </section>
 
-      <section className="future-offers">
-        <article><BookOpen aria-hidden="true" /><span>EM PREPARAÇÃO</span><h2>E-book PráxIA</h2><p>Um aprofundamento prático alinhado ao seu resultado estará disponível futuramente.</p><button disabled>Conhecer em breve</button></article>
-        <article><CalendarClock aria-hidden="true" /><span>EM PREPARAÇÃO</span><h2>Mentoria individual</h2><p>Uma sessão para aplicar IA a um desafio real da sua prática será oferecida futuramente.</p><button disabled>Agendamento futuro</button></article>
-      </section>
+      <ResultCommercialOffers bandId={result.band.id} sourcePage="result" />
 
       <footer className="result-footer">
         <p>Instrumento de autorreflexão fundamentado em referenciais internacionais. Versão beta em processo de validação.</p>

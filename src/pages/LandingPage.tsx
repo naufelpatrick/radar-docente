@@ -1,11 +1,8 @@
 import {
   ArrowDown,
-  BookOpenCheck,
   Compass,
-  FileText,
   Gauge,
   Layers3,
-  Linkedin,
   MessageCircleMore,
   Route,
   Sparkles,
@@ -18,6 +15,9 @@ import { RadarGraphic } from '../components/RadarGraphic'
 import { ScorePraxia } from '../components/ScorePraxia'
 import { SiteHeader } from '../components/SiteHeader'
 import { Seo } from '../components/Seo'
+import { CommercialSolutions } from '../components/CommercialSolutions'
+import { TeamProfiles } from '../components/TeamProfiles'
+import { team } from '../data/team'
 import { useScrollMotion } from '../hooks/useScrollMotion'
 
 const benefits = [
@@ -74,6 +74,16 @@ const homeSchema = {
       url: 'https://radar-docente-pi.vercel.app/',
       inLanguage: 'pt-BR',
       description: 'Radar de Fluência Digital e IA para professores.',
+    },
+    {
+      '@type': 'Organization',
+      name: 'PráxIA',
+      url: 'https://radar-docente-pi.vercel.app/',
+      member: team.map((member) => ({
+        '@type': 'Person',
+        name: member.name,
+        sameAs: member.links.map((link) => link.href),
+      })),
     },
     {
       '@type': 'WebPage',
@@ -238,42 +248,17 @@ export function LandingPage() {
           </div>
         </section>
 
+        <CommercialSolutions />
+
         <section className="section about" id="sobre">
-          <div className="shell about__grid">
-            <div className="about__portrait" aria-hidden="true" data-reveal="left">
-              <BookOpenCheck />
-              <span>PN</span>
-              <div className="about__path" />
+          <div className="shell home-team">
+            <div className="home-team__heading" data-reveal="up">
+              <p className="eyebrow eyebrow--dark">QUEM SOMOS</p>
+              <h2>Educação, tecnologia e prática docente</h2>
+              <p>A PráxIA é conduzida pelos professores Patrick Naufel e Giovani Letti, reunindo experiências em educação, comunicação, design, tecnologia e inovação.</p>
             </div>
-            <div data-reveal="right">
-              <p className="eyebrow eyebrow--dark">QUEM ESTÁ POR TRÁS</p>
-              <div className="about__name">
-                <h2>Patrick Naufel</h2>
-                <div className="about__links">
-                  <a
-                    href="https://www.linkedin.com/in/patricknaufel"
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="LinkedIn de Patrick Naufel, abre em uma nova aba"
-                  >
-                    <Linkedin aria-hidden="true" />
-                    <span>LinkedIn</span>
-                  </a>
-                  <a
-                    href="http://lattes.cnpq.br/0026328778886854"
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="Currículo Lattes de Patrick Naufel, abre em uma nova aba"
-                  >
-                    <FileText aria-hidden="true" />
-                    <span>Currículo Lattes</span>
-                  </a>
-                </div>
-              </div>
-              <p className="about__role">Professor, pesquisador e mentor.</p>
-              <p>A PráxIA nasce da vontade de aproximar tecnologia, inteligência artificial e prática pedagógica sem perder de vista o que importa: as pessoas, o contexto e a aprendizagem.</p>
-              <p>Uma iniciativa independente para ajudar professores a transformar curiosidade em escolha consciente — e fluência em prática.</p>
-            </div>
+            <TeamProfiles compact />
+            <ButtonLink href="/para-instituicoes#quem-somos" showArrow>Conheça a PráxIA</ButtonLink>
           </div>
         </section>
 

@@ -47,6 +47,12 @@ const RadarDocentePage = lazy(() =>
 const RadarFlow = lazy(() =>
   import('./pages/radar/RadarFlow').then((module) => ({ default: module.RadarFlow })),
 )
+const InstitutionsPage = lazy(() =>
+  import('./pages/InstitutionsPage').then((module) => ({ default: module.InstitutionsPage })),
+)
+const TeacherProductPage = lazy(() =>
+  import('./pages/TeacherProductPage').then((module) => ({ default: module.TeacherProductPage })),
+)
 
 export default function App() {
   return (
@@ -69,6 +75,9 @@ export default function App() {
           <Route path="/blog/artigo" element={<Navigate to="/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta" replace />} />
           <Route path="/metodologia" element={<MethodologyPage />} />
           <Route path="/radar-docente" element={<RadarDocentePage />} />
+          <Route path="/ebook" element={<TeacherProductPage productId="ebook" />} />
+          <Route path="/mentoria" element={<TeacherProductPage productId="mentoring" />} />
+          <Route path="/para-instituicoes" element={<InstitutionsPage />} />
           <Route path="/radar/*" element={<RadarFlow />} />
         </Routes>
       </Suspense>

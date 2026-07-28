@@ -3,10 +3,8 @@ import {
   BookOpenCheck,
   ChevronRight,
   Compass,
-  FileText,
   HeartHandshake,
   Layers3,
-  Linkedin,
   MessageCircleMore,
   Route,
   Scale,
@@ -17,6 +15,8 @@ import { ButtonLink } from '../components/ButtonLink'
 import { Footer } from '../components/Footer'
 import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { Seo } from '../components/Seo'
+import { TeamProfiles } from '../components/TeamProfiles'
+import { team, teamIntroduction } from '../data/team'
 import { useScrollMotion } from '../hooks/useScrollMotion'
 
 const values = [
@@ -67,14 +67,11 @@ const aboutSchema = {
         name: 'PráxIA',
         slogan: 'Transforme fluência em prática docente.',
         url: 'https://radar-docente-pi.vercel.app/',
-        founder: {
+        member: team.map((member) => ({
           '@type': 'Person',
-          name: 'Patrick Naufel',
-          sameAs: [
-            'https://www.linkedin.com/in/patricknaufel',
-            'http://lattes.cnpq.br/0026328778886854',
-          ],
-        },
+          name: member.name,
+          sameAs: member.links.map((link) => link.href),
+        })),
       },
     },
     {
@@ -205,22 +202,13 @@ export function AboutPage() {
         </section>
 
         <section className="about-section about-founder" id="quem-esta-por-tras">
-          <div className="shell about-founder__grid">
-            <div className="about-founder__portrait" aria-hidden="true" data-reveal="left">
-              <span>PN</span>
-              <div /><i /><i />
+          <div className="shell">
+            <div className="about-founder__heading" data-reveal="up">
+              <p className="method-kicker">QUEM ESTÁ À FRENTE DA PRÁXIA</p>
+              <h2>Educação, tecnologia e prática docente</h2>
+              <p>{teamIntroduction}</p>
             </div>
-            <div data-reveal="right">
-              <p className="method-kicker">QUEM ESTÁ POR TRÁS</p>
-              <h2>Patrick Naufel</h2>
-              <p className="about-founder__role">Professor, pesquisador e mentor.</p>
-              <p>A PráxIA reúne inquietações que atravessam sua atuação com educação, tecnologia e desenvolvimento docente: como transformar curiosidade em critério, uso em intenção e fluência em prática.</p>
-              <p>O projeto é independente e está sendo construído de forma progressiva, com transparência sobre o estágio de cada recurso e sobre os limites do instrumento.</p>
-              <div className="about-founder__links">
-                <a href="https://www.linkedin.com/in/patricknaufel" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" />LinkedIn</a>
-                <a href="http://lattes.cnpq.br/0026328778886854" target="_blank" rel="noreferrer"><FileText aria-hidden="true" />Currículo Lattes</a>
-              </div>
-            </div>
+            <TeamProfiles />
           </div>
         </section>
 
