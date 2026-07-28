@@ -1,4 +1,4 @@
-import { json, readJson, supabase } from '../_lib/ebook.mjs'
+import { json, readJson, supabase } from '../_lib/ebook.js'
 
 const eventStatus = {
   CHECKOUT_PAID: 'paid',

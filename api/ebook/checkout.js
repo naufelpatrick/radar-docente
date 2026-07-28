@@ -6,7 +6,7 @@ import {
   json,
   readJson,
   supabase,
-} from '../_lib/ebook.mjs'
+} from '../_lib/ebook.js'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
