@@ -87,7 +87,7 @@ const editorialTracks = [
     title: 'Da possibilidade tecnológica ao objetivo de aprendizagem',
     summary: 'Perguntas para decidir quando um recurso amplia a experiência — e quando apenas adiciona complexidade.',
     category: 'Planejamento',
-    time: 'Leitura estimada: 6 min',
+    time: 'Leitura estimada: 9 min',
   },
   {
     label: 'ÉTICA E AUTORIA',
@@ -217,7 +217,7 @@ export function BlogPage() {
                   <div><Icon aria-hidden="true" /><span>0{index + 1}</span></div>
                   <h3><Link to={`/blog/categoria/${slug}`}>{name}</Link></h3>
                   <p>{description}</p>
-                  <Link className="blog-category-status" to={`/blog/categoria/${slug}`}>{slug === 'ia-para-professores' ? '1 artigo publicado' : 'Conteúdos em preparação'} <ArrowRight aria-hidden="true" /></Link>
+                  <Link className="blog-category-status" to={`/blog/categoria/${slug}`}>{['ia-para-professores', 'planejamento', 'etica'].includes(slug) ? '1 artigo publicado' : 'Conteúdos em preparação'} <ArrowRight aria-hidden="true" /></Link>
                 </article>
               ))}
             </div>
@@ -237,6 +237,8 @@ export function BlogPage() {
                   <h3>{track.title}</h3>
                   <p>{track.summary}</p>
                   {index === 0 && <Link className="blog-roadmap__link" to="/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta">Ler artigo <ArrowRight aria-hidden="true" /></Link>}
+                  {index === 1 && <Link className="blog-roadmap__link" to="/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem">Ler artigo <ArrowRight aria-hidden="true" /></Link>}
+                  {index === 2 && <Link className="blog-roadmap__link" to="/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia">Ler artigo <ArrowRight aria-hidden="true" /></Link>}
                   <footer><span>{track.category}</span><span>{track.time}</span></footer>
                 </article>
               ))}

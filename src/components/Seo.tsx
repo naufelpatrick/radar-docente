@@ -11,6 +11,7 @@ interface SeoProps {
 }
 
 const siteUrl = 'https://radar-docente-pi.vercel.app'
+const socialImage = `${siteUrl}/social-graph-praxia.png`
 
 function setMeta(selector: string, attributes: Record<string, string>) {
   let element = document.head.querySelector<HTMLMetaElement>(selector)
@@ -35,11 +36,17 @@ export function Seo({ title, description, path, type = 'website', jsonLd }: SeoP
     setMeta('meta[property="og:url"]', { property: 'og:url', content: canonicalUrl })
     setMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'PráxIA' })
     setMeta('meta[property="og:locale"]', { property: 'og:locale', content: 'pt_BR' })
-    setMeta('meta[property="og:image"]', { property: 'og:image', content: `${siteUrl}/favicon.png` })
-    setMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary' })
+    setMeta('meta[property="og:image"]', { property: 'og:image', content: socialImage })
+    setMeta('meta[property="og:image:secure_url"]', { property: 'og:image:secure_url', content: socialImage })
+    setMeta('meta[property="og:image:type"]', { property: 'og:image:type', content: 'image/png' })
+    setMeta('meta[property="og:image:width"]', { property: 'og:image:width', content: '1200' })
+    setMeta('meta[property="og:image:height"]', { property: 'og:image:height', content: '630' })
+    setMeta('meta[property="og:image:alt"]', { property: 'og:image:alt', content: 'PráxIA — descubra sua maturidade para ensinar com inteligência artificial' })
+    setMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' })
     setMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: title })
     setMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description })
-    setMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: `${siteUrl}/favicon.png` })
+    setMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: socialImage })
+    setMeta('meta[name="twitter:image:alt"]', { name: 'twitter:image:alt', content: 'PráxIA — descubra sua maturidade para ensinar com inteligência artificial' })
 
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
     if (!canonical) {

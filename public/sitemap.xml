@@ -40,6 +40,16 @@
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://radar-docente-pi.vercel.app/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://radar-docente-pi.vercel.app/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url><loc>https://radar-docente-pi.vercel.app/blog/categoria/ia-para-professores</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://radar-docente-pi.vercel.app/blog/categoria/competencias-docentes</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://radar-docente-pi.vercel.app/blog/categoria/ferramentas</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>

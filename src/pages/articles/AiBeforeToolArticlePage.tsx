@@ -56,7 +56,7 @@ export function AiBeforeToolArticlePage() {
   return (
     <>
       <Seo title={`${title} | Blog PráxIA`} description={description} path={path} type="article" jsonLd={schema} />
-      <ArticleLayout category="IA PARA PROFESSORES" title={title} description={description} date="28 de julho de 2026" readingTime="7 min de leitura" author="Patrick Naufel" toc={toc}>
+      <ArticleLayout category="IA PARA PROFESSORES" categoryPath="/blog/categoria/ia-para-professores" title={title} description={description} date="28 de julho de 2026" readingTime="7 min de leitura" author="Patrick Naufel" toc={toc}>
         <p className="article-lead">Quando uma ferramenta de IA entra primeiro na conversa, o planejamento tende a começar pela pergunta “o que ela faz?”. Para a docência, uma pergunta mais útil é: <strong>que aprendizagem quero apoiar e por que a IA seria adequada neste contexto?</strong></p>
         <p>Essa mudança de ordem não é detalhe. Ela preserva a autoria do professor, torna os critérios visíveis e permite decidir inclusive quando não usar IA.</p>
 
