@@ -1,5 +1,6 @@
 import { BrandMark } from './BrandMark'
 import { Link } from 'react-router-dom'
+import { openCookiePreferences } from '../services/cookieConsent'
 
 export function Footer() {
   return (
@@ -17,6 +18,7 @@ export function Footer() {
               <Link to="/sobre">Sobre</Link>
               <Link to="/contato">Contato</Link>
               <Link to="/para-instituicoes">Para instituições</Link>
+              <Link to="/privacidade">Política de Privacidade</Link>
             </div>
             <div>
               <strong>Radar</strong>
@@ -36,7 +38,7 @@ export function Footer() {
         </div>
         <div className="footer__bottom">
           <span>Projeto independente de Patrick Naufel e Giovani Letti.</span>
-          <span>Suas respostas são tratadas com privacidade e usadas apenas para gerar sua leitura orientativa.</span>
+          <span><Link to="/privacidade">Política de Privacidade</Link> · <button type="button" onClick={openCookiePreferences}>Preferências de cookies</button></span>
           <span>© {new Date().getFullYear()} PráxIA.</span>
         </div>
       </div>

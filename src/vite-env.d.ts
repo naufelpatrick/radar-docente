@@ -1,7 +1,8 @@
 /// <reference types="vite/client" />
 
 interface Window {
-  gtag?: (command: 'event', eventName: string, parameters?: Record<string, unknown>) => void
+  dataLayer?: unknown[]
+  gtag?: (...args: unknown[]) => void
 }
 
 interface ImportMetaEnv {

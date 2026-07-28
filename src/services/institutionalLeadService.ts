@@ -45,7 +45,7 @@ export const institutionalLeadAdapter: InstitutionalLeadAdapter = {
         preferred_period: lead.preferredPeriod.trim(),
         message: lead.message.trim(),
         source_page: lead.sourcePage,
-        privacy_consent: lead.privacyConsent,
+        privacy_notice_acknowledged: true,
         status: 'new',
       }),
     })
@@ -71,6 +71,5 @@ export function validateInstitutionalLead(lead: InstitutionalLead): Institutiona
   if (lead.phone && (phoneDigits.length < 10 || phoneDigits.length > 13)) {
     errors.phone = 'Informe um telefone com DDD.'
   }
-  if (!lead.privacyConsent) errors.privacyConsent = 'Aceite a política de privacidade para continuar.'
   return errors
 }

@@ -7,14 +7,13 @@ const validLead: InstitutionalLead = {
   email: 'pessoa@example.com', phone: '(11) 99999-9999', city: 'São Paulo', state: 'SP',
   modality: 'online', interest: 'both', participantsRange: '30',
   preferredPeriod: 'Segundo semestre', message: 'Formação para a equipe.',
-  sourcePage: '/para-instituicoes', privacyConsent: true,
+  sourcePage: '/para-instituicoes',
 }
 
 describe('lead institucional', () => {
-  it('bloqueia envio incompleto e exige consentimento', () => {
-    const errors = validateInstitutionalLead({ ...validLead, name: '', privacyConsent: false })
+  it('bloqueia envio incompleto', () => {
+    const errors = validateInstitutionalLead({ ...validLead, name: '' })
     expect(errors.name).toBeTruthy()
-    expect(errors.privacyConsent).toBeTruthy()
   })
 
   it('valida e-mail', () => {

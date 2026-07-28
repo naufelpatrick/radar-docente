@@ -1,4 +1,5 @@
 import type { ProductAudience, ProductId } from '../types/products'
+import { analyticsAllowed } from './cookieConsent'
 
 export type CommercialEvent =
   | 'view_products_section'
@@ -18,6 +19,6 @@ export interface CommercialEventParameters {
 }
 
 export function trackCommercialEvent(event: CommercialEvent, parameters: CommercialEventParameters = {}) {
-  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
+  if (typeof window === 'undefined' || !analyticsAllowed() || typeof window.gtag !== 'function') return
   window.gtag('event', event, { ...parameters })
 }

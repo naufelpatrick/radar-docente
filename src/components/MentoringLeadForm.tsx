@@ -9,7 +9,6 @@ const initialLead: MentoringLead = {
   phone: '',
   teachingContext: '',
   mainChallenge: '',
-  privacyConsent: false,
 }
 
 export function MentoringLeadForm() {
@@ -74,11 +73,7 @@ export function MentoringLeadForm() {
         <textarea {...fieldProps('mainChallenge')} rows={5} value={lead.mainChallenge} onChange={(event) => update('mainChallenge', event.target.value)} />
         {error('mainChallenge')}
       </div>
-      <label className="lead-consent">
-        <input {...fieldProps('privacyConsent')} type="checkbox" checked={lead.privacyConsent} onChange={(event) => update('privacyConsent', event.target.checked)} />
-        <span>Concordo com o uso destes dados exclusivamente para o contato sobre a Mentoria PráxIA.</span>
-      </label>
-      {error('privacyConsent')}
+      <p className="form-privacy-notice">Os dados informados serão utilizados para responder à sua solicitação de mentoria e dar continuidade a este contato. Saiba mais na <a href="/privacidade">Política de Privacidade</a>.</p>
       <button type="submit" disabled={status === 'submitting' || status === 'success'}>
         {status === 'submitting' ? 'Enviando…' : status === 'success' ? 'Interesse registrado' : 'Manifestar interesse'} <ArrowRight aria-hidden="true" />
       </button>

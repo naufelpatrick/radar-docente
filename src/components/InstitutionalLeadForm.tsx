@@ -7,7 +7,7 @@ import type { InstitutionalLead, InstitutionalLeadErrors } from '../types/instit
 const initialLead: InstitutionalLead = {
   name: '', institution: '', role: '', email: '', phone: '', city: '', state: '',
   modality: '', interest: '', participantsRange: '', preferredPeriod: '', message: '',
-  sourcePage: '/para-instituicoes', privacyConsent: false,
+  sourcePage: '/para-instituicoes',
 }
 
 export function InstitutionalLeadForm() {
@@ -72,11 +72,8 @@ export function InstitutionalLeadForm() {
         <label className="institutional-form__wide">Período ou data pretendida<input {...fieldProps('preferredPeriod')} value={lead.preferredPeriod} onChange={(e) => update('preferredPeriod', e.target.value)} required />{error('preferredPeriod')}</label>
         <label className="institutional-form__wide">Necessidade da instituição<textarea {...fieldProps('message')} rows={5} value={lead.message} onChange={(e) => update('message', e.target.value)} required />{error('message')}</label>
       </div>
-      <label className="institutional-form__consent">
-        <input {...fieldProps('privacyConsent')} type="checkbox" checked={lead.privacyConsent} onChange={(e) => update('privacyConsent', e.target.checked)} required />
-        <span>Concordo com o uso destes dados exclusivamente para o contato sobre esta solicitação, conforme a política de privacidade.</span>
-      </label>
-      {error('privacyConsent')}
+      <p className="form-sensitive-warning">Não inclua dados pessoais de estudantes ou outras informações sensíveis.</p>
+      <p className="form-privacy-notice">Os dados informados serão utilizados para responder à sua solicitação e dar continuidade a este contato. Saiba mais na <a href="/privacidade">Política de Privacidade</a>.</p>
       <button type="submit" disabled={status === 'submitting' || status === 'success'}>
         {status === 'submitting' ? 'Enviando…' : status === 'success' ? 'Solicitação enviada' : 'Solicitar proposta'}<ArrowRight aria-hidden="true" />
       </button>

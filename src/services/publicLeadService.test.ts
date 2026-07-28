@@ -12,7 +12,6 @@ const validContact = {
   email: 'pessoa@example.com',
   subject: 'radar',
   message: 'Esta é uma mensagem válida para contato.',
-  privacyConsent: true,
 }
 
 const validMentoring = {
@@ -21,7 +20,6 @@ const validMentoring = {
   phone: '(11) 99999-9999',
   teachingContext: 'Ensino superior',
   mainChallenge: 'Quero integrar IA ao planejamento com mais intenção.',
-  privacyConsent: true,
 }
 
 describe('public lead validation', () => {
@@ -30,11 +28,10 @@ describe('public lead validation', () => {
     expect(validateMentoringLead(validMentoring)).toEqual({})
   })
 
-  it('rejects invalid contact data and missing consent', () => {
-    expect(validateContactLead({ ...validContact, email: 'inválido', message: 'curta', privacyConsent: false })).toMatchObject({
+  it('rejects invalid contact data', () => {
+    expect(validateContactLead({ ...validContact, email: 'inválido', message: 'curta' })).toMatchObject({
       email: expect.any(String),
       message: expect.any(String),
-      privacyConsent: expect.any(String),
     })
   })
 

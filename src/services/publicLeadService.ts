@@ -41,7 +41,7 @@ export const contactLeadService = {
       subject: lead.subject,
       message: lead.message.trim(),
       source_page: '/contato',
-      privacy_consent: lead.privacyConsent,
+      privacy_notice_acknowledged: true,
       status: 'new',
     })
   },
@@ -56,7 +56,7 @@ export const mentoringLeadService = {
       teaching_context: lead.teachingContext.trim(),
       main_challenge: lead.mainChallenge.trim(),
       source_page: '/mentoria',
-      privacy_consent: lead.privacyConsent,
+      privacy_notice_acknowledged: true,
       status: 'new',
     })
   },
@@ -70,7 +70,6 @@ export function validateContactLead(lead: ContactLead): LeadErrors<ContactLead> 
   if (!validEmail(lead.email)) errors.email = 'Informe um e-mail válido.'
   if (!lead.subject) errors.subject = 'Selecione um assunto.'
   if (lead.message.trim().length < 20) errors.message = 'Escreva uma mensagem com pelo menos 20 caracteres.'
-  if (!lead.privacyConsent) errors.privacyConsent = 'Aceite o uso dos dados para enviar a mensagem.'
   return errors
 }
 
@@ -82,6 +81,5 @@ export function validateMentoringLead(lead: MentoringLead): LeadErrors<Mentoring
   if (phoneDigits.length < 10 || phoneDigits.length > 13) errors.phone = 'Informe um telefone com DDD.'
   if (lead.teachingContext.trim().length < 3) errors.teachingContext = 'Conte brevemente seu contexto de atuação.'
   if (lead.mainChallenge.trim().length < 20) errors.mainChallenge = 'Descreva seu desafio em pelo menos 20 caracteres.'
-  if (!lead.privacyConsent) errors.privacyConsent = 'Aceite o uso dos dados para manifestar interesse.'
   return errors
 }

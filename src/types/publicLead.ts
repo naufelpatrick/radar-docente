@@ -3,7 +3,6 @@ export interface ContactLead {
   email: string
   subject: string
   message: string
-  privacyConsent: boolean
 }
 
 export interface MentoringLead {
@@ -12,7 +11,6 @@ export interface MentoringLead {
   phone: string
   teachingContext: string
   mainChallenge: string
-  privacyConsent: boolean
 }
 
 export type LeadErrors<T> = Partial<Record<keyof T, string>>

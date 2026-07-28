@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ScrollToTop } from './components/ScrollToTop'
+import { CookiePreferences } from './components/CookiePreferences'
 
 const LandingPage = lazy(() =>
   import('./pages/LandingPage').then((module) => ({ default: module.LandingPage })),
@@ -53,17 +54,22 @@ const InstitutionsPage = lazy(() =>
 const TeacherProductPage = lazy(() =>
   import('./pages/TeacherProductPage').then((module) => ({ default: module.TeacherProductPage })),
 )
+const PrivacyPage = lazy(() =>
+  import('./pages/PrivacyPage').then((module) => ({ default: module.PrivacyPage })),
+)
 
 export default function App() {
   return (
     <>
       <ScrollToTop />
+      <CookiePreferences />
       <Suspense fallback={<div className="route-loading" role="status">Carregando conteúdo…</div>}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/sobre" element={<AboutPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/contato" element={<ContactPage />} />
+          <Route path="/privacidade" element={<PrivacyPage />} />
           <Route path="/resultado" element={<DemoResultPage />} />
           <Route path="/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta" element={<AiBeforeToolArticlePage />} />
           <Route path="/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem" element={<TechnologyToLearningArticlePage />} />

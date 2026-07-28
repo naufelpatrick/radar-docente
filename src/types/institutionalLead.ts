@@ -15,7 +15,6 @@ export interface InstitutionalLead {
   preferredPeriod: string
   message: string
   sourcePage: '/para-instituicoes'
-  privacyConsent: boolean
 }
 
 export type InstitutionalLeadErrors = Partial<Record<keyof InstitutionalLead, string>>

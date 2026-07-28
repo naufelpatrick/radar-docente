@@ -120,14 +120,13 @@ export function ContactPage() {
   const [email, setEmail] = useState('')
   const [subject, setSubject] = useState(subjects[0].value)
   const [message, setMessage] = useState('')
-  const [privacyConsent, setPrivacyConsent] = useState(false)
   const [errors, setErrors] = useState<LeadErrors<ContactLead>>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (status === 'submitting' || status === 'success') return
-    const lead = { name, email, subject, message, privacyConsent }
+    const lead = { name, email, subject, message }
     const nextErrors = validateContactLead(lead)
     if (Object.keys(nextErrors).length) {
       setErrors(nextErrors)
@@ -234,11 +233,7 @@ export function ContactPage() {
                 <small id="contact-message-help">Inclua contexto e sua principal pergunta. Mínimo de 20 caracteres.</small>
                 {errors.message && <span className="form-error" id="contact-error-message">{errors.message}</span>}
               </div>
-              <label className="lead-consent">
-                <input id="contact-privacyConsent" type="checkbox" checked={privacyConsent} aria-invalid={Boolean(errors.privacyConsent)} aria-describedby={errors.privacyConsent ? 'contact-error-privacyConsent' : undefined} onChange={(event) => { setPrivacyConsent(event.target.checked); setErrors((current) => ({ ...current, privacyConsent: undefined })) }} />
-                <span>Concordo com o uso destes dados exclusivamente para que a PráxIA responda a esta mensagem.</span>
-              </label>
-              {errors.privacyConsent && <span className="form-error" id="contact-error-privacyConsent">{errors.privacyConsent}</span>}
+              <p className="form-privacy-notice">Os dados informados serão utilizados para responder à sua solicitação e dar continuidade a este contato. Saiba mais na <a href="/privacidade">Política de Privacidade</a>.</p>
               <button type="submit" disabled={status === 'submitting' || status === 'success'}>
                 {status === 'submitting' ? 'Enviando…' : status === 'success' ? 'Mensagem enviada' : 'Enviar mensagem'} <ArrowRight aria-hidden="true" />
               </button>
