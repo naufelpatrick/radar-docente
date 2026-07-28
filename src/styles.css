@@ -290,6 +290,10 @@ h2 em, h1 em { color: var(--indigo); font-style: normal; }
 .result-hero__copy > p:not(.flow-eyebrow) { max-width: 610px; color: rgb(255 255 255 / 70%); font-size: 18px; line-height: 1.65; }
 .result-hero__copy > span { color: rgb(255 255 255 / 45%); font-size: 13px; }
 .result-hero .flow-eyebrow { color: var(--lime); }
+.pdf-export-button { display: inline-flex; min-height: 43px; align-items: center; gap: 9px; margin-bottom: 34px; padding: 10px 15px; border: 1px solid rgb(255 255 255 / 24%); border-radius: 9px; background: rgb(255 255 255 / 7%); color: var(--white); cursor: pointer; font: 600 13px var(--font-body); transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+.pdf-export-button:hover:not(:disabled) { border-color: var(--lime); background: rgb(255 255 255 / 12%); transform: translateY(-2px); }
+.pdf-export-button:disabled { cursor: wait; opacity: .65; }
+.pdf-export-button svg { width: 17px; height: 17px; color: var(--lime); }
 .dynamic-gauge { position: relative; width: min(100%, 520px); margin: auto; color: var(--white); }
 .dynamic-gauge svg { display: block; width: 100%; overflow: visible; }
 .dynamic-gauge__track, .dynamic-gauge__accent, .dynamic-gauge__progress { fill: none; stroke-linecap: round; }
@@ -478,6 +482,7 @@ h2 em, h1 em { color: var(--indigo); font-style: normal; }
   .result-hero > * { width: 100%; max-width: 100%; min-width: 0; }
   .result-hero__copy h1 { font-size: 39px; overflow-wrap: anywhere; }
   .result-hero__copy > p:not(.flow-eyebrow) { max-width: 100%; overflow-wrap: anywhere; }
+  .pdf-export-button { width: 100%; justify-content: center; margin-bottom: 28px; }
   .dynamic-gauge { width: 94%; margin-top: 22px; }
   .result-section { width: min(100% - 32px, 620px); padding: 76px 0; }
   .result-section__heading { display: block; }

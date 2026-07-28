@@ -2,6 +2,7 @@ import { AlertTriangle, ArrowRight, BookOpen, CalendarClock, CheckCircle2, Chevr
 import { Link, Navigate } from 'react-router-dom'
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart, ResponsiveContainer } from 'recharts'
 import { DynamicScoreGauge } from '../../components/DynamicScoreGauge'
+import { PdfExportButton } from '../../components/PdfExportButton'
 import { dimensions, instrument } from '../../data/instrument'
 import { useRadarSession } from '../../context/radarSessionContextValue'
 import { buildResultNarrative } from '../../services/resultNarrativeService'
@@ -37,6 +38,7 @@ export function RadarResultPage() {
     <main className="result-page">
       <section className="result-hero">
         <div className="result-hero__copy">
+          <PdfExportButton result={result} narrative={narrative} />
           <p className="flow-eyebrow">SEU RESULTADO • BETA 0.1</p>
           <h1>Seu Score PráxIA é<br /><em>{result.displayedOverallScore} de 100.</em></h1>
           <p>{result.band.message}</p>

@@ -3,6 +3,8 @@ dist
 coverage
 .vercel
 artifacts
+output
+tmp
 .env
 .env.local
 .DS_Store

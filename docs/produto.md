@@ -22,7 +22,8 @@ O produto evita a lógica de prova ou ranking. A devolutiva é orientativa, cont
 2. Inicia o Radar gratuito.
 3. Responde a perguntas sobre situações reais da prática.
 4. Recebe score, radar de seis dimensões, leitura personalizada e próximo passo recomendado.
-5. Pode conhecer conteúdos ou mentoria individual alinhados ao resultado, quando estiverem disponíveis.
+5. Pode exportar a devolutiva em PDF para consulta pessoal.
+6. Pode conhecer conteúdos ou mentoria individual alinhados ao resultado, quando estiverem disponíveis.
 
 ## Dimensões
 
