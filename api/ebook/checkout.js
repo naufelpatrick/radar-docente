@@ -63,7 +63,6 @@ export default async function handler(request, response) {
           quantity: 1,
           value: EBOOK_PRICE,
         }],
-        customerData: { name: safeName, email: safeEmail },
       }),
     })
     const checkout = await asaasResponse.json()
