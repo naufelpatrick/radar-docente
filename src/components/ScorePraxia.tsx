@@ -31,6 +31,8 @@ export function ScorePraxia() {
     <article
       className="score-praxia"
       id="score-praxia"
+      data-reveal="scale"
+      data-animate="score"
       aria-label={`Score PráxIA demonstrativo: ${score} de 100, faixa Integração`}
     >
       <header className="score-praxia__header">
