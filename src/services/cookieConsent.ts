@@ -3,6 +3,7 @@ export type CookiePreference = 'accepted' | 'essential_only'
 export const COOKIE_PREFERENCE_KEY = 'praxia:cookie-preference:v1'
 export const COOKIE_PREFERENCES_EVENT = 'praxia:open-cookie-preferences'
 const GA_ID = 'G-9JR9Q9KSV6'
+const GOOGLE_ADS_ID = 'AW-18356888280'
 
 export function readCookiePreference(): CookiePreference | null {
   try {
@@ -30,6 +31,7 @@ export function loadGoogleAnalytics() {
   }
   window.gtag('js', new Date())
   window.gtag('config', GA_ID, { anonymize_ip: true })
+  window.gtag('config', GOOGLE_ADS_ID)
 
   const script = document.createElement('script')
   script.async = true

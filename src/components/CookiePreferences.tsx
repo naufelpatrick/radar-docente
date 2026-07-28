@@ -7,6 +7,7 @@ import {
   saveCookiePreference,
   type CookiePreference,
 } from '../services/cookieConsent'
+import { flushPendingEbookPurchase } from '../services/ebookConversion'
 
 export function CookiePreferences() {
   const [visible, setVisible] = useState(() => readCookiePreference() === null)
@@ -15,7 +16,10 @@ export function CookiePreferences() {
   const headingRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
-    if (readCookiePreference() === 'accepted') loadGoogleAnalytics()
+    if (readCookiePreference() === 'accepted') {
+      loadGoogleAnalytics()
+      flushPendingEbookPurchase()
+    }
     const open = () => {
       setAnalytics(readCookiePreference() === 'accepted')
       setCustomizing(true)
@@ -31,7 +35,10 @@ export function CookiePreferences() {
 
   const choose = (preference: CookiePreference) => {
     saveCookiePreference(preference)
-    if (preference === 'accepted') loadGoogleAnalytics()
+    if (preference === 'accepted') {
+      loadGoogleAnalytics()
+      flushPendingEbookPurchase()
+    }
     setVisible(false)
     setCustomizing(false)
   }
@@ -42,12 +49,12 @@ export function CookiePreferences() {
     <aside className="cookie-preferences" aria-labelledby="cookie-title" role="dialog" aria-modal="false">
       <div>
         <p className="cookie-preferences__label">PRIVACIDADE E MEDIÇÃO</p>
-        <h2 id="cookie-title" ref={headingRef} tabIndex={-1}>{customizing ? 'Preferências de cookies' : 'Você escolhe sobre o Analytics.'}</h2>
-        <p>Usamos armazenamento local necessário ao funcionamento do Radar e, somente com sua autorização, Google Analytics para compreender o uso do site. <Link to="/privacidade">Leia a Política de Privacidade</Link>.</p>
+        <h2 id="cookie-title" ref={headingRef} tabIndex={-1}>{customizing ? 'Preferências de cookies' : 'Você escolhe sobre a medição.'}</h2>
+        <p>Usamos armazenamento local necessário ao funcionamento do Radar e, somente com sua autorização, serviços do Google para compreender o uso do site e medir compras. <Link to="/privacidade">Leia a Política de Privacidade</Link>.</p>
         {customizing && (
           <div className="cookie-preferences__options">
             <label><input type="checkbox" checked disabled /><span><strong>Necessários</strong> Mantêm sua preferência e o progresso do Radar neste navegador.</span></label>
-            <label><input type="checkbox" checked={analytics} onChange={(event) => setAnalytics(event.target.checked)} /><span><strong>Analytics</strong> Ajuda a medir navegação e desempenho, sem enviar respostas, scores ou dados dos formulários.</span></label>
+            <label><input type="checkbox" checked={analytics} onChange={(event) => setAnalytics(event.target.checked)} /><span><strong>Medição</strong> Ajuda a medir navegação, desempenho e compras confirmadas, sem enviar respostas, scores, CPF ou dados dos formulários.</span></label>
           </div>
         )}
       </div>

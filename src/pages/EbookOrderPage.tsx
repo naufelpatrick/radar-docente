@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { Footer } from '../components/Footer'
 import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { Seo } from '../components/Seo'
+import { trackEbookPurchase } from '../services/ebookConversion'
 
 type OrderStatus = 'checking' | 'pending' | 'paid' | 'canceled' | 'expired' | 'failed' | 'invalid'
 
@@ -36,6 +37,10 @@ export function EbookOrderPage() {
   }, [pedido, query, token])
 
   const paid = status === 'paid'
+
+  useEffect(() => {
+    if (status === 'paid') trackEbookPurchase(pedido)
+  }, [pedido, status])
 
   function returnHomeAfterDownload() {
     window.setTimeout(() => window.location.assign('/'), 1200)

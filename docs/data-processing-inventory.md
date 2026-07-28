@@ -94,4 +94,5 @@ Canal de privacidade configurado: `praxia@radarpraxia.com`.
 - Dados: nome, e-mail, identificadores do pedido e checkout, status e data de pagamento.
 - Operadores: ASAAS (pagamento), Supabase (pedido e arquivo privado) e Vercel (API).
 - Acesso ao arquivo: URL assinada com validade de cinco minutos, emitida apenas para pedido confirmado.
+- Medição opcional: conversão enviada ao Google Ads após confirmação, com identificador técnico do pedido, valor e moeda; nunca CPF ou dados de pagamento.
 - Retenção: pendente de definição formal.

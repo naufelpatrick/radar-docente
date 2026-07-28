@@ -28,9 +28,9 @@ export const privacyConfig = {
       internationalProcessing: true,
     },
     {
-      name: 'Google Analytics',
-      purpose: 'Medição opcional de uso e desempenho do site',
-      data: 'Eventos de navegação e parâmetros comerciais não identificadores, somente após autorização',
+      name: 'Google Analytics e Google Ads',
+      purpose: 'Medição opcional de uso, desempenho e conversões de compra',
+      data: 'Eventos de navegação, identificador técnico do pedido e valor da compra, somente após autorização',
       privacyUrl: 'https://policies.google.com/privacy',
       internationalProcessing: true,
     },
