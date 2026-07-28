@@ -80,9 +80,12 @@ export function calculateScore(
   const max = Math.max(...dimensionScores.map(({ score }) => score))
   const min = Math.min(...dimensionScores.map(({ score }) => score))
   const amplitude = max - min
-  const developmentZones = getExtremes(dimensionScores, 'min')
-  const recommendationDimension = recommendationPriority.find((dimensionId) => developmentZones.includes(dimensionId))
-    ?? developmentZones[0]
+  const similarPerformance = amplitude < 5
+  const strengths = similarPerformance ? [] : getExtremes(dimensionScores, 'max')
+  const developmentZones = similarPerformance ? [] : getExtremes(dimensionScores, 'min')
+  const recommendationDimension = similarPerformance
+    ? recommendationPriority[0]
+    : recommendationPriority.find((dimensionId) => developmentZones.includes(dimensionId)) ?? developmentZones[0]
   const lowDimensions = dimensionScores.filter(({ score }) => score < 40)
   const ethicsIsLow = lowDimensions.some(({ dimensionId }) => dimensionId === 'ethics_safety_authorship')
   const attentionSignals = [
@@ -101,9 +104,9 @@ export function calculateScore(
     exactOverallScore,
     displayedOverallScore,
     band: { id: bandId, ...bandContent[bandId] },
-    strengths: getExtremes(dimensionScores, 'max'),
+    strengths,
     developmentZones,
-    similarPerformance: max - min < 5,
+    similarPerformance,
     amplitude,
     balanceProfile: getBalanceProfile(amplitude),
     attentionSignals,

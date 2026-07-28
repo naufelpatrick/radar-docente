@@ -19,6 +19,7 @@ O Radar oferece uma leitura orientativa baseada em autorrelato. O score não é 
 - progresso salvo localmente e revisão antes do envio;
 - cálculo determinístico do score geral e das seis dimensões;
 - Score PráxIA, radar hexagonal, forças, zonas de desenvolvimento, sinais de atenção e próximo passo;
+- exportação do resultado personalizado em PDF;
 - ofertas futuras de conteúdo e mentoria claramente marcadas como indisponíveis.
 
 ## Stack

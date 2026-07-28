@@ -22,7 +22,8 @@ O produto evita a lógica de prova ou ranking. A devolutiva é orientativa, cont
 2. Inicia o Radar gratuito.
 3. Responde a perguntas sobre situações reais da prática.
 4. Recebe score, radar de seis dimensões, leitura personalizada e próximo passo recomendado.
-5. Pode conhecer conteúdos ou mentoria individual alinhados ao resultado, quando estiverem disponíveis.
+5. Pode exportar a devolutiva em PDF para consulta pessoal.
+6. Pode conhecer conteúdos ou mentoria individual alinhados ao resultado, quando estiverem disponíveis.
 
 ## Dimensões
 
@@ -43,6 +44,8 @@ O resultado principal usa uma escala de 0 a 100, apresentada por um medidor semi
 - 80–100: Transformação.
 
 O radar hexagonal das seis dimensões aparece abaixo do score como explicação complementar da pontuação.
+
+A devolutiva também relaciona a combinação das dimensões a manifestações possíveis na docência, apresenta interpretações específicas por faixa dimensional e propõe um pequeno experimento com critérios, evidência observável, tempo de preparação e pergunta de reflexão.
 
 ## Escopo desta etapa
 

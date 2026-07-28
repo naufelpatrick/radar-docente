@@ -63,7 +63,16 @@ describe('scoringService', () => {
   })
 
   it('classifica perfil equilibrado', () => {
-    expect(calculateScore(answersWith(3), profile).balanceProfile).toBe('balanced')
+    const result = calculateScore(answersWith(3), profile)
+    expect(result.balanceProfile).toBe('balanced')
+    expect(result.strengths).toEqual([])
+    expect(result.developmentZones).toEqual([])
+    expect(result.recommendationDimension).toBe('ethics_safety_authorship')
+  })
+
+  it('não apresenta o mesmo conjunto como força e zona', () => {
+    const result = calculateScore(setDimension(answersWith(3), 'PC', 5), profile)
+    expect(result.strengths).not.toEqual(result.developmentZones)
   })
 
   it('classifica perfil heterogêneo', () => {
