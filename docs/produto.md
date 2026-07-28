@@ -47,17 +47,20 @@ O radar hexagonal das seis dimensões aparece abaixo do score como explicação 
 ## Escopo desta etapa
 
 - landing page responsiva;
-- rota `/radar` com estado “Radar em preparação”;
+- fluxo completo em `/radar`, com consentimento, perfil, 30 itens e revisão;
+- persistência local e retomada do progresso;
+- cálculo determinístico e resultado personalizado;
+- Score PráxIA e radar complementar das seis dimensões;
 - componentes e tokens reutilizáveis;
-- documentação inicial;
+- testes unitários das regras de pontuação;
 - base compatível com publicação futura na Vercel;
-- variável opcional preparada para GA4, sem ID de medição.
+- interface de repositório preparada para persistência futura.
 
 ## Fora do escopo desta etapa
 
-- questionário definitivo;
-- algoritmo de score;
 - autenticação;
+- armazenamento remoto;
+- analytics das respostas ou rastreamento individual;
 - pagamentos;
 - e-book;
 - agenda de mentoria;
