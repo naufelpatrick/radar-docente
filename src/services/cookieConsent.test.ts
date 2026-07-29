@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { analyticsAllowed, COOKIE_PREFERENCE_KEY, readCookiePreference, saveCookiePreference } from './cookieConsent'
+import { analyticsAllowed, COOKIE_PREFERENCE_KEY, loadGoogleAnalytics, readCookiePreference, saveCookiePreference } from './cookieConsent'
 
 describe('cookie preferences', () => {
   afterEach(() => vi.unstubAllGlobals())
@@ -20,5 +20,33 @@ describe('cookie preferences', () => {
   it('allows analytics only after explicit acceptance', () => {
     vi.stubGlobal('window', { localStorage: { getItem: () => 'accepted', setItem: vi.fn() } })
     expect(analyticsAllowed()).toBe(true)
+  })
+
+  it('initializes dataLayer and gtag even when the Google script already exists', () => {
+    const windowStub = {
+      localStorage: { getItem: () => 'accepted', setItem: vi.fn() },
+    } as unknown as Window
+    vi.stubGlobal('window', windowStub)
+    vi.stubGlobal('document', { querySelector: () => ({}) })
+
+    loadGoogleAnalytics()
+
+    expect(Array.isArray(windowStub.dataLayer)).toBe(true)
+    expect(typeof windowStub.gtag).toBe('function')
+    expect(windowStub.dataLayer).toEqual(expect.arrayContaining([
+      expect.arrayContaining(['config', 'G-9JR9Q9KSV6']),
+    ]))
+  })
+
+  it('does not initialize Google globals before analytics consent', () => {
+    const windowStub = {
+      localStorage: { getItem: () => 'essential_only', setItem: vi.fn() },
+    } as unknown as Window
+    vi.stubGlobal('window', windowStub)
+
+    loadGoogleAnalytics()
+
+    expect(windowStub.dataLayer).toBeUndefined()
+    expect(windowStub.gtag).toBeUndefined()
   })
 })

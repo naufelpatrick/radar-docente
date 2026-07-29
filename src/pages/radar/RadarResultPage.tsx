@@ -4,6 +4,7 @@ import { PolarAngleAxis, PolarGrid, Radar, RadarChart, ResponsiveContainer } fro
 import { DynamicScoreGauge } from '../../components/DynamicScoreGauge'
 import { PdfExportButton } from '../../components/PdfExportButton'
 import { ResultCommercialOffers } from '../../components/ResultCommercialOffers'
+import { RadarCompletionTracker } from '../../components/RadarCompletionTracker'
 import { dimensions, instrument } from '../../data/instrument'
 import { useRadarSession } from '../../context/radarSessionContextValue'
 import { buildResultNarrative } from '../../services/resultNarrativeService'
@@ -37,6 +38,7 @@ export function RadarResultPage() {
 
   return (
     <main className="result-page">
+      {!isLocalDemo && <RadarCompletionTracker completionId={session.startedAt} />}
       <section className="result-hero">
         <div className="result-hero__copy">
           <PdfExportButton result={result} narrative={narrative} />

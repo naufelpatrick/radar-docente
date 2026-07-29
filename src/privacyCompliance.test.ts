@@ -35,10 +35,10 @@ describe('privacy implementation contracts', () => {
   it('tracks Radar completion only after the Supabase submission succeeds', () => {
     const form = read('./components/RadarLeadForm.tsx')
     const submission = form.indexOf('await radarLeadService.submit')
-    const analytics = form.indexOf('trackRadarCompletion(completionId)')
+    const confirmation = form.indexOf('markRadarCompletionSaved(completionId)')
     expect(submission).toBeGreaterThan(-1)
-    expect(analytics).toBeGreaterThan(submission)
-    expect(read('./pages/radar/RadarResultPage.tsx')).not.toContain('trackRadarCompletion')
+    expect(confirmation).toBeGreaterThan(submission)
+    expect(read('./pages/radar/RadarResultPage.tsx')).toContain('RadarCompletionTracker')
   })
 
   it('does not load Google Analytics statically', () => {

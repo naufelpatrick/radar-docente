@@ -3,6 +3,7 @@
 interface Window {
   dataLayer?: unknown[]
   gtag?: (...args: unknown[]) => void
+  praxiaAnalyticsConfigured?: boolean
 }
 
 interface ImportMetaEnv {

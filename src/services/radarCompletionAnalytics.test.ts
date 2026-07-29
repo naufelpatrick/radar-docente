@@ -1,5 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { flushPendingRadarCompletion, trackRadarCompletion } from './radarCompletionAnalytics'
+import {
+  flushPendingRadarCompletion,
+  markRadarCompletionSaved,
+  trackRadarCompletion,
+  trackRadarCompletionAfterReport,
+} from './radarCompletionAnalytics'
 
 function createWindow(preference?: 'accepted' | 'essential_only') {
   const values = new Map<string, string>()
@@ -30,7 +35,6 @@ describe('conclusão do Radar no GA4', () => {
 
     trackRadarCompletion('session-2026-07-29')
 
-    expect(context.gtag).toHaveBeenCalledTimes(1)
     expect(context.gtag).toHaveBeenCalledWith('event', 'radar_complete', {
       source: 'radar_praxia',
     })
@@ -59,6 +63,29 @@ describe('conclusão do Radar no GA4', () => {
     flushPendingRadarCompletion()
     flushPendingRadarCompletion()
 
-    expect(context.gtag).toHaveBeenCalledTimes(1)
+    expect(context.gtag.mock.calls.filter(([command]) => command === 'event')).toHaveLength(1)
+  })
+
+  it('não mede uma visita direta ao resultado sem confirmação do Supabase', () => {
+    const context = createWindow('accepted')
+    vi.stubGlobal('window', context.window)
+    vi.stubGlobal('document', { querySelector: () => ({}) })
+
+    trackRadarCompletionAfterReport('session-direta')
+
+    expect(context.gtag).not.toHaveBeenCalled()
+  })
+
+  it('consome a confirmação após o relatório montar e não repete no reload', () => {
+    const context = createWindow('accepted')
+    vi.stubGlobal('window', context.window)
+    vi.stubGlobal('document', { querySelector: () => ({}) })
+
+    markRadarCompletionSaved('session-confirmada')
+    trackRadarCompletionAfterReport('session-confirmada')
+    trackRadarCompletionAfterReport('session-confirmada')
+
+    expect(context.gtag.mock.calls.filter(([command, event]) => command === 'event' && event === 'radar_complete')).toHaveLength(1)
+    expect(context.values.has('praxia:radar:confirmed-completion')).toBe(false)
   })
 })

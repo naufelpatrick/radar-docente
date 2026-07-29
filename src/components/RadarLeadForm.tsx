@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { CheckCircle2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { radarLeadService, validateRadarLead } from '../services/radarLeadService'
-import { trackRadarCompletion } from '../services/radarCompletionAnalytics'
+import { markRadarCompletionSaved } from '../services/radarCompletionAnalytics'
 import type { ScoreResult } from '../types/result'
 import type { RadarLead, RadarLeadErrors } from '../types/radarLead'
 
@@ -36,7 +36,7 @@ export function RadarLeadForm({ result, completionId, onSubmitted }: { result: S
     setStatus('submitting')
     try {
       await radarLeadService.submit({ lead, result })
-      trackRadarCompletion(completionId)
+      markRadarCompletionSaved(completionId)
       onSubmitted()
     } catch {
       setStatus('error')
