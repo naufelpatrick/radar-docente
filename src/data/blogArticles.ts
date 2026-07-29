@@ -26,6 +26,38 @@ export type BlogArticle = {
 
 export const blogArticles: BlogArticle[] = [
   {
+    slug: 'como-avaliar-atividades-produzidas-com-apoio-de-ia',
+    path: '/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia',
+    category: 'Avaliação',
+    categorySlug: 'avaliacao',
+    editorialLabel: 'EVIDÊNCIAS DE APRENDIZAGEM',
+    title: 'Como avaliar atividades produzidas com apoio de IA',
+    summary: 'Critérios e modelos práticos para avaliar processo, autoria, decisões e aprendizagem em trabalhos produzidos com apoio de inteligência artificial.',
+    seoTitle: 'Como avaliar atividades produzidas com apoio de IA | PráxIA',
+    metaDescription: 'Aprenda a avaliar processo, autoria, decisões e aprendizagem em trabalhos produzidos com apoio de inteligência artificial.',
+    readingTime: '11 min de leitura',
+    publishedAt: '2026-07-29T20:30:00-03:00',
+    modifiedAt: '2026-07-29',
+    publishedDate: '29 jul. 2026',
+    displayDate: '29 de julho de 2026',
+    canonicalUrl: 'https://www.radarpraxia.com/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia',
+    socialImage: 'https://www.radarpraxia.com/social/avaliar-atividades-com-ia-1200x630.jpg',
+    socialImageAlt: 'Professora observa as camadas de aprendizagem por trás de um trabalho produzido com apoio de inteligência artificial',
+    author: 'Patrick Naufel',
+    status: 'published',
+    coverImage: {
+      src: '/social/avaliar-atividades-com-ia-1200x630.webp',
+      alt: 'Professor avalia as etapas de aprendizagem por trás de um trabalho produzido com apoio de inteligência artificial',
+    },
+    faq: [
+      { question: 'Preciso pedir todos os prompts utilizados?', answer: 'Não. Solicite apenas registros relevantes para o objetivo. Em muitos casos, uma declaração, uma comparação entre versões e uma justificativa são suficientes.' },
+      { question: 'Posso descontar nota pelo uso de IA?', answer: 'Somente quando as regras foram definidas previamente e o uso contrariou critérios claros. A avaliação deve considerar a competência e a gravidade do ocorrido, não apenas a presença da ferramenta.' },
+      { question: 'Como avaliar um trabalho que parece ter sido gerado por IA?', answer: 'Converse com o estudante, solicite explicação, analise evidências de processo e aplique os critérios comunicados. Não baseie a decisão apenas em impressão ou detector automático.' },
+      { question: 'A defesa oral deve ser obrigatória em todos os trabalhos?', answer: 'Não. Pode ser utilizada em atividades específicas, por amostragem ou quando é relevante para a competência avaliada.' },
+      { question: 'É possível usar IA para ajudar na correção?', answer: 'Sim, como apoio preliminar para organizar observações ou comparar critérios, desde que o professor revise o resultado e permaneça responsável pela avaliação final.' },
+    ],
+  },
+  {
     slug: 'o-que-sao-competencias-docentes-para-uso-de-ia',
     path: '/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia',
     category: 'Competências Docentes',

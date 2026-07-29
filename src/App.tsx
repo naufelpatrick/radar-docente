@@ -30,6 +30,9 @@ const AuthorshipWithAiArticlePage = lazy(() =>
 const TeacherAiCompetenciesArticlePage = lazy(() =>
   import('./pages/articles/TeacherAiCompetenciesArticlePage').then((module) => ({ default: module.TeacherAiCompetenciesArticlePage })),
 )
+const AssessingAiSupportedWorkArticlePage = lazy(() =>
+  import('./pages/articles/AssessingAiSupportedWorkArticlePage').then((module) => ({ default: module.AssessingAiSupportedWorkArticlePage })),
+)
 const BlogCategoryPage = lazy(() =>
   import('./pages/BlogCategoryPage').then((module) => ({ default: module.BlogCategoryPage })),
 )
@@ -81,6 +84,7 @@ export default function App() {
           <Route path="/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem" element={<TechnologyToLearningArticlePage />} />
           <Route path="/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia" element={<AuthorshipWithAiArticlePage />} />
           <Route path="/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia" element={<TeacherAiCompetenciesArticlePage />} />
+          <Route path="/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia" element={<AssessingAiSupportedWorkArticlePage />} />
           <Route path="/blog/categoria/:slug" element={<BlogCategoryPage />} />
           <Route path="/guias" element={<GuidesPage />} />
           <Route path="/competencias" element={<CompetenciesPage />} />

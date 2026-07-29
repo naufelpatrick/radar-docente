@@ -37,4 +37,14 @@ describe('fonte editorial do blog', () => {
     expect(article?.faq).toHaveLength(5)
     expect(article?.coverImage?.alt).toContain('Professor')
   })
+
+  it('publica o artigo de avaliação com imagem e FAQ próprias', () => {
+    const article = blogArticles.find((item) => item.slug === 'como-avaliar-atividades-produzidas-com-apoio-de-ia')
+
+    expect(article?.status).toBe('published')
+    expect(article?.categorySlug).toBe('avaliacao')
+    expect(article?.faq).toHaveLength(5)
+    expect(article?.socialImage).toContain('avaliar-atividades-com-ia-1200x630.jpg')
+    expect(article?.coverImage?.src).toContain('avaliar-atividades-com-ia-1200x630.webp')
+  })
 })
