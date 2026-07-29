@@ -4,10 +4,7 @@ import { ButtonLink } from '../components/ButtonLink'
 import { Footer } from '../components/Footer'
 import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { Seo } from '../components/Seo'
-
-const articlePath = '/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta'
-const planningArticlePath = '/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem'
-const ethicsArticlePath = '/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia'
+import { getPublishedArticlesByCategory } from '../data/blogArticles'
 
 const categories = {
   'ia-para-professores': {
@@ -15,46 +12,27 @@ const categories = {
     eyebrow: 'COMPREENDER ANTES DE APLICAR',
     description: 'Conceitos, critérios e situações práticas para utilizar inteligência artificial com intenção pedagógica, transparência e supervisão humana.',
     questions: ['Quando a IA amplia a aprendizagem?', 'Que decisões permanecem com professor e estudantes?', 'Como preservar dados, autoria e possibilidade de revisão?'],
-    articles: [{
-      title: 'Usar IA com estudantes começa antes da ferramenta',
-      description: 'Um roteiro para definir objetivo, dados, transparência, autoria e revisão antes de escolher uma ferramenta.',
-      path: articlePath,
-      readingTime: '7 min de leitura',
-      date: '28 jul. 2026',
-    }],
   },
   'competencias-docentes': {
-    name: 'Competências Docentes', eyebrow: 'DESENVOLVIMENTO PROFISSIONAL', description: 'Leituras sobre fluência digital, repertório pedagógico e desenvolvimento das competências observadas pelo Radar Docente.', questions: ['Como reconhecer competências na prática?', 'O que diferencia uso pontual e integração?', 'Como acompanhar a própria trajetória?'], articles: [],
+    name: 'Competências Docentes', eyebrow: 'DESENVOLVIMENTO PROFISSIONAL', description: 'Leituras sobre fluência digital, repertório pedagógico e desenvolvimento das competências observadas pelo Radar Docente.', questions: ['Como reconhecer competências na prática?', 'O que diferencia uso pontual e integração?', 'Como acompanhar a própria trajetória?'],
   },
   ferramentas: {
-    name: 'Ferramentas', eyebrow: 'PROPÓSITO ANTES DA NOVIDADE', description: 'Análises de recursos digitais e de IA orientadas por objetivo pedagógico, contexto, dados e condições de uso.', questions: ['Que problema a ferramenta ajuda a resolver?', 'Que complexidade ela acrescenta?', 'Quais dados e termos precisam ser verificados?'], articles: [],
+    name: 'Ferramentas', eyebrow: 'PROPÓSITO ANTES DA NOVIDADE', description: 'Análises de recursos digitais e de IA orientadas por objetivo pedagógico, contexto, dados e condições de uso.', questions: ['Que problema a ferramenta ajuda a resolver?', 'Que complexidade ela acrescenta?', 'Quais dados e termos precisam ser verificados?'],
   },
   planejamento: {
-    name: 'Planejamento', eyebrow: 'INTENÇÃO E CURADORIA', description: 'Critérios para selecionar recursos, organizar percursos e conectar escolhas digitais aos objetivos de aprendizagem.', questions: ['Qual é o objetivo de aprendizagem?', 'Que evidência será observada?', 'A tecnologia amplia ou apenas substitui o suporte?'], articles: [{
-      title: 'Da possibilidade tecnológica ao objetivo de aprendizagem',
-      description: 'Um caminho para transformar possibilidades da IA em atividades coerentes com objetivos, evidências e decisões de aprendizagem.',
-      path: planningArticlePath,
-      readingTime: '9 min de leitura',
-      date: '28 jul. 2026',
-    }],
+    name: 'Planejamento', eyebrow: 'INTENÇÃO E CURADORIA', description: 'Critérios para selecionar recursos, organizar percursos e conectar escolhas digitais aos objetivos de aprendizagem.', questions: ['Qual é o objetivo de aprendizagem?', 'Que evidência será observada?', 'A tecnologia amplia ou apenas substitui o suporte?'],
   },
   avaliacao: {
-    name: 'Avaliação', eyebrow: 'EVIDÊNCIAS E FEEDBACK', description: 'Caminhos para acompanhar processos, oferecer devolutivas e preservar autoria em experiências digitais e com IA.', questions: ['Que evidências mostram aprendizagem?', 'Como tornar critérios visíveis?', 'Onde a revisão humana é indispensável?'], articles: [],
+    name: 'Avaliação', eyebrow: 'EVIDÊNCIAS E FEEDBACK', description: 'Caminhos para acompanhar processos, oferecer devolutivas e preservar autoria em experiências digitais e com IA.', questions: ['Que evidências mostram aprendizagem?', 'Como tornar critérios visíveis?', 'Onde a revisão humana é indispensável?'],
   },
   etica: {
-    name: 'Ética', eyebrow: 'CUIDADO E RESPONSABILIDADE', description: 'Privacidade, vieses, transparência, segurança, autoria e responsabilidade nas decisões educacionais com tecnologia.', questions: ['Quais dados estão envolvidos?', 'Como comunicar o uso de IA?', 'Quem pode revisar ou contestar o resultado?'], articles: [{
-      title: 'Como conversar sobre autoria em atividades com IA',
-      description: 'Critérios e modelos práticos para orientar transparência, contribuição humana e responsabilidade em trabalhos com apoio de IA.',
-      path: ethicsArticlePath,
-      readingTime: '10 min de leitura',
-      date: '28 jul. 2026',
-    }],
+    name: 'Ética', eyebrow: 'CUIDADO E RESPONSABILIDADE', description: 'Privacidade, vieses, transparência, segurança, autoria e responsabilidade nas decisões educacionais com tecnologia.', questions: ['Quais dados estão envolvidos?', 'Como comunicar o uso de IA?', 'Quem pode revisar ou contestar o resultado?'],
   },
   pesquisa: {
-    name: 'Pesquisa', eyebrow: 'EVIDÊNCIA COM CONTEXTO', description: 'Sínteses acessíveis de documentos, estudos e debates que ajudam professores a interpretar mudanças sem generalizações.', questions: ['O que a fonte realmente permite afirmar?', 'Em que contexto o estudo foi realizado?', 'Como traduzir evidência em pergunta para a prática?'], articles: [],
+    name: 'Pesquisa', eyebrow: 'EVIDÊNCIA COM CONTEXTO', description: 'Sínteses acessíveis de documentos, estudos e debates que ajudam professores a interpretar mudanças sem generalizações.', questions: ['O que a fonte realmente permite afirmar?', 'Em que contexto o estudo foi realizado?', 'Como traduzir evidência em pergunta para a prática?'],
   },
   'estudos-de-caso': {
-    name: 'Estudos de Caso', eyebrow: 'DECISÕES EM CONTEXTO', description: 'Experiências analisadas a partir de objetivos, escolhas, evidências, limites e ajustes — sem transformar caso em receita.', questions: ['Que decisão foi tomada e por quê?', 'Que evidência orientou o ajuste?', 'O que depende daquele contexto específico?'], articles: [],
+    name: 'Estudos de Caso', eyebrow: 'DECISÕES EM CONTEXTO', description: 'Experiências analisadas a partir de objetivos, escolhas, evidências, limites e ajustes — sem transformar caso em receita.', questions: ['Que decisão foi tomada e por quê?', 'Que evidência orientou o ajuste?', 'O que depende daquele contexto específico?'],
   },
 } as const
 
@@ -64,6 +42,7 @@ export function BlogCategoryPage() {
   const { slug } = useParams()
   if (!slug || !(slug in categories)) return <Navigate to="/blog" replace />
   const category = categories[slug as CategorySlug]
+  const articles = getPublishedArticlesByCategory(slug)
   const canonicalPath = `/blog/categoria/${slug}`
   const schema = {
     '@context': 'https://schema.org',
@@ -102,13 +81,13 @@ export function BlogCategoryPage() {
         <section className="category-content" aria-labelledby="category-content-title">
           <div className="shell">
             <div className="method-heading"><div><p className="method-kicker">CONTEÚDOS</p><h2 id="category-content-title">Leituras em {category.name}.</h2></div><p>Artigos integrais, com autoria, referências, tempo de leitura e continuidade para a prática.</p></div>
-            {category.articles.length > 0 ? (
+            {articles.length > 0 ? (
               <div className="category-articles">
-                {category.articles.map((article) => (
+                {articles.map((article) => (
                   <article key={article.path}>
-                    <div><span>{category.name}</span><small>{article.date} · {article.readingTime}</small></div>
+                    <div><span>{category.name}</span><small>{article.publishedDate} · {article.readingTime}</small></div>
                     <h3><Link to={article.path}>{article.title}</Link></h3>
-                    <p>{article.description}</p>
+                    <p>{article.summary}</p>
                     <Link to={article.path}>Ler artigo <ArrowRight aria-hidden="true" /></Link>
                   </article>
                 ))}

@@ -16,6 +16,7 @@ import { ScorePraxia } from '../components/ScorePraxia'
 import { SiteHeader } from '../components/SiteHeader'
 import { Seo } from '../components/Seo'
 import { CommercialSolutions } from '../components/CommercialSolutions'
+import { RecentArticles } from '../components/RecentArticles'
 import { TeamProfiles } from '../components/TeamProfiles'
 import { team } from '../data/team'
 import { useScrollMotion } from '../hooks/useScrollMotion'
@@ -247,6 +248,8 @@ export function LandingPage() {
             </div>
           </div>
         </section>
+
+        <RecentArticles />
 
         <CommercialSolutions />
 

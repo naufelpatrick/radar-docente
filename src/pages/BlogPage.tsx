@@ -21,6 +21,7 @@ import { FaqSection } from '../components/FaqSection'
 import { Footer } from '../components/Footer'
 import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { Seo } from '../components/Seo'
+import { getPublishedBlogArticles } from '../data/blogArticles'
 import { useScrollMotion } from '../hooks/useScrollMotion'
 
 const categories = [
@@ -74,29 +75,13 @@ const categories = [
   },
 ]
 
-const editorialTracks = [
-  {
-    label: 'PRIMEIROS PASSOS',
-    title: 'Usar IA com estudantes começa antes da ferramenta',
-    summary: 'Um percurso para definir objetivo, dados envolvidos, transparência e forma de revisão antes de escolher uma solução.',
-    category: 'IA para Professores',
-    time: 'Leitura estimada: 7 min',
-  },
-  {
-    label: 'PLANEJAMENTO',
-    title: 'Da possibilidade tecnológica ao objetivo de aprendizagem',
-    summary: 'Perguntas para decidir quando um recurso amplia a experiência — e quando apenas adiciona complexidade.',
-    category: 'Planejamento',
-    time: 'Leitura estimada: 9 min',
-  },
-  {
-    label: 'ÉTICA E AUTORIA',
-    title: 'Como conversar sobre autoria em atividades com IA',
-    summary: 'Critérios para tornar participação, revisão, citação e responsabilidade visíveis para os estudantes.',
-    category: 'Ética',
-    time: 'Leitura estimada: 8 min',
-  },
-]
+const publishedArticles = getPublishedBlogArticles()
+
+function getCategoryStatus(categorySlug: string) {
+  const count = publishedArticles.filter((article) => article.categorySlug === categorySlug).length
+  if (count === 0) return 'Conteúdos em preparação'
+  return `${count} ${count === 1 ? 'artigo publicado' : 'artigos publicados'}`
+}
 
 const blogFaq = [
   {
@@ -217,7 +202,7 @@ export function BlogPage() {
                   <div><Icon aria-hidden="true" /><span>0{index + 1}</span></div>
                   <h3><Link to={`/blog/categoria/${slug}`}>{name}</Link></h3>
                   <p>{description}</p>
-                  <Link className="blog-category-status" to={`/blog/categoria/${slug}`}>{['ia-para-professores', 'planejamento', 'etica'].includes(slug) ? '1 artigo publicado' : 'Conteúdos em preparação'} <ArrowRight aria-hidden="true" /></Link>
+                  <Link className="blog-category-status" to={`/blog/categoria/${slug}`}>{getCategoryStatus(slug)} <ArrowRight aria-hidden="true" /></Link>
                 </article>
               ))}
             </div>
@@ -231,15 +216,13 @@ export function BlogPage() {
               <p>Os temas abaixo mostram a direção editorial. Eles só receberão data, autoria e URL quando o conteúdo integral estiver publicado.</p>
             </div>
             <div className="blog-roadmap__grid">
-              {editorialTracks.map((track, index) => (
-                <article key={track.title} data-reveal="up">
-                  <div><span>{track.label}</span><small>0{index + 1}</small></div>
-                  <h3>{track.title}</h3>
-                  <p>{track.summary}</p>
-                  {index === 0 && <Link className="blog-roadmap__link" to="/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta">Ler artigo <ArrowRight aria-hidden="true" /></Link>}
-                  {index === 1 && <Link className="blog-roadmap__link" to="/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem">Ler artigo <ArrowRight aria-hidden="true" /></Link>}
-                  {index === 2 && <Link className="blog-roadmap__link" to="/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia">Ler artigo <ArrowRight aria-hidden="true" /></Link>}
-                  <footer><span>{track.category}</span><span>{track.time}</span></footer>
+              {publishedArticles.map((article, index) => (
+                <article key={article.path} data-reveal="up">
+                  <div><span>{article.editorialLabel}</span><small>0{index + 1}</small></div>
+                  <h3>{article.title}</h3>
+                  <p>{article.summary}</p>
+                  <Link className="blog-roadmap__link" to={article.path}>Ler artigo <ArrowRight aria-hidden="true" /></Link>
+                  <footer><span>{article.category}</span><span>Leitura estimada: {article.readingTime.replace(' de leitura', '')}</span></footer>
                 </article>
               ))}
             </div>
