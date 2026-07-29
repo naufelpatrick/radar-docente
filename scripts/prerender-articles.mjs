@@ -70,7 +70,7 @@ function renderArticleHtml(article) {
     `<meta property="og:url" content="${escapeHtml(article.canonicalUrl)}" />`,
     `<meta property="og:image" content="${escapeHtml(article.socialImage)}" />`,
     `<meta property="og:image:secure_url" content="${escapeHtml(article.socialImage)}" />`,
-    '<meta property="og:image:type" content="image/webp" />',
+    '<meta property="og:image:type" content="image/jpeg" />',
     '<meta property="og:image:width" content="1200" />',
     '<meta property="og:image:height" content="630" />',
     `<meta property="og:image:alt" content="${escapeHtml(article.socialImageAlt)}" />`,

@@ -42,7 +42,8 @@ export function Seo({ title, socialTitle = title, description, path, type = 'web
     setMeta('meta[property="og:locale"]', { property: 'og:locale', content: 'pt_BR' })
     setMeta('meta[property="og:image"]', { property: 'og:image', content: image })
     setMeta('meta[property="og:image:secure_url"]', { property: 'og:image:secure_url', content: image })
-    setMeta('meta[property="og:image:type"]', { property: 'og:image:type', content: image.endsWith('.webp') ? 'image/webp' : 'image/png' })
+    const imageType = image.endsWith('.webp') ? 'image/webp' : image.endsWith('.jpg') || image.endsWith('.jpeg') ? 'image/jpeg' : 'image/png'
+    setMeta('meta[property="og:image:type"]', { property: 'og:image:type', content: imageType })
     setMeta('meta[property="og:image:width"]', { property: 'og:image:width', content: '1200' })
     setMeta('meta[property="og:image:height"]', { property: 'og:image:height', content: '630' })
     setMeta('meta[property="og:image:alt"]', { property: 'og:image:alt', content: imageAlt })
