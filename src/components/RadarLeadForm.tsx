@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { CheckCircle2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { radarLeadService, validateRadarLead } from '../services/radarLeadService'
+import { trackRadarCompletion } from '../services/radarCompletionAnalytics'
 import type { ScoreResult } from '../types/result'
 import type { RadarLead, RadarLeadErrors } from '../types/radarLead'
 
@@ -13,7 +14,7 @@ const emptyLead: RadarLead = {
   marketingConsent: false,
 }
 
-export function RadarLeadForm({ result, onSubmitted }: { result: ScoreResult; onSubmitted: () => void }) {
+export function RadarLeadForm({ result, completionId, onSubmitted }: { result: ScoreResult; completionId: string; onSubmitted: () => void }) {
   const [lead, setLead] = useState(emptyLead)
   const [errors, setErrors] = useState<RadarLeadErrors>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle')
@@ -35,6 +36,7 @@ export function RadarLeadForm({ result, onSubmitted }: { result: ScoreResult; on
     setStatus('submitting')
     try {
       await radarLeadService.submit({ lead, result })
+      trackRadarCompletion(completionId)
       onSubmitted()
     } catch {
       setStatus('error')

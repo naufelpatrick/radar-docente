@@ -8,6 +8,7 @@ import {
   type CookiePreference,
 } from '../services/cookieConsent'
 import { flushPendingEbookPurchase } from '../services/ebookConversion'
+import { flushPendingRadarCompletion } from '../services/radarCompletionAnalytics'
 
 export function CookiePreferences() {
   const [visible, setVisible] = useState(() => readCookiePreference() === null)
@@ -19,6 +20,7 @@ export function CookiePreferences() {
     if (readCookiePreference() === 'accepted') {
       loadGoogleAnalytics()
       flushPendingEbookPurchase()
+      flushPendingRadarCompletion()
     }
     const open = () => {
       setAnalytics(readCookiePreference() === 'accepted')
@@ -38,6 +40,7 @@ export function CookiePreferences() {
     if (preference === 'accepted') {
       loadGoogleAnalytics()
       flushPendingEbookPurchase()
+      flushPendingRadarCompletion()
     }
     setVisible(false)
     setCustomizing(false)
@@ -50,11 +53,11 @@ export function CookiePreferences() {
       <div>
         <p className="cookie-preferences__label">PRIVACIDADE E MEDIÇÃO</p>
         <h2 id="cookie-title" ref={headingRef} tabIndex={-1}>{customizing ? 'Preferências de cookies' : 'Você escolhe sobre a medição.'}</h2>
-        <p>Usamos armazenamento local necessário ao funcionamento do Radar e, somente com sua autorização, serviços do Google para compreender o uso do site e medir compras. <Link to="/privacidade">Leia a Política de Privacidade</Link>.</p>
+        <p>Usamos armazenamento local necessário ao funcionamento do Radar e, somente com sua autorização, serviços do Google para compreender o uso do site, medir conclusões e compras. <Link to="/privacidade">Leia a Política de Privacidade</Link>.</p>
         {customizing && (
           <div className="cookie-preferences__options">
             <label><input type="checkbox" checked disabled /><span><strong>Necessários</strong> Mantêm sua preferência e o progresso do Radar neste navegador.</span></label>
-            <label><input type="checkbox" checked={analytics} onChange={(event) => setAnalytics(event.target.checked)} /><span><strong>Medição</strong> Ajuda a medir navegação, desempenho e compras confirmadas, sem enviar respostas, scores, CPF ou dados dos formulários.</span></label>
+            <label><input type="checkbox" checked={analytics} onChange={(event) => setAnalytics(event.target.checked)} /><span><strong>Medição</strong> Ajuda a medir navegação, conclusões do Radar e compras confirmadas, sem enviar respostas, scores, CPF ou dados dos formulários.</span></label>
           </div>
         )}
       </div>

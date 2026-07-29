@@ -38,7 +38,7 @@ export function RadarReviewPage() {
           })}
         </div>
         <div className="flow-actions"><Link className="flow-back" to="/radar/questoes/30"><ArrowLeft aria-hidden="true" /> Voltar</Link></div>
-        {result && <RadarLeadForm result={result} onSubmitted={() => navigate('/radar/resultado')} />}
+        {result && <RadarLeadForm result={result} completionId={session.startedAt} onSubmitted={() => navigate('/radar/resultado')} />}
       </div>
     </main>
   )
