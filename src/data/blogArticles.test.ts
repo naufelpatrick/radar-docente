@@ -19,6 +19,7 @@ describe('fonte editorial do blog', () => {
   it('mantém rotas únicas e permite selecionar artigos por categoria', () => {
     expect(new Set(blogArticles.map((article) => article.path)).size).toBe(blogArticles.length)
     expect(getPublishedArticlesByCategory('etica').every((article) => article.categorySlug === 'etica')).toBe(true)
+    expect(getPublishedArticlesByCategory('competencias-docentes')).toHaveLength(1)
   })
 
   it('mantém SEO e imagens sociais exclusivos para cada artigo publicado', () => {
@@ -28,5 +29,12 @@ describe('fonte editorial do blog', () => {
     expect(new Set(articles.map((article) => article.socialImage)).size).toBe(articles.length)
     expect(articles.every((article) => article.socialImage.startsWith('https://www.radarpraxia.com/social/'))).toBe(true)
     expect(articles.every((article) => article.seoTitle.endsWith('| PráxIA'))).toBe(true)
+  })
+
+  it('mantém FAQ e capa acessível no artigo de competências docentes', () => {
+    const article = blogArticles.find((item) => item.slug === 'o-que-sao-competencias-docentes-para-uso-de-ia')
+
+    expect(article?.faq).toHaveLength(5)
+    expect(article?.coverImage?.alt).toContain('Professor')
   })
 })

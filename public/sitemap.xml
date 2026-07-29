@@ -55,6 +55,11 @@
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.radarpraxia.com/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url><loc>https://radar-docente-pi.vercel.app/blog/categoria/ia-para-professores</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://radar-docente-pi.vercel.app/blog/categoria/competencias-docentes</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://radar-docente-pi.vercel.app/blog/categoria/ferramentas</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>

@@ -1,5 +1,6 @@
 import { BrandMark } from './BrandMark'
 import { Link } from 'react-router-dom'
+import { Facebook, Instagram } from 'lucide-react'
 import { openCookiePreferences } from '../services/cookieConsent'
 
 export function Footer() {
@@ -10,6 +11,16 @@ export function Footer() {
           <div className="footer__brand">
             <BrandMark inverse />
             <p>Transforme fluência em prática docente.</p>
+            <nav className="footer__social" aria-label="Redes sociais da PráxIA">
+              <a href="https://www.instagram.com/radarpraxia/" target="_blank" rel="noopener noreferrer" aria-label="Acompanhar a PráxIA no Instagram">
+                <Instagram aria-hidden="true" />
+                <span>Instagram</span>
+              </a>
+              <a href="https://www.facebook.com/radarpraxia" target="_blank" rel="noopener noreferrer" aria-label="Acompanhar a PráxIA no Facebook">
+                <Facebook aria-hidden="true" />
+                <span>Facebook</span>
+              </a>
+            </nav>
           </div>
           <nav className="footer__navigation" aria-label="Navegação do rodapé">
             <div>

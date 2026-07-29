@@ -9,6 +9,9 @@ describe('privacy implementation contracts', () => {
     const footer = read('./components/Footer.tsx')
     expect(footer).toContain('Política de Privacidade')
     expect(footer).toContain('Preferências de cookies')
+    expect(footer).toContain('https://www.instagram.com/radarpraxia/')
+    expect(footer).toContain('https://www.facebook.com/radarpraxia')
+    expect(footer.match(/rel="noopener noreferrer"/g)).toHaveLength(2)
   })
 
   it('shows a contextual privacy notice in every lead form', () => {

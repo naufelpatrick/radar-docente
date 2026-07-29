@@ -21,9 +21,42 @@ export type BlogArticle = {
   author: string
   status: BlogArticleStatus
   coverImage?: { src: string; alt: string }
+  faq?: Array<{ question: string; answer: string }>
 }
 
 export const blogArticles: BlogArticle[] = [
+  {
+    slug: 'o-que-sao-competencias-docentes-para-uso-de-ia',
+    path: '/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia',
+    category: 'Competências Docentes',
+    categorySlug: 'competencias-docentes',
+    editorialLabel: 'DESENVOLVIMENTO PROFISSIONAL',
+    title: 'O que são competências docentes para uso de IA',
+    summary: 'Capacidades que ajudam professores a integrar inteligência artificial com intenção pedagógica, senso crítico, ética, segurança e responsabilidade.',
+    seoTitle: 'Competências docentes para uso de IA: o que desenvolver | PráxIA',
+    metaDescription: 'Entenda quais competências professores precisam desenvolver para usar inteligência artificial com intenção pedagógica, senso crítico, ética e segurança.',
+    readingTime: '10 min de leitura',
+    publishedAt: '2026-07-29',
+    modifiedAt: '2026-07-29',
+    publishedDate: '29 jul. 2026',
+    displayDate: '29 de julho de 2026',
+    canonicalUrl: 'https://www.radarpraxia.com/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia',
+    socialImage: 'https://www.radarpraxia.com/social/competencias-docentes-uso-ia-1200x630.jpg',
+    socialImageAlt: 'Professor no centro de um sistema de competências conectadas para o uso pedagógico e responsável da inteligência artificial',
+    author: 'Patrick Naufel',
+    status: 'published',
+    coverImage: {
+      src: '/social/competencias-docentes-uso-ia-1200x630.webp',
+      alt: 'Professor desenvolve diferentes competências para utilizar inteligência artificial de forma pedagógica e responsável',
+    },
+    faq: [
+      { question: 'Preciso saber programação para desenvolver competências em IA?', answer: 'Não. É necessário compreender conceitos básicos, limites e critérios de uso, mas muitas competências são pedagógicas, éticas e avaliativas.' },
+      { question: 'Criar bons prompts é a principal competência?', answer: 'Não. Formular instruções é uma habilidade importante, mas não substitui planejamento, verificação, proteção de dados, autoria e avaliação.' },
+      { question: 'Professores que usam poucas ferramentas possuem baixa maturidade?', answer: 'Não necessariamente. Maturidade está relacionada à qualidade das decisões, e não à quantidade de ferramentas utilizadas.' },
+      { question: 'Como avaliar minhas competências em IA?', answer: 'Utilize um diagnóstico multidimensional que observe comportamentos e decisões concretas em áreas como planejamento, avaliação crítica, ética, segurança e desenvolvimento profissional.' },
+      { question: 'A formação deve ser igual para todos?', answer: 'Não. Professores possuem contextos e experiências diferentes. A formação deve considerar o diagnóstico e oferecer trajetórias progressivas.' },
+    ],
+  },
   {
     slug: 'usar-ia-com-estudantes-comeca-antes-da-ferramenta',
     path: '/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta',

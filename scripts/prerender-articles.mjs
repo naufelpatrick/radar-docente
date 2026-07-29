@@ -53,6 +53,22 @@ function createBlogPosting(article) {
   }
 }
 
+function createStructuredData(article) {
+  const graph = [createBlogPosting(article)]
+  if (article.faq?.length) {
+    graph.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: article.faq.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    })
+  }
+  return graph.length === 1 ? graph[0] : graph
+}
+
 function renderArticleHtml(article) {
   const cleanedHtml = baseHtml
     .split('\n')
@@ -79,7 +95,7 @@ function renderArticleHtml(article) {
     `<meta name="twitter:description" content="${escapeHtml(article.metaDescription)}" />`,
     `<meta name="twitter:image" content="${escapeHtml(article.socialImage)}" />`,
     `<meta name="twitter:image:alt" content="${escapeHtml(article.socialImageAlt)}" />`,
-    `<script id="page-json-ld" type="application/ld+json">${JSON.stringify(createBlogPosting(article)).replaceAll('<', '\\u003c')}</script>`,
+    `<script id="page-json-ld" type="application/ld+json">${JSON.stringify(createStructuredData(article)).replaceAll('<', '\\u003c')}</script>`,
   ].map((tag) => `    ${tag}`).join('\n')
 
   return cleanedHtml.replace('  </head>', `${tags}\n  </head>`)
