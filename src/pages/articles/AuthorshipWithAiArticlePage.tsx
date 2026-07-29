@@ -1,14 +1,15 @@
 import { ArrowRight, CheckCircle2, ExternalLink, MessageSquareText, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ArticleLayout } from '../../components/ArticleLayout'
+import { ArticleShare } from '../../components/ArticleShare'
 import { AuthorshipTrafficLight, DeclarationCopyCards } from '../../components/AuthorshipTools'
 import { ButtonLink } from '../../components/ButtonLink'
 import { FaqSection } from '../../components/FaqSection'
 import { Seo } from '../../components/Seo'
+import { getBlogArticleBySlug } from '../../data/blogArticles'
+import { createBlogPostingSchema } from '../../services/articleSeo'
 
-const path = '/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia'
-const title = 'Como conversar sobre autoria em atividades com IA'
-const description = 'Veja como discutir autoria, transparência, contribuição humana e responsabilidade em atividades produzidas com apoio de inteligência artificial.'
+const article = getBlogArticleBySlug('como-conversar-sobre-autoria-em-atividades-com-ia')
 const article2Path = '/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem'
 const toc = [
   { id: 'autoria', label: 'Autoria além da produção manual' },
@@ -34,12 +35,12 @@ const articleFaq = [
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'Article', headline: title, description, datePublished: '2026-07-28', dateModified: '2026-07-28', inLanguage: 'pt-BR', mainEntityOfPage: `https://radar-docente-pi.vercel.app${path}`, articleSection: 'Ética', keywords: ['autoria e inteligência artificial na educação', 'uso ético de IA por estudantes', 'transparência no uso de IA', 'declaração de uso de IA'], author: { '@type': 'Person', name: 'Patrick Naufel', url: 'http://lattes.cnpq.br/0026328778886854' }, publisher: { '@type': 'Organization', name: 'PráxIA', url: 'https://radar-docente-pi.vercel.app/' } },
+    { ...createBlogPostingSchema(article), keywords: ['autoria e inteligência artificial na educação', 'uso ético de IA por estudantes', 'transparência no uso de IA', 'declaração de uso de IA'] },
     { '@type': 'BreadcrumbList', itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://radar-docente-pi.vercel.app/blog' },
-      { '@type': 'ListItem', position: 3, name: 'Ética', item: 'https://radar-docente-pi.vercel.app/blog/categoria/etica' },
-      { '@type': 'ListItem', position: 4, name: title, item: `https://radar-docente-pi.vercel.app${path}` },
+      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.radarpraxia.com/blog' },
+      { '@type': 'ListItem', position: 3, name: 'Ética', item: 'https://www.radarpraxia.com/blog/categoria/etica' },
+      { '@type': 'ListItem', position: 4, name: article.title, item: article.canonicalUrl },
     ] },
     { '@type': 'FAQPage', mainEntity: articleFaq.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })) },
   ],
@@ -48,8 +49,8 @@ const schema = {
 export function AuthorshipWithAiArticlePage() {
   return (
     <>
-      <Seo title="Autoria e IA na educação: como orientar estudantes | PráxIA" description={description} path={path} type="article" jsonLd={schema} />
-      <ArticleLayout category="ÉTICA" categoryPath="/blog/categoria/etica" title={title} description={description} date="28 de julho de 2026" readingTime="10 min de leitura" author="Patrick Naufel" toc={toc}>
+      <Seo title={article.seoTitle} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
+      <ArticleLayout article={article} categoryPath="/blog/categoria/etica" toc={toc}>
         <p className="article-lead">A discussão sobre autoria em atividades com IA não pode ser reduzida a “usou ou não usou”. O ponto central é reconhecer quais decisões pertencem ao estudante, como a ferramenta contribuiu e de que modo o processo pode ser apresentado com transparência.</p>
         <p>Dois estudantes podem utilizar IA e realizar processos profundamente diferentes. Autoria envolve intenção, julgamento, seleção, transformação, verificação e capacidade de responder pelo trabalho entregue.</p>
         <div className="authorship-layers" role="img" aria-label="Camadas de autoria humana e contribuição da inteligência artificial em uma atividade educacional">{['Ideia própria','Consulta à IA','Seleção','Verificação','Transformação','Versão final'].map((label, index) => <span key={label} style={{ '--layer': index } as React.CSSProperties}>{label}</span>)}</div>
@@ -78,6 +79,7 @@ export function AuthorshipWithAiArticlePage() {
 
         <section id="referencias"><h2>Referências de base</h2><ul className="article-references"><li><a href="https://arxiv.org/abs/2305.07605" target="_blank" rel="noreferrer">Tzirides et al. — Generative AI: Implications and Applications for Education <ExternalLink aria-hidden="true" /></a><span>Discussão de 2023 sobre limites e aplicações educacionais da IA generativa, incluindo revisão e avaliação.</span></li><li><a href="https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research" target="_blank" rel="noreferrer">UNESCO — Guidance for generative AI in education and research <ExternalLink aria-hidden="true" /></a><span>Agência humana, validação pedagógica e uso responsável da IA generativa.</span></li><li><a href="https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence" target="_blank" rel="noreferrer">UNESCO — Recommendation on the Ethics of Artificial Intelligence <ExternalLink aria-hidden="true" /></a><span>Transparência, responsabilidade, supervisão humana e proteção de direitos.</span></li></ul></section>
 
+        <ArticleShare article={article} />
         <section className="article-cta"><h2>Suas orientações sobre autoria já estão claras?</h2><p>Descubra como transparência, responsabilidade e ética aparecem hoje em sua prática docente.</p><ButtonLink href="/radar" variant="light" showArrow>Fazer meu Radar Docente</ButtonLink></section>
         <FaqSection items={articleFaq} title="Perguntas frequentes" />
         <section className="article-related"><p className="method-kicker">CONTINUE A LEITURA</p><h2>Conteúdos relacionados</h2><div><Link to="/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta">Usar IA com estudantes começa antes da ferramenta <ArrowRight /></Link><Link to={article2Path}>Da possibilidade tecnológica ao objetivo de aprendizagem <ArrowRight /></Link><Link to="/ferramentas">Critérios para escolher ferramentas digitais e de IA <ArrowRight /></Link><Link to="/competencias">Competências docentes para uso de IA <ArrowRight /></Link></div></section>

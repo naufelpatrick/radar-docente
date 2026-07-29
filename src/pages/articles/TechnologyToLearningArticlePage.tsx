@@ -1,14 +1,15 @@
 import { ArrowRight, CheckCircle2, ExternalLink, Filter, Lightbulb, Target } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ArticleLayout } from '../../components/ArticleLayout'
+import { ArticleShare } from '../../components/ArticleShare'
 import { ButtonLink } from '../../components/ButtonLink'
 import { DecisionMatrix } from '../../components/DecisionMatrix'
 import { FaqSection } from '../../components/FaqSection'
 import { Seo } from '../../components/Seo'
+import { getBlogArticleBySlug } from '../../data/blogArticles'
+import { createBlogPostingSchema } from '../../services/articleSeo'
 
-const path = '/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem'
-const title = 'Da possibilidade tecnológica ao objetivo de aprendizagem'
-const description = 'Aprenda a transformar uma possibilidade tecnológica em uma atividade coerente com objetivos, evidências e decisões de aprendizagem.'
+const article = getBlogArticleBySlug('da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem')
 const firstArticlePath = '/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta'
 const toc = [
   { id: 'objetivo', label: 'Possibilidade não é objetivo' },
@@ -33,12 +34,12 @@ const articleFaq = [
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'Article', headline: title, description, datePublished: '2026-07-28', dateModified: '2026-07-28', inLanguage: 'pt-BR', mainEntityOfPage: `https://radar-docente-pi.vercel.app${path}`, author: { '@type': 'Person', name: 'Patrick Naufel', url: 'http://lattes.cnpq.br/0026328778886854' }, publisher: { '@type': 'Organization', name: 'PráxIA', url: 'https://radar-docente-pi.vercel.app/' }, articleSection: 'Planejamento', keywords: ['planejamento de aula com IA', 'objetivo de aprendizagem', 'atividade com IA', 'uso pedagógico da IA'] },
+    { ...createBlogPostingSchema(article), keywords: ['planejamento de aula com IA', 'objetivo de aprendizagem', 'atividade com IA', 'uso pedagógico da IA'] },
     { '@type': 'BreadcrumbList', itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://radar-docente-pi.vercel.app/blog' },
-      { '@type': 'ListItem', position: 3, name: 'Planejamento', item: 'https://radar-docente-pi.vercel.app/blog/categoria/planejamento' },
-      { '@type': 'ListItem', position: 4, name: title, item: `https://radar-docente-pi.vercel.app${path}` },
+      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.radarpraxia.com/blog' },
+      { '@type': 'ListItem', position: 3, name: 'Planejamento', item: 'https://www.radarpraxia.com/blog/categoria/planejamento' },
+      { '@type': 'ListItem', position: 4, name: article.title, item: article.canonicalUrl },
     ] },
     { '@type': 'FAQPage', mainEntity: articleFaq.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })) },
   ],
@@ -47,8 +48,8 @@ const schema = {
 export function TechnologyToLearningArticlePage() {
   return (
     <>
-      <Seo title="Planejamento de aula com IA: comece pelo objetivo | PráxIA" description={description} path={path} type="article" jsonLd={schema} />
-      <ArticleLayout category="PLANEJAMENTO" categoryPath="/blog/categoria/planejamento" title={title} description={description} date="28 de julho de 2026" readingTime="9 min de leitura" author="Patrick Naufel" toc={toc}>
+      <Seo title={article.seoTitle} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
+      <ArticleLayout article={article} categoryPath="/blog/categoria/planejamento" toc={toc}>
         <p className="article-lead">Uma ferramenta pode gerar textos, imagens, perguntas, roteiros e simulações em poucos segundos. Isso não significa que cada possibilidade deva se transformar em atividade pedagógica.</p>
         <p>Quando a função tecnológica comanda o planejamento, a avaliação costuma ser decidida tarde demais. Um percurso mais consistente inverte a ordem: define a aprendizagem, torna-a observável, escolhe a experiência e só então pergunta se a IA a amplia.</p>
         <div className="article-funnel" role="img" aria-label="Possibilidades tecnológicas sendo filtradas até chegar a um objetivo de aprendizagem"><div><span>texto</span><span>imagem</span><span>simulação</span><span>chat</span></div><Filter aria-hidden="true" /><strong>Objetivo de aprendizagem</strong></div>
@@ -77,6 +78,7 @@ export function TechnologyToLearningArticlePage() {
 
         <section id="referencias"><h2>Referências de base</h2><ul className="article-references"><li><a href="https://books.google.com/books/about/Teaching_for_Quality_Learning_at_Univers.html?id=XhjRBrDAESkC" target="_blank" rel="noreferrer">Biggs e Tang — Teaching for Quality Learning at University <ExternalLink /></a><span>4ª edição, McGraw-Hill Education/Open University Press, 2011. Referência para alinhamento construtivo.</span></li><li><a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC107466" target="_blank" rel="noreferrer">Comissão Europeia — DigCompEdu <ExternalLink /></a><span>Framework europeu para a competência digital de educadores, 2017.</span></li><li><a href="https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research" target="_blank" rel="noreferrer">UNESCO — Guidance for generative AI in education and research <ExternalLink /></a><span>Orientação para uso humano, ético, seguro e pedagogicamente adequado da IA generativa, 2023.</span></li></ul></section>
 
+        <ArticleShare article={article} />
         <section className="article-cta"><h2>Seu planejamento parte da ferramenta ou da aprendizagem?</h2><p>Reconheça como você decide, planeja, avalia e conduz o uso de IA em sua prática.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PráxIA</ButtonLink></section>
         <FaqSection items={articleFaq} title="Perguntas frequentes" />
         <section className="article-related"><p className="method-kicker">CONTINUE A LEITURA</p><h2>Conteúdos relacionados</h2><div><Link to={firstArticlePath}>Usar IA com estudantes começa antes da ferramenta <ArrowRight /></Link><Link to="/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia">Como conversar sobre autoria em atividades com IA <ArrowRight /></Link><Link to="/ferramentas">Critérios para escolher ferramentas digitais e de IA <ArrowRight /></Link><Link to="/competencias">As seis dimensões das competências docentes <ArrowRight /></Link></div></section>

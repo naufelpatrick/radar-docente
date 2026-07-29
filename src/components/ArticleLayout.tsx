@@ -3,22 +3,19 @@ import { CalendarDays, Clock3, List, UserRound } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Footer } from './Footer'
 import { InstitutionalHeader } from './InstitutionalHeader'
+import { ArticleShare } from './ArticleShare'
+import type { BlogArticle } from '../data/blogArticles'
 
 type TocItem = { id: string; label: string }
 
 interface ArticleLayoutProps {
-  category: string
+  article: BlogArticle
   categoryPath?: string
-  title: string
-  description: string
-  date: string
-  readingTime: string
-  author: string
   toc: TocItem[]
   children: ReactNode
 }
 
-export function ArticleLayout({ category, categoryPath, title, description, date, readingTime, author, toc, children }: ArticleLayoutProps) {
+export function ArticleLayout({ article, categoryPath, toc, children }: ArticleLayoutProps) {
   return (
     <>
       <a className="skip-link" href="#conteudo-artigo">Pular para o artigo</a>
@@ -27,15 +24,16 @@ export function ArticleLayout({ category, categoryPath, title, description, date
         <header className="article-hero">
           <div className="shell">
             <nav className="breadcrumb" aria-label="Navegação estrutural">
-              <Link to="/">Início</Link><span>/</span><Link to="/blog">Blog</Link><span>/</span>{categoryPath ? <Link to={categoryPath}>{category}</Link> : <span>{category}</span>}<span>/</span><span aria-current="page">{title}</span>
+              <Link to="/">Início</Link><span>/</span><Link to="/blog">Blog</Link><span>/</span>{categoryPath ? <Link to={categoryPath}>{article.category}</Link> : <span>{article.category}</span>}<span>/</span><span aria-current="page">{article.title}</span>
             </nav>
-            <p className="method-kicker">{category}</p>
-            <h1>{title}</h1>
-            <p className="article-hero__description">{description}</p>
+            <p className="method-kicker">{article.category}</p>
+            <h1>{article.title}</h1>
+            <p className="article-hero__description">{article.metaDescription}</p>
             <div className="article-meta">
-              <span><UserRound aria-hidden="true" />{author}</span>
-              <span><CalendarDays aria-hidden="true" />{date}</span>
-              <span><Clock3 aria-hidden="true" />{readingTime}</span>
+              <span><UserRound aria-hidden="true" />{article.author}</span>
+              <span><CalendarDays aria-hidden="true" />{article.displayDate}</span>
+              <span><Clock3 aria-hidden="true" />{article.readingTime}</span>
+              <ArticleShare article={article} variant="compact" />
             </div>
           </div>
         </header>

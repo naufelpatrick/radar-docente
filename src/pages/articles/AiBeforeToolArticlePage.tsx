@@ -1,13 +1,14 @@
 import { ArrowRight, CheckCircle2, ExternalLink, Lightbulb, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ArticleLayout } from '../../components/ArticleLayout'
+import { ArticleShare } from '../../components/ArticleShare'
 import { ButtonLink } from '../../components/ButtonLink'
 import { FaqSection } from '../../components/FaqSection'
 import { Seo } from '../../components/Seo'
+import { getBlogArticleBySlug } from '../../data/blogArticles'
+import { createBlogPostingSchema } from '../../services/articleSeo'
 
-const path = '/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta'
-const title = 'Usar IA com estudantes começa antes da ferramenta'
-const description = 'Um roteiro pedagógico para definir objetivo, dados, transparência, autoria e revisão antes de escolher uma ferramenta de inteligência artificial.'
+const article = getBlogArticleBySlug('usar-ia-com-estudantes-comeca-antes-da-ferramenta')
 const toc = [
   { id: 'antes-da-ferramenta', label: 'O que vem antes da ferramenta' },
   { id: 'cinco-decisoes', label: 'Cinco decisões pedagógicas' },
@@ -26,23 +27,15 @@ const schema = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'Article',
-      headline: title,
-      description,
-      datePublished: '2026-07-28',
-      dateModified: '2026-07-28',
-      inLanguage: 'pt-BR',
-      mainEntityOfPage: `https://radar-docente-pi.vercel.app${path}`,
-      author: { '@type': 'Person', name: 'Patrick Naufel', url: 'http://lattes.cnpq.br/0026328778886854' },
-      publisher: { '@type': 'Organization', name: 'PráxIA', url: 'https://radar-docente-pi.vercel.app/' },
+      ...createBlogPostingSchema(article),
     },
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://radar-docente-pi.vercel.app/blog' },
-        { '@type': 'ListItem', position: 3, name: 'IA para Professores', item: 'https://radar-docente-pi.vercel.app/blog/ia-para-professores' },
-        { '@type': 'ListItem', position: 4, name: title, item: `https://radar-docente-pi.vercel.app${path}` },
+        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.radarpraxia.com/blog' },
+        { '@type': 'ListItem', position: 3, name: 'IA para Professores', item: 'https://www.radarpraxia.com/blog/categoria/ia-para-professores' },
+        { '@type': 'ListItem', position: 4, name: article.title, item: article.canonicalUrl },
       ],
     },
     {
@@ -55,8 +48,8 @@ const schema = {
 export function AiBeforeToolArticlePage() {
   return (
     <>
-      <Seo title={`${title} | Blog PráxIA`} description={description} path={path} type="article" jsonLd={schema} />
-      <ArticleLayout category="IA PARA PROFESSORES" categoryPath="/blog/categoria/ia-para-professores" title={title} description={description} date="28 de julho de 2026" readingTime="7 min de leitura" author="Patrick Naufel" toc={toc}>
+      <Seo title={article.seoTitle} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
+      <ArticleLayout article={article} categoryPath="/blog/categoria/ia-para-professores" toc={toc}>
         <p className="article-lead">Quando uma ferramenta de IA entra primeiro na conversa, o planejamento tende a começar pela pergunta “o que ela faz?”. Para a docência, uma pergunta mais útil é: <strong>que aprendizagem quero apoiar e por que a IA seria adequada neste contexto?</strong></p>
         <p>Essa mudança de ordem não é detalhe. Ela preserva a autoria do professor, torna os critérios visíveis e permite decidir inclusive quando não usar IA.</p>
 
@@ -117,6 +110,8 @@ export function AiBeforeToolArticlePage() {
             <li><a href="https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes/guia-orientativo-tratamento-de-dados-pessoais-para-fins-academicos-e-para-a-realizacao-de-estudos-e-pesquisas" target="_blank" rel="noreferrer">ANPD — Tratamento de dados pessoais para fins acadêmicos <ExternalLink aria-hidden="true" /></a><span>Orientações brasileiras sobre tratamento de dados em contextos acadêmicos e de pesquisa.</span></li>
           </ul>
         </section>
+
+        <ArticleShare article={article} />
 
         <section className="article-cta">
           <h2>Antes de escolher uma ferramenta, reconheça seus critérios.</h2>

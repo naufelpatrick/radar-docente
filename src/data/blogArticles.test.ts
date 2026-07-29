@@ -20,4 +20,13 @@ describe('fonte editorial do blog', () => {
     expect(new Set(blogArticles.map((article) => article.path)).size).toBe(blogArticles.length)
     expect(getPublishedArticlesByCategory('etica').every((article) => article.categorySlug === 'etica')).toBe(true)
   })
+
+  it('mantém SEO e imagens sociais exclusivos para cada artigo publicado', () => {
+    const articles = getPublishedBlogArticles()
+
+    expect(new Set(articles.map((article) => article.canonicalUrl)).size).toBe(articles.length)
+    expect(new Set(articles.map((article) => article.socialImage)).size).toBe(articles.length)
+    expect(articles.every((article) => article.socialImage.startsWith('https://www.radarpraxia.com/social/'))).toBe(true)
+    expect(articles.every((article) => article.seoTitle.endsWith('| PráxIA'))).toBe(true)
+  })
 })
