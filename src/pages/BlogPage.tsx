@@ -7,7 +7,6 @@ import {
   ClipboardCheck,
   Compass,
   FileSearch,
-  Lightbulb,
   ListChecks,
   Scale,
   Search,
@@ -79,7 +78,7 @@ const publishedArticles = getPublishedBlogArticles()
 
 function getCategoryStatus(categorySlug: string) {
   const count = publishedArticles.filter((article) => article.categorySlug === categorySlug).length
-  if (count === 0) return 'Conteúdos em preparação'
+  if (count === 0) return 'Explorar categoria'
   return `${count} ${count === 1 ? 'artigo publicado' : 'artigos publicados'}`
 }
 
@@ -170,8 +169,8 @@ export function BlogPage() {
         <nav className="method-index" aria-label="Nesta página">
           <div className="shell">
             <span>Explorar</span>
+            <a href="#artigos-recentes">Artigos recentes</a>
             <a href="#categorias">Categorias</a>
-            <a href="#em-preparacao">Em preparação</a>
             <a href="#criterios-editoriais">Critérios editoriais</a>
             <a href="#perguntas">FAQ</a>
           </div>
@@ -186,6 +185,35 @@ export function BlogPage() {
             <div data-reveal="right">
               <p className="blog-intro__lead">Entre o entusiasmo e a recusa, professores precisam de espaço para compreender o que muda, o que permanece e quais perguntas precisam ser feitas.</p>
               <p>Os conteúdos da PráxIA aproximam conceitos, referenciais e situações concretas. O foco não está em prescrever uma ferramenta, mas em apoiar escolhas coerentes com objetivos de aprendizagem, contexto, participação, autoria e segurança.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="blog-section blog-roadmap" id="artigos-recentes">
+          <div className="shell">
+            <div className="method-heading method-heading--light" data-reveal="up">
+              <div><p className="method-kicker">CONTEÚDOS PRÁXIA</p><h2>Artigos recentes.</h2></div>
+              <p>Reflexões, referências e práticas para professores que desejam integrar tecnologia e inteligência artificial à docência com mais consciência pedagógica.</p>
+            </div>
+            <div className="blog-roadmap__grid">
+              {publishedArticles.map((article, index) => (
+                <Link
+                  className="blog-roadmap__card"
+                  to={article.path}
+                  key={article.path}
+                  data-reveal="up"
+                  aria-label={`Ler artigo: ${article.title}`}
+                >
+                  <div><span>{article.editorialLabel}</span><small>0{index + 1}</small></div>
+                  <h3>{article.title}</h3>
+                  <p>{article.summary}</p>
+                  <span className="blog-roadmap__link">Ler artigo <ArrowRight aria-hidden="true" /></span>
+                  <footer>
+                    <span>{article.category}</span>
+                    <span>{article.publishedDate} · {article.readingTime}</span>
+                  </footer>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
@@ -206,27 +234,6 @@ export function BlogPage() {
                 </article>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section className="blog-section blog-roadmap" id="em-preparacao">
-          <div className="shell">
-            <div className="method-heading method-heading--light" data-reveal="up">
-              <div><p className="method-kicker">AGENDA EDITORIAL</p><h2>Primeiras leituras em desenvolvimento.</h2></div>
-              <p>Os temas abaixo mostram a direção editorial. Eles só receberão data, autoria e URL quando o conteúdo integral estiver publicado.</p>
-            </div>
-            <div className="blog-roadmap__grid">
-              {publishedArticles.map((article, index) => (
-                <article key={article.path} data-reveal="up">
-                  <div><span>{article.editorialLabel}</span><small>0{index + 1}</small></div>
-                  <h3>{article.title}</h3>
-                  <p>{article.summary}</p>
-                  <Link className="blog-roadmap__link" to={article.path}>Ler artigo <ArrowRight aria-hidden="true" /></Link>
-                  <footer><span>{article.category}</span><span>Leitura estimada: {article.readingTime.replace(' de leitura', '')}</span></footer>
-                </article>
-              ))}
-            </div>
-            <p className="blog-roadmap__note"><Lightbulb aria-hidden="true" /> Estes itens não são artigos publicados. São pautas editoriais apresentadas com transparência para não criar páginas vazias ou conteúdo superficial.</p>
           </div>
         </section>
 
@@ -263,20 +270,20 @@ export function BlogPage() {
           </div>
         </section>
 
-        <div id="perguntas">
-          <FaqSection items={blogFaq} title="Sobre os conteúdos" />
-        </div>
-
         <section className="method-cta blog-cta" aria-labelledby="blog-cta-title">
           <div className="method-cta__arc" aria-hidden="true" />
           <div className="shell" data-reveal="up">
-            <p className="method-kicker">ENQUANTO OS CONTEÚDOS SÃO PREPARADOS</p>
+            <p className="method-kicker">LEVE A REFLEXÃO PARA A PRÁTICA</p>
             <h2 id="blog-cta-title">Comece pela sua prática, não por uma lista de ferramentas.</h2>
             <p>O Radar Docente ajuda a reconhecer quais dimensões já aparecem com consistência e onde um próximo experimento pode fazer sentido.</p>
             <ButtonLink href="/radar" variant="light" showArrow>Fazer o Radar gratuito</ButtonLink>
             <small>Resultado personalizado · Sem ranking · Relatório em PDF</small>
           </div>
         </section>
+
+        <div id="perguntas">
+          <FaqSection items={blogFaq} title="Sobre os conteúdos" />
+        </div>
       </main>
       <Footer />
     </>
