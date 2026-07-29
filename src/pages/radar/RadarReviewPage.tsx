@@ -1,7 +1,9 @@
-import { ArrowLeft, CheckCircle2, Pencil } from 'lucide-react'
+import { ArrowLeft, Pencil } from 'lucide-react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { instrument } from '../../data/instrument'
 import { useRadarSession } from '../../context/radarSessionContextValue'
+import { RadarLeadForm } from '../../components/RadarLeadForm'
+import { calculateScore } from '../../services/scoringService'
 
 export function RadarReviewPage() {
   const { session } = useRadarSession()
@@ -11,6 +13,10 @@ export function RadarReviewPage() {
   if (!session.teachingProfile) {
     return <Navigate to="/radar/perfil" replace />
   }
+
+  const result = missing < 0
+    ? calculateScore(session.answers, session.teachingProfile, session.startedAt)
+    : null
 
   return (
     <main className="radar-screen review-screen">
@@ -31,17 +37,8 @@ export function RadarReviewPage() {
             )
           })}
         </div>
-        <div className="flow-actions">
-          <Link className="flow-back" to="/radar/questoes/30"><ArrowLeft aria-hidden="true" /> Voltar</Link>
-          <button
-            type="button"
-            className="flow-button"
-            disabled={missing >= 0}
-            onClick={() => navigate('/radar/resultado')}
-          >
-            <CheckCircle2 aria-hidden="true" /> Calcular meu resultado
-          </button>
-        </div>
+        <div className="flow-actions"><Link className="flow-back" to="/radar/questoes/30"><ArrowLeft aria-hidden="true" /> Voltar</Link></div>
+        {result && <RadarLeadForm result={result} onSubmitted={() => navigate('/radar/resultado')} />}
       </div>
     </main>
   )

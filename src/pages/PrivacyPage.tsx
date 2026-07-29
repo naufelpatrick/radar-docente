@@ -50,8 +50,8 @@ export function PrivacyPage() {
         <section className="privacy-summary" aria-label="Síntese em linguagem simples">
           <div className="shell">
             <ShieldCheck aria-hidden="true" />
-            <div><p className="method-kicker">EM POUCAS PALAVRAS</p><h2>O Radar fica neste navegador. Os formulários vão para o Supabase. O Analytics é opcional.</h2></div>
-            <p>As respostas e o resultado do Radar são guardados no armazenamento local deste navegador para preservar o progresso. Não são enviados ao Supabase, ao Google Analytics ou a uma API de IA. Nome e contato só são coletados quando você envia um dos formulários.</p>
+            <div><p className="method-kicker">EM POUCAS PALAVRAS</p><h2>As respostas ficam no navegador. O cadastro e o resumo do relatório vão para o Supabase. O Analytics é opcional.</h2></div>
+            <p>As 30 respostas permanecem no armazenamento local deste navegador. Para liberar o relatório gratuito, a PráxIA registra nome, e-mail, contexto opcional e pontuações resumidas, sem enviar respostas individuais.</p>
           </div>
         </section>
 
@@ -83,26 +83,27 @@ export function PrivacyPage() {
               <h3>Contato geral</h3><p>Nome, e-mail, assunto, mensagem, data e horário do envio, origem da página e estado de atendimento.</p>
               <h3>Interesse em mentoria</h3><p>Nome, e-mail, WhatsApp, contexto de atuação, desafio informado, data e horário do envio, origem da página e estado de atendimento.</p>
               <h3>Proposta institucional</h3><p>Nome, instituição, cargo ou função, e-mail, WhatsApp, cidade, estado, modalidade, interesse em palestra ou workshop, quantidade aproximada de participantes, período pretendido, descrição da necessidade, data e horário, origem e estado de atendimento.</p>
+              <h3>Relatório gratuito do Radar</h3><p>Nome, e-mail, cidade e instituição quando informadas, perfil docente, Score PráxIA, faixa de desenvolvimento, pontuações resumidas das seis dimensões, versão do instrumento, tempo de conclusão, opção de receber comunicações, data e horário.</p>
               <h3>Dados técnicos</h3><p>Vercel, Supabase e Google Analytics podem tratar informações técnicas de acesso conforme suas configurações e políticas. A PráxIA não adiciona nome, e-mail, telefone, instituição, cidade ou campos livres aos eventos de Analytics.</p>
             </section>
 
             <section id="diagnostico" className="privacy-highlight">
               <span>04</span><h2>Como funciona o diagnóstico PráxIA</h2>
               <p>Perfil docente, respostas aos 30 itens, escolhas apresentadas na introdução, horário de início, scores e dimensões são processados no navegador. O progresso é salvo em <code>localStorage</code> sob uma chave da PráxIA e permanece até ser substituído, apagado pela própria pessoa ou removido pela limpeza dos dados do navegador.</p>
-              <p>Na versão auditada, esses dados não são enviados ao Supabase, ao Google Analytics ou a APIs de inteligência artificial. Eles não aparecem na URL. O PDF é gerado localmente a partir do resultado exibido.</p>
+              <p>As respostas individuais não são enviadas ao Supabase, ao Google Analytics ou a APIs de inteligência artificial. Antes de abrir o relatório, são enviados ao Supabase os dados de identificação informados, o perfil docente, o Score PráxIA, a faixa e as seis pontuações dimensionais resumidas. Esses dados não aparecem na URL. O PDF continua sendo gerado localmente.</p>
               <p>Como o armazenamento é local, outras pessoas com acesso ao mesmo perfil de navegador podem visualizar o progresso. Use um dispositivo confiável ou limpe os dados do site após concluir.</p>
             </section>
 
             <section id="formularios">
-              <span>05</span><h2>Formulários de contato, mentoria e proposta</h2>
-              <p>Os três formulários enviam os dados diretamente para tabelas separadas no Supabase: <code>lead_contato</code>, <code>lead_mentoria</code> e <code>institutional_leads</code>. O e-mail exibido no site também pode ser usado voluntariamente por meio do aplicativo de e-mail da pessoa.</p>
+              <span>05</span><h2>Formulários e liberação do relatório</h2>
+              <p>Os formulários enviam os dados diretamente para tabelas separadas no Supabase: <code>lead_contato</code>, <code>lead_mentoria</code>, <code>institutional_leads</code> e <code>lead_radar</code>. O e-mail exibido no site também pode ser usado voluntariamente por meio do aplicativo de e-mail da pessoa.</p>
               <p>Não envie nomes, avaliações, diagnósticos, condições de saúde ou outras informações pessoais de estudantes nos campos livres.</p>
             </section>
 
             <section id="finalidades">
               <span>06</span><h2>Finalidades e bases legais aplicáveis</h2>
-              <p>Os dados dos formulários são usados para responder mensagens, avaliar pedidos de mentoria e preparar ou acompanhar propostas solicitadas. Conforme o contexto, essas operações podem se apoiar em procedimentos preliminares relacionados a contrato ou em legítimo interesse compatível com a expectativa de quem iniciou o contato, sujeito à avaliação dos responsáveis.</p>
-              <p>A PráxIA não oferece newsletter nem coleta consentimento promocional nesta versão. O aviso informativo do formulário não é aceite contratual de toda esta política.</p>
+              <p>Os dados são usados para entregar e mensurar o uso do relatório gratuito, responder mensagens, avaliar pedidos de mentoria e preparar ou acompanhar propostas solicitadas. Conforme o contexto, essas operações podem se apoiar em procedimentos preliminares relacionados a contrato ou em legítimo interesse compatível com a expectativa de quem iniciou o contato, sujeito à avaliação dos responsáveis.</p>
+              <p>O envio de conteúdos e novidades por e-mail depende de uma autorização separada, opcional e revogável. O aviso informativo do formulário não é aceite contratual de toda esta política.</p>
             </section>
 
             <section id="fornecedores">

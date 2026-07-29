@@ -16,11 +16,20 @@ describe('privacy implementation contracts', () => {
       read('./pages/ContactPage.tsx'),
       read('./components/MentoringLeadForm.tsx'),
       read('./components/InstitutionalLeadForm.tsx'),
+      read('./components/RadarLeadForm.tsx'),
     ]
     sources.forEach((source) => {
       expect(source).toContain('Política de Privacidade')
       expect(source).toContain('/privacidade')
     })
+  })
+
+  it('keeps individual Radar answers out of the lead submission', () => {
+    const service = read('./services/radarLeadService.ts')
+    expect(service).toContain('dimension_scores')
+    expect(service).toContain('overall_score')
+    expect(service).not.toContain('result.answers')
+    expect(service).not.toContain('session.answers')
   })
 
   it('does not load Google Analytics statically', () => {

@@ -5,18 +5,19 @@ export const privacyConfig = {
   controllerAddress: null,
   privacyEmail: 'praxia@radarpraxia.com',
   effectiveDate: '28 de julho de 2026',
-  lastUpdated: '28 de julho de 2026',
+  lastUpdated: '29 de julho de 2026',
   retentionPeriods: {
     contact: null,
     mentoring: null,
     institutional: null,
+    radar: null,
     securityLogs: null,
   },
   serviceProviders: [
     {
       name: 'Supabase',
       purpose: 'Banco de dados dos formulários e controle de acesso aos registros',
-      data: 'Dados enviados nos formulários de contato, mentoria e proposta institucional',
+      data: 'Dados enviados nos formulários de contato, mentoria, proposta institucional e liberação do relatório gratuito',
       privacyUrl: 'https://supabase.com/privacy',
       internationalProcessing: true,
     },
