@@ -4,17 +4,29 @@ const PENDING_COMPLETION_KEY = 'praxia:ga4:pending-radar-complete'
 const SENT_COMPLETION_PREFIX = 'praxia:ga4:radar-complete:'
 const CONFIRMED_COMPLETION_KEY = 'praxia:radar:confirmed-completion'
 
+function analyticsDebug(message: string, details?: Record<string, unknown>) {
+  if (import.meta.env.DEV) console.info(`[PráxIA analytics] ${message}`, details ?? {})
+}
+
 function sendRadarCompletion(completionId: string) {
   if (!completionId || window.localStorage.getItem(`${SENT_COMPLETION_PREFIX}${completionId}`)) return false
 
+  analyticsDebug('Tentativa de radar_complete', {
+    consent: analyticsAllowed(),
+    completionIdPresent: Boolean(completionId),
+  })
   loadGoogleAnalytics()
-  if (typeof window.gtag !== 'function' || !Array.isArray(window.dataLayer)) return false
+  if (typeof window.gtag !== 'function' || !Array.isArray(window.dataLayer)) {
+    analyticsDebug('radar_complete não enviado: GA4 indisponível')
+    return false
+  }
 
   window.gtag('event', 'radar_complete', {
     source: 'radar_praxia',
   })
   window.localStorage.setItem(`${SENT_COMPLETION_PREFIX}${completionId}`, 'sent')
   window.localStorage.removeItem(PENDING_COMPLETION_KEY)
+  analyticsDebug('radar_complete enviado com sucesso')
   return true
 }
 

@@ -5,6 +5,11 @@ export const COOKIE_PREFERENCES_EVENT = 'praxia:open-cookie-preferences'
 const GA_ID = 'G-9JR9Q9KSV6'
 const GOOGLE_ADS_ID = 'AW-18356888280'
 const GOOGLE_TAG_SELECTOR = `script[src*="googletagmanager.com/gtag/js?id=${GA_ID}"], script[data-praxia-analytics="${GA_ID}"]`
+const ANALYTICS_INITIALIZED_ATTRIBUTE = 'data-praxia-analytics-initialized'
+
+function analyticsDebug(message: string, details?: Record<string, unknown>) {
+  if (import.meta.env.DEV) console.info(`[PráxIA analytics] ${message}`, details ?? {})
+}
 
 export function readCookiePreference(): CookiePreference | null {
   try {
@@ -23,13 +28,13 @@ export function analyticsAllowed() {
   return readCookiePreference() === 'accepted'
 }
 
-export function loadGoogleAnalytics() {
-  if (!analyticsAllowed()) return
-
+function initializeGoogleGlobals() {
   window.dataLayer = window.dataLayer || []
   if (typeof window.gtag !== 'function') {
-    window.gtag = function gtag(...args: unknown[]) {
-      window.dataLayer?.push(args)
+    window.gtag = function gtag() {
+      // Google recommends the arguments object here because gtag.js consumes this queue format.
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer?.push(arguments)
     }
   }
 
@@ -40,12 +45,33 @@ export function loadGoogleAnalytics() {
     window.praxiaAnalyticsConfigured = true
   }
 
-  if (document.querySelector(GOOGLE_TAG_SELECTOR)) return
+  document.documentElement?.setAttribute(ANALYTICS_INITIALIZED_ATTRIBUTE, 'true')
+  analyticsDebug('GA4 inicializado', {
+    consent: true,
+    dataLayer: Array.isArray(window.dataLayer),
+    gtag: typeof window.gtag,
+  })
+}
+
+export function loadGoogleAnalytics() {
+  const consent = analyticsAllowed()
+  analyticsDebug('Consentimento analítico verificado', { consent })
+  if (!consent) return false
+
+  initializeGoogleGlobals()
+
+  if (document.querySelector(GOOGLE_TAG_SELECTOR)) return true
   const script = document.createElement('script')
   script.async = true
   script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`
   script.dataset.praxiaAnalytics = GA_ID
   document.head.appendChild(script)
+  return true
+}
+
+export function initializeAnalyticsFromStoredConsent() {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return false
+  return loadGoogleAnalytics()
 }
 
 export function openCookiePreferences() {

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   COOKIE_PREFERENCES_EVENT,
+  initializeAnalyticsFromStoredConsent,
   loadGoogleAnalytics,
   readCookiePreference,
   saveCookiePreference,
@@ -17,8 +18,7 @@ export function CookiePreferences() {
   const headingRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
-    if (readCookiePreference() === 'accepted') {
-      loadGoogleAnalytics()
+    if (initializeAnalyticsFromStoredConsent()) {
       flushPendingEbookPurchase()
       flushPendingRadarCompletion()
     }

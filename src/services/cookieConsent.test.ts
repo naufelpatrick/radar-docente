@@ -1,5 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { analyticsAllowed, COOKIE_PREFERENCE_KEY, loadGoogleAnalytics, readCookiePreference, saveCookiePreference } from './cookieConsent'
+import {
+  analyticsAllowed,
+  COOKIE_PREFERENCE_KEY,
+  initializeAnalyticsFromStoredConsent,
+  loadGoogleAnalytics,
+  readCookiePreference,
+  saveCookiePreference,
+} from './cookieConsent'
 
 describe('cookie preferences', () => {
   afterEach(() => vi.unstubAllGlobals())
@@ -33,7 +40,8 @@ describe('cookie preferences', () => {
 
     expect(Array.isArray(windowStub.dataLayer)).toBe(true)
     expect(typeof windowStub.gtag).toBe('function')
-    expect(windowStub.dataLayer).toEqual(expect.arrayContaining([
+    const commands = windowStub.dataLayer?.map((entry) => Array.from(entry as ArrayLike<unknown>))
+    expect(commands).toEqual(expect.arrayContaining([
       expect.arrayContaining(['config', 'G-9JR9Q9KSV6']),
     ]))
   })
@@ -48,5 +56,17 @@ describe('cookie preferences', () => {
 
     expect(windowStub.dataLayer).toBeUndefined()
     expect(windowStub.gtag).toBeUndefined()
+  })
+
+  it('initializes GA4 synchronously for a previously accepted preference', () => {
+    const windowStub = {
+      localStorage: { getItem: () => 'accepted', setItem: vi.fn() },
+    } as unknown as Window
+    vi.stubGlobal('window', windowStub)
+    vi.stubGlobal('document', { querySelector: () => ({}) })
+
+    expect(initializeAnalyticsFromStoredConsent()).toBe(true)
+    expect(typeof windowStub.gtag).toBe('function')
+    expect(Array.isArray(windowStub.dataLayer)).toBe(true)
   })
 })
