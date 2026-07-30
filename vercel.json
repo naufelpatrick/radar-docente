@@ -4,6 +4,6 @@
     { "path": "/api/cron/distribution", "schedule": "0 12 * * *" }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
