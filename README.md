@@ -52,6 +52,28 @@ npm run build
 npm run preview
 ```
 
+## Agente de distribuição PráxIA
+
+O painel privado em `/admin/distribuicao` sincroniza os artigos de
+`https://www.radarpraxia.com/rss.xml`, gera rascunhos para Instagram e
+Facebook e permite aprovar, agendar ou publicar. A fila usa a tabela
+`content_distribution`, criada pelas migrations do Supabase.
+
+Variáveis server-side:
+
+- `DISTRIBUTION_ADMIN_KEY`: chave usada para entrar no painel;
+- `CRON_SECRET`: segredo verificado pela rotina horária da Vercel;
+- `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY`: persistência privada;
+- `PRAXIA_RSS_URL`: opcional; por padrão usa o RSS oficial;
+- `META_ACCESS_TOKEN`: token de longa duração da Meta;
+- `META_INSTAGRAM_USER_ID`: ID da conta profissional do Instagram;
+- `META_FACEBOOK_PAGE_ID`: ID da Página do Facebook conectada.
+
+Nenhuma credencial da Meta é enviada ao navegador. Enquanto as três variáveis
+`META_*` não estiverem configuradas, detecção, edição, aprovação e agendamento
+funcionam normalmente; a ação de publicar informa a configuração ausente sem
+perder o rascunho.
+
 ## Privacidade e persistência
 
 As respostas e o andamento ficam somente no `localStorage` do navegador. O MVP não possui autenticação, banco de dados, analytics de respostas ou rastreamento individual. Uma interface de repositório isola a persistência para permitir uma integração futura com Supabase sem acoplar o domínio ao fornecedor.
