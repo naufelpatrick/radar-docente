@@ -65,14 +65,14 @@ Variáveis server-side:
 - `CRON_SECRET`: segredo verificado pela rotina diária da Vercel;
 - `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY`: persistência privada;
 - `PRAXIA_RSS_URL`: opcional; por padrão usa o RSS oficial;
-- `META_ACCESS_TOKEN`: token de longa duração da Meta;
-- `META_INSTAGRAM_USER_ID`: ID da conta profissional do Instagram;
-- `META_FACEBOOK_PAGE_ID`: ID da Página do Facebook conectada.
+- `MAKE_WEBHOOK_URL`: URL privada do webhook personalizado no Make;
+- `MAKE_WEBHOOK_API_KEY`: chave enviada no cabeçalho `x-make-apikey`.
 
-Nenhuma credencial da Meta é enviada ao navegador. Enquanto as três variáveis
-`META_*` não estiverem configuradas, detecção, edição, aprovação e agendamento
-funcionam normalmente; a ação de publicar informa a configuração ausente sem
-perder o rascunho.
+O webhook recebe os dados do artigo, a URL pública da imagem e as legendas
+específicas de cada rede. Nenhuma credencial é enviada ao navegador. Enquanto
+as variáveis `MAKE_*` não estiverem configuradas, detecção, edição, aprovação e
+agendamento funcionam normalmente; a ação de publicar informa a configuração
+ausente sem perder o rascunho.
 
 ## Privacidade e persistência
 
