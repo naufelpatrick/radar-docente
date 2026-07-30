@@ -62,7 +62,7 @@ Facebook e permite aprovar, agendar ou publicar. A fila usa a tabela
 Variáveis server-side:
 
 - `DISTRIBUTION_ADMIN_KEY`: chave usada para entrar no painel;
-- `CRON_SECRET`: segredo verificado pela rotina horária da Vercel;
+- `CRON_SECRET`: segredo verificado pela rotina diária da Vercel;
 - `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY`: persistência privada;
 - `PRAXIA_RSS_URL`: opcional; por padrão usa o RSS oficial;
 - `META_ACCESS_TOKEN`: token de longa duração da Meta;
