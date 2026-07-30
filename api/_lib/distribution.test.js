@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { createDraft, parseRss, sendToMake, validateChannelImages } from './distribution.js'
+import { createDraft, missingImageChannels, parseRss, sendToMake, validateChannelImages } from './distribution.js'
 import { createChannelJpeg } from './distribution-images.js'
 
 describe('content distribution', () => {
@@ -40,8 +40,25 @@ describe('content distribution', () => {
     expect(draft.instagram_caption).toContain('utm_source=instagram')
     expect(draft.facebook_caption).toContain('utm_source=facebook')
     expect(draft.status).toBe('draft')
-    expect(draft.facebook_image_url).toBe('https://www.radarpraxia.com/social/teste.jpg')
+    expect(draft.facebook_image_url).toBeNull()
     expect(draft.instagram_image_url).toBeNull()
+  })
+
+  it('automatically identifies every missing channel image after RSS sync', () => {
+    expect(missingImageChannels({
+      article_image_url: 'https://cdn.example.com/social-graph.jpg',
+      instagram_image_url: null,
+      facebook_image_url: 'https://cdn.example.com/facebook.jpg',
+    })).toEqual(['instagram'])
+    expect(missingImageChannels({
+      article_image_url: 'https://cdn.example.com/social-graph.jpg',
+      instagram_image_url: null,
+      facebook_image_url: null,
+    })).toEqual(['instagram', 'facebook'])
+    expect(missingImageChannels({
+      instagram_image_url: 'https://cdn.example.com/instagram.jpg',
+      facebook_image_url: 'https://cdn.example.com/facebook.jpg',
+    })).toEqual([])
   })
 
   it('sends the publication payload to the authenticated Make webhook', async () => {
