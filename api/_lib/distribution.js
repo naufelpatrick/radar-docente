@@ -3,6 +3,17 @@ import { supabase } from './ebook.js'
 import { IMAGE_GENERATION_VERSION, uploadChannelImage } from './distribution-images.js'
 
 const RSS_URL = process.env.PRAXIA_RSS_URL || 'https://www.radarpraxia.com/rss.xml'
+const SOCIAL_CHANNELS = ['instagram', 'facebook', 'linkedin']
+const HASHTAG_LIMITS = { instagram: 10, facebook: 5, linkedin: 5 }
+
+const CATEGORY_HASHTAGS = {
+  avaliacao: ['#AvaliaçãoDaAprendizagem', '#AvaliaçãoComIA'],
+  competencias: ['#CompetênciasDocentes', '#DesenvolvimentoDocente'],
+  etica: ['#ÉticaNaIA', '#AutoriaDigital'],
+  ferramentas: ['#FerramentasDigitais', '#PráticaDocente'],
+  planejamento: ['#PlanejamentoPedagógico', '#ObjetivosDeAprendizagem'],
+  pesquisa: ['#PesquisaEmEducação', '#InovaçãoEducacional'],
+}
 function decodeXml(value = '') {
   return value
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
@@ -50,7 +61,27 @@ function trackedUrl(url, source) {
   return target.toString()
 }
 
+function normalizedCategory(category = '') {
+  return category.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase()
+}
+
+export function generateChannelHashtags(article, channel) {
+  const category = normalizedCategory(article.category)
+  const topic = Object.entries(CATEGORY_HASHTAGS)
+    .find(([key]) => category.includes(key))?.[1] || ['#PráticaDocente', '#IAnaEducação']
+  const recurring = channel === 'instagram'
+    ? ['#PráxIA', '#InteligênciaArtificial', '#Educação', '#TecnologiaNaEducação', '#FormaçãoDocente']
+    : channel === 'facebook'
+      ? ['#PráxIA', '#Educação', '#TecnologiaNaEducação']
+      : ['#PráxIA', '#InteligênciaArtificial', '#FormaçãoDocente']
+  const unique = [...new Set([...topic, ...recurring])]
+  return unique.slice(0, HASHTAG_LIMITS[channel] || 5)
+}
+
 export function createDraft(article) {
+  const instagramHashtags = generateChannelHashtags(article, 'instagram').join(' ')
+  const facebookHashtags = generateChannelHashtags(article, 'facebook').join(' ')
+  const linkedinHashtags = generateChannelHashtags(article, 'linkedin').join(' ')
   return {
     article_guid: article.guid,
     article_title: article.title,
@@ -61,11 +92,16 @@ export function createDraft(article) {
     instagram_image_url: null,
     facebook_image_url: null,
     published_at: article.publishedAt,
-    instagram_caption: `${article.title}\n\n${article.summary}\n\nLeia o artigo completo no link da bio.\n\n#PráxIA #InteligênciaArtificial #Educação #Professores #PráticaDocente\n\nLink de campanha: ${trackedUrl(article.url, 'instagram')}`,
-    facebook_caption: `${article.title}\n\n${article.summary}\n\nLeia o artigo completo: ${trackedUrl(article.url, 'facebook')}`,
+    instagram_caption: `${article.title}\n\n${article.summary}\n\nLeia o artigo completo no link da bio.\n\n${instagramHashtags}\n\nLink de campanha: ${trackedUrl(article.url, 'instagram')}`,
+    facebook_caption: `${article.title}\n\n${article.summary}\n\nLeia o artigo completo: ${trackedUrl(article.url, 'facebook')}\n\n${facebookHashtags}`,
+    linkedin_caption: `${article.title}\n\n${article.summary}\n\nEsta reflexão apoia professores, gestores escolares e instituições de ensino na integração pedagogicamente intencional da inteligência artificial.\n\nLeia o conteúdo completo e compartilhe com sua equipe: ${trackedUrl(article.url, 'linkedin')}\n\n${linkedinHashtags}`,
+    instagram_enabled: true,
+    facebook_enabled: true,
+    linkedin_enabled: true,
     status: 'draft',
     instagram_status: 'pending',
     facebook_status: 'pending',
+    linkedin_status: 'pending',
   }
 }
 
@@ -126,8 +162,10 @@ export async function listDistribution() {
 
 export async function updateDistribution(id, changes) {
   const allowed = [
-    'instagram_caption', 'facebook_caption', 'instagram_image_url', 'facebook_image_url',
-    'instagram_status', 'facebook_status', 'instagram_error', 'facebook_error',
+    'instagram_caption', 'facebook_caption', 'linkedin_caption', 'instagram_image_url', 'facebook_image_url',
+    'instagram_enabled', 'facebook_enabled', 'linkedin_enabled',
+    'instagram_status', 'facebook_status', 'linkedin_status',
+    'instagram_error', 'facebook_error', 'linkedin_error',
     'status', 'scheduled_for', 'error_message',
   ]
   const payload = Object.fromEntries(Object.entries(changes).filter(([key]) => allowed.includes(key)))
@@ -157,10 +195,13 @@ export function createMakePublicationPayload(item) {
     article_url: item.article_url,
     instagram_image_url: item.instagram_image_url,
     facebook_image_url: item.facebook_image_url,
+    linkedin_image_url: item.instagram_image_url,
     instagram_caption: item.instagram_caption,
     facebook_caption: item.facebook_caption,
+    linkedin_caption: item.linkedin_caption,
     publish_instagram: item.publish_channels?.includes('instagram') ?? true,
     publish_facebook: item.publish_channels?.includes('facebook') ?? true,
+    publish_linkedin: item.publish_channels?.includes('linkedin') ?? true,
   }
 }
 
@@ -210,9 +251,10 @@ export function validatePublicImageUrl(value, label) {
   return url.toString()
 }
 
-export function validateChannelImages(item, channels = ['instagram', 'facebook']) {
+export function validateChannelImages(item, channels = SOCIAL_CHANNELS) {
   if (channels.includes('instagram')) validatePublicImageUrl(item.instagram_image_url, 'Instagram')
   if (channels.includes('facebook')) validatePublicImageUrl(item.facebook_image_url, 'Facebook')
+  if (channels.includes('linkedin')) validatePublicImageUrl(item.instagram_image_url, 'LinkedIn')
   if (
     item.instagram_image_url
     && item.facebook_image_url
@@ -220,6 +262,13 @@ export function validateChannelImages(item, channels = ['instagram', 'facebook']
   ) {
     throw new Error('Instagram e Facebook precisam de artes diferentes; as URLs não podem ser iguais')
   }
+}
+
+export function selectedPublicationChannels(item, requestedChannels) {
+  const requested = requestedChannels || SOCIAL_CHANNELS
+  return requested
+    .filter((channel) => SOCIAL_CHANNELS.includes(channel))
+    .filter((channel) => item[`${channel}_enabled`] !== false)
 }
 
 function channelUpdate(channels, status, error = null) {
@@ -243,8 +292,7 @@ export async function generateChannelImage(item, channel) {
 }
 
 export async function publishItem(item, requestedChannels) {
-  const channels = (requestedChannels || ['instagram', 'facebook'])
-    .filter((channel) => ['instagram', 'facebook'].includes(channel))
+  const channels = selectedPublicationChannels(item, requestedChannels)
     .filter((channel) => item[`${channel}_status`] !== 'published')
   if (!channels.length) throw new Error('Os canais selecionados já foram publicados')
   validateChannelImages(item, channels)
@@ -259,17 +307,20 @@ export async function publishItem(item, requestedChannels) {
     const reported = makeResponse.result || {}
     const succeeded = channels.filter((channel) => reported[`${channel}_status`] !== 'error')
     const failed = channels.filter((channel) => reported[`${channel}_status`] === 'error')
-    const nextInstagram = succeeded.includes('instagram') ? 'published' : failed.includes('instagram') ? 'error' : item.instagram_status
-    const nextFacebook = succeeded.includes('facebook') ? 'published' : failed.includes('facebook') ? 'error' : item.facebook_status
-    const fullyPublished = nextInstagram === 'published' && nextFacebook === 'published'
+    const nextStatuses = Object.fromEntries(SOCIAL_CHANNELS.map((channel) => [
+      channel,
+      succeeded.includes(channel) ? 'published' : failed.includes(channel) ? 'error' : item[`${channel}_status`],
+    ]))
+    const enabledChannels = selectedPublicationChannels(item)
+    const fullyPublished = enabledChannels.every((channel) => nextStatuses[channel] === 'published')
     const response = await supabase(`/rest/v1/content_distribution?id=eq.${encodeURIComponent(item.id)}`, {
       method: 'PATCH',
       headers: { prefer: 'return=representation' },
       body: JSON.stringify({
-        instagram_status: nextInstagram,
-        facebook_status: nextFacebook,
-        instagram_error: failed.includes('instagram') ? (reported.instagram_error || 'O Make informou erro no Instagram') : null,
-        facebook_error: failed.includes('facebook') ? (reported.facebook_error || 'O Make informou erro no Facebook') : null,
+        ...Object.fromEntries(SOCIAL_CHANNELS.flatMap((channel) => [
+          [`${channel}_status`, nextStatuses[channel]],
+          [`${channel}_error`, failed.includes(channel) ? (reported[`${channel}_error`] || `O Make informou erro no ${channel}`) : null],
+        ])),
         status: fullyPublished ? 'published' : failed.length ? 'error' : 'approved',
         error_message: failed.length ? 'Uma rota do Make requer nova tentativa' : null,
         updated_at: new Date().toISOString(),

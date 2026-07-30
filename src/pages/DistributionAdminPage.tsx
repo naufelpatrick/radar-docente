@@ -16,10 +16,16 @@ type DistributionItem = {
   facebook_image_url: string | null
   instagram_caption: string
   facebook_caption: string
+  linkedin_caption: string
+  instagram_enabled: boolean
+  facebook_enabled: boolean
+  linkedin_enabled: boolean
   instagram_status: ChannelStatus
   facebook_status: ChannelStatus
+  linkedin_status: ChannelStatus
   instagram_error: string | null
   facebook_error: string | null
+  linkedin_error: string | null
   status: DistributionStatus
   scheduled_for: string | null
   error_message: string | null
@@ -102,43 +108,58 @@ export function DistributionAdminPage() {
 
   function imagePreview(item: DistributionItem, channel: DistributionChannel) {
     const isInstagram = channel === 'instagram'
-    const imageUrl = item[`${channel}_image_url`]
+    const isLinkedIn = channel === 'linkedin'
+    const channelName = isInstagram ? 'Instagram' : isLinkedIn ? 'LinkedIn' : 'Facebook'
+    const imageUrl = isLinkedIn ? item.instagram_image_url : item[`${channel}_image_url`]
     const status = item[`${channel}_status`]
+    const enabled = item[`${channel}_enabled`] !== false
     const validation = channelImageError(item, channel)
     return (
       <section className={`distribution-channel distribution-channel--${channel}`} aria-labelledby={`${item.id}-${channel}-title`}>
         <div className="distribution-channel__heading">
           <div>
-            <h3 id={`${item.id}-${channel}-title`}>{isInstagram ? 'Instagram' : 'Facebook'}</h3>
-            <small>{isInstagram ? '1080 × 1350 · proporção 4:5' : '1200 × 630 · proporção 1.91:1'}</small>
+            <h3 id={`${item.id}-${channel}-title`}>{channelName}</h3>
+            <small>{isInstagram ? '1080 × 1350 · proporção 4:5' : isLinkedIn ? 'Reutiliza a imagem vertical do Instagram' : '1200 × 630 · proporção 1.91:1'}</small>
           </div>
           <span className={`distribution-channel-status distribution-channel-status--${status}`}>
             {channelLabels[status || 'pending']}
           </span>
         </div>
+        <label className="distribution-channel__selector">
+          <input
+            type="checkbox"
+            checked={enabled}
+            onChange={(event) => changeItem(item.id, { [`${channel}_enabled`]: event.target.checked })}
+          />
+          <span>Incluir {channelName} na publicação</span>
+        </label>
         <div className="distribution-channel__preview">
           {imageUrl ? (
-            <img src={imageUrl} alt={`Prévia da arte de ${isInstagram ? 'Instagram' : 'Facebook'} para “${item.article_title}”`} />
+            <img src={imageUrl} alt={`Prévia da arte de ${channelName} para “${item.article_title}”`} />
           ) : (
             <div className="distribution-channel__missing"><ImageIcon aria-hidden="true" /><span>Imagem ausente</span></div>
           )}
         </div>
-        <label htmlFor={`${item.id}-${channel}-url`}>URL HTTPS da imagem</label>
-        <input
-          id={`${item.id}-${channel}-url`}
-          type="url"
-          inputMode="url"
-          placeholder="https://..."
-          value={imageUrl || ''}
-          aria-describedby={`${item.id}-${channel}-help`}
-          onChange={(event) => changeItem(item.id, { [`${channel}_image_url`]: event.target.value || null })}
-        />
+        <label htmlFor={`${item.id}-${channel}-url`}>{isLinkedIn ? 'Imagem vinculada ao Instagram' : 'URL HTTPS da imagem'}</label>
+        {isLinkedIn ? (
+          <output id={`${item.id}-${channel}-url`} className="distribution-channel__linked-image">{imageUrl || 'Aguardando imagem do Instagram'}</output>
+        ) : (
+          <input
+            id={`${item.id}-${channel}-url`}
+            type="url"
+            inputMode="url"
+            placeholder="https://..."
+            value={imageUrl || ''}
+            aria-describedby={`${item.id}-${channel}-help`}
+            onChange={(event) => changeItem(item.id, { [`${channel}_image_url`]: event.target.value || null })}
+          />
+        )}
         <p id={`${item.id}-${channel}-help`} className={validation ? 'distribution-channel__validation' : 'distribution-channel__ready'}>
           {validation || 'Imagem válida e exclusiva para este canal.'}
         </p>
         {item[`${channel}_error`] && <p className="distribution-channel__validation">{item[`${channel}_error`]}</p>}
         <label htmlFor={`${item.id}-${channel}-caption`}>
-          {isInstagram ? 'Legenda publicada com esta imagem' : 'Texto publicado com esta imagem'}
+          {isInstagram ? 'Legenda publicada com esta imagem' : `Texto publicado no ${channelName} com esta imagem`}
         </label>
         <textarea
           id={`${item.id}-${channel}-caption`}
@@ -147,18 +168,22 @@ export function DistributionAdminPage() {
           onChange={(event) => changeItem(item.id, { [`${channel}_caption`]: event.target.value })}
         />
         <div className="distribution-channel__actions">
-          <button type="button" disabled={busy} onClick={() => void run(
+          {!isLinkedIn && <button type="button" disabled={busy} onClick={() => void run(
             () => api({ action: 'generate_image', id: item.id, channel }),
-            `Nova arte de ${isInstagram ? 'Instagram' : 'Facebook'} gerada.`,
-          )}><RotateCcw aria-hidden="true" /> {imageUrl ? 'Gerar novamente' : 'Gerar imagem'}</button>
-          <button type="button" disabled={busy || Boolean(validation) || status === 'published'} onClick={() => window.confirm(`Publicar somente no ${isInstagram ? 'Instagram' : 'Facebook'}?`) && void run(
+            `Nova arte de ${channelName} gerada.`,
+          )}><RotateCcw aria-hidden="true" /> {imageUrl ? 'Gerar novamente' : 'Gerar imagem'}</button>}
+          <button type="button" disabled={busy || !enabled || Boolean(validation) || status === 'published'} onClick={() => window.confirm(`Publicar somente no ${channelName}?`) && void run(
             () => api({ action: 'update', id: item.id, changes: {
               instagram_caption: item.instagram_caption,
               facebook_caption: item.facebook_caption,
+              linkedin_caption: item.linkedin_caption,
               instagram_image_url: item.instagram_image_url,
               facebook_image_url: item.facebook_image_url,
+              instagram_enabled: item.instagram_enabled,
+              facebook_enabled: item.facebook_enabled,
+              linkedin_enabled: item.linkedin_enabled,
             } }).then(() => api({ action: 'publish', id: item.id, channels: [channel] })),
-            `Conteúdo enviado ao ${isInstagram ? 'Instagram' : 'Facebook'}.`,
+            `Conteúdo enviado ao ${channelName}.`,
           )}><Send aria-hidden="true" /> Publicar imagem + {isInstagram ? 'legenda' : 'texto'}</button>
         </div>
       </section>
@@ -190,7 +215,7 @@ export function DistributionAdminPage() {
           <div>
             <p className="eyebrow"><span />Agente PráxIA</p>
             <h1>Distribuição de conteúdo</h1>
-            <p>Revise, aprove e publique artigos no Instagram e Facebook.</p>
+            <p>Revise, aprove e publique artigos no Instagram, Facebook e LinkedIn.</p>
           </div>
           <button type="button" disabled={busy} onClick={() => void run(() => api({ action: 'sync' }), 'RSS sincronizado.')}>
             <RefreshCw aria-hidden="true" /> Sincronizar RSS
@@ -222,6 +247,7 @@ export function DistributionAdminPage() {
               <div className="distribution-images__grid">
                 {imagePreview(item, 'instagram')}
                 {imagePreview(item, 'facebook')}
+                {imagePreview(item, 'linkedin')}
               </div>
             </section>
 
@@ -231,8 +257,12 @@ export function DistributionAdminPage() {
                 () => api({ action: 'update', id: item.id, changes: {
                   instagram_caption: item.instagram_caption,
                   facebook_caption: item.facebook_caption,
+                  linkedin_caption: item.linkedin_caption,
                   instagram_image_url: item.instagram_image_url,
                   facebook_image_url: item.facebook_image_url,
+                  instagram_enabled: item.instagram_enabled,
+                  facebook_enabled: item.facebook_enabled,
+                  linkedin_enabled: item.linkedin_enabled,
                   status: 'approved',
                 } }),
                 'Rascunho salvo e aprovado.',
@@ -241,19 +271,35 @@ export function DistributionAdminPage() {
                 <input type="datetime-local" value={item.scheduled_for?.slice(0, 16) || ''} onChange={(event) => changeItem(item.id, { scheduled_for: event.target.value })} />
               </label>
               <button type="button" disabled={busy || !item.scheduled_for || item.status === 'published'} onClick={() => void run(
-                () => api({ action: 'update', id: item.id, changes: { instagram_caption: item.instagram_caption, facebook_caption: item.facebook_caption, status: 'scheduled', scheduled_for: new Date(item.scheduled_for!).toISOString() } }),
+                () => api({ action: 'update', id: item.id, changes: {
+                  instagram_caption: item.instagram_caption,
+                  facebook_caption: item.facebook_caption,
+                  linkedin_caption: item.linkedin_caption,
+                  instagram_enabled: item.instagram_enabled,
+                  facebook_enabled: item.facebook_enabled,
+                  linkedin_enabled: item.linkedin_enabled,
+                  status: 'scheduled',
+                  scheduled_for: new Date(item.scheduled_for!).toISOString(),
+                } }),
                 'Publicação agendada.',
               )}>Confirmar agenda</button>
               <button className="distribution-publish" type="button" disabled={
-                busy || item.status === 'published' || Boolean(channelImageError(item, 'instagram')) || Boolean(channelImageError(item, 'facebook'))
+                busy || item.status === 'published'
+                || (item.instagram_enabled && Boolean(channelImageError(item, 'instagram')))
+                || (item.facebook_enabled && Boolean(channelImageError(item, 'facebook')))
+                || (item.linkedin_enabled && Boolean(channelImageError(item, 'linkedin')))
               } onClick={() => window.confirm('Publicar agora nos canais ainda pendentes?') && void run(
                 () => api({ action: 'update', id: item.id, changes: {
                   instagram_caption: item.instagram_caption,
                   facebook_caption: item.facebook_caption,
+                  linkedin_caption: item.linkedin_caption,
                   instagram_image_url: item.instagram_image_url,
                   facebook_image_url: item.facebook_image_url,
+                  instagram_enabled: item.instagram_enabled,
+                  facebook_enabled: item.facebook_enabled,
+                  linkedin_enabled: item.linkedin_enabled,
                 } }).then(() => api({ action: 'publish', id: item.id })),
-                'Conteúdo publicado nas duas redes.',
+                'Conteúdo enviado aos canais selecionados.',
               )}><Send aria-hidden="true" /> Publicar agora</button>
             </div>
           </article>

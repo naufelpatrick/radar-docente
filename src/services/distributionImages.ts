@@ -1,4 +1,4 @@
-export type DistributionChannel = 'instagram' | 'facebook'
+export type DistributionChannel = 'instagram' | 'facebook' | 'linkedin'
 
 export type ChannelImages = {
   instagram_image_url: string | null
@@ -6,8 +6,9 @@ export type ChannelImages = {
 }
 
 export function channelImageError(images: ChannelImages, channel: DistributionChannel) {
-  const label = channel === 'instagram' ? 'Instagram' : 'Facebook'
-  const value = images[`${channel}_image_url`]
+  const label = channel === 'instagram' ? 'Instagram' : channel === 'facebook' ? 'Facebook' : 'LinkedIn'
+  const imageChannel = channel === 'linkedin' ? 'instagram' : channel
+  const value = images[`${imageChannel}_image_url`]
   if (!value) return `${label}: adicione ou gere a imagem antes de publicar.`
   try {
     const parsed = new URL(value)
@@ -15,8 +16,9 @@ export function channelImageError(images: ChannelImages, channel: DistributionCh
   } catch {
     return `${label}: informe uma URL válida.`
   }
-  const other = images[channel === 'instagram' ? 'facebook_image_url' : 'instagram_image_url']
-  if (other && other.trim() === value.trim()) return 'As artes de Instagram e Facebook precisam ser diferentes.'
+  if (channel !== 'linkedin') {
+    const other = images[channel === 'instagram' ? 'facebook_image_url' : 'instagram_image_url']
+    if (other && other.trim() === value.trim()) return 'As artes de Instagram e Facebook precisam ser diferentes.'
+  }
   return null
 }
-

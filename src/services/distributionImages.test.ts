@@ -30,5 +30,13 @@ describe('distribution channel images', () => {
     }
     expect(channelImageError(images, 'instagram')).toBeNull()
     expect(channelImageError(images, 'facebook')).toBeNull()
+    expect(channelImageError(images, 'linkedin')).toBeNull()
+  })
+
+  it('requires the Instagram image when LinkedIn is selected', () => {
+    expect(channelImageError({
+      instagram_image_url: null,
+      facebook_image_url: 'https://cdn.example.com/facebook.jpg',
+    }, 'linkedin')).toContain('LinkedIn')
   })
 })

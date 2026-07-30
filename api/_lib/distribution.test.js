@@ -2,8 +2,10 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   createDraft,
   createMakePublicationPayload,
+  generateChannelHashtags,
   missingImageChannels,
   parseRss,
+  selectedPublicationChannels,
   sendToMake,
   validateChannelImages,
 } from './distribution.js'
@@ -49,6 +51,21 @@ describe('content distribution', () => {
     expect(draft.status).toBe('draft')
     expect(draft.facebook_image_url).toBeNull()
     expect(draft.instagram_image_url).toBeNull()
+    expect(draft.linkedin_caption).toContain('professores, gestores escolares e instituições de ensino')
+    expect(draft.linkedin_status).toBe('pending')
+  })
+
+  it.each([
+    ['instagram', 5, 10],
+    ['facebook', 3, 5],
+    ['linkedin', 3, 5],
+  ])('generates relevant, unique hashtags for %s', (channel, minimum, maximum) => {
+    const hashtags = generateChannelHashtags({ category: 'Avaliação' }, channel)
+    expect(hashtags.length).toBeGreaterThanOrEqual(minimum)
+    expect(hashtags.length).toBeLessThanOrEqual(maximum)
+    expect(new Set(hashtags).size).toBe(hashtags.length)
+    expect(hashtags).toContain('#AvaliaçãoDaAprendizagem')
+    expect(hashtags).toContain('#PráxIA')
   })
 
   it('automatically identifies every missing channel image after RSS sync', () => {
@@ -90,7 +107,8 @@ describe('content distribution', () => {
       facebook_image_url: 'https://cdn.radarpraxia.com/teste-facebook.jpg',
       instagram_caption: 'Legenda Instagram',
       facebook_caption: 'Legenda Facebook',
-      publish_channels: ['instagram', 'facebook'],
+      linkedin_caption: 'Legenda LinkedIn',
+      publish_channels: ['instagram', 'facebook', 'linkedin'],
     })
 
     expect(fetchMock).toHaveBeenCalledWith(
@@ -110,10 +128,13 @@ describe('content distribution', () => {
       article_url: 'https://www.radarpraxia.com/blog/artigo-teste',
       instagram_image_url: 'https://cdn.radarpraxia.com/teste-instagram.jpg',
       facebook_image_url: 'https://cdn.radarpraxia.com/teste-facebook.jpg',
+      linkedin_image_url: 'https://cdn.radarpraxia.com/teste-instagram.jpg',
       instagram_caption: 'Legenda Instagram',
       facebook_caption: 'Legenda Facebook',
+      linkedin_caption: 'Legenda LinkedIn',
       publish_instagram: true,
       publish_facebook: true,
+      publish_linkedin: true,
     })
     expect(payload).not.toHaveProperty('image_url')
   })
@@ -128,6 +149,7 @@ describe('content distribution', () => {
       facebook_image_url: 'https://cdn.example.com/facebook.jpg',
       instagram_caption: 'Legenda do Instagram',
       facebook_caption: 'Texto do Facebook',
+      linkedin_caption: 'Texto do LinkedIn',
       publish_channels: ['facebook'],
     })
 
@@ -137,12 +159,26 @@ describe('content distribution', () => {
       article_url: 'https://www.radarpraxia.com/blog/outro-artigo',
       instagram_image_url: 'https://cdn.example.com/instagram.jpg',
       facebook_image_url: 'https://cdn.example.com/facebook.jpg',
+      linkedin_image_url: 'https://cdn.example.com/instagram.jpg',
       instagram_caption: 'Legenda do Instagram',
       facebook_caption: 'Texto do Facebook',
+      linkedin_caption: 'Texto do LinkedIn',
       publish_instagram: false,
       publish_facebook: true,
+      publish_linkedin: false,
     })
     expect(payload).not.toHaveProperty('image_url')
+  })
+
+  it('selects the three channels independently', () => {
+    const item = {
+      instagram_enabled: true,
+      facebook_enabled: false,
+      linkedin_enabled: true,
+    }
+    expect(selectedPublicationChannels(item)).toEqual(['instagram', 'linkedin'])
+    expect(selectedPublicationChannels(item, ['facebook'])).toEqual([])
+    expect(selectedPublicationChannels(item, ['linkedin'])).toEqual(['linkedin'])
   })
 
   it('rejects missing, equal, invalid and insecure channel images', () => {
