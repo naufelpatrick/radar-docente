@@ -76,6 +76,12 @@ as variáveis `MAKE_*` não estiverem configuradas, detecção, edição, aprova
 agendamento funcionam normalmente; a ação de publicar informa a configuração
 ausente sem perder o rascunho.
 
+Ao sincronizar o RSS, o servidor gera automaticamente todas as imagens por
+canal que estiverem ausentes. Isso inclui o preenchimento das artes verticais
+dos registros antigos após a primeira sincronização posterior à migration.
+Os botões “Gerar imagem” e “Gerar novamente” permanecem disponíveis para
+substituições manuais.
+
 ### Migração das imagens por canal
 
 Execute a migration

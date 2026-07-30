@@ -59,7 +59,7 @@ export function createDraft(article) {
     article_category: article.category,
     article_image_url: article.imageUrl || null,
     instagram_image_url: null,
-    facebook_image_url: article.imageUrl || null,
+    facebook_image_url: null,
     published_at: article.publishedAt,
     instagram_caption: `${article.title}\n\n${article.summary}\n\nLeia o artigo completo no link da bio.\n\n#PráxIA #InteligênciaArtificial #Educação #Professores #PráticaDocente\n\nLink de campanha: ${trackedUrl(article.url, 'instagram')}`,
     facebook_caption: `${article.title}\n\n${article.summary}\n\nLeia o artigo completo: ${trackedUrl(article.url, 'facebook')}`,
@@ -81,7 +81,35 @@ export async function syncRss() {
     body: JSON.stringify(drafts),
   })
   if (!result.ok) throw new Error(`Não foi possível sincronizar a fila: ${await result.text()}`)
-  return { found: articles.length, created: (await result.json()).length }
+  const created = (await result.json()).length
+  const articleGuids = new Set(articles.map((article) => article.guid))
+  const items = (await listDistribution()).filter((item) => articleGuids.has(item.article_guid))
+  let generated = 0
+  const imageErrors = []
+
+  for (const item of items) {
+    for (const channel of missingImageChannels(item)) {
+      try {
+        await generateChannelImage(item, channel)
+        generated += 1
+      } catch (error) {
+        imageErrors.push({
+          id: item.id,
+          channel,
+          error: error instanceof Error ? error.message : 'Erro ao gerar imagem',
+        })
+      }
+    }
+  }
+
+  if (imageErrors.length) {
+    throw new Error(`RSS sincronizado, mas ${imageErrors.length} imagem(ns) não puderam ser geradas: ${imageErrors[0].error}`)
+  }
+  return { found: articles.length, created, generated }
+}
+
+export function missingImageChannels(item) {
+  return ['instagram', 'facebook'].filter((channel) => !item[`${channel}_image_url`])
 }
 
 export async function listDistribution() {
