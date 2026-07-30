@@ -1,5 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { createDraft, missingImageChannels, parseRss, sendToMake, validateChannelImages } from './distribution.js'
+import {
+  createDraft,
+  createMakePublicationPayload,
+  missingImageChannels,
+  parseRss,
+  sendToMake,
+  validateChannelImages,
+} from './distribution.js'
 import { createChannelJpeg } from './distribution-images.js'
 
 describe('content distribution', () => {
@@ -96,7 +103,8 @@ describe('content distribution', () => {
         },
       }),
     )
-    expect(JSON.parse(fetchMock.mock.calls[0][1].body)).toEqual({
+    const payload = JSON.parse(fetchMock.mock.calls[0][1].body)
+    expect(payload).toEqual({
       content_id: 'publication-1',
       article_title: 'Artigo teste',
       article_url: 'https://www.radarpraxia.com/blog/artigo-teste',
@@ -107,6 +115,34 @@ describe('content distribution', () => {
       publish_instagram: true,
       publish_facebook: true,
     })
+    expect(payload).not.toHaveProperty('image_url')
+  })
+
+  it('builds a channel-specific Make payload without the legacy image_url field', () => {
+    const payload = createMakePublicationPayload({
+      id: 'publication-2',
+      article_title: 'Outro artigo',
+      article_url: 'https://www.radarpraxia.com/blog/outro-artigo',
+      image_url: 'https://cdn.example.com/legacy.jpg',
+      instagram_image_url: 'https://cdn.example.com/instagram.jpg',
+      facebook_image_url: 'https://cdn.example.com/facebook.jpg',
+      instagram_caption: 'Legenda do Instagram',
+      facebook_caption: 'Texto do Facebook',
+      publish_channels: ['facebook'],
+    })
+
+    expect(payload).toEqual({
+      content_id: 'publication-2',
+      article_title: 'Outro artigo',
+      article_url: 'https://www.radarpraxia.com/blog/outro-artigo',
+      instagram_image_url: 'https://cdn.example.com/instagram.jpg',
+      facebook_image_url: 'https://cdn.example.com/facebook.jpg',
+      instagram_caption: 'Legenda do Instagram',
+      facebook_caption: 'Texto do Facebook',
+      publish_instagram: false,
+      publish_facebook: true,
+    })
+    expect(payload).not.toHaveProperty('image_url')
   })
 
   it('rejects missing, equal, invalid and insecure channel images', () => {
