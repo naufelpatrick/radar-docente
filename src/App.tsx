@@ -69,6 +69,9 @@ const EbookOrderPage = lazy(() =>
 const DistributionAdminPage = lazy(() =>
   import('./pages/DistributionAdminPage').then((module) => ({ default: module.DistributionAdminPage })),
 )
+const LinksPage = lazy(() =>
+  import('./pages/LinksPage').then((module) => ({ default: module.LinksPage })),
+)
 
 export default function App() {
   return (
@@ -98,6 +101,7 @@ export default function App() {
           <Route path="/ebook" element={<TeacherProductPage productId="ebook" />} />
           <Route path="/ebook/obrigado" element={<EbookOrderPage />} />
           <Route path="/admin/distribuicao" element={<DistributionAdminPage />} />
+          <Route path="/links" element={<LinksPage />} />
           <Route path="/mentoria" element={<TeacherProductPage productId="mentoring" />} />
           <Route path="/para-instituicoes" element={<InstitutionsPage />} />
           <Route path="/radar/*" element={<RadarFlow />} />

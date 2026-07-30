@@ -3,6 +3,14 @@
   "crons": [
     { "path": "/api/cron/distribution", "schedule": "0 12 * * *" }
   ],
+  "headers": [
+    {
+      "source": "/links",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, follow" }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ]
