@@ -1,5 +1,6 @@
 import { timingSafeEqual } from 'node:crypto'
 import { supabase } from './ebook.js'
+import { uploadChannelImage } from './distribution-images.js'
 
 const RSS_URL = process.env.PRAXIA_RSS_URL || 'https://www.radarpraxia.com/rss.xml'
 function decodeXml(value = '') {
@@ -57,10 +58,14 @@ export function createDraft(article) {
     article_summary: article.summary,
     article_category: article.category,
     article_image_url: article.imageUrl || null,
+    instagram_image_url: null,
+    facebook_image_url: article.imageUrl || null,
     published_at: article.publishedAt,
     instagram_caption: `${article.title}\n\n${article.summary}\n\nLeia o artigo completo no link da bio.\n\n#PráxIA #InteligênciaArtificial #Educação #Professores #PráticaDocente\n\nLink de campanha: ${trackedUrl(article.url, 'instagram')}`,
     facebook_caption: `${article.title}\n\n${article.summary}\n\nLeia o artigo completo: ${trackedUrl(article.url, 'facebook')}`,
     status: 'draft',
+    instagram_status: 'pending',
+    facebook_status: 'pending',
   }
 }
 
@@ -86,7 +91,11 @@ export async function listDistribution() {
 }
 
 export async function updateDistribution(id, changes) {
-  const allowed = ['instagram_caption', 'facebook_caption', 'status', 'scheduled_for', 'error_message']
+  const allowed = [
+    'instagram_caption', 'facebook_caption', 'instagram_image_url', 'facebook_image_url',
+    'instagram_status', 'facebook_status', 'instagram_error', 'facebook_error',
+    'status', 'scheduled_for', 'error_message',
+  ]
   const payload = Object.fromEntries(Object.entries(changes).filter(([key]) => allowed.includes(key)))
   payload.updated_at = new Date().toISOString()
   const response = await supabase(`/rest/v1/content_distribution?id=eq.${encodeURIComponent(id)}`, {
@@ -130,37 +139,112 @@ export async function sendToMake(item) {
       content_id: item.id,
       article_title: item.article_title,
       article_url: item.article_url,
-      image_url: item.article_image_url,
+      instagram_image_url: item.instagram_image_url,
+      facebook_image_url: item.facebook_image_url,
       instagram_caption: item.instagram_caption,
       facebook_caption: item.facebook_caption,
+      publish_instagram: item.publish_channels?.includes('instagram') ?? true,
+      publish_facebook: item.publish_channels?.includes('facebook') ?? true,
     }),
   })
   if (!response.ok) {
     const detail = (await response.text()).trim()
     throw new Error(`Make recusou a publicação (${response.status})${detail ? `: ${detail.slice(0, 300)}` : ''}`)
   }
-  return { status: response.status }
+  let result = {}
+  try {
+    result = await response.json()
+  } catch {
+    // A webhook without a JSON response means the requested routes were accepted.
+  }
+  return { status: response.status, result }
 }
 
-export async function publishItem(item) {
-  if (!item.article_image_url) throw new Error('O artigo não possui imagem pública para publicação')
-
-  await updateDistribution(item.id, { status: 'publishing', error_message: null })
+export function validatePublicImageUrl(value, label) {
+  if (!value) throw new Error(`${label}: adicione a imagem antes de publicar`)
+  let url
   try {
-    await sendToMake(item)
+    url = new URL(value)
+  } catch {
+    throw new Error(`${label}: a URL da imagem é inválida`)
+  }
+  if (url.protocol !== 'https:') throw new Error(`${label}: a imagem deve usar uma URL HTTPS`)
+  return url.toString()
+}
+
+export function validateChannelImages(item, channels = ['instagram', 'facebook']) {
+  if (channels.includes('instagram')) validatePublicImageUrl(item.instagram_image_url, 'Instagram')
+  if (channels.includes('facebook')) validatePublicImageUrl(item.facebook_image_url, 'Facebook')
+  if (
+    item.instagram_image_url
+    && item.facebook_image_url
+    && item.instagram_image_url.trim() === item.facebook_image_url.trim()
+  ) {
+    throw new Error('Instagram e Facebook precisam de artes diferentes; as URLs não podem ser iguais')
+  }
+}
+
+function channelUpdate(channels, status, error = null) {
+  const changes = {}
+  for (const channel of channels) {
+    changes[`${channel}_status`] = status
+    changes[`${channel}_error`] = error
+  }
+  return changes
+}
+
+export async function generateChannelImage(item, channel) {
+  if (!['instagram', 'facebook'].includes(channel)) throw new Error('Canal de imagem inválido')
+  const imageUrl = await uploadChannelImage(item, channel)
+  return updateDistribution(item.id, {
+    [`${channel}_image_url`]: imageUrl,
+    [`${channel}_status`]: 'pending',
+    [`${channel}_error`]: null,
+    status: item.status === 'published' ? 'approved' : item.status,
+  })
+}
+
+export async function publishItem(item, requestedChannels) {
+  const channels = (requestedChannels || ['instagram', 'facebook'])
+    .filter((channel) => ['instagram', 'facebook'].includes(channel))
+    .filter((channel) => item[`${channel}_status`] !== 'published')
+  if (!channels.length) throw new Error('Os canais selecionados já foram publicados')
+  validateChannelImages(item, channels)
+
+  await updateDistribution(item.id, {
+    ...channelUpdate(channels, 'pending'),
+    status: 'publishing',
+    error_message: null,
+  })
+  try {
+    const makeResponse = await sendToMake({ ...item, publish_channels: channels })
+    const reported = makeResponse.result || {}
+    const succeeded = channels.filter((channel) => reported[`${channel}_status`] !== 'error')
+    const failed = channels.filter((channel) => reported[`${channel}_status`] === 'error')
+    const nextInstagram = succeeded.includes('instagram') ? 'published' : failed.includes('instagram') ? 'error' : item.instagram_status
+    const nextFacebook = succeeded.includes('facebook') ? 'published' : failed.includes('facebook') ? 'error' : item.facebook_status
+    const fullyPublished = nextInstagram === 'published' && nextFacebook === 'published'
     const response = await supabase(`/rest/v1/content_distribution?id=eq.${encodeURIComponent(item.id)}`, {
       method: 'PATCH',
       headers: { prefer: 'return=representation' },
       body: JSON.stringify({
-        status: 'published',
-        error_message: null,
+        instagram_status: nextInstagram,
+        facebook_status: nextFacebook,
+        instagram_error: failed.includes('instagram') ? (reported.instagram_error || 'O Make informou erro no Instagram') : null,
+        facebook_error: failed.includes('facebook') ? (reported.facebook_error || 'O Make informou erro no Facebook') : null,
+        status: fullyPublished ? 'published' : failed.length ? 'error' : 'approved',
+        error_message: failed.length ? 'Uma rota do Make requer nova tentativa' : null,
         updated_at: new Date().toISOString(),
       }),
     })
     if (!response.ok) throw new Error('Publicação concluída, mas o histórico não pôde ser atualizado')
     return (await response.json())[0]
   } catch (error) {
-    await updateDistribution(item.id, { status: 'error', error_message: error.message })
+    await updateDistribution(item.id, {
+      ...channelUpdate(channels, 'error', error.message),
+      status: 'error',
+      error_message: error.message,
+    })
     throw error
   }
 }

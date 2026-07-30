@@ -1,4 +1,11 @@
-import { authorize, listDistribution, publishItem, syncRss, updateDistribution } from '../_lib/distribution.js'
+import {
+  authorize,
+  generateChannelImage,
+  listDistribution,
+  publishItem,
+  syncRss,
+  updateDistribution,
+} from '../_lib/distribution.js'
 import { json, readJson } from '../_lib/ebook.js'
 
 export default async function handler(request, response) {
@@ -14,7 +21,12 @@ export default async function handler(request, response) {
     if (body.action === 'publish' && body.id) {
       const item = (await listDistribution()).find((candidate) => candidate.id === body.id)
       if (!item) return json(response, 404, { error: 'Publicação não encontrada' })
-      return json(response, 200, { item: await publishItem(item) })
+      return json(response, 200, { item: await publishItem(item, body.channels) })
+    }
+    if (body.action === 'generate_image' && body.id && body.channel) {
+      const item = (await listDistribution()).find((candidate) => candidate.id === body.id)
+      if (!item) return json(response, 404, { error: 'Publicação não encontrada' })
+      return json(response, 200, { item: await generateChannelImage(item, body.channel) })
     }
     return json(response, 400, { error: 'Ação inválida' })
   } catch (error) {
