@@ -107,43 +107,52 @@ export function authorize(request, envName = 'DISTRIBUTION_ADMIN_KEY') {
   return first.length === second.length && timingSafeEqual(first, second)
 }
 
-async function metaRequest(path, body) {
-  const token = process.env.META_ACCESS_TOKEN
-  if (!token) throw new Error('META_ACCESS_TOKEN não configurado')
-  const response = await fetch(`https://graph.facebook.com/v23.0/${path}`, {
+export async function sendToMake(item) {
+  const webhookUrl = process.env.MAKE_WEBHOOK_URL
+  const apiKey = process.env.MAKE_WEBHOOK_API_KEY
+  if (!webhookUrl || !apiKey) throw new Error('Webhook do Make não configurado')
+
+  let target
+  try {
+    target = new URL(webhookUrl)
+  } catch {
+    throw new Error('MAKE_WEBHOOK_URL inválida')
+  }
+  if (target.protocol !== 'https:') throw new Error('MAKE_WEBHOOK_URL deve usar HTTPS')
+
+  const response = await fetch(target, {
     method: 'POST',
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ ...body, access_token: token }),
+    headers: {
+      'content-type': 'application/json',
+      'x-make-apikey': apiKey,
+    },
+    body: JSON.stringify({
+      content_id: item.id,
+      article_title: item.article_title,
+      article_url: item.article_url,
+      image_url: item.article_image_url,
+      instagram_caption: item.instagram_caption,
+      facebook_caption: item.facebook_caption,
+    }),
   })
-  const result = await response.json()
-  if (!response.ok) throw new Error(result.error?.message || 'Falha na API da Meta')
-  return result
+  if (!response.ok) {
+    const detail = (await response.text()).trim()
+    throw new Error(`Make recusou a publicação (${response.status})${detail ? `: ${detail.slice(0, 300)}` : ''}`)
+  }
+  return { status: response.status }
 }
 
 export async function publishItem(item) {
   if (!item.article_image_url) throw new Error('O artigo não possui imagem pública para publicação')
-  const igUser = process.env.META_INSTAGRAM_USER_ID
-  const pageId = process.env.META_FACEBOOK_PAGE_ID
-  if (!igUser || !pageId) throw new Error('IDs do Instagram e da Página do Facebook não configurados')
 
   await updateDistribution(item.id, { status: 'publishing', error_message: null })
   try {
-    const container = await metaRequest(`${igUser}/media`, {
-      image_url: item.article_image_url,
-      caption: item.instagram_caption,
-    })
-    const instagram = await metaRequest(`${igUser}/media_publish`, { creation_id: container.id })
-    const facebook = await metaRequest(`${pageId}/photos`, {
-      url: item.article_image_url,
-      caption: item.facebook_caption,
-    })
+    await sendToMake(item)
     const response = await supabase(`/rest/v1/content_distribution?id=eq.${encodeURIComponent(item.id)}`, {
       method: 'PATCH',
       headers: { prefer: 'return=representation' },
       body: JSON.stringify({
         status: 'published',
-        instagram_media_id: instagram.id,
-        facebook_post_id: facebook.post_id || facebook.id,
         error_message: null,
         updated_at: new Date().toISOString(),
       }),
