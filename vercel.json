@@ -1,7 +1,7 @@
 {
   "cleanUrls": true,
   "crons": [
-    { "path": "/api/cron/distribution", "schedule": "0 * * * *" }
+    { "path": "/api/cron/distribution", "schedule": "0 12 * * *" }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
