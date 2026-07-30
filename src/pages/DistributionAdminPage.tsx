@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
-import { CalendarClock, Check, ExternalLink, RefreshCw, Send, ShieldCheck } from 'lucide-react'
+import { CalendarClock, Check, ExternalLink, ImageIcon, RefreshCw, RotateCcw, Send, ShieldCheck } from 'lucide-react'
 import { BrandMark } from '../components/BrandMark'
+import { channelImageError, type DistributionChannel } from '../services/distributionImages'
 
 type DistributionStatus = 'draft' | 'approved' | 'scheduled' | 'publishing' | 'published' | 'error'
+type ChannelStatus = 'pending' | 'published' | 'error'
 
 type DistributionItem = {
   id: string
@@ -10,8 +12,14 @@ type DistributionItem = {
   article_url: string
   article_category: string
   article_image_url: string | null
+  instagram_image_url: string | null
+  facebook_image_url: string | null
   instagram_caption: string
   facebook_caption: string
+  instagram_status: ChannelStatus
+  facebook_status: ChannelStatus
+  instagram_error: string | null
+  facebook_error: string | null
   status: DistributionStatus
   scheduled_for: string | null
   error_message: string | null
@@ -25,6 +33,12 @@ const labels: Record<DistributionStatus, string> = {
   publishing: 'Publicando',
   published: 'Publicado',
   error: 'Requer atenção',
+}
+
+const channelLabels: Record<ChannelStatus, string> = {
+  pending: 'Pendente',
+  published: 'Publicado',
+  error: 'Erro',
 }
 
 export function DistributionAdminPage() {
@@ -86,6 +100,62 @@ export function DistributionAdminPage() {
     setItems((current) => current.map((item) => item.id === id ? { ...item, ...changes } : item))
   }
 
+  function imagePreview(item: DistributionItem, channel: DistributionChannel) {
+    const isInstagram = channel === 'instagram'
+    const imageUrl = item[`${channel}_image_url`]
+    const status = item[`${channel}_status`]
+    const validation = channelImageError(item, channel)
+    return (
+      <section className={`distribution-channel distribution-channel--${channel}`} aria-labelledby={`${item.id}-${channel}-title`}>
+        <div className="distribution-channel__heading">
+          <div>
+            <h3 id={`${item.id}-${channel}-title`}>{isInstagram ? 'Instagram' : 'Facebook'}</h3>
+            <small>{isInstagram ? '1080 × 1350 · proporção 4:5' : '1200 × 630 · proporção 1.91:1'}</small>
+          </div>
+          <span className={`distribution-channel-status distribution-channel-status--${status}`}>
+            {channelLabels[status || 'pending']}
+          </span>
+        </div>
+        <div className="distribution-channel__preview">
+          {imageUrl ? (
+            <img src={imageUrl} alt={`Prévia da arte de ${isInstagram ? 'Instagram' : 'Facebook'} para “${item.article_title}”`} />
+          ) : (
+            <div className="distribution-channel__missing"><ImageIcon aria-hidden="true" /><span>Imagem ausente</span></div>
+          )}
+        </div>
+        <label htmlFor={`${item.id}-${channel}-url`}>URL HTTPS da imagem</label>
+        <input
+          id={`${item.id}-${channel}-url`}
+          type="url"
+          inputMode="url"
+          placeholder="https://..."
+          value={imageUrl || ''}
+          aria-describedby={`${item.id}-${channel}-help`}
+          onChange={(event) => changeItem(item.id, { [`${channel}_image_url`]: event.target.value || null })}
+        />
+        <p id={`${item.id}-${channel}-help`} className={validation ? 'distribution-channel__validation' : 'distribution-channel__ready'}>
+          {validation || 'Imagem válida e exclusiva para este canal.'}
+        </p>
+        {item[`${channel}_error`] && <p className="distribution-channel__validation">{item[`${channel}_error`]}</p>}
+        <div className="distribution-channel__actions">
+          <button type="button" disabled={busy} onClick={() => void run(
+            () => api({ action: 'generate_image', id: item.id, channel }),
+            `Nova arte de ${isInstagram ? 'Instagram' : 'Facebook'} gerada.`,
+          )}><RotateCcw aria-hidden="true" /> {imageUrl ? 'Gerar novamente' : 'Gerar imagem'}</button>
+          <button type="button" disabled={busy || Boolean(validation) || status === 'published'} onClick={() => window.confirm(`Publicar somente no ${isInstagram ? 'Instagram' : 'Facebook'}?`) && void run(
+            () => api({ action: 'update', id: item.id, changes: {
+              instagram_caption: item.instagram_caption,
+              facebook_caption: item.facebook_caption,
+              instagram_image_url: item.instagram_image_url,
+              facebook_image_url: item.facebook_image_url,
+            } }).then(() => api({ action: 'publish', id: item.id, channels: [channel] })),
+            `Conteúdo enviado ao ${isInstagram ? 'Instagram' : 'Facebook'}.`,
+          )}><Send aria-hidden="true" /> Publicar {isInstagram ? 'no Instagram' : 'no Facebook'}</button>
+        </div>
+      </section>
+    )
+  }
+
   if (!key) {
     return (
       <main className="distribution-login">
@@ -125,7 +195,7 @@ export function DistributionAdminPage() {
         {items.map((item) => (
           <article className="distribution-card" key={item.id}>
             <div className="distribution-card__summary">
-              {item.article_image_url && <img src={item.article_image_url} alt="" />}
+              {item.article_image_url && <img src={item.article_image_url} alt={`Social Graph do artigo “${item.article_title}”`} />}
               <div>
                 <span className={`distribution-status distribution-status--${item.status}`}>{labels[item.status]}</span>
                 <small>{item.article_category}</small>
@@ -133,6 +203,18 @@ export function DistributionAdminPage() {
                 <a href={item.article_url} target="_blank" rel="noreferrer">Abrir artigo <ExternalLink aria-hidden="true" /></a>
               </div>
             </div>
+
+            <section className="distribution-images" aria-labelledby={`${item.id}-images-title`}>
+              <div className="distribution-images__intro">
+                <p className="eyebrow eyebrow--dark"><span />Publicação social</p>
+                <h2 id={`${item.id}-images-title`}>Imagens por canal</h2>
+                <p>Cada rede recebe uma composição própria. O Social Graph acima permanece separado para SEO.</p>
+              </div>
+              <div className="distribution-images__grid">
+                {imagePreview(item, 'instagram')}
+                {imagePreview(item, 'facebook')}
+              </div>
+            </section>
 
             <div className="distribution-card__editors">
               <label>Legenda do Instagram
@@ -146,7 +228,13 @@ export function DistributionAdminPage() {
             {item.error_message && <p className="distribution-error">{item.error_message}</p>}
             <div className="distribution-card__actions">
               <button type="button" disabled={busy || item.status === 'published'} onClick={() => void run(
-                () => api({ action: 'update', id: item.id, changes: { instagram_caption: item.instagram_caption, facebook_caption: item.facebook_caption, status: 'approved' } }),
+                () => api({ action: 'update', id: item.id, changes: {
+                  instagram_caption: item.instagram_caption,
+                  facebook_caption: item.facebook_caption,
+                  instagram_image_url: item.instagram_image_url,
+                  facebook_image_url: item.facebook_image_url,
+                  status: 'approved',
+                } }),
                 'Rascunho salvo e aprovado.',
               )}><Check aria-hidden="true" /> Salvar e aprovar</button>
               <label className="distribution-schedule"><CalendarClock aria-hidden="true" /><span>Agendar</span>
@@ -156,8 +244,15 @@ export function DistributionAdminPage() {
                 () => api({ action: 'update', id: item.id, changes: { instagram_caption: item.instagram_caption, facebook_caption: item.facebook_caption, status: 'scheduled', scheduled_for: new Date(item.scheduled_for!).toISOString() } }),
                 'Publicação agendada.',
               )}>Confirmar agenda</button>
-              <button className="distribution-publish" type="button" disabled={busy || item.status === 'published'} onClick={() => window.confirm('Publicar agora no Instagram e Facebook?') && void run(
-                () => api({ action: 'publish', id: item.id }),
+              <button className="distribution-publish" type="button" disabled={
+                busy || item.status === 'published' || Boolean(channelImageError(item, 'instagram')) || Boolean(channelImageError(item, 'facebook'))
+              } onClick={() => window.confirm('Publicar agora nos canais ainda pendentes?') && void run(
+                () => api({ action: 'update', id: item.id, changes: {
+                  instagram_caption: item.instagram_caption,
+                  facebook_caption: item.facebook_caption,
+                  instagram_image_url: item.instagram_image_url,
+                  facebook_image_url: item.facebook_image_url,
+                } }).then(() => api({ action: 'publish', id: item.id })),
                 'Conteúdo publicado nas duas redes.',
               )}><Send aria-hidden="true" /> Publicar agora</button>
             </div>

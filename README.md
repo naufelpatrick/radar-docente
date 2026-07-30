@@ -68,11 +68,44 @@ Variáveis server-side:
 - `MAKE_WEBHOOK_URL`: URL privada do webhook personalizado no Make;
 - `MAKE_WEBHOOK_API_KEY`: chave enviada no cabeçalho `x-make-apikey`.
 
-O webhook recebe os dados do artigo, a URL pública da imagem e as legendas
-específicas de cada rede. Nenhuma credencial é enviada ao navegador. Enquanto
+O webhook recebe os dados do artigo, as imagens independentes de Instagram
+(`1080 × 1350`) e Facebook (`1200 × 630`) e as legendas específicas de cada
+rede. `article_image_url` permanece reservado ao Social Graph e nunca é usado
+silenciosamente como imagem do Instagram. Nenhuma credencial é enviada ao navegador. Enquanto
 as variáveis `MAKE_*` não estiverem configuradas, detecção, edição, aprovação e
 agendamento funcionam normalmente; a ação de publicar informa a configuração
 ausente sem perder o rascunho.
+
+### Migração das imagens por canal
+
+Execute a migration
+`supabase/migrations/20260730190000_separate_distribution_channel_images.sql`
+antes do deploy. Ela:
+
+- cria `instagram_image_url` e `facebook_image_url`;
+- copia a imagem horizontal antiga apenas para `facebook_image_url`;
+- mantém `instagram_image_url` vazio até que uma arte vertical seja gerada;
+- adiciona estados e erros independentes por canal;
+- cria o bucket público `distribution-images` para as artes geradas no servidor.
+
+Depois do deploy, remapeie o cenário do Make:
+
+- Instagram → **Photo URL**: `instagram_image_url`;
+- Facebook → **Photos**: `facebook_image_url`;
+- filtro da rota Instagram: `publish_instagram = true`;
+- filtro da rota Facebook: `publish_facebook = true`.
+
+O payload também contém `publish_instagram` e `publish_facebook`. Esses
+indicadores permitem repetir somente a rota que falhou, sem duplicar a
+publicação já concluída na outra rede. O Make pode responder opcionalmente
+`instagram_status` e `facebook_status` com `published` ou `error`, além de
+`instagram_error` e `facebook_error`; sem essa resposta, uma aceitação HTTP 2xx
+marca como publicados apenas os canais solicitados.
+
+Na Vercel, confirme as variáveis server-side `SUPABASE_URL`,
+`SUPABASE_SERVICE_ROLE_KEY`, `DISTRIBUTION_ADMIN_KEY`, `CRON_SECRET`,
+`MAKE_WEBHOOK_URL` e `MAKE_WEBHOOK_API_KEY`. Não use o prefixo `VITE_` para
+segredos.
 
 ## Privacidade e persistência
 
