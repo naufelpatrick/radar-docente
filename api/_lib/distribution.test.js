@@ -59,6 +59,14 @@ describe('content distribution', () => {
       instagram_image_url: 'https://cdn.example.com/instagram.jpg',
       facebook_image_url: 'https://cdn.example.com/facebook.jpg',
     })).toEqual([])
+    expect(missingImageChannels({
+      instagram_image_url: 'https://project.supabase.co/storage/v1/object/public/distribution-images/article-instagram-1080x1350-123.jpg',
+      facebook_image_url: 'https://cdn.example.com/facebook.jpg',
+    })).toEqual(['instagram'])
+    expect(missingImageChannels({
+      instagram_image_url: 'https://project.supabase.co/storage/v1/object/public/distribution-images/article-instagram-1080x1350-v2-123.jpg',
+      facebook_image_url: 'https://cdn.example.com/facebook.jpg',
+    })).toEqual([])
   })
 
   it('sends the publication payload to the authenticated Make webhook', async () => {
