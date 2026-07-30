@@ -8,6 +8,7 @@ const CHANNELS = {
   instagram: { width: 1080, height: 1350, suffix: 'instagram-1080x1350' },
   facebook: { width: 1200, height: 630, suffix: 'facebook-1200x630' },
 }
+export const IMAGE_GENERATION_VERSION = 'v2'
 
 function escapeXml(value = '') {
   return value
@@ -109,7 +110,7 @@ export async function uploadChannelImage(item, channel) {
   if (!supabaseUrl || !serviceKey) throw new Error('Supabase não configurado para gerar imagens')
 
   const slug = new URL(item.article_url).pathname.split('/').filter(Boolean).at(-1) || item.id
-  const fileName = `${slug}-${config.suffix}-${Date.now()}.jpg`
+  const fileName = `${slug}-${config.suffix}-${IMAGE_GENERATION_VERSION}-${Date.now()}.jpg`
   const response = await fetch(`${supabaseUrl}/storage/v1/object/distribution-images/${fileName}`, {
     method: 'POST',
     headers: {

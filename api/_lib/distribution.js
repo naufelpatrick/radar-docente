@@ -1,6 +1,6 @@
 import { timingSafeEqual } from 'node:crypto'
 import { supabase } from './ebook.js'
-import { uploadChannelImage } from './distribution-images.js'
+import { IMAGE_GENERATION_VERSION, uploadChannelImage } from './distribution-images.js'
 
 const RSS_URL = process.env.PRAXIA_RSS_URL || 'https://www.radarpraxia.com/rss.xml'
 function decodeXml(value = '') {
@@ -109,7 +109,13 @@ export async function syncRss() {
 }
 
 export function missingImageChannels(item) {
-  return ['instagram', 'facebook'].filter((channel) => !item[`${channel}_image_url`])
+  return ['instagram', 'facebook'].filter((channel) => {
+    const imageUrl = item[`${channel}_image_url`]
+    if (!imageUrl) return true
+    return channel === 'instagram'
+      && imageUrl.includes('/distribution-images/')
+      && !imageUrl.includes(`-${IMAGE_GENERATION_VERSION}-`)
+  })
 }
 
 export async function listDistribution() {
