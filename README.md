@@ -55,8 +55,8 @@ npm run preview
 ## Agente de distribuição PráxIA
 
 O painel privado em `/admin/distribuicao` sincroniza os artigos de
-`https://www.radarpraxia.com/rss.xml`, gera rascunhos para Instagram e
-Facebook e permite aprovar, agendar ou publicar. A fila usa a tabela
+`https://www.radarpraxia.com/rss.xml`, gera rascunhos para Instagram,
+Facebook e LinkedIn e permite aprovar, agendar ou publicar. A fila usa a tabela
 `content_distribution`, criada pelas migrations do Supabase.
 
 Variáveis server-side:
@@ -69,8 +69,9 @@ Variáveis server-side:
 - `MAKE_WEBHOOK_API_KEY`: chave enviada no cabeçalho `x-make-apikey`.
 
 O webhook recebe os dados do artigo, as imagens independentes de Instagram
-(`1080 × 1350`) e Facebook (`1200 × 630`) e as legendas específicas de cada
-rede. `article_image_url` permanece reservado ao Social Graph e nunca é usado
+(`1080 × 1350`) e Facebook (`1200 × 630`) e as legendas específicas dos três
+canais. O LinkedIn reutiliza explicitamente `instagram_image_url`, sem gerar
+uma terceira arte. `article_image_url` permanece reservado ao Social Graph e nunca é usado
 silenciosamente como imagem do Instagram. Nenhuma credencial é enviada ao navegador. Enquanto
 as variáveis `MAKE_*` não estiverem configuradas, detecção, edição, aprovação e
 agendamento funcionam normalmente; a ação de publicar informa a configuração
@@ -81,6 +82,21 @@ canal que estiverem ausentes. Isso inclui o preenchimento das artes verticais
 dos registros antigos após a primeira sincronização posterior à migration.
 Os botões “Gerar imagem” e “Gerar novamente” permanecem disponíveis para
 substituições manuais.
+
+Novos rascunhos recebem hashtags relacionadas à categoria do artigo, sem
+duplicação: de 5 a 10 no Instagram e de 3 a 5 no Facebook e LinkedIn.
+Publicações existentes não são reescritas retroativamente.
+
+### Migração do LinkedIn
+
+Antes do deploy, execute no SQL Editor do Supabase:
+
+`supabase/migrations/20260730210000_add_linkedin_distribution.sql`
+
+A migration cria a legenda, seleção, status, erro e identificador de publicação
+do LinkedIn, além das seleções persistentes de Instagram e Facebook. Ela é
+idempotente e não altera legendas já publicadas. A Vercel não executa migrations
+automaticamente.
 
 ### Migração das imagens por canal
 
@@ -100,12 +116,16 @@ Depois do deploy, remapeie o cenário do Make:
 - Facebook → **Photos**: `facebook_image_url`;
 - filtro da rota Instagram: `publish_instagram = true`;
 - filtro da rota Facebook: `publish_facebook = true`.
+- LinkedIn → imagem: `linkedin_image_url`;
+- LinkedIn → texto: `linkedin_caption`;
+- filtro da rota LinkedIn: `publish_linkedin = true`.
 
-O payload também contém `publish_instagram` e `publish_facebook`. Esses
+O payload também contém `publish_instagram`, `publish_facebook` e
+`publish_linkedin`. Esses
 indicadores permitem repetir somente a rota que falhou, sem duplicar a
 publicação já concluída na outra rede. O Make pode responder opcionalmente
-`instagram_status` e `facebook_status` com `published` ou `error`, além de
-`instagram_error` e `facebook_error`; sem essa resposta, uma aceitação HTTP 2xx
+`instagram_status`, `facebook_status` e `linkedin_status` com `published` ou
+`error`, além dos respectivos campos de erro; sem essa resposta, uma aceitação HTTP 2xx
 marca como publicados apenas os canais solicitados.
 
 Na Vercel, confirme as variáveis server-side `SUPABASE_URL`,

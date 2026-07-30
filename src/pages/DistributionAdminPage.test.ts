@@ -14,8 +14,16 @@ describe('distribution admin security and previews', () => {
   it('uses independent previews with contain and channel aspect ratios', () => {
     expect(page).toContain("imagePreview(item, 'instagram')")
     expect(page).toContain("imagePreview(item, 'facebook')")
+    expect(page).toContain("imagePreview(item, 'linkedin')")
     expect(styles).toContain('aspect-ratio: 4 / 5')
     expect(styles).toContain('aspect-ratio: 1200 / 630')
     expect(styles).toContain('object-fit: contain')
+  })
+
+  it('keeps LinkedIn selectable and tied to the Instagram image', () => {
+    expect(page).toContain('linkedin_enabled')
+    expect(page).toContain('linkedin_caption')
+    expect(page).toContain('item.instagram_image_url')
+    expect(page).toContain('Incluir {channelName} na publicação')
   })
 })
