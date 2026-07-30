@@ -137,6 +137,15 @@ export function DistributionAdminPage() {
           {validation || 'Imagem válida e exclusiva para este canal.'}
         </p>
         {item[`${channel}_error`] && <p className="distribution-channel__validation">{item[`${channel}_error`]}</p>}
+        <label htmlFor={`${item.id}-${channel}-caption`}>
+          {isInstagram ? 'Legenda publicada com esta imagem' : 'Texto publicado com esta imagem'}
+        </label>
+        <textarea
+          id={`${item.id}-${channel}-caption`}
+          className="distribution-channel__caption"
+          value={item[`${channel}_caption`]}
+          onChange={(event) => changeItem(item.id, { [`${channel}_caption`]: event.target.value })}
+        />
         <div className="distribution-channel__actions">
           <button type="button" disabled={busy} onClick={() => void run(
             () => api({ action: 'generate_image', id: item.id, channel }),
@@ -150,7 +159,7 @@ export function DistributionAdminPage() {
               facebook_image_url: item.facebook_image_url,
             } }).then(() => api({ action: 'publish', id: item.id, channels: [channel] })),
             `Conteúdo enviado ao ${isInstagram ? 'Instagram' : 'Facebook'}.`,
-          )}><Send aria-hidden="true" /> Publicar {isInstagram ? 'no Instagram' : 'no Facebook'}</button>
+          )}><Send aria-hidden="true" /> Publicar imagem + {isInstagram ? 'legenda' : 'texto'}</button>
         </div>
       </section>
     )
@@ -215,15 +224,6 @@ export function DistributionAdminPage() {
                 {imagePreview(item, 'facebook')}
               </div>
             </section>
-
-            <div className="distribution-card__editors">
-              <label>Legenda do Instagram
-                <textarea value={item.instagram_caption} onChange={(event) => changeItem(item.id, { instagram_caption: event.target.value })} />
-              </label>
-              <label>Texto do Facebook
-                <textarea value={item.facebook_caption} onChange={(event) => changeItem(item.id, { facebook_caption: event.target.value })} />
-              </label>
-            </div>
 
             {item.error_message && <p className="distribution-error">{item.error_message}</p>}
             <div className="distribution-card__actions">
