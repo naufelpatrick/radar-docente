@@ -150,6 +150,20 @@ export function authorize(request, envName = 'DISTRIBUTION_ADMIN_KEY') {
   return first.length === second.length && timingSafeEqual(first, second)
 }
 
+export function createMakePublicationPayload(item) {
+  return {
+    content_id: item.id,
+    article_title: item.article_title,
+    article_url: item.article_url,
+    instagram_image_url: item.instagram_image_url,
+    facebook_image_url: item.facebook_image_url,
+    instagram_caption: item.instagram_caption,
+    facebook_caption: item.facebook_caption,
+    publish_instagram: item.publish_channels?.includes('instagram') ?? true,
+    publish_facebook: item.publish_channels?.includes('facebook') ?? true,
+  }
+}
+
 export async function sendToMake(item) {
   const webhookUrl = process.env.MAKE_WEBHOOK_URL
   const apiKey = process.env.MAKE_WEBHOOK_API_KEY
@@ -169,17 +183,7 @@ export async function sendToMake(item) {
       'content-type': 'application/json',
       'x-make-apikey': apiKey,
     },
-    body: JSON.stringify({
-      content_id: item.id,
-      article_title: item.article_title,
-      article_url: item.article_url,
-      instagram_image_url: item.instagram_image_url,
-      facebook_image_url: item.facebook_image_url,
-      instagram_caption: item.instagram_caption,
-      facebook_caption: item.facebook_caption,
-      publish_instagram: item.publish_channels?.includes('instagram') ?? true,
-      publish_facebook: item.publish_channels?.includes('facebook') ?? true,
-    }),
+    body: JSON.stringify(createMakePublicationPayload(item)),
   })
   if (!response.ok) {
     const detail = (await response.text()).trim()
