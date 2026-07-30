@@ -78,10 +78,14 @@ export function generateChannelHashtags(article, channel) {
   return unique.slice(0, HASHTAG_LIMITS[channel] || 5)
 }
 
+export function createLinkedinCaption(article) {
+  const hashtags = generateChannelHashtags(article, 'linkedin').join(' ')
+  return `${article.title}\n\n${article.summary}\n\nEsta reflexão apoia professores, gestores escolares e instituições de ensino na integração pedagogicamente intencional da inteligência artificial.\n\nLeia o conteúdo completo e compartilhe com sua equipe: ${trackedUrl(article.url, 'linkedin')}\n\n${hashtags}`
+}
+
 export function createDraft(article) {
   const instagramHashtags = generateChannelHashtags(article, 'instagram').join(' ')
   const facebookHashtags = generateChannelHashtags(article, 'facebook').join(' ')
-  const linkedinHashtags = generateChannelHashtags(article, 'linkedin').join(' ')
   return {
     article_guid: article.guid,
     article_title: article.title,
@@ -94,7 +98,7 @@ export function createDraft(article) {
     published_at: article.publishedAt,
     instagram_caption: `${article.title}\n\n${article.summary}\n\nLeia o artigo completo no link da bio.\n\n${instagramHashtags}\n\nLink de campanha: ${trackedUrl(article.url, 'instagram')}`,
     facebook_caption: `${article.title}\n\n${article.summary}\n\nLeia o artigo completo: ${trackedUrl(article.url, 'facebook')}\n\n${facebookHashtags}`,
-    linkedin_caption: `${article.title}\n\n${article.summary}\n\nEsta reflexão apoia professores, gestores escolares e instituições de ensino na integração pedagogicamente intencional da inteligência artificial.\n\nLeia o conteúdo completo e compartilhe com sua equipe: ${trackedUrl(article.url, 'linkedin')}\n\n${linkedinHashtags}`,
+    linkedin_caption: createLinkedinCaption(article),
     instagram_enabled: true,
     facebook_enabled: true,
     linkedin_enabled: true,
@@ -102,6 +106,19 @@ export function createDraft(article) {
     instagram_status: 'pending',
     facebook_status: 'pending',
     linkedin_status: 'pending',
+  }
+}
+
+export function withGeneratedLinkedinCaption(item) {
+  if (item.linkedin_caption?.trim() || item.linkedin_status === 'published') return item
+  return {
+    ...item,
+    linkedin_caption: createLinkedinCaption({
+      title: item.article_title,
+      summary: item.article_summary,
+      category: item.article_category,
+      url: item.article_url,
+    }),
   }
 }
 
@@ -157,7 +174,7 @@ export function missingImageChannels(item) {
 export async function listDistribution() {
   const response = await supabase('/rest/v1/content_distribution?select=*&order=created_at.desc')
   if (!response.ok) throw new Error('Não foi possível carregar a fila')
-  return response.json()
+  return (await response.json()).map(withGeneratedLinkedinCaption)
 }
 
 export async function updateDistribution(id, changes) {
@@ -342,7 +359,7 @@ export async function publishDueItems() {
   const now = encodeURIComponent(new Date().toISOString())
   const response = await supabase(`/rest/v1/content_distribution?status=eq.scheduled&scheduled_for=lte.${now}&select=*`)
   if (!response.ok) throw new Error('Não foi possível consultar publicações agendadas')
-  const items = await response.json()
+  const items = (await response.json()).map(withGeneratedLinkedinCaption)
   const results = []
   for (const item of items) {
     try {
