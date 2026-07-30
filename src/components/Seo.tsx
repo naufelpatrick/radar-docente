@@ -11,6 +11,7 @@ interface SeoProps {
   image?: string
   imageAlt?: string
   jsonLd?: JsonLd
+  robots?: string
 }
 
 const siteUrl = 'https://www.radarpraxia.com'
@@ -28,12 +29,13 @@ function setMeta(selector: string, attributes: Record<string, string>) {
   Object.entries(attributes).forEach(([name, value]) => element?.setAttribute(name, value))
 }
 
-export function Seo({ title, socialTitle = title, description, path, type = 'website', image = socialImage, imageAlt = defaultImageAlt, jsonLd }: SeoProps) {
+export function Seo({ title, socialTitle = title, description, path, type = 'website', image = socialImage, imageAlt = defaultImageAlt, jsonLd, robots = 'index, follow' }: SeoProps) {
   useEffect(() => {
     const canonicalUrl = new URL(path, siteUrl).toString()
     document.title = title
 
     setMeta('meta[name="description"]', { name: 'description', content: description })
+    setMeta('meta[name="robots"]', { name: 'robots', content: robots })
     setMeta('meta[property="og:title"]', { property: 'og:title', content: socialTitle })
     setMeta('meta[property="og:description"]', { property: 'og:description', content: description })
     setMeta('meta[property="og:type"]', { property: 'og:type', content: type })
@@ -72,7 +74,7 @@ export function Seo({ title, socialTitle = title, description, path, type = 'web
     }
 
     return () => document.getElementById(scriptId)?.remove()
-  }, [description, image, imageAlt, jsonLd, path, socialTitle, title, type])
+  }, [description, image, imageAlt, jsonLd, path, robots, socialTitle, title, type])
 
   return null
 }
