@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { createDraft, parseRss, sendToMake } from './distribution.js'
+import { createDraft, parseRss, sendToMake, validateChannelImages } from './distribution.js'
+import { createChannelJpeg } from './distribution-images.js'
 
 describe('content distribution', () => {
   afterEach(() => {
@@ -39,6 +40,8 @@ describe('content distribution', () => {
     expect(draft.instagram_caption).toContain('utm_source=instagram')
     expect(draft.facebook_caption).toContain('utm_source=facebook')
     expect(draft.status).toBe('draft')
+    expect(draft.facebook_image_url).toBe('https://www.radarpraxia.com/social/teste.jpg')
+    expect(draft.instagram_image_url).toBeNull()
   })
 
   it('sends the publication payload to the authenticated Make webhook', async () => {
@@ -51,9 +54,11 @@ describe('content distribution', () => {
       id: 'publication-1',
       article_title: 'Artigo teste',
       article_url: 'https://www.radarpraxia.com/blog/artigo-teste',
-      article_image_url: 'https://www.radarpraxia.com/social/teste.jpg',
+      instagram_image_url: 'https://cdn.radarpraxia.com/teste-instagram.jpg',
+      facebook_image_url: 'https://cdn.radarpraxia.com/teste-facebook.jpg',
       instagram_caption: 'Legenda Instagram',
       facebook_caption: 'Legenda Facebook',
+      publish_channels: ['instagram', 'facebook'],
     })
 
     expect(fetchMock).toHaveBeenCalledWith(
@@ -70,10 +75,60 @@ describe('content distribution', () => {
       content_id: 'publication-1',
       article_title: 'Artigo teste',
       article_url: 'https://www.radarpraxia.com/blog/artigo-teste',
-      image_url: 'https://www.radarpraxia.com/social/teste.jpg',
+      instagram_image_url: 'https://cdn.radarpraxia.com/teste-instagram.jpg',
+      facebook_image_url: 'https://cdn.radarpraxia.com/teste-facebook.jpg',
       instagram_caption: 'Legenda Instagram',
       facebook_caption: 'Legenda Facebook',
+      publish_instagram: true,
+      publish_facebook: true,
     })
+  })
+
+  it('rejects missing, equal, invalid and insecure channel images', () => {
+    expect(() => validateChannelImages({ facebook_image_url: 'https://cdn.example.com/fb.jpg' }, ['instagram']))
+      .toThrow('Instagram: adicione')
+    expect(() => validateChannelImages({ instagram_image_url: 'https://cdn.example.com/ig.jpg' }, ['facebook']))
+      .toThrow('Facebook: adicione')
+    expect(() => validateChannelImages({
+      instagram_image_url: 'https://cdn.example.com/same.jpg',
+      facebook_image_url: 'https://cdn.example.com/same.jpg',
+    })).toThrow('URLs não podem ser iguais')
+    expect(() => validateChannelImages({
+      instagram_image_url: 'not-a-url',
+      facebook_image_url: 'https://cdn.example.com/fb.jpg',
+    })).toThrow('URL da imagem é inválida')
+    expect(() => validateChannelImages({
+      instagram_image_url: 'http://cdn.example.com/ig.jpg',
+      facebook_image_url: 'https://cdn.example.com/fb.jpg',
+    })).toThrow('URL HTTPS')
+  })
+
+  it('does not silently accept legacy content with only article_image_url for Instagram', () => {
+    expect(() => validateChannelImages({
+      article_image_url: 'https://cdn.example.com/social-graph.jpg',
+      facebook_image_url: 'https://cdn.example.com/social-graph.jpg',
+      instagram_image_url: null,
+    })).toThrow('Instagram: adicione')
+  })
+
+  it('propagates a Make failure without exposing credentials', async () => {
+    process.env.MAKE_WEBHOOK_URL = 'https://hook.eu2.make.com/example'
+    process.env.MAKE_WEBHOOK_API_KEY = 'server-only-secret'
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('route failed', { status: 500 })))
+    await expect(sendToMake({})).rejects.toThrow('Make recusou a publicação (500): route failed')
+  })
+
+  it('generates genuinely different JPEG dimensions for each channel', async () => {
+    const item = { article_title: 'Avaliação com apoio de IA', article_category: 'Avaliação' }
+    const instagram = await createChannelJpeg(item, 'instagram')
+    const facebook = await createChannelJpeg(item, 'facebook')
+    const [instagramMetadata, facebookMetadata] = await Promise.all([
+      import('sharp').then(({ default: sharp }) => sharp(instagram).metadata()),
+      import('sharp').then(({ default: sharp }) => sharp(facebook).metadata()),
+    ])
+    expect(instagramMetadata).toMatchObject({ width: 1080, height: 1350, format: 'jpeg' })
+    expect(facebookMetadata).toMatchObject({ width: 1200, height: 630, format: 'jpeg' })
+    expect(instagram.equals(facebook)).toBe(false)
   })
 
   it('does not accept an insecure Make webhook URL', async () => {
