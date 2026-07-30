@@ -42,6 +42,7 @@ export function Footer() {
               <Link to="/blog">Blog</Link>
               <Link to="/guias">Guias</Link>
               <Link to="/ferramentas">Ferramentas</Link>
+              <a href="/feed.xml" type="application/rss+xml" aria-label="Assinar o feed RSS do Blog PráxIA">RSS</a>
               <Link to="/ebook">E-book</Link>
               <Link to="/mentoria">Mentoria</Link>
             </div>
