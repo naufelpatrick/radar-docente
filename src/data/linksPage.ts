@@ -6,7 +6,7 @@ export const praxiaLinks = {
   workshops: '/para-instituicoes#workshops',
   lectures: '/para-instituicoes#palestras',
   instagram: 'https://www.instagram.com/radarpraxia/',
-  linkedin: 'https://www.linkedin.com/in/patricknaufel',
+  linkedin: 'https://www.linkedin.com/company/radar-pr%C3%A1xia/',
   website: '/',
   contact: '/contato',
   about: '/sobre',
