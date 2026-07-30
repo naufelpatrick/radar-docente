@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   createDraft,
+  createLinkedinCaption,
   createMakePublicationPayload,
   generateChannelHashtags,
   missingImageChannels,
@@ -8,6 +9,7 @@ import {
   selectedPublicationChannels,
   sendToMake,
   validateChannelImages,
+  withGeneratedLinkedinCaption,
 } from './distribution.js'
 import { createChannelJpeg } from './distribution-images.js'
 
@@ -66,6 +68,36 @@ describe('content distribution', () => {
     expect(new Set(hashtags).size).toBe(hashtags.length)
     expect(hashtags).toContain('#AvaliaçãoDaAprendizagem')
     expect(hashtags).toContain('#PráxIA')
+  })
+
+  it('fills the LinkedIn text for a draft created before the migration', () => {
+    const item = withGeneratedLinkedinCaption({
+      article_title: 'Avaliação com apoio de IA',
+      article_summary: 'Critérios para avaliar processos e resultados.',
+      article_category: 'Avaliação',
+      article_url: 'https://www.radarpraxia.com/blog/avaliacao/exemplo',
+      linkedin_caption: '',
+      linkedin_status: 'pending',
+    })
+
+    expect(item.linkedin_caption).toBe(createLinkedinCaption({
+      title: 'Avaliação com apoio de IA',
+      summary: 'Critérios para avaliar processos e resultados.',
+      category: 'Avaliação',
+      url: 'https://www.radarpraxia.com/blog/avaliacao/exemplo',
+    }))
+    expect(item.linkedin_caption).toContain('#AvaliaçãoDaAprendizagem')
+    expect(item.linkedin_caption).toContain('utm_source=linkedin')
+  })
+
+  it('does not change a LinkedIn publication that is already complete', () => {
+    const item = {
+      linkedin_caption: '',
+      linkedin_status: 'published',
+      article_title: 'Conteúdo publicado',
+    }
+
+    expect(withGeneratedLinkedinCaption(item)).toBe(item)
   })
 
   it('automatically identifies every missing channel image after RSS sync', () => {
