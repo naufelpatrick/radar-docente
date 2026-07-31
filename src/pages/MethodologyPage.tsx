@@ -104,7 +104,7 @@ export function MethodologyPage() {
   return (
     <>
       <Seo
-        title="Metodologia do Radar Docente e Score PráxIA"
+        title="Metodologia"
         description="Entenda como o Radar Docente avalia seis dimensões da fluência digital e em IA, calcula o Score PráxIA e transforma autorrelato em próximos passos."
         path="/metodologia"
         jsonLd={schema}

@@ -29,7 +29,7 @@ const schema = {
 export function ToolsPage() {
   return (
     <>
-      <Seo title="Ferramentas digitais e IA: critérios para professores | PráxIA" description="Avalie ferramentas digitais e de IA por adequação pedagógica, privacidade, acessibilidade, autoria, viabilidade e evidências de aprendizagem." path="/ferramentas" jsonLd={schema} />
+      <Seo title="Ferramentas" description="Avalie ferramentas digitais e de IA por adequação pedagógica, privacidade, acessibilidade, autoria, viabilidade e evidências de aprendizagem." path="/ferramentas" jsonLd={schema} />
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
       <InstitutionalHeader />
       <main id="conteudo-principal" className="tools-page">

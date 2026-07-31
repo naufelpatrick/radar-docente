@@ -29,7 +29,7 @@ const schema = {
 export function CompetenciesPage() {
   return (
     <>
-      <Seo title="Competências docentes digitais e em IA | PráxIA" description="Conheça as seis dimensões que ajudam professores a observar sua fluência digital e em IA como prática situada, integrada e em desenvolvimento." path="/competencias" jsonLd={schema} />
+      <Seo title="Competências" description="Conheça as seis dimensões que ajudam professores a observar sua fluência digital e em IA como prática situada, integrada e em desenvolvimento." path="/competencias" jsonLd={schema} />
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
       <InstitutionalHeader />
       <main id="conteudo-principal" className="knowledge-page">

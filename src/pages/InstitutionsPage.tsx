@@ -37,7 +37,7 @@ export function InstitutionsPage() {
 
   return (
     <>
-      <Seo title="Palestras e Workshops para Professores | PráxIA" description="Palestras e workshops sobre fluência digital, inteligência artificial e prática docente para escolas, faculdades e organizações educacionais." path="/para-instituicoes" jsonLd={schema} />
+      <Seo title="Para instituições" description="Palestras e workshops sobre fluência digital, inteligência artificial e prática docente para escolas, faculdades e organizações educacionais." path="/para-instituicoes" jsonLd={schema} />
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
       <InstitutionalHeader currentPage="institutions" />
       <main id="conteudo-principal" className="institutions-page">

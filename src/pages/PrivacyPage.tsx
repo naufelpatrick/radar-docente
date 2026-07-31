@@ -30,7 +30,7 @@ export function PrivacyPage() {
   return (
     <>
       <Seo
-        title="Política de Privacidade | PráxIA"
+        title="Política de Privacidade"
         description="Entenda como a PráxIA trata dados pessoais, utiliza cookies e protege a privacidade de professores e representantes de instituições."
         path="/privacidade"
       />

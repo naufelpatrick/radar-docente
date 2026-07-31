@@ -164,7 +164,7 @@ export function DemoResultPage() {
   return (
     <>
       <Seo
-        title="Exemplo de resultado: Score PráxIA e Radar Docente"
+        title="Exemplo de resultado"
         description="Explore uma devolutiva demonstrativa com Score PráxIA, radar de seis dimensões, interpretação e plano de desenvolvimento."
         path="/resultado"
         jsonLd={resultSchema}

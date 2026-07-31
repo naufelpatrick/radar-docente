@@ -47,7 +47,7 @@ export function EbookOrderPage() {
   }
   return (
     <>
-      <Seo title="Acesso ao e-book | PráxIA" description="Confirmação e acesso ao e-book IA na prática docente." path="/ebook/obrigado" />
+      <Seo title="Acesso ao e-book" description="Confirmação e acesso ao e-book IA na prática docente." path="/ebook/obrigado" />
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
       <InstitutionalHeader currentPage="ebook" />
       <main id="conteudo-principal" className="ebook-order-page">

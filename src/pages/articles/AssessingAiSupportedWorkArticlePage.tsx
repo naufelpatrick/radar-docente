@@ -93,7 +93,7 @@ function DeclarationCopyBox() {
 export function AssessingAiSupportedWorkArticlePage() {
   return (
     <>
-      <Seo title={article.seoTitle} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
+      <Seo title={article.title} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
       <ArticleLayout article={article} categoryPath="/blog/categoria/avaliacao" toc={toc}>
         <p className="article-lead">Quando a IA participa da produção, a entrega final pode não revelar o que o estudante realmente compreendeu.</p>
         <p>Avaliar bem exige observar decisões, justificativas, versões, verificações e capacidade de explicar — sem transformar a sala de aula em um ambiente de vigilância.</p>

@@ -15,6 +15,7 @@ interface SeoProps {
 }
 
 const siteUrl = 'https://www.radarpraxia.com'
+export const siteName = 'Radar PráxIA'
 const socialImage = `${siteUrl}/social-graph-praxia.png`
 const defaultImageAlt = 'PráxIA — fluência digital e inteligência artificial para a prática docente'
 
@@ -32,7 +33,8 @@ function setMeta(selector: string, attributes: Record<string, string>) {
 export function Seo({ title, socialTitle = title, description, path, type = 'website', image = socialImage, imageAlt = defaultImageAlt, jsonLd, robots = 'index, follow' }: SeoProps) {
   useEffect(() => {
     const canonicalUrl = new URL(path, siteUrl).toString()
-    document.title = title
+    const documentTitle = `${siteName} | ${title}`
+    document.title = documentTitle
 
     setMeta('meta[name="description"]', { name: 'description', content: description })
     setMeta('meta[name="robots"]', { name: 'robots', content: robots })

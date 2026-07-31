@@ -49,7 +49,7 @@ const schema = {
 export function AuthorshipWithAiArticlePage() {
   return (
     <>
-      <Seo title={article.seoTitle} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
+      <Seo title={article.title} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
       <ArticleLayout article={article} categoryPath="/blog/categoria/etica" toc={toc}>
         <p className="article-lead">A discussão sobre autoria em atividades com IA não pode ser reduzida a “usou ou não usou”. O ponto central é reconhecer quais decisões pertencem ao estudante, como a ferramenta contribuiu e de que modo o processo pode ser apresentado com transparência.</p>
         <p>Dois estudantes podem utilizar IA e realizar processos profundamente diferentes. Autoria envolve intenção, julgamento, seleção, transformação, verificação e capacidade de responder pelo trabalho entregue.</p>

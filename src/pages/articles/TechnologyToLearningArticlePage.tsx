@@ -48,7 +48,7 @@ const schema = {
 export function TechnologyToLearningArticlePage() {
   return (
     <>
-      <Seo title={article.seoTitle} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
+      <Seo title={article.title} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
       <ArticleLayout article={article} categoryPath="/blog/categoria/planejamento" toc={toc}>
         <p className="article-lead">Uma ferramenta pode gerar textos, imagens, perguntas, roteiros e simulações em poucos segundos. Isso não significa que cada possibilidade deva se transformar em atividade pedagógica.</p>
         <p>Quando a função tecnológica comanda o planejamento, a avaliação costuma ser decidida tarde demais. Um percurso mais consistente inverte a ordem: define a aprendizagem, torna-a observável, escolhe a experiência e só então pergunta se a IA a amplia.</p>

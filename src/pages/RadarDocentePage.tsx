@@ -112,7 +112,7 @@ export function RadarDocentePage() {
   return (
     <>
       <Seo
-        title="Radar Docente: fluência digital e IA na prática"
+        title="Radar Docente"
         description="Conheça o Radar Docente PráxIA: uma leitura gratuita de seis dimensões da fluência digital e em IA, com score explicado e próximo passo."
         path="/radar-docente"
         jsonLd={schema}

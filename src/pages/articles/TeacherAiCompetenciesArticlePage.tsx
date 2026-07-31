@@ -94,7 +94,7 @@ const schema = {
 export function TeacherAiCompetenciesArticlePage() {
   return (
     <>
-      <Seo title={article.seoTitle} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
+      <Seo title={article.title} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
       <ArticleLayout article={article} categoryPath="/blog/categoria/competencias-docentes" toc={toc}>
         <p className="article-lead">Saber utilizar uma ferramenta não é o mesmo que possuir competência para integrar inteligência artificial à prática docente.</p>
         <p>Competência envolve compreender possibilidades e limites, tomar decisões pedagógicas, verificar resultados, proteger dados, orientar estudantes e refletir sobre os efeitos do uso.</p>
