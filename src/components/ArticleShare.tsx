@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
-import { Check, Copy, Facebook, Linkedin, MessageCircle, Share2 } from 'lucide-react'
+import { Check, Copy, Facebook, Linkedin, Mail, MessageCircle, Share2, Twitter, XCircle } from 'lucide-react'
 import type { BlogArticle } from '../data/blogArticles'
 import { trackArticleShare, type ArticleShareMethod } from '../services/articleShareAnalytics'
 import { buildArticleShareUrls } from '../services/articleShareUrls'
@@ -32,7 +32,7 @@ async function copyText(value: string) {
 }
 
 export function ArticleShare({ article, variant = 'full' }: ArticleShareProps) {
-  const [copied, setCopied] = useState(false)
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle')
   const [menuOpen, setMenuOpen] = useState(false)
   const menuId = useId()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -56,23 +56,23 @@ export function ArticleShare({ article, variant = 'full' }: ArticleShareProps) {
   }, [menuOpen])
 
   useEffect(() => {
-    if (!copied) return
-    const timeout = window.setTimeout(() => setCopied(false), 2400)
+    if (copyStatus === 'idle') return
+    const timeout = window.setTimeout(() => setCopyStatus('idle'), 2400)
     return () => window.clearTimeout(timeout)
-  }, [copied])
+  }, [copyStatus])
 
-  const handleExternalShare = (method: Exclude<ArticleShareMethod, 'native' | 'copy_link'>) => {
-    trackArticleShare(article.title, article.slug, method)
+  const handleExternalShare = (method: Exclude<ArticleShareMethod, 'native_share' | 'copylink'>) => {
+    trackArticleShare(method)
     setMenuOpen(false)
   }
 
   const handleCopy = async () => {
     try {
-      await copyText(article.canonicalUrl)
-      setCopied(true)
-      trackArticleShare(article.title, article.slug, 'copy_link')
+      await copyText(shareUrls.copylink)
+      setCopyStatus('copied')
+      trackArticleShare('copylink')
     } catch {
-      setCopied(false)
+      setCopyStatus('error')
     } finally {
       setMenuOpen(false)
     }
@@ -87,9 +87,9 @@ export function ArticleShare({ article, variant = 'full' }: ArticleShareProps) {
       await navigator.share({
         title: article.title,
         text: article.summary,
-        url: article.canonicalUrl,
+        url: shareUrls.nativeShare,
       })
-      trackArticleShare(article.title, article.slug, 'native')
+      trackArticleShare('native_share')
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return
     }
@@ -106,8 +106,15 @@ export function ArticleShare({ article, variant = 'full' }: ArticleShareProps) {
       <a className="article-share__action" href={shareUrls.facebook} target="_blank" rel="noopener noreferrer" onClick={() => handleExternalShare('facebook')} aria-label={`Compartilhar “${article.title}” no Facebook`}>
         <Facebook aria-hidden="true" /> <span>Facebook</span>
       </a>
+      <a className="article-share__action" href={shareUrls.x} target="_blank" rel="noopener noreferrer" onClick={() => handleExternalShare('x')} aria-label={`Compartilhar “${article.title}” no X`}>
+        <Twitter aria-hidden="true" /> <span>X / Twitter</span>
+      </a>
+      <a className="article-share__action" href={shareUrls.email} onClick={() => handleExternalShare('email')} aria-label={`Compartilhar “${article.title}” por e-mail`}>
+        <Mail aria-hidden="true" /> <span>E-mail</span>
+      </a>
       <button className="article-share__action" type="button" onClick={handleCopy} aria-label={`Copiar link do artigo “${article.title}”`}>
-        {copied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />} <span>{copied ? 'Link copiado!' : 'Copiar link'}</span>
+        {copyStatus === 'copied' ? <Check aria-hidden="true" /> : copyStatus === 'error' ? <XCircle aria-hidden="true" /> : <Copy aria-hidden="true" />}
+        <span>{copyStatus === 'copied' ? 'Link copiado!' : copyStatus === 'error' ? 'Não foi possível copiar' : 'Copiar link'}</span>
       </button>
     </>
   )
@@ -138,7 +145,7 @@ export function ArticleShare({ article, variant = 'full' }: ArticleShareProps) {
           </button>
         )}
       </div>
-      <span className="sr-only" aria-live="polite">{copied ? 'Link copiado!' : ''}</span>
+      <span className="sr-only" aria-live="polite">{copyStatus === 'copied' ? 'Link copiado!' : copyStatus === 'error' ? 'Não foi possível copiar o link.' : ''}</span>
     </section>
   )
 }
