@@ -1,4 +1,5 @@
 import { analyticsAllowed, loadGoogleAnalytics } from './cookieConsent'
+import { trackRadarResult } from './radarFunnelAnalytics'
 
 const PENDING_COMPLETION_KEY = 'praxia:ga4:pending-radar-complete'
 const SENT_COMPLETION_PREFIX = 'praxia:ga4:radar-complete:'
@@ -8,7 +9,9 @@ function analyticsDebug(message: string, details?: Record<string, unknown>) {
   if (import.meta.env.DEV) console.info(`[PráxIA analytics] ${message}`, details ?? {})
 }
 
-function sendRadarCompletion(completionId: string) {
+type CompletionParameters = { totalQuestions: number; completionTimeSeconds: number; scoreRange: string }
+
+function sendRadarCompletion(completionId: string, parameters?: CompletionParameters) {
   if (!completionId || window.localStorage.getItem(`${SENT_COMPLETION_PREFIX}${completionId}`)) return false
 
   analyticsDebug('Tentativa de radar_complete', {
@@ -21,9 +24,8 @@ function sendRadarCompletion(completionId: string) {
     return false
   }
 
-  window.gtag('event', 'radar_complete', {
-    source: 'radar_praxia',
-  })
+  if (parameters) trackRadarResult(completionId, parameters.totalQuestions, parameters.completionTimeSeconds, parameters.scoreRange)
+  else window.gtag('event', 'radar_complete', { source: 'radar_praxia' })
   window.localStorage.setItem(`${SENT_COMPLETION_PREFIX}${completionId}`, 'sent')
   window.localStorage.removeItem(PENDING_COMPLETION_KEY)
   analyticsDebug('radar_complete enviado com sucesso')
@@ -55,10 +57,16 @@ export function markRadarCompletionSaved(completionId: string) {
   window.localStorage.setItem(CONFIRMED_COMPLETION_KEY, completionId)
 }
 
-export function trackRadarCompletionAfterReport(completionId: string) {
+export function trackRadarCompletionAfterReport(completionId: string, parameters?: CompletionParameters) {
   if (typeof window === 'undefined' || !completionId) return
   if (window.localStorage.getItem(CONFIRMED_COMPLETION_KEY) !== completionId) return
 
-  trackRadarCompletion(completionId)
+  if (parameters) {
+    trackRadarResult(completionId, parameters.totalQuestions, parameters.completionTimeSeconds, parameters.scoreRange)
+    window.localStorage.setItem(`${SENT_COMPLETION_PREFIX}${completionId}`, 'sent')
+    window.localStorage.removeItem(PENDING_COMPLETION_KEY)
+  } else {
+    trackRadarCompletion(completionId)
+  }
   window.localStorage.removeItem(CONFIRMED_COMPLETION_KEY)
 }

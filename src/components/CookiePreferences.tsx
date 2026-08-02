@@ -10,6 +10,7 @@ import {
 } from '../services/cookieConsent'
 import { flushPendingEbookPurchase } from '../services/ebookConversion'
 import { flushPendingRadarCompletion } from '../services/radarCompletionAnalytics'
+import { flushPendingRadarEvents } from '../services/radarFunnelAnalytics'
 
 export function CookiePreferences() {
   const [visible, setVisible] = useState(() => readCookiePreference() === null)
@@ -21,6 +22,7 @@ export function CookiePreferences() {
     if (initializeAnalyticsFromStoredConsent()) {
       flushPendingEbookPurchase()
       flushPendingRadarCompletion()
+      flushPendingRadarEvents()
     }
     const open = () => {
       setAnalytics(readCookiePreference() === 'accepted')
@@ -41,6 +43,7 @@ export function CookiePreferences() {
       loadGoogleAnalytics()
       flushPendingEbookPurchase()
       flushPendingRadarCompletion()
+      flushPendingRadarEvents()
     }
     setVisible(false)
     setCustomizing(false)
