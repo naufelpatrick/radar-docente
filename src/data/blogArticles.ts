@@ -28,6 +28,37 @@ export type BlogArticle = {
 
 const blogArticleEntries: Array<Omit<BlogArticle, 'canonicalUrl'>> = [
   {
+    slug: 'como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica',
+    path: '/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica',
+    category: 'Ferramentas',
+    categorySlug: 'ferramentas',
+    editorialLabel: 'ESCOLHA COM CRITÉRIO',
+    title: 'Como escolher uma ferramenta de IA para uma atividade pedagógica',
+    summary: 'Um método para comparar objetivo, função, precisão, privacidade, acesso, custo e revisão antes de levar uma ferramenta de IA para a aula.',
+    seoTitle: 'Como escolher uma ferramenta de IA para uma atividade pedagógica | PráxIA',
+    metaDescription: 'Compare objetivo, função, precisão, privacidade, acesso e custo antes de escolher uma ferramenta de inteligência artificial para sua aula.',
+    readingTime: '9 min de leitura',
+    publishedAt: '2026-08-02T12:00:00-03:00',
+    modifiedAt: '2026-08-02',
+    publishedDate: '2 ago. 2026',
+    displayDate: '2 de agosto de 2026',
+    socialImage: 'https://www.radarpraxia.com/social/escolher-ferramenta-ia-atividade-pedagogica-1200x630.jpg',
+    socialImageAlt: 'Professora analisa ferramentas abstratas que passam por filtros de objetivo, função, segurança, acesso e revisão',
+    author: 'Patrick Naufel',
+    status: 'published',
+    coverImage: {
+      src: '/social/escolher-ferramenta-ia-atividade-pedagogica-1200x630.webp',
+      alt: 'Professora seleciona uma ferramenta de IA após comparar critérios pedagógicos, éticos e operacionais',
+    },
+    faq: [
+      { question: 'Qual é a melhor ferramenta de IA para professores?', answer: 'Não existe uma única resposta. A melhor ferramenta é aquela que atende ao objetivo, possui qualidade suficiente, protege dados, é acessível e permite revisão.' },
+      { question: 'Posso usar uma ferramenta gratuita com estudantes?', answer: 'Sim, desde que sejam verificados termos, idade mínima, privacidade, limites e condições de acesso. Gratuidade não garante adequação.' },
+      { question: 'Preciso testar a ferramenta antes da aula?', answer: 'Sim. Teste tarefas próximas da atividade real, incluindo situações difíceis e possíveis erros.' },
+      { question: 'Ferramentas que mostram fontes são sempre mais confiáveis?', answer: 'Não. As fontes também precisam ser verificadas. A presença de links melhora a possibilidade de revisão, mas não garante precisão.' },
+      { question: 'A instituição precisa aprovar todas as ferramentas?', answer: 'Siga as políticas locais. Quando há dados de estudantes, cadastro obrigatório ou uso recorrente, a avaliação institucional é especialmente importante.' },
+    ],
+  },
+  {
     slug: 'como-avaliar-atividades-produzidas-com-apoio-de-ia',
     path: '/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia',
     category: 'Avaliação',

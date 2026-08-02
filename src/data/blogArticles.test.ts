@@ -49,4 +49,14 @@ describe('fonte editorial do blog', () => {
     expect(article?.socialImage).toContain('avaliar-atividades-com-ia-1200x630.jpg')
     expect(article?.coverImage?.src).toContain('avaliar-atividades-com-ia-1200x630.webp')
   })
+
+  it('publica o artigo de escolha de ferramenta com imagem e FAQ próprias', () => {
+    const article = blogArticles.find((item) => item.slug === 'como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica')
+
+    expect(article?.status).toBe('published')
+    expect(article?.categorySlug).toBe('ferramentas')
+    expect(article?.faq).toHaveLength(5)
+    expect(article?.socialImage).toContain('escolher-ferramenta-ia-atividade-pedagogica-1200x630.jpg')
+    expect(article?.coverImage?.src).toContain('escolher-ferramenta-ia-atividade-pedagogica-1200x630.webp')
+  })
 })
