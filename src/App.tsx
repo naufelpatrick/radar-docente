@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ScrollToTop } from './components/ScrollToTop'
 import { CookiePreferences } from './components/CookiePreferences'
+import { WhatsAppFloat } from './components/WhatsAppFloat'
 
 const LandingPage = lazy(() =>
   import('./pages/LandingPage').then((module) => ({ default: module.LandingPage })),
@@ -78,6 +79,7 @@ export default function App() {
     <>
       <ScrollToTop />
       <CookiePreferences />
+      <WhatsAppFloat />
       <Suspense fallback={<div className="route-loading" role="status">Carregando conteúdo…</div>}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
