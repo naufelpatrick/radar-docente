@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { RadarFlowLayout } from '../../components/RadarFlowLayout'
 import { RadarSessionProvider } from '../../context/RadarSessionContext'
@@ -6,8 +7,13 @@ import { RadarProfilePage } from './RadarProfilePage'
 import { RadarQuestionPage } from './RadarQuestionPage'
 import { RadarResultPage } from './RadarResultPage'
 import { RadarReviewPage } from './RadarReviewPage'
+import { trackExpiredRadarAbandon } from '../../services/radarFunnelAnalytics'
 
 export function RadarFlow() {
+  useEffect(() => {
+    trackExpiredRadarAbandon()
+  }, [])
+
   return (
     <RadarSessionProvider>
       <RadarFlowLayout>

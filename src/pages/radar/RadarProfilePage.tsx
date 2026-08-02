@@ -3,10 +3,23 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { teachingProfiles } from '../../data/instrument'
 import { useRadarSession } from '../../context/radarSessionContextValue'
 import type { TeachingProfile } from '../../types/instrument'
+import { recordRadarStep, trackRadarProfileComplete, trackRadarProfileStarted } from '../../services/radarFunnelAnalytics'
 
 export function RadarProfilePage() {
   const { session, setTeachingProfile } = useRadarSession()
   const navigate = useNavigate()
+
+  const selectProfile = (profile: TeachingProfile) => {
+    trackRadarProfileStarted(session.startedAt)
+    setTeachingProfile(profile)
+  }
+
+  const completeProfile = () => {
+    if (!session.teachingProfile) return
+    trackRadarProfileComplete(session.startedAt, session.teachingProfile)
+    recordRadarStep(session.startedAt, 'profile')
+    navigate('/radar/questoes/1')
+  }
 
   if (!session.consent.reflectionAccepted) {
     return <Navigate to="/radar" replace />
@@ -27,7 +40,7 @@ export function RadarProfilePage() {
                 name="teachingProfile"
                 value={id}
                 checked={session.teachingProfile === id}
-                onChange={() => setTeachingProfile(id as TeachingProfile)}
+                onChange={() => selectProfile(id as TeachingProfile)}
               />
               <span>{label}</span>
             </label>
@@ -35,7 +48,7 @@ export function RadarProfilePage() {
         </fieldset>
         <div className="flow-actions">
           <Link className="flow-back" to="/radar"><ArrowLeft aria-hidden="true" /> Voltar</Link>
-          <button type="button" className="flow-button" disabled={!session.teachingProfile} onClick={() => navigate('/radar/questoes/1')}>
+          <button type="button" className="flow-button" disabled={!session.teachingProfile} onClick={completeProfile}>
             Começar o questionário <ArrowRight aria-hidden="true" />
           </button>
         </div>

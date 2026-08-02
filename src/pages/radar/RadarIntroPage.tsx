@@ -1,7 +1,8 @@
 import { ArrowRight, CheckCircle2, Clock3, ShieldCheck } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRadarSession } from '../../context/radarSessionContextValue'
+import { recordRadarStep, trackExpiredRadarAbandon, trackRadarConsentAccepted, trackRadarLanding, trackRadarStart } from '../../services/radarFunnelAnalytics'
 
 export function RadarIntroPage() {
   const { session, setConsent } = useRadarSession()
@@ -9,8 +10,16 @@ export function RadarIntroPage() {
   const [reflectionAccepted, setReflectionAccepted] = useState(session.consent.reflectionAccepted)
   const [anonymousImprovementAccepted, setAnonymousImprovementAccepted] = useState(session.consent.anonymousImprovementAccepted)
 
+  useEffect(() => {
+    trackExpiredRadarAbandon()
+    trackRadarLanding(session.startedAt)
+    recordRadarStep(session.startedAt, 'landing')
+  }, [session.startedAt])
+
   const start = () => {
     if (!reflectionAccepted) return
+    trackRadarStart(session.startedAt, 'continue', 'radar_intro')
+    trackRadarConsentAccepted(session.startedAt)
     setConsent({ reflectionAccepted, anonymousImprovementAccepted })
     navigate('/radar/perfil')
   }

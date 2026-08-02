@@ -4,11 +4,17 @@ import { instrument } from '../../data/instrument'
 import { useRadarSession } from '../../context/radarSessionContextValue'
 import { RadarLeadForm } from '../../components/RadarLeadForm'
 import { calculateScore } from '../../services/scoringService'
+import { useEffect } from 'react'
+import { recordRadarStep } from '../../services/radarFunnelAnalytics'
 
 export function RadarReviewPage() {
   const { session } = useRadarSession()
   const navigate = useNavigate()
   const missing = instrument.findIndex(({ id }) => !session.answers[id])
+
+  useEffect(() => {
+    recordRadarStep(session.startedAt, 'review', Math.min(Object.keys(session.answers).length, instrument.length), instrument.length)
+  }, [session.answers, session.startedAt])
 
   if (!session.teachingProfile) {
     return <Navigate to="/radar/perfil" replace />
