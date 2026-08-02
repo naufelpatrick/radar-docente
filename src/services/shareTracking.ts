@@ -1,4 +1,5 @@
 import { analyticsAllowed } from './cookieConsent'
+import { SITE_URL } from '../config/site'
 
 export type ShareSource = 'whatsapp' | 'linkedin' | 'facebook' | 'x' | 'email' | 'copylink' | 'native_share'
 
@@ -7,6 +8,11 @@ type BuildShareUrlOptions = {
   source: ShareSource
   campaign: string
   content?: string
+}
+
+type GetShareBaseUrlOptions = {
+  canonicalUrl?: string
+  path?: string
 }
 
 type TrackShareOptions = {
@@ -22,6 +28,39 @@ const PRIVATE_OR_TEMPORARY_PARAMS = [
   /^(?:score|result|resultado|answer|answers|resposta|respostas|diagnostic|diagnostico)$/i,
 ]
 
+function cleanShareUrl(url: URL) {
+  for (const key of [...url.searchParams.keys()]) {
+    if (key.toLowerCase().startsWith('utm_') || PRIVATE_OR_TEMPORARY_PARAMS.some((pattern) => pattern.test(key))) {
+      url.searchParams.delete(key)
+    }
+  }
+  url.hash = ''
+  return url
+}
+
+function validPublicUrl(value?: string) {
+  if (!value) return null
+  try {
+    const url = new URL(value)
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url : null
+  } catch {
+    return null
+  }
+}
+
+export function getShareBaseUrl({ canonicalUrl, path }: GetShareBaseUrlOptions = {}) {
+  const canonical = validPublicUrl(canonicalUrl)
+  if (canonical) return cleanShareUrl(canonical).toString()
+
+  const browserOrigin = typeof window !== 'undefined' ? window.location.origin : undefined
+  const browserPath = typeof window !== 'undefined' ? window.location.pathname : undefined
+  const baseOrigin = browserOrigin ?? SITE_URL
+  const explicitUrl = validPublicUrl(path)
+  const baseUrl = explicitUrl ?? new URL(path ?? browserPath ?? '/', baseOrigin)
+
+  return cleanShareUrl(baseUrl).toString()
+}
+
 function normalizedTrackingValue(value: string) {
   return value
     .normalize('NFD')
@@ -32,13 +71,7 @@ function normalizedTrackingValue(value: string) {
 }
 
 export function buildShareUrl({ url, source, campaign, content }: BuildShareUrlOptions) {
-  const shareUrl = new URL(url)
-
-  for (const key of [...shareUrl.searchParams.keys()]) {
-    if (key.toLowerCase().startsWith('utm_') || PRIVATE_OR_TEMPORARY_PARAMS.some((pattern) => pattern.test(key))) {
-      shareUrl.searchParams.delete(key)
-    }
-  }
+  const shareUrl = cleanShareUrl(new URL(url))
 
   shareUrl.searchParams.set('utm_source', source)
   shareUrl.searchParams.set('utm_medium', 'share')
@@ -55,6 +88,6 @@ export function trackShare({ method, contentType, itemId }: TrackShareOptions) {
     method,
     content_type: contentType,
     item_id: itemId,
-    page_location: window.location.href,
+    page_location: getShareBaseUrl(),
   })
 }

@@ -208,7 +208,7 @@ export function AboutPage() {
               <h2>Educação, tecnologia e prática docente</h2>
               <p>{teamIntroduction}</p>
             </div>
-            <TeamProfiles />
+            <TeamProfiles showPhotos />
           </div>
         </section>
 

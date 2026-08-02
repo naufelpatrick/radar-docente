@@ -1,5 +1,7 @@
-import { describe, expect, it } from 'vitest'
-import { buildShareUrl } from './shareTracking'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { buildShareUrl, getShareBaseUrl } from './shareTracking'
+
+afterEach(() => vi.unstubAllGlobals())
 
 describe('buildShareUrl', () => {
   it('preserva parâmetros úteis, substitui UTMs e evita duplicatas', () => {
@@ -31,5 +33,36 @@ describe('buildShareUrl', () => {
     expect(result.searchParams.has('fbclid')).toBe(false)
     expect(result.searchParams.get('faixa')).toBe('intermediaria')
     expect(result.searchParams.get('utm_content')).toBe('fluencia_intermediaria')
+  })
+})
+
+describe('getShareBaseUrl', () => {
+  it('prioriza a URL canônica e remove rastreamento, dados sensíveis e hash', () => {
+    const result = getShareBaseUrl({
+      canonicalUrl: 'https://www.radarpraxia.com/metodologia?utm_source=sessao&token=segredo#secao',
+    })
+
+    expect(result).toBe('https://www.radarpraxia.com/metodologia')
+  })
+
+  it('usa origin e pathname do navegador sem carregar query ou hash', () => {
+    vi.stubGlobal('window', {
+      location: {
+        origin: 'https://www.radarpraxia.com',
+        pathname: '/workshops',
+        href: 'https://www.radarpraxia.com/workshops?email=pessoa%40example.com#formulario',
+      },
+    })
+
+    expect(getShareBaseUrl()).toBe('https://www.radarpraxia.com/workshops')
+  })
+
+  it('aceita um path explícito fora do navegador', () => {
+    expect(getShareBaseUrl({ path: '/metodologia' })).toBe('https://www.radarpraxia.com/metodologia')
+  })
+
+  it('ignora uma canonical inválida e usa o path explícito', () => {
+    expect(getShareBaseUrl({ canonicalUrl: 'javascript:alert(1)', path: '/radar-docente' }))
+      .toBe('https://www.radarpraxia.com/radar-docente')
   })
 })

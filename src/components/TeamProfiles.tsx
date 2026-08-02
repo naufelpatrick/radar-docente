@@ -3,15 +3,18 @@ import { team } from '../data/team'
 
 interface TeamProfilesProps {
   compact?: boolean
+  showPhotos?: boolean
 }
 
-export function TeamProfiles({ compact = false }: TeamProfilesProps) {
+export function TeamProfiles({ compact = false, showPhotos = false }: TeamProfilesProps) {
   return (
     <div className={`team-profiles${compact ? ' team-profiles--compact' : ''}`}>
       {team.map((member) => (
         <article className="team-profile" key={member.id} data-reveal="up">
-          <div className="team-profile__portrait" role="img" aria-label={`Espaço reservado para retrato de ${member.name}`}>
-            <span>{member.initials}</span><i /><i />
+          <div className={`team-profile__portrait${showPhotos ? ' team-profile__portrait--photo' : ''}`} role={showPhotos ? undefined : 'img'} aria-label={showPhotos ? undefined : `Identificação visual de ${member.name}`}>
+            {showPhotos && member.photo
+              ? <img src={member.photo.src} alt={member.photo.alt} width={member.photo.width} height={member.photo.height} loading="lazy" decoding="async" />
+              : <><span>{member.initials}</span><i /><i /></>}
           </div>
           <div className="team-profile__content">
             <h3>{member.name}</h3>

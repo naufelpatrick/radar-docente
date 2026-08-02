@@ -4,7 +4,7 @@ import { team } from './team'
 describe('equipe PráxIA', () => {
   it('apresenta Patrick Naufel e Giovani Letti com a mesma estrutura', () => {
     expect(team.map(({ name }) => name)).toEqual(['Patrick Naufel', 'Giovani Letti'])
-    expect(team.every(({ role, photo }) => role === null && photo === null)).toBe(true)
+    expect(team.every(({ role, photo }) => role === null && photo?.src.startsWith('/team/'))).toBe(true)
   })
 
   it('mantém os links profissionais documentados de Giovani', () => {

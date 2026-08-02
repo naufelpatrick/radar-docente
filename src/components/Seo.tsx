@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { SITE_URL } from '../config/site'
 
 type JsonLd = Record<string, unknown> | Record<string, unknown>[]
 
@@ -14,8 +15,7 @@ interface SeoProps {
   robots?: string
 }
 
-const siteUrl = 'https://www.radarpraxia.com'
-const socialImage = `${siteUrl}/social-graph-praxia.png`
+const socialImage = `${SITE_URL}/social-graph-praxia.png`
 const defaultImageAlt = 'PráxIA — fluência digital e inteligência artificial para a prática docente'
 
 function setMeta(selector: string, attributes: Record<string, string>) {
@@ -31,7 +31,7 @@ function setMeta(selector: string, attributes: Record<string, string>) {
 
 export function Seo({ title, socialTitle = title, description, path, type = 'website', image = socialImage, imageAlt = defaultImageAlt, jsonLd, robots = 'index, follow' }: SeoProps) {
   useEffect(() => {
-    const canonicalUrl = new URL(path, siteUrl).toString()
+    const canonicalUrl = new URL(path, SITE_URL).toString()
     document.title = title
 
     setMeta('meta[name="description"]', { name: 'description', content: description })

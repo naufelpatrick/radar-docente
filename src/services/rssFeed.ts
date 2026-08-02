@@ -1,7 +1,7 @@
 import type { BlogArticle } from '../data/blogArticles'
+import { SITE_URL } from '../config/site.ts'
 
-const siteUrl = 'https://www.radarpraxia.com'
-const feedUrl = `${siteUrl}/feed.xml`
+const feedUrl = `${SITE_URL}/feed.xml`
 
 function escapeXml(value: string) {
   return value
@@ -40,7 +40,7 @@ export function generateRssXml(articles: BlogArticle[]) {
     '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/">',
     '  <channel>',
     '    <title>Blog PráxIA</title>',
-    `    <link>${siteUrl}/blog</link>`,
+    `    <link>${SITE_URL}/blog</link>`,
     '    <description>Reflexões, referências e práticas para integrar tecnologia e inteligência artificial à docência com consciência pedagógica.</description>',
     '    <language>pt-BR</language>',
     `    <lastBuildDate>${latestPublication}</lastBuildDate>`,
@@ -48,9 +48,9 @@ export function generateRssXml(articles: BlogArticle[]) {
     '    <ttl>60</ttl>',
     `    <atom:link href="${feedUrl}" rel="self" type="application/rss+xml" />`,
     '    <image>',
-    `      <url>${siteUrl}/social-graph-praxia.png</url>`,
+    `      <url>${SITE_URL}/social-graph-praxia.png</url>`,
     '      <title>Blog PráxIA</title>',
-    `      <link>${siteUrl}/blog</link>`,
+    `      <link>${SITE_URL}/blog</link>`,
     '    </image>',
     items,
     '  </channel>',

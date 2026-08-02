@@ -1,9 +1,9 @@
 import type { BlogArticle } from '../data/blogArticles'
-import { buildShareUrl, type ShareSource } from './shareTracking'
+import { buildShareUrl, getShareBaseUrl, type ShareSource } from './shareTracking'
 
 export function buildArticleShareUrls(article: BlogArticle) {
   const trackedUrl = (source: ShareSource) => buildShareUrl({
-    url: article.canonicalUrl,
+    url: getShareBaseUrl({ canonicalUrl: article.canonicalUrl, path: article.path }),
     source,
     campaign: 'article_share',
     content: article.slug,

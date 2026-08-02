@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { buildSiteUrl } from '../config/site'
 import { blogArticles, getPublishedArticlesByCategory, getPublishedBlogArticles } from './blogArticles'
 
 describe('fonte editorial do blog', () => {
@@ -26,6 +27,7 @@ describe('fonte editorial do blog', () => {
     const articles = getPublishedBlogArticles()
 
     expect(new Set(articles.map((article) => article.canonicalUrl)).size).toBe(articles.length)
+    expect(articles.every((article) => article.canonicalUrl === buildSiteUrl(article.path))).toBe(true)
     expect(new Set(articles.map((article) => article.socialImage)).size).toBe(articles.length)
     expect(articles.every((article) => article.socialImage.startsWith('https://www.radarpraxia.com/social/'))).toBe(true)
     expect(articles.every((article) => article.seoTitle.endsWith('| PráxIA'))).toBe(true)

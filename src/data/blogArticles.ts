@@ -1,3 +1,5 @@
+import { buildSiteUrl } from '../config/site.ts'
+
 export type BlogArticleStatus = 'published' | 'draft' | 'in_preparation'
 
 export type BlogArticle = {
@@ -24,7 +26,7 @@ export type BlogArticle = {
   faq?: Array<{ question: string; answer: string }>
 }
 
-export const blogArticles: BlogArticle[] = [
+const blogArticleEntries: Array<Omit<BlogArticle, 'canonicalUrl'>> = [
   {
     slug: 'como-avaliar-atividades-produzidas-com-apoio-de-ia',
     path: '/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia',
@@ -40,7 +42,6 @@ export const blogArticles: BlogArticle[] = [
     modifiedAt: '2026-07-29',
     publishedDate: '29 jul. 2026',
     displayDate: '29 de julho de 2026',
-    canonicalUrl: 'https://www.radarpraxia.com/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia',
     socialImage: 'https://www.radarpraxia.com/social/avaliar-atividades-com-ia-1200x630.jpg',
     socialImageAlt: 'Professora observa as camadas de aprendizagem por trás de um trabalho produzido com apoio de inteligência artificial',
     author: 'Patrick Naufel',
@@ -72,7 +73,6 @@ export const blogArticles: BlogArticle[] = [
     modifiedAt: '2026-07-29',
     publishedDate: '29 jul. 2026',
     displayDate: '29 de julho de 2026',
-    canonicalUrl: 'https://www.radarpraxia.com/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia',
     socialImage: 'https://www.radarpraxia.com/social/competencias-docentes-uso-ia-1200x630.jpg',
     socialImageAlt: 'Professor no centro de um sistema de competências conectadas para o uso pedagógico e responsável da inteligência artificial',
     author: 'Patrick Naufel',
@@ -104,7 +104,6 @@ export const blogArticles: BlogArticle[] = [
     modifiedAt: '2026-07-28',
     publishedDate: '28 jul. 2026',
     displayDate: '28 de julho de 2026',
-    canonicalUrl: 'https://www.radarpraxia.com/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta',
     socialImage: 'https://www.radarpraxia.com/social/usar-ia-antes-da-ferramenta-1200x630.jpg',
     socialImageAlt: 'Capa do artigo Usar IA com estudantes começa antes da ferramenta, da PráxIA',
     author: 'Patrick Naufel',
@@ -125,7 +124,6 @@ export const blogArticles: BlogArticle[] = [
     modifiedAt: '2026-07-28',
     publishedDate: '28 jul. 2026',
     displayDate: '28 de julho de 2026',
-    canonicalUrl: 'https://www.radarpraxia.com/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem',
     socialImage: 'https://www.radarpraxia.com/social/possibilidade-tecnologica-objetivo-aprendizagem-1200x630.jpg',
     socialImageAlt: 'Capa do artigo Da possibilidade tecnológica ao objetivo de aprendizagem, da PráxIA',
     author: 'Patrick Naufel',
@@ -146,13 +144,17 @@ export const blogArticles: BlogArticle[] = [
     modifiedAt: '2026-07-28',
     publishedDate: '28 jul. 2026',
     displayDate: '28 de julho de 2026',
-    canonicalUrl: 'https://www.radarpraxia.com/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia',
     socialImage: 'https://www.radarpraxia.com/social/autoria-atividades-com-ia-1200x630.jpg',
     socialImageAlt: 'Capa do artigo Como conversar sobre autoria em atividades com IA, da PráxIA',
     author: 'Patrick Naufel',
     status: 'published',
   },
 ]
+
+export const blogArticles: BlogArticle[] = blogArticleEntries.map((article) => ({
+  ...article,
+  canonicalUrl: buildSiteUrl(article.path),
+}))
 
 function hasValidPublicationDate(article: BlogArticle) {
   return article.publishedAt !== null && !Number.isNaN(Date.parse(article.publishedAt))

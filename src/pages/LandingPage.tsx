@@ -260,7 +260,7 @@ export function LandingPage() {
               <h2>Educação, tecnologia e prática docente</h2>
               <p>A PráxIA é conduzida pelos professores Patrick Naufel e Giovani Letti, reunindo experiências em educação, comunicação, design, tecnologia e inovação.</p>
             </div>
-            <TeamProfiles compact />
+            <TeamProfiles compact showPhotos />
             <ButtonLink href="/para-instituicoes#quem-somos" showArrow>Conheça a PráxIA</ButtonLink>
           </div>
         </section>

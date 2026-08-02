@@ -63,7 +63,7 @@ export function InstitutionsPage() {
 
         <section className="section institutional-formats" id="formatos">
           <div className="shell">
-            <div className="section-heading" data-reveal="up"><div><p className="eyebrow eyebrow--dark">FORMATOS</p><h2>Uma conversa que mobiliza.<br />Uma oficina que <em>coloca em prática.</em></h2></div><p>Conteúdo e formato são ajustados ao público, aos objetivos e ao contexto da instituição.</p></div>
+            <div className="section-heading" data-reveal="up"><div><p className="eyebrow eyebrow--dark">FORMATOS</p><h2>Uma conversa que mobiliza.<br />Uma oficina que <em>coloca em prática.</em></h2></div><p>Conteúdo e formato são ajustados ao público, aos objetivos e ao contexto da instituição. As atividades são conduzidas pessoalmente pelos professores Patrick Naufel e Giovani Letti.</p></div>
             <article className="format-editorial" id="palestras" data-reveal="up">
               <div className="format-editorial__title"><Mic2 aria-hidden="true" /><span>PALESTRA · 60 A 90 MINUTOS</span><h3>Fluência digital docente em tempos de IA</h3><p>Uma experiência de sensibilização, reflexão e mobilização para equipes educacionais.</p></div>
               <div><h4>Temas adaptáveis</h4><ul>{['O que realmente muda na docência com a IA', 'Intenção pedagógica antes da ferramenta', 'Pensamento crítico e autoria', 'Ética, transparência e supervisão humana', 'Caminhos para desenvolver fluência digital docente'].map((item) => <li key={item}>{item}</li>)}</ul></div>
@@ -92,7 +92,7 @@ export function InstitutionsPage() {
               <h2>Educação, tecnologia e prática docente</h2>
               <p>{teamIntroduction}</p>
             </div>
-            <TeamProfiles />
+            <TeamProfiles showPhotos />
           </div>
         </section>
 

@@ -11,7 +11,12 @@ export interface TeamMember {
   initials: string
   shortBio: string
   fullBio: string
-  photo: string | null
+  photo: {
+    src: string
+    alt: string
+    width: number
+    height: number
+  } | null
   links: TeamLink[]
   displayOrder: number
 }

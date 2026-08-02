@@ -6,6 +6,7 @@ import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { MentoringLeadForm } from '../components/MentoringLeadForm'
 import { Seo } from '../components/Seo'
 import { getProduct } from '../data/products'
+import { team } from '../data/team'
 import { useScrollMotion } from '../hooks/useScrollMotion'
 
 interface TeacherProductPageProps {
@@ -59,7 +60,11 @@ export function TeacherProductPage({ productId }: TeacherProductPageProps) {
         )}
         <section className="section teacher-product-content">
           <div className="shell teacher-product-content__grid">
-            <div><p className="eyebrow eyebrow--dark">O QUE VOCÊ ENCONTRA</p><h2>{isEbook ? 'Decisões pedagógicas traduzidas em prática.' : 'Uma conversa orientada pelo seu contexto.'}</h2></div>
+            <div>
+              <p className="eyebrow eyebrow--dark">O QUE VOCÊ ENCONTRA</p>
+              <h2>{isEbook ? 'Decisões pedagógicas traduzidas em prática.' : 'Uma conversa orientada pelo seu contexto.'}</h2>
+              {!isEbook && <p>A mentoria é conduzida pessoalmente pelos professores Patrick Naufel e Giovani Letti, a partir dos desafios e das condições reais de cada docente.</p>}
+            </div>
             <ul>{product.benefits.map((benefit) => <li key={benefit}><Check aria-hidden="true" />{benefit}</li>)}</ul>
           </div>
         </section>
@@ -70,6 +75,14 @@ export function TeacherProductPage({ productId }: TeacherProductPageProps) {
                 <p className="eyebrow eyebrow--dark">MANIFESTE SEU INTERESSE</p>
                 <h2>Conte um pouco sobre seu contexto.</h2>
                 <p>Este primeiro contato ajuda a compreender sua necessidade e verificar como a mentoria pode contribuir. O envio não implica contratação ou pagamento.</p>
+                <div className="mentoring-experts" aria-label="Professores responsáveis pela mentoria">
+                  {team.map((member) => member.photo && (
+                    <div key={member.id}>
+                      <img src={member.photo.src} alt="" width={member.photo.width} height={member.photo.height} loading="lazy" decoding="async" />
+                      <span><strong>{member.name}</strong><small>Professor e pesquisador</small></span>
+                    </div>
+                  ))}
+                </div>
               </div>
               <MentoringLeadForm />
             </div>
