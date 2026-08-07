@@ -4,7 +4,7 @@ import { resolve } from 'node:path'
 const outputDirectory = resolve('dist/lp/workshop-ia-2026')
 const source = await readFile(resolve('dist/index.html'), 'utf8')
 const title = 'Workshop gratuito: IA na prática docente | PráxIA'
-const description = 'Entre na lista de espera do workshop gratuito sobre fluência em IA, maturidade digital e aplicação prática no planejamento docente.'
+const description = 'Entre na lista de espera do workshop gratuito sobre fluência em IA, critérios pedagógicos e aplicação prática no planejamento docente.'
 const canonical = 'https://www.radarpraxia.com/lp/workshop-ia-2026'
 const image = 'https://www.radarpraxia.com/social/workshop-ia-pratica-docente-1200x630.jpg'
 const imageAlt = 'Educadores reunidos em torno de um computador durante atividade de formação'

@@ -7,14 +7,14 @@ import '../workshopWaitlist.css'
 
 const topics = [
   { number: '01', icon: Layers3, title: 'Fluência real × uso superficial de IA', text: 'Como reconhecer a diferença entre apenas operar uma ferramenta e tomar decisões pedagógicas mais conscientes com ela.' },
-  { number: '02', icon: LineChart, title: 'O que a pesquisa mostra', text: 'Uma leitura clara sobre maturidade digital, inovatividade e o que essa relação revela sobre a prática em sala de aula.' },
+  { number: '02', icon: LineChart, title: 'Critério pedagógico em um cenário de mudança', text: 'Como analisar possibilidades da IA sem perder de vista objetivos de aprendizagem, contexto e responsabilidade docente.' },
   { number: '03', icon: BookOpen, title: 'Da teoria ao plano de aula', text: 'Um caminho aplicado para transformar possibilidades da IA em intenção pedagógica, atividade e critérios de avaliação.' },
 ]
 
 export function WorkshopWaitlistPage() {
   return (
     <div className="workshop-page">
-      <Seo title="Workshop gratuito: IA na prática docente | PráxIA" description="Entre na lista de espera do workshop gratuito sobre fluência em IA, maturidade digital e aplicação prática no planejamento docente." path="/lp/workshop-ia-2026" image="https://www.radarpraxia.com/social/workshop-ia-pratica-docente-1200x630.jpg" imageAlt="Educadores reunidos em torno de um computador durante atividade de formação" />
+      <Seo title="Workshop gratuito: IA na prática docente | PráxIA" description="Entre na lista de espera do workshop gratuito sobre fluência em IA, critérios pedagógicos e aplicação prática no planejamento docente." path="/lp/workshop-ia-2026" image="https://www.radarpraxia.com/social/workshop-ia-pratica-docente-1200x630.jpg" imageAlt="Educadores reunidos em torno de um computador durante atividade de formação" />
       <a className="skip-link" href="#conteudo-workshop">Pular para o conteúdo</a>
       <header className="workshop-header"><div className="workshop-shell"><a href="/" aria-label="PráxIA — página inicial"><BrandMark inverse /></a><a href="#lista-de-espera">Entrar na lista <span aria-hidden="true">↘</span></a></div></header>
       <main id="conteudo-workshop">
@@ -25,7 +25,7 @@ export function WorkshopWaitlistPage() {
               <p className="workshop-tag"><span /> EM BREVE</p>
               <h1>Workshop gratuito: <em>IA na prática docente</em></h1>
               <p>Antes de marcar a data, queremos saber: isso faz sentido para você?</p>
-              <div className="workshop-hero__signal"><span>Pesquisa</span><i /><span>Contexto</span><i /><span>Prática</span></div>
+              <div className="workshop-hero__signal"><span>Critério</span><i /><span>Contexto</span><i /><span>Prática</span></div>
             </div>
             <WorkshopWaitlistForm compact submitLabel="Quero entrar na lista de espera" />
           </div>
@@ -42,7 +42,7 @@ export function WorkshopWaitlistPage() {
             <div className="workshop-instructors__grid">
               {team.map((member) => <article key={member.id}>
                 {member.photo && <div className="workshop-instructors__photo"><img src={member.photo.src} alt={member.photo.alt} width={member.photo.width} height={member.photo.height} loading="lazy" decoding="async" /></div>}
-                <div className="workshop-instructors__content"><span>PROFESSOR E PESQUISADOR</span><h3>{member.name}</h3><p>{member.fullBio}</p><div>{member.links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label}<ExternalLink aria-hidden="true" /></a>)}</div></div>
+                <div className="workshop-instructors__content"><span>PROFESSOR</span><h3>{member.name}</h3><p>{member.shortBio.replace('Professor e pesquisador', 'Professor')}</p><div>{member.links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label}<ExternalLink aria-hidden="true" /></a>)}</div></div>
               </article>)}
             </div>
           </div>
@@ -51,7 +51,7 @@ export function WorkshopWaitlistPage() {
         <section className="workshop-origin" aria-labelledby="origem-workshop">
           <div className="workshop-shell workshop-origin__grid">
             <div className="workshop-origin__photo"><img src="/workshop-ia-docentes.webp" alt="Três educadores analisam juntos uma atividade em um computador" width="900" height="1100" loading="lazy" decoding="async" /><span>Educação em primeiro plano</span></div>
-            <div className="workshop-origin__copy"><p className="workshop-kicker">POR QUE ESSE WORKSHOP EXISTE</p><h2 id="origem-workshop">Pesquisa que volta para a <em>sala de aula.</em></h2><p>O PráxIA nasceu de uma pesquisa de mestrado em Sistemas Produtivos, na UNIPLAC, sobre a correlação entre maturidade digital e inovatividade. O estudo ajudou a tornar visível algo que educadores percebem na prática: acesso à tecnologia, sozinho, não produz inovação pedagógica.</p><p>Este workshop é o próximo passo dessa investigação — uma conversa para traduzir evidências em escolhas de planejamento, aplicação e avaliação.</p><blockquote><Quote aria-hidden="true" /><strong>Criado por educadores e pesquisadores, não por especialistas em marketing de IA.</strong></blockquote></div>
+            <div className="workshop-origin__copy"><p className="workshop-kicker">POR QUE ESSE WORKSHOP EXISTE</p><h2 id="origem-workshop">Tecnologia só faz sentido quando encontra um <em>propósito pedagógico.</em></h2><p>Novas ferramentas de IA aparecem o tempo todo. Para quem ensina, porém, a questão central não é acompanhar cada novidade, mas compreender quando, por que e como usar esses recursos de forma coerente com a aprendizagem.</p><p>O workshop cria um espaço para analisar possibilidades, discutir limites e transformar intenção pedagógica em decisões aplicáveis ao planejamento, às atividades e à avaliação.</p><blockquote><Quote aria-hidden="true" /><strong>Conduzido por professores, com foco no contexto e nas decisões de quem ensina.</strong></blockquote></div>
           </div>
         </section>
 
@@ -64,7 +64,7 @@ export function WorkshopWaitlistPage() {
 
         <section className="workshop-final" id="lista-de-espera" aria-labelledby="titulo-lista"><div className="workshop-shell workshop-final__grid"><div><p className="workshop-kicker">SE FIZER SENTIDO PARA VOCÊ</p><h2 id="titulo-lista">Ajude a construir um workshop que responda a <em>dúvidas reais.</em></h2><p>Seu interesse e sua pergunta vão orientar formato, exemplos e aprofundamento. Quando a data for definida, você será uma das primeiras pessoas a saber.</p></div><WorkshopWaitlistForm /></div></section>
       </main>
-      <footer className="workshop-footer"><div className="workshop-shell"><div><a href="/"><BrandMark inverse /></a><p>Transforme fluência em prática docente.</p></div><div className="workshop-footer__links"><a href="https://www.radarpraxia.com">radarpraxia.com</a><a href="https://www.instagram.com/radarpraxia" target="_blank" rel="noreferrer"><Instagram aria-hidden="true" /> @radarpraxia</a><a href="https://www.linkedin.com/company/radarpraxia" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" /> LinkedIn</a></div></div><div className="workshop-shell workshop-footer__bottom"><span>© {new Date().getFullYear()} PráxIA</span><span>Pesquisa, contexto e prática docente.</span></div></footer>
+      <footer className="workshop-footer"><div className="workshop-shell"><div><a href="/"><BrandMark inverse /></a><p>Transforme fluência em prática docente.</p></div><div className="workshop-footer__links"><a href="https://www.radarpraxia.com">radarpraxia.com</a><a href="https://www.instagram.com/radarpraxia" target="_blank" rel="noreferrer"><Instagram aria-hidden="true" /> @radarpraxia</a><a href="https://www.linkedin.com/company/radarpraxia" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" /> LinkedIn</a></div></div><div className="workshop-shell workshop-footer__bottom"><span>© {new Date().getFullYear()} PráxIA</span><span>Contexto, critério e prática docente.</span></div></footer>
     </div>
   )
 }
