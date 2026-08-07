@@ -7,7 +7,7 @@ const title = 'Workshop: IA na prática docente | PráxIA'
 const description = 'Entre na lista de espera do workshop sobre fluência em IA, critérios pedagógicos e aplicação prática no planejamento docente.'
 const canonical = 'https://www.radarpraxia.com/lp/workshop-ia-2026'
 const image = 'https://www.radarpraxia.com/social/workshop-ia-pratica-docente-1200x630.jpg'
-const imageAlt = 'Educadores reunidos em torno de um computador durante atividade de formação'
+const imageAlt = 'Arte do workshop IA na prática docente com chamada para entrar na lista prioritária'
 
 const html = source
   .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)
