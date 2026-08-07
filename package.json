@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
+    "@supabase/supabase-js": "^2.112.2",
     "@tailwindcss/vite": "^4.1.14",
     "jspdf": "^4.2.1",
     "lucide-react": "^0.468.0",

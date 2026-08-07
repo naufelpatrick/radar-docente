@@ -75,6 +75,9 @@ const LinksPage = lazy(() =>
 const ChoosingAiToolArticlePage = lazy(() =>
   import('./pages/articles/ChoosingAiToolArticlePage').then((module) => ({ default: module.ChoosingAiToolArticlePage })),
 )
+const WorkshopWaitlistPage = lazy(() =>
+  import('./pages/WorkshopWaitlistPage').then((module) => ({ default: module.WorkshopWaitlistPage })),
+)
 
 export default function App() {
   return (
@@ -106,6 +109,7 @@ export default function App() {
           <Route path="/ebook/obrigado" element={<EbookOrderPage />} />
           <Route path="/admin/distribuicao" element={<DistributionAdminPage />} />
           <Route path="/links" element={<LinksPage />} />
+          <Route path="/lp/workshop-ia-2026" element={<WorkshopWaitlistPage />} />
           <Route path="/mentoria" element={<TeacherProductPage productId="mentoring" />} />
           <Route path="/para-instituicoes" element={<InstitutionsPage />} />
           <Route path="/radar/*" element={<RadarFlow />} />
