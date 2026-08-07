@@ -42,7 +42,7 @@ export function WorkshopWaitlistPage() {
             <div className="workshop-instructors__grid">
               {team.map((member) => <article key={member.id}>
                 {member.photo && <div className="workshop-instructors__photo"><img src={member.photo.src} alt={member.photo.alt} width={member.photo.width} height={member.photo.height} loading="lazy" decoding="async" /></div>}
-                <div className="workshop-instructors__content"><span>PROFESSOR</span><h3>{member.name}</h3><p>{member.shortBio.replace('Professor e pesquisador', 'Professor')}</p><div>{member.links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label}<ExternalLink aria-hidden="true" /></a>)}</div></div>
+                <div className="workshop-instructors__content"><span>PROFESSOR</span><h3>{member.name}</h3><p>{member.fullBio}</p><div>{member.links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label}<ExternalLink aria-hidden="true" /></a>)}</div></div>
               </article>)}
             </div>
           </div>
