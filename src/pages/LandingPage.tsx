@@ -151,6 +151,18 @@ export function LandingPage() {
           </div>
         </div>
 
+        <section className="home-workshop" aria-labelledby="home-workshop-title">
+          <div className="shell home-workshop__inner" data-reveal="up">
+            <div className="home-workshop__signal" aria-hidden="true"><Sparkles /></div>
+            <div className="home-workshop__copy">
+              <p className="eyebrow"><span /> EM BREVE · LISTA DE ESPERA</p>
+              <h2 id="home-workshop-title">Workshop: <em>IA na prática docente</em></h2>
+              <p>Um encontro para transformar possibilidades da IA em escolhas pedagógicas mais conscientes, aplicáveis e coerentes com a realidade de quem ensina.</p>
+            </div>
+            <ButtonLink href="/lp/workshop-ia-2026" variant="light" showArrow>Conhecer o workshop</ButtonLink>
+          </div>
+        </section>
+
         <section className="section section--benefits" id="o-que-voce-recebe">
           <div className="shell">
             <div className="section-heading" data-reveal="up">
