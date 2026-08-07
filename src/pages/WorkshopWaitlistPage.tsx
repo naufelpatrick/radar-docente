@@ -14,7 +14,7 @@ const topics = [
 export function WorkshopWaitlistPage() {
   return (
     <div className="workshop-page">
-      <Seo title="Workshop gratuito: IA na prática docente | PráxIA" description="Entre na lista de espera do workshop gratuito sobre fluência em IA, critérios pedagógicos e aplicação prática no planejamento docente." path="/lp/workshop-ia-2026" image="https://www.radarpraxia.com/social/workshop-ia-pratica-docente-1200x630.jpg" imageAlt="Educadores reunidos em torno de um computador durante atividade de formação" />
+      <Seo title="Workshop: IA na prática docente | PráxIA" description="Entre na lista de espera do workshop sobre fluência em IA, critérios pedagógicos e aplicação prática no planejamento docente." path="/lp/workshop-ia-2026" image="https://www.radarpraxia.com/social/workshop-ia-pratica-docente-1200x630.jpg" imageAlt="Educadores reunidos em torno de um computador durante atividade de formação" />
       <a className="skip-link" href="#conteudo-workshop">Pular para o conteúdo</a>
       <header className="workshop-header"><div className="workshop-shell"><a href="/" aria-label="PráxIA — página inicial"><BrandMark inverse /></a><a href="#lista-de-espera">Entrar na lista <span aria-hidden="true">↘</span></a></div></header>
       <main id="conteudo-workshop">
@@ -23,7 +23,7 @@ export function WorkshopWaitlistPage() {
           <div className="workshop-shell workshop-hero__grid">
             <div className="workshop-hero__copy">
               <p className="workshop-tag"><span /> EM BREVE</p>
-              <h1>Workshop gratuito: <em>IA na prática docente</em></h1>
+              <h1>Workshop: <em>IA na prática docente</em></h1>
               <p>Antes de marcar a data, queremos saber: isso faz sentido para você?</p>
               <div className="workshop-hero__signal"><span>Critério</span><i /><span>Contexto</span><i /><span>Prática</span></div>
             </div>
