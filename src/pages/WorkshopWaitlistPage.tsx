@@ -14,7 +14,7 @@ const topics = [
 export function WorkshopWaitlistPage() {
   return (
     <div className="workshop-page">
-      <Seo title="Workshop: IA na prática docente | PráxIA" description="Entre na lista de espera do workshop sobre fluência em IA, critérios pedagógicos e aplicação prática no planejamento docente." path="/lp/workshop-ia-2026" image="https://www.radarpraxia.com/social/workshop-ia-pratica-docente-1200x630.jpg" imageAlt="Arte do workshop IA na prática docente com chamada para entrar na lista prioritária" />
+      <Seo title="Workshop: IA na prática docente | PráxIA" description="Entre na lista de espera do workshop sobre fluência em IA, critérios pedagógicos e aplicação prática no planejamento docente." path="/lp/workshop-ia-2026" image="https://www.radarpraxia.com/social/workshop-ia-pratica-docente-lista-prioritaria-1200x630.jpg" imageAlt="Arte do workshop IA na prática docente com chamada para entrar na lista prioritária" />
       <a className="skip-link" href="#conteudo-workshop">Pular para o conteúdo</a>
       <header className="workshop-header"><div className="workshop-shell"><a href="/" aria-label="PráxIA — página inicial"><BrandMark inverse /></a><a href="#lista-de-espera">Entrar na lista <span aria-hidden="true">↘</span></a></div></header>
       <main id="conteudo-workshop">
