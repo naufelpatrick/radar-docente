@@ -110,6 +110,7 @@ export default function App() {
           <Route path="/admin/distribuicao" element={<DistributionAdminPage />} />
           <Route path="/links" element={<LinksPage />} />
           <Route path="/lp/workshop-ia-2026" element={<WorkshopWaitlistPage />} />
+          <Route path="/lp/workshop-ia-2026/inscrito" element={<WorkshopWaitlistPage registered />} />
           <Route path="/mentoria" element={<TeacherProductPage productId="mentoring" />} />
           <Route path="/para-instituicoes" element={<InstitutionsPage />} />
           <Route path="/radar/*" element={<RadarFlow />} />

@@ -12,14 +12,16 @@ const initialLead: WorkshopWaitlistLead = {
   nome: '', email: '', etapaEnsino: '', duvidaPrincipal: '', topaPagar: '',
 }
 
-type Props = { compact?: boolean; submitLabel?: string }
+type Props = { compact?: boolean; submitLabel?: string; onSuccess?: () => void; registered?: boolean }
 
-export function WorkshopWaitlistForm({ compact = false, submitLabel = 'Entrar na lista de espera' }: Props) {
+const successMessage = 'Você está na lista! Avisaremos assim que a data for confirmada.'
+
+export function WorkshopWaitlistForm({ compact = false, submitLabel = 'Entrar na lista de espera', onSuccess, registered = false }: Props) {
   const id = useId()
   const [lead, setLead] = useState(initialLead)
   const [errors, setErrors] = useState<WorkshopWaitlistErrors>({})
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
-  const [message, setMessage] = useState('')
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>(registered ? 'success' : 'idle')
+  const [message, setMessage] = useState(registered ? successMessage : '')
 
   function update<K extends keyof WorkshopWaitlistLead>(key: K, value: WorkshopWaitlistLead[K]) {
     setLead((current) => ({ ...current, [key]: value }))
@@ -41,8 +43,9 @@ export function WorkshopWaitlistForm({ compact = false, submitLabel = 'Entrar na
         utmCampaign: params.get('utm_campaign') || undefined,
       })
       setStatus('success')
-      setMessage('Você está na lista! Avisaremos assim que a data for confirmada.')
+      setMessage(successMessage)
       setLead(initialLead)
+      onSuccess?.()
     } catch (error) {
       setStatus('error')
       setMessage(
