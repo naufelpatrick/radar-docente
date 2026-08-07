@@ -1,7 +1,8 @@
-import { BookOpen, Instagram, Layers3, LineChart, Linkedin, Quote } from 'lucide-react'
+import { BookOpen, ExternalLink, Instagram, Layers3, LineChart, Linkedin, Quote } from 'lucide-react'
 import { BrandMark } from '../components/BrandMark'
 import { Seo } from '../components/Seo'
 import { WorkshopWaitlistForm } from '../components/WorkshopWaitlistForm'
+import { team, teamIntroduction } from '../data/team'
 import '../workshopWaitlist.css'
 
 const topics = [
@@ -23,7 +24,7 @@ export function WorkshopWaitlistPage() {
             <div className="workshop-hero__copy">
               <p className="workshop-tag"><span /> EM BREVE</p>
               <h1>Workshop gratuito: <em>IA na prática docente</em></h1>
-              <p>Direto da pesquisa que deu origem ao PráxIA. Antes de marcar a data, queremos saber: isso faz sentido para você?</p>
+              <p>Antes de marcar a data, queremos saber: isso faz sentido para você?</p>
               <div className="workshop-hero__signal"><span>Pesquisa</span><i /><span>Contexto</span><i /><span>Prática</span></div>
             </div>
             <WorkshopWaitlistForm compact submitLabel="Quero entrar na lista de espera" />
@@ -33,6 +34,18 @@ export function WorkshopWaitlistPage() {
         <section className="workshop-topics" aria-labelledby="sobre-workshop">
           <div className="workshop-shell"><p className="workshop-kicker">SOBRE O WORKSHOP</p><div className="workshop-section-heading"><h2 id="sobre-workshop">Um encontro para pensar antes de <em>automatizar.</em></h2><p>Sem receitas prontas. Vamos olhar para evidências, contexto e decisões que cabem na realidade de quem ensina.</p></div>
           <div className="workshop-topic-grid">{topics.map(({ number, icon: Icon, title, text }) => <article key={number}><div><span>{number}</span><Icon aria-hidden="true" /></div><h3>{title}</h3><p>{text}</p></article>)}</div></div>
+        </section>
+
+        <section className="workshop-instructors" aria-labelledby="titulo-instrutores">
+          <div className="workshop-shell">
+            <div className="workshop-instructors__heading"><div><p className="workshop-kicker">INSTRUTORES</p><h2 id="titulo-instrutores">Quem conduz este <em>encontro.</em></h2></div><p>{teamIntroduction}</p></div>
+            <div className="workshop-instructors__grid">
+              {team.map((member) => <article key={member.id}>
+                {member.photo && <div className="workshop-instructors__photo"><img src={member.photo.src} alt={member.photo.alt} width={member.photo.width} height={member.photo.height} loading="lazy" decoding="async" /></div>}
+                <div className="workshop-instructors__content"><span>PROFESSOR E PESQUISADOR</span><h3>{member.name}</h3><p>{member.fullBio}</p><div>{member.links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label}<ExternalLink aria-hidden="true" /></a>)}</div></div>
+              </article>)}
+            </div>
+          </div>
         </section>
 
         <section className="workshop-origin" aria-labelledby="origem-workshop">
