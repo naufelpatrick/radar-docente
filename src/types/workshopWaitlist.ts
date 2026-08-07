@@ -1,4 +1,4 @@
-export type TeachingStage = 'fundamental' | 'medio' | 'superior' | 'tecnico' | 'outro'
+export type TeachingStage = 'fundamental' | 'medio' | 'superior_graduacao' | 'superior_pos_graduacao' | 'tecnico' | 'outro'
 export type PaymentIntent = 'sim' | 'nao' | 'depende'
 
 export type WorkshopWaitlistLead = {
