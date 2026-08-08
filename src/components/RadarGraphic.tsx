@@ -1,4 +1,4 @@
-import brandSymbol from '../assets/praxia-symbol.svg'
+import brandSymbol from '../assets/praxia-symbol.png'
 
 type RadarGraphicProps = {
   className?: string
