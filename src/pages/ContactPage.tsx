@@ -145,7 +145,7 @@ export function ContactPage() {
   return (
     <>
       <Seo
-        title="Contato PráxIA: Radar Docente, metodologia e parcerias"
+        title="Contato"
         description="Fale com a PráxIA sobre o Radar Docente, metodologia, pesquisa, formação, privacidade ou propostas de parceria."
         path="/contato"
         jsonLd={contactSchema}

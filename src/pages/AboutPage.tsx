@@ -90,7 +90,7 @@ export function AboutPage() {
   return (
     <>
       <Seo
-        title="Sobre a PráxIA: educação, tecnologia e prática docente"
+        title="Sobre nós"
         description="Conheça a história, o propósito e os valores da PráxIA, iniciativa que aproxima fluência digital, inteligência artificial e prática pedagógica."
         path="/sobre"
         jsonLd={aboutSchema}

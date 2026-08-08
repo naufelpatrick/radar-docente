@@ -110,7 +110,7 @@ export function LandingPage() {
   return (
     <>
       <Seo
-        title="PráxIA: Radar de Fluência Digital e IA para professores"
+        title="Radar de Fluência Digital e IA para professores"
         description="Reconheça como tecnologia e IA aparecem na sua prática docente. Receba um score explicado, radar de seis dimensões e próximo passo gratuito."
         path="/"
         jsonLd={homeSchema}
