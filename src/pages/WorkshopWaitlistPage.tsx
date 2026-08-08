@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import { BookOpen, ExternalLink, Instagram, Layers3, LineChart, Linkedin, Quote } from 'lucide-react'
+import { BookOpen, Instagram, Layers3, LineChart, Linkedin, Quote } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { BrandMark } from '../components/BrandMark'
 import { Seo } from '../components/Seo'
 import { WorkshopWaitlistForm } from '../components/WorkshopWaitlistForm'
-import { team, teamIntroduction } from '../data/team'
 import '../workshopWaitlist.css'
 
 const topics = [
@@ -56,14 +55,20 @@ export function WorkshopWaitlistPage({ registered = false }: Props) {
         </section>
 
         <section className="workshop-instructors" aria-labelledby="titulo-instrutores">
-          <div className="workshop-shell">
-            <div className="workshop-instructors__heading"><div><p className="workshop-kicker">INSTRUTORES</p><h2 id="titulo-instrutores">Quem conduz este <em>encontro.</em></h2></div><p>{teamIntroduction}</p></div>
-            <div className="workshop-instructors__grid">
-              {team.map((member) => <article key={member.id}>
-                {member.photo && <div className="workshop-instructors__photo"><img src={member.photo.src} alt={member.photo.alt} width={member.photo.width} height={member.photo.height} loading="lazy" decoding="async" /></div>}
-                <div className="workshop-instructors__content"><span>PROFESSOR</span><h3>{member.name}</h3><p>{member.fullBio}</p><div>{member.links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label}<ExternalLink aria-hidden="true" /></a>)}</div></div>
-              </article>)}
+          <div className="workshop-shell workshop-instructors__grid">
+            <div className="workshop-instructors__photo">
+              <img src="/workshop-facilitadores-patrick-giovani.png" alt="Patrick Naufel e Giovani Letti, facilitadores do workshop" width="1123" height="1401" loading="lazy" decoding="async" />
             </div>
+            <div className="workshop-instructors__content">
+              <p className="workshop-kicker">QUEM CONDUZ O WORKSHOP</p>
+              <h2 id="titulo-instrutores">Uma formação entre educadores, <em>para educadores.</em></h2>
+              <p className="workshop-instructors__intro">O workshop é conduzido por Patrick Naufel e Giovani Letti, profissionais que unem educação, design, inovação e uso responsável de tecnologias para apoiar decisões mais conscientes na prática docente.</p>
+              <div className="workshop-instructors__bios">
+                <article><h3>Patrick Naufel</h3><strong>Professor, designer e pesquisador em inovação e transformação digital.</strong><p>Com mais de 20 anos de experiência em design e educação, atua na formação de profissionais e docentes para o uso crítico, estratégico e centrado nas pessoas das tecnologias digitais.</p></article>
+                <article><h3>Giovani Letti</h3><strong>Professor e profissional de educação, tecnologia e inovação.</strong><p>Atua na conexão entre práticas pedagógicas, cultura digital e inovação, contribuindo para que a tecnologia seja incorporada à educação com propósito, responsabilidade e aplicabilidade real.</p></article>
+              </div>
+            </div>
+            <p className="workshop-instructors__closing">Uma conversa prática para transformar tecnologia em decisões pedagógicas melhores.</p>
           </div>
         </section>
 
