@@ -14,7 +14,7 @@ export const team: TeamMember[] = [
       src: '/team/patrick-naufel.webp',
       alt: 'Retrato de Patrick Naufel',
       width: 720,
-      height: 848,
+      height: 1082,
     },
     links: [
       { label: 'LinkedIn', href: 'https://www.linkedin.com/in/patricknaufel', type: 'linkedin' },
@@ -33,7 +33,7 @@ export const team: TeamMember[] = [
       src: '/team/giovani-letti.webp',
       alt: 'Retrato de Giovani Letti',
       width: 720,
-      height: 877,
+      height: 1082,
     },
     links: [
       { label: 'LinkedIn', href: 'https://www.linkedin.com/in/giovani-letti-1332a1/', type: 'linkedin' },
