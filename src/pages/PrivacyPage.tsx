@@ -69,7 +69,7 @@ export function PrivacyPage() {
 
             <section id="sobre">
               <span>01</span><h2>Sobre esta política</h2>
-              <p>Esta política abrange o site, o Radar Docente, a página de resultado e os formulários de contato, mentoria e proposta institucional da PráxIA. Ela não substitui os avisos específicos apresentados no momento de cada coleta.</p>
+              <p>Esta política abrange o site, o Radar Docente, a página de resultado e os formulários de contato, e-book, mentoria e proposta institucional da PráxIA. Ela não substitui os avisos específicos apresentados no momento de cada coleta.</p>
             </section>
 
             <section id="responsavel">
@@ -82,6 +82,7 @@ export function PrivacyPage() {
               <span>03</span><h2>Quais dados são tratados</h2>
               <h3>Contato geral</h3><p>Nome, e-mail, assunto, mensagem, data e horário do envio, origem da página e estado de atendimento.</p>
               <h3>Interesse em mentoria</h3><p>Nome, e-mail, WhatsApp, contexto de atuação, desafio informado, data e horário do envio, origem da página e estado de atendimento.</p>
+              <h3>Download gratuito do e-book</h3><p>Nome, perfil de atuação, e-mail, telefone, registro do consentimento para mensagens, data, horário e origem da página.</p>
               <h3>Proposta institucional</h3><p>Nome, instituição, cargo ou função, e-mail, WhatsApp, cidade, estado, modalidade, interesse em palestra ou workshop, quantidade aproximada de participantes, período pretendido, descrição da necessidade, data e horário, origem e estado de atendimento.</p>
               <h3>Relatório gratuito do Radar</h3><p>Nome, e-mail, cidade e instituição quando informadas, perfil docente, Score PráxIA, faixa de desenvolvimento, pontuações resumidas das seis dimensões, versão do instrumento, tempo de conclusão, opção de receber comunicações, data e horário.</p>
               <h3>Dados técnicos</h3><p>Vercel, Supabase e Google Analytics podem tratar informações técnicas de acesso conforme suas configurações e políticas. A PráxIA não adiciona nome, e-mail, telefone, instituição, cidade ou campos livres aos eventos de Analytics.</p>
@@ -96,14 +97,14 @@ export function PrivacyPage() {
 
             <section id="formularios">
               <span>05</span><h2>Formulários e liberação do relatório</h2>
-              <p>Os formulários enviam os dados diretamente para tabelas separadas no Supabase: <code>lead_contato</code>, <code>lead_mentoria</code>, <code>institutional_leads</code> e <code>lead_radar</code>. O e-mail exibido no site também pode ser usado voluntariamente por meio do aplicativo de e-mail da pessoa.</p>
+              <p>Os formulários enviam os dados para tabelas separadas no Supabase: <code>lead_contato</code>, <code>ebook_leads</code>, <code>lead_mentoria</code>, <code>institutional_leads</code> e <code>lead_radar</code>. O e-mail exibido no site também pode ser usado voluntariamente por meio do aplicativo de e-mail da pessoa.</p>
               <p>Não envie nomes, avaliações, diagnósticos, condições de saúde ou outras informações pessoais de estudantes nos campos livres.</p>
             </section>
 
             <section id="finalidades">
               <span>06</span><h2>Finalidades e bases legais aplicáveis</h2>
-              <p>Os dados são usados para entregar e mensurar o uso do relatório gratuito, responder mensagens, avaliar pedidos de mentoria e preparar ou acompanhar propostas solicitadas. Conforme o contexto, essas operações podem se apoiar em procedimentos preliminares relacionados a contrato ou em legítimo interesse compatível com a expectativa de quem iniciou o contato, sujeito à avaliação dos responsáveis.</p>
-              <p>O envio de conteúdos e novidades por e-mail depende de uma autorização separada, opcional e revogável. O aviso informativo do formulário não é aceite contratual de toda esta política.</p>
+              <p>Os dados são usados para liberar o e-book e o relatório gratuitos, responder mensagens, avaliar pedidos de mentoria e preparar ou acompanhar propostas solicitadas. Conforme o contexto, essas operações podem se apoiar em procedimentos preliminares relacionados a contrato, consentimento ou legítimo interesse compatível com a expectativa de quem iniciou o contato, sujeito à avaliação dos responsáveis.</p>
+              <p>O envio de conteúdos, produtos e eventos por e-mail ou telefone/WhatsApp depende da autorização apresentada no respectivo formulário e pode ser cancelado a qualquer momento. O aviso informativo do formulário não é aceite contratual de toda esta política.</p>
             </section>
 
             <section id="fornecedores">

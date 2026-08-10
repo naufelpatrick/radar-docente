@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/prerender-articles.mjs && node scripts/generate-rss.mjs",
+    "build": "tsc -b && vite build && node scripts/prerender-articles.mjs && node scripts/prerender-workshop.mjs && node scripts/generate-rss.mjs",
     "lint": "eslint .",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
+    "@supabase/supabase-js": "^2.112.2",
     "@tailwindcss/vite": "^4.1.14",
     "jspdf": "^4.2.1",
     "lucide-react": "^0.468.0",

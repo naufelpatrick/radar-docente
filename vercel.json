@@ -12,6 +12,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/lp/workshop-ia-2026", "destination": "/lp/workshop-ia-2026/index.html" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }

@@ -29,7 +29,7 @@ export function createBlogPostingSchema(article: BlogArticle) {
       url: 'https://www.radarpraxia.com/',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.radarpraxia.com/favicon.png',
+        url: 'https://www.radarpraxia.com/brand/praxia-logo-positive.svg',
       },
     },
     articleSection: article.category,

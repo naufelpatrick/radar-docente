@@ -79,7 +79,7 @@ export function LinksPage() {
   return (
     <>
       <Seo
-        title="PráxIA | Fluência Digital e IA para Professores"
+        title="Links"
         description="Diagnóstico, artigos, conteúdos, mentorias, workshops e palestras para desenvolver a Fluência Digital e em IA de professores."
         path="/links"
         robots="noindex, follow"

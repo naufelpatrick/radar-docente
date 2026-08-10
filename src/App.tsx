@@ -73,6 +73,12 @@ const DistributionAdminPage = lazy(() =>
 const LinksPage = lazy(() =>
   import('./pages/LinksPage').then((module) => ({ default: module.LinksPage })),
 )
+const ChoosingAiToolArticlePage = lazy(() =>
+  import('./pages/articles/ChoosingAiToolArticlePage').then((module) => ({ default: module.ChoosingAiToolArticlePage })),
+)
+const WorkshopWaitlistPage = lazy(() =>
+  import('./pages/WorkshopWaitlistPage').then((module) => ({ default: module.WorkshopWaitlistPage })),
+)
 
 export default function App() {
   return (
@@ -93,6 +99,7 @@ export default function App() {
           <Route path="/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia" element={<AuthorshipWithAiArticlePage />} />
           <Route path="/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia" element={<TeacherAiCompetenciesArticlePage />} />
           <Route path="/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia" element={<AssessingAiSupportedWorkArticlePage />} />
+          <Route path="/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica" element={<ChoosingAiToolArticlePage />} />
           <Route path="/blog/categoria/:slug" element={<BlogCategoryPage />} />
           <Route path="/guias" element={<GuidesPage />} />
           <Route path="/competencias" element={<CompetenciesPage />} />
@@ -104,6 +111,8 @@ export default function App() {
           <Route path="/ebook/obrigado" element={<EbookOrderPage />} />
           <Route path="/admin/distribuicao" element={<DistributionAdminPage />} />
           <Route path="/links" element={<LinksPage />} />
+          <Route path="/lp/workshop-ia-2026" element={<WorkshopWaitlistPage />} />
+          <Route path="/lp/workshop-ia-2026/inscrito" element={<WorkshopWaitlistPage registered />} />
           <Route path="/mentoria" element={<TeacherProductPage productId="mentoring" />} />
           <Route path="/para-instituicoes" element={<InstitutionsPage />} />
           <Route path="/radar/*" element={<RadarFlow />} />

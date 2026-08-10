@@ -18,6 +18,11 @@ interface SeoProps {
 const socialImage = `${SITE_URL}/social-graph-praxia.png`
 const defaultImageAlt = 'PráxIA — fluência digital e inteligência artificial para a prática docente'
 
+function formatPageTitle(title: string) {
+  const pageName = title.replace(/\s*\|\s*Pr[áa]xIA\s*$/i, '').trim()
+  return `${pageName} | PraxIA`
+}
+
 function setMeta(selector: string, attributes: Record<string, string>) {
   let element = document.head.querySelector<HTMLMetaElement>(selector)
 
@@ -32,7 +37,7 @@ function setMeta(selector: string, attributes: Record<string, string>) {
 export function Seo({ title, socialTitle = title, description, path, type = 'website', image = socialImage, imageAlt = defaultImageAlt, jsonLd, robots = 'index, follow' }: SeoProps) {
   useEffect(() => {
     const canonicalUrl = new URL(path, SITE_URL).toString()
-    document.title = title
+    document.title = formatPageTitle(title)
 
     setMeta('meta[name="description"]', { name: 'description', content: description })
     setMeta('meta[name="robots"]', { name: 'robots', content: robots })

@@ -110,7 +110,7 @@ export function LandingPage() {
   return (
     <>
       <Seo
-        title="PráxIA: Radar de Fluência Digital e IA para professores"
+        title="Radar de Fluência Digital e IA para professores"
         description="Reconheça como tecnologia e IA aparecem na sua prática docente. Receba um score explicado, radar de seis dimensões e próximo passo gratuito."
         path="/"
         jsonLd={homeSchema}
@@ -150,6 +150,18 @@ export function LandingPage() {
             <strong>Ensino Superior</strong>
           </div>
         </div>
+
+        <section className="home-workshop" aria-labelledby="home-workshop-title">
+          <div className="shell home-workshop__inner" data-reveal="up">
+            <div className="home-workshop__signal" aria-hidden="true"><Sparkles /></div>
+            <div className="home-workshop__copy">
+              <p className="eyebrow"><span /> EM BREVE · LISTA DE ESPERA</p>
+              <h2 id="home-workshop-title">Workshop: <em>IA na prática docente</em></h2>
+              <p>Um encontro para transformar possibilidades da IA em escolhas pedagógicas mais conscientes, aplicáveis e coerentes com a realidade de quem ensina.</p>
+            </div>
+            <ButtonLink href="/lp/workshop-ia-2026" variant="light" showArrow>Conhecer o workshop</ButtonLink>
+          </div>
+        </section>
 
         <section className="section section--benefits" id="o-que-voce-recebe">
           <div className="shell">

@@ -1,8 +1,10 @@
+import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { Resvg } from '@resvg/resvg-js'
 import sharp from 'sharp'
 
 const FONT_PATH = fileURLToPath(new URL('./Sora-Variable.ttf', import.meta.url))
+const BRAND_LOGO_NEGATIVE = `data:image/svg+xml;base64,${readFileSync(new URL('../../public/brand/praxia-logo-negative.svg', import.meta.url)).toString('base64')}`
 
 const CHANNELS = {
   instagram: { width: 1080, height: 1350, suffix: 'instagram-1080x1350' },
@@ -59,7 +61,7 @@ export function renderChannelSvg(item, channel) {
       <path d="M760 705a260 260 0 1 1-185 78" fill="none" stroke="#c8f03e" stroke-width="9"/>
       <path d="M742 770a190 190 0 1 1-130 57" fill="none" stroke="#5142e8" stroke-width="34"/>
       <circle cx="770" cy="965" r="20" fill="#22c7d6"/><circle cx="927" cy="1050" r="13" fill="#c8f03e"/>
-      <text x="82" y="110" fill="#f8f9fc" font-family="Sora" font-size="50" font-weight="700">PráxIA</text>
+      <image href="${BRAND_LOGO_NEGATIVE}" x="82" y="62" width="210" height="56"/>
       <text x="82" y="158" fill="#c8f03e" font-family="Sora" font-size="20" font-weight="700" letter-spacing="2">INTELIGÊNCIA APLICADA À DOCÊNCIA</text>
       <rect x="82" y="240" width="500" height="52" rx="26" fill="#c8f03e"/>
       <text x="110" y="274" fill="#111721" font-family="Sora" font-size="19" font-weight="700">${category}</text>
@@ -78,7 +80,7 @@ export function renderChannelSvg(item, channel) {
     <circle cx="1010" cy="315" r="150" fill="none" stroke="#5142e8" stroke-width="24"/>
     <path d="M850 385L950 280l90 65 90-135" fill="none" stroke="#c8f03e" stroke-width="8"/>
     <circle cx="950" cy="280" r="12" fill="#22c7d6"/><circle cx="1040" cy="345" r="12" fill="#c8f03e"/>
-    <text x="72" y="76" fill="#f8f9fc" font-family="Sora" font-size="34" font-weight="700">PráxIA</text>
+    <image href="${BRAND_LOGO_NEGATIVE}" x="72" y="38" width="150" height="40"/>
     <text x="72" y="112" fill="#c8f03e" font-family="Sora" font-size="14" font-weight="700" letter-spacing="1.5">${category}</text>
     ${titleMarkup(lines, 72, 220, 48, 57)}
     <text x="72" y="565" fill="#9ba6b7" font-family="Sora" font-size="17">radarpraxia.com  ·  PráxIA</text>

@@ -30,7 +30,7 @@ describe('fonte editorial do blog', () => {
     expect(articles.every((article) => article.canonicalUrl === buildSiteUrl(article.path))).toBe(true)
     expect(new Set(articles.map((article) => article.socialImage)).size).toBe(articles.length)
     expect(articles.every((article) => article.socialImage.startsWith('https://www.radarpraxia.com/social/'))).toBe(true)
-    expect(articles.every((article) => article.seoTitle.endsWith('| PráxIA'))).toBe(true)
+    expect(articles.every((article) => article.seoTitle.endsWith('| PraxIA'))).toBe(true)
   })
 
   it('mantém FAQ e capa acessível no artigo de competências docentes', () => {
@@ -48,5 +48,15 @@ describe('fonte editorial do blog', () => {
     expect(article?.faq).toHaveLength(5)
     expect(article?.socialImage).toContain('avaliar-atividades-com-ia-1200x630.jpg')
     expect(article?.coverImage?.src).toContain('avaliar-atividades-com-ia-1200x630.webp')
+  })
+
+  it('publica o artigo de escolha de ferramenta com imagem e FAQ próprias', () => {
+    const article = blogArticles.find((item) => item.slug === 'como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica')
+
+    expect(article?.status).toBe('published')
+    expect(article?.categorySlug).toBe('ferramentas')
+    expect(article?.faq).toHaveLength(5)
+    expect(article?.socialImage).toContain('escolher-ferramenta-ia-atividade-pedagogica-1200x630.jpg')
+    expect(article?.coverImage?.src).toContain('escolher-ferramenta-ia-atividade-pedagogica-1200x630.webp')
   })
 })

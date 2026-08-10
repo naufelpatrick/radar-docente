@@ -33,9 +33,9 @@ export function TeacherProductPage({ productId }: TeacherProductPageProps) {
               <h1>{product.name}</h1>
               <p>{product.description}</p>
               <a className="button-link button-link--light" href={isEbook ? '#comprar' : '#manifestar-interesse'}>
-                {isEbook ? 'Comprar por R$ 19,90' : 'Manifestar interesse'}<ArrowRight aria-hidden="true" />
+                {isEbook ? 'Baixar gratuitamente' : 'Manifestar interesse'}<ArrowRight aria-hidden="true" />
               </a>
-              <small>{isEbook ? 'Pagamento único via Pix ou cartão no ambiente seguro do ASAAS.' : 'Os detalhes de disponibilização estão em preparação. Não há pagamento nesta etapa.'}</small>
+              <small>{isEbook ? 'Acesso digital gratuito após o preenchimento do formulário.' : 'Os detalhes de disponibilização estão em preparação. Não há pagamento nesta etapa.'}</small>
             </div>
             {isEbook
               ? <img className="ebook-cover" src="/ebook-cover.jpg" alt="Capa do caderno IA na prática docente" width="540" height="720" />

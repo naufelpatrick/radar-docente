@@ -137,7 +137,7 @@ export function BlogPage() {
   return (
     <>
       <Seo
-        title="Blog PráxIA: IA, competências digitais e prática docente"
+        title="Blog: IA, competências digitais e prática docente"
         description="Conteúdos para professores sobre IA, competências digitais, planejamento, avaliação, ferramentas, ética, pesquisa e experiências de ensino."
         path="/blog"
         jsonLd={blogSchema}
