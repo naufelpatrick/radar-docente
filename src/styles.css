@@ -45,8 +45,8 @@ h2 em, h1 em { color: var(--indigo); font-style: normal; }
 .button-link--secondary { border-color: rgb(255 255 255 / 28%); color: var(--white); }
 .button-link--secondary:hover { background: rgb(255 255 255 / 8%); border-color: rgb(255 255 255 / 48%); }
 
-.brand-mark { display: block; width: 126px; height: auto; }
-.brand-mark--compact { width: 104px; }
+.brand-mark { display: block; width: 72px; height: auto; }
+.brand-mark--compact { width: 60px; }
 
 .hero { position: relative; min-height: 780px; overflow: hidden; background: var(--graphite); color: var(--white); }
 .hero__glow { position: absolute; width: 750px; height: 750px; right: -220px; top: -390px; border-radius: 50%; background: var(--indigo); filter: blur(120px); opacity: .27; }
@@ -239,7 +239,7 @@ h2 em, h1 em { color: var(--indigo); font-style: normal; }
 .distribution-card__actions { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 24px 24px; }.distribution-card__actions .distribution-publish { margin-left: auto; border-color: var(--indigo); background: var(--indigo); color: var(--white); }.distribution-schedule { display: flex; align-items: center; gap: 8px; padding-left: 12px; border: 1px solid var(--line); border-radius: 9px; font-size: 13px; font-weight: 600; }.distribution-schedule svg { width: 17px; }.distribution-schedule input { min-height: 42px; padding: 0 10px; border: 0; border-left: 1px solid var(--line); border-radius: 0 9px 9px 0; font: inherit; }
 .distribution-error { margin: 0 24px 18px; padding: 12px; border-radius: 8px; background: #fff0ed; color: #9c2d1d; }
 @media (max-width: 760px) {
-  .distribution-admin__header .shell { grid-template-columns: 1fr; gap: 24px; }.distribution-admin__header .brand-mark { width: 110px; }.distribution-admin__header button { width: 100%; }
+  .distribution-admin__header .shell { grid-template-columns: 1fr; gap: 24px; }.distribution-admin__header .brand-mark { width: 68px; }.distribution-admin__header button { width: 100%; }
   .distribution-card__summary, .distribution-card__editors, .distribution-images__grid { grid-template-columns: 1fr; }.distribution-card__actions, .distribution-schedule { display: grid; width: 100%; }.distribution-card__actions .distribution-publish { margin-left: 0; }.distribution-schedule { grid-template-columns: auto 1fr; padding: 10px 12px; }.distribution-schedule input { grid-column: 1 / -1; border: 1px solid var(--line); border-radius: 7px; }.distribution-channel__actions { display: grid; }.distribution-channel__actions button:last-child { margin-left: 0; }
 }
 .radar-flow { min-height: 100vh; background: var(--background); }
@@ -483,7 +483,7 @@ h2 em, h1 em { color: var(--indigo); font-style: normal; }
 
 @media (min-width: 768px) and (max-width: 980px) {
   .site-header nav, .institutional-header nav { gap: 12px; font-size: 12px; }
-  .site-header .brand-mark, .institutional-header .brand-mark { width: 104px; }
+  .site-header .brand-mark, .institutional-header .brand-mark { width: 62px; }
   .site-header .button-link, .institutional-header .button-link { min-height: 40px; padding: 9px 11px; }
 }
 
@@ -747,7 +747,7 @@ h2 em, h1 em { color: var(--indigo); font-style: normal; }
 .links-page__shell { width: min(100%, 760px); margin: 0 auto; }
 .links-page__header { padding: 18px 4px 34px; text-align: center; }
 .links-page__header > a { display: inline-flex; border-radius: 8px; }
-.links-page__header .brand-mark { width: 154px; height: auto; }
+.links-page__header .brand-mark { width: 104px; height: auto; }
 .links-page__header p { margin: 18px 0 12px; color: rgb(255 255 255 / 66%); font-size: 14px; }
 .links-page__header h1 { margin: 0; font-size: clamp(25px, 7vw, 39px); line-height: 1.16; letter-spacing: -.045em; }
 .links-page__header h1 em { color: var(--lime); font-style: normal; }
@@ -840,7 +840,7 @@ h2 em, h1 em { color: var(--indigo); font-style: normal; }
 .links-about { margin-top: 14px; padding: 25px 22px; background: rgb(255 255 255 / 4%); }
 .links-about h2 { font-size: 21px; }
 .links-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 16px; margin-top: 40px; padding: 30px 10px; border-top: 1px solid rgb(255 255 255 / 10%); color: rgb(255 255 255 / 54%); font-size: 12px; text-align: center; }
-.links-footer .brand-mark { width: 82px; height: auto; }
+.links-footer .brand-mark { width: 58px; height: auto; }
 .links-footer p { width: 100%; margin: 3px 0; }
 .links-footer a { color: inherit; }
 .links-footer small { font-size: inherit; }
