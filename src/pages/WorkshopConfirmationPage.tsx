@@ -36,8 +36,8 @@ export function WorkshopConfirmationPage() {
   </main>
     {paid && registration && <aside className="workshop-diagnostic" aria-labelledby="titulo-diagnostico-confirmacao">
       <div className="workshop-shell workshop-diagnostic__inner">
-        <div><p className="workshop-kicker">CONHEÇA SEU PONTO DE PARTIDA</p><h2 id="titulo-diagnostico-confirmacao">Antes do workshop, realize o <em>Diagnóstico PráxIA.</em></h2></div>
-        <div><p>Uma leitura gratuita da sua fluência digital e em IA, com forças, pontos de atenção e um próximo passo possível para a prática docente.</p><div className="workshop-diagnostic__actions"><a href="/radar-docente">Realizar o Diagnóstico <span aria-hidden="true">→</span></a><a className="workshop-diagnostic__secondary" href="/">Conhecer o site PráxIA <span aria-hidden="true">→</span></a></div></div>
+        <div><p className="workshop-kicker">CONHEÇA SEU PONTO DE PARTIDA</p><h2 id="titulo-diagnostico-confirmacao">Antes do workshop, realize o <em>Diagnóstico PraxIA.</em></h2></div>
+        <div><p>Uma leitura gratuita da sua fluência digital e em IA, com forças, pontos de atenção e um próximo passo possível para a prática docente.</p><div className="workshop-diagnostic__actions"><a href="/radar-docente">Realizar o Diagnóstico <span aria-hidden="true">→</span></a><a className="workshop-diagnostic__secondary" href="/">Conhecer o site PraxIA <span aria-hidden="true">→</span></a></div></div>
       </div>
     </aside>}
   </div>
