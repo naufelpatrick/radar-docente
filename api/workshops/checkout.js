@@ -25,10 +25,14 @@ export default async function handler(request, response) {
     })
     let registrationReady = created.ok
     if (created.status === 409) {
-      const lookup = await supabase(`/rest/v1/workshop_registrations?workshop_id=eq.${edition.id}&or=(email.eq.${encodeURIComponent(email)},cpf.eq.${cpf})&select=id,status_pagamento&limit=1`)
+      const lookup = await supabase(`/rest/v1/workshop_registrations?workshop_id=eq.${edition.id}&or=(email.eq.${encodeURIComponent(email)},cpf.eq.${cpf})&select=id,status_pagamento,asaas_payment_id&limit=1`)
       if (!lookup.ok) throw new Error('Unable to inspect existing workshop registration')
       const [existing] = await lookup.json()
-      if (!existing || !['falhou', 'cancelado', 'expirado'].includes(existing.status_pagamento)) {
+      const retryable = existing && (
+        ['falhou', 'cancelado', 'expirado'].includes(existing.status_pagamento)
+        || (existing.status_pagamento === 'aguardando_pagamento' && !existing.asaas_payment_id)
+      )
+      if (!retryable) {
         return json(response, 409, { error: 'Já existe uma inscrição para este e-mail ou CPF nesta turma.' })
       }
       id = existing.id
