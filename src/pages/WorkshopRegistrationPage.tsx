@@ -8,7 +8,7 @@ import { loadWorkshopEdition } from '../services/workshopRegistrationService'
 import type { WorkshopEdition } from '../types/workshopRegistration'
 import '../workshopWaitlist.css'
 
-const fallback: WorkshopEdition = { id: '', slug: 'ia-pratica-docente-2026-08-29', titulo: 'WORKSHOP | IA para Prática Docente', descricao: 'Uma conversa prática para transformar tecnologia em decisões pedagógicas melhores.', inicio_em: '2026-08-29T11:30:00.000Z', fim_em: '2026-08-29T15:30:00.000Z', timezone: 'America/Sao_Paulo', valor: 50, carga_horaria: 4, status: 'inscricoes_abertas', limite_vagas: null }
+const fallback: WorkshopEdition = { id: '', slug: 'ia-pratica-docente-2026-08-29', titulo: 'WORKSHOP | IA na Prática Docente', descricao: 'Uma conversa prática para transformar tecnologia em decisões pedagógicas melhores.', inicio_em: '2026-08-29T11:30:00.000Z', fim_em: '2026-08-29T15:30:00.000Z', timezone: 'America/Sao_Paulo', valor: 50, carga_horaria: 4, status: 'inscricoes_abertas', limite_vagas: null }
 
 function editionLabels(edition: WorkshopEdition) {
   const date = new Intl.DateTimeFormat('pt-BR', { timeZone: edition.timezone, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(edition.inicio_em))
@@ -21,12 +21,12 @@ export function WorkshopRegistrationPage() {
   useEffect(() => { loadWorkshopEdition().then(setEdition).catch(() => undefined) }, [])
   const labels = editionLabels(edition)
   return <div className="workshop-page workshop-registration-page">
-    <Seo title="Inscrições do Workshop IA para Prática Docente | PraxIA" description="Inscreva-se no Workshop IA para Prática Docente, online, em 29 de agosto de 2026. Formação de 4 horas com certificado." path="/lp/workshop-ia-2026/inscricoes" />
+    <Seo title="IA na Prática Docente | PraxIA" description="Inscreva-se no Workshop IA na Prática Docente, online, em 29 de agosto de 2026. Formação de 4 horas com certificado." path="/lp/workshop-ia-2026/inscricoes" />
     <a className="skip-link" href="#conteudo-inscricoes">Pular para o conteúdo</a>
     <header className="workshop-header"><div className="workshop-shell"><a href="/" aria-label="PraxIA — página inicial"><BrandMark inverse /></a><a href="#inscricao">Inscrever-se <span aria-hidden="true">↘</span></a></div></header>
     <main id="conteudo-inscricoes">
       <section className="workshop-registration-hero"><div className="workshop-orbit" aria-hidden="true"><i /><i /><i /></div><div className="workshop-shell workshop-registration-hero__grid">
-        <div><p className="workshop-tag"><span /> INSCRIÇÕES ABERTAS</p><h1>IA para <em>Prática Docente</em></h1><p>{edition.descricao}</p><div className="workshop-registration-facts">
+        <div><p className="workshop-tag"><span /> INSCRIÇÕES ABERTAS</p><h1>IA na <em>Prática Docente</em></h1><p>{edition.descricao}</p><div className="workshop-registration-facts">
           <span><CalendarDays aria-hidden="true" /><b>{labels.date}</b></span><span><Clock3 aria-hidden="true" /><b>{labels.time}</b></span><span><Monitor aria-hidden="true" /><b>Online</b></span><span><Award aria-hidden="true" /><b>{edition.carga_horaria} horas · Certificado</b></span>
         </div><a className="workshop-registration-primary" href="#inscricao">QUERO ME INSCREVER — R$ {Number(edition.valor).toFixed(0)}<ArrowRight aria-hidden="true" /></a></div>
         <aside><span>INVESTIMENTO</span><strong>R$ {Number(edition.valor).toFixed(2).replace('.', ',')}</strong><p>Pagamento via Pix ou cartão</p><i /><small>Certificado após participação confirmada</small></aside>
