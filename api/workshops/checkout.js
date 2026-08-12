@@ -23,6 +23,7 @@ export default async function handler(request, response) {
         status_pagamento: 'aguardando_pagamento', access_token_hash: accessHash(token), access_token_secret: token,
       }),
     })
+    let registrationReady = created.ok
     if (created.status === 409) {
       const lookup = await supabase(`/rest/v1/workshop_registrations?workshop_id=eq.${edition.id}&or=(email.eq.${encodeURIComponent(email)},cpf.eq.${cpf})&select=id,status_pagamento&limit=1`)
       if (!lookup.ok) throw new Error('Unable to inspect existing workshop registration')
@@ -40,8 +41,9 @@ export default async function handler(request, response) {
         }),
       })
       if (!reset.ok) throw new Error('Unable to reset failed workshop registration')
+      registrationReady = true
     }
-    if (!created.ok) throw new Error(`Unable to create workshop registration: ${created.status}`)
+    if (!registrationReady) throw new Error(`Unable to create workshop registration: ${created.status}`)
 
     const apiUrl = process.env.ASAAS_API_URL || 'https://api.asaas.com/v3'
     const headers = { accept: 'application/json', access_token: process.env.ASAAS_API_KEY || '', 'content-type': 'application/json', 'user-agent': 'PraxIA-Workshop/1.0' }
