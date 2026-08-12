@@ -16,14 +16,31 @@ export default async function handler(request, response) {
 
     const edition = await getEdition(String(body.workshopSlug || WORKSHOP_SLUG), { includePrivate: true })
     if (!edition || edition.status !== 'inscricoes_abertas') return json(response, 409, { error: 'As inscrições para esta turma não estão abertas.' })
-    const { id, token } = createRegistrationIdentity()
+    let { id, token } = createRegistrationIdentity()
     const created = await supabase('/rest/v1/workshop_registrations', {
       method: 'POST', headers: { prefer: 'return=minimal' }, body: JSON.stringify({
         id, workshop_id: edition.id, nome, email, cpf, telefone, valor: edition.valor,
         status_pagamento: 'aguardando_pagamento', access_token_hash: accessHash(token), access_token_secret: token,
       }),
     })
-    if (created.status === 409) return json(response, 409, { error: 'Já existe uma inscrição para este e-mail ou CPF nesta turma.' })
+    if (created.status === 409) {
+      const lookup = await supabase(`/rest/v1/workshop_registrations?workshop_id=eq.${edition.id}&or=(email.eq.${encodeURIComponent(email)},cpf.eq.${cpf})&select=id,status_pagamento&limit=1`)
+      if (!lookup.ok) throw new Error('Unable to inspect existing workshop registration')
+      const [existing] = await lookup.json()
+      if (!existing || !['falhou', 'cancelado', 'expirado'].includes(existing.status_pagamento)) {
+        return json(response, 409, { error: 'Já existe uma inscrição para este e-mail ou CPF nesta turma.' })
+      }
+      id = existing.id
+      ;({ token } = createRegistrationIdentity())
+      const reset = await supabase(`/rest/v1/workshop_registrations?id=eq.${id}`, {
+        method: 'PATCH', body: JSON.stringify({
+          nome, email, cpf, telefone, valor: edition.valor, status_pagamento: 'aguardando_pagamento',
+          asaas_customer_id: null, asaas_payment_id: null, data_pagamento: null,
+          access_token_hash: accessHash(token), access_token_secret: token, updated_at: new Date().toISOString(),
+        }),
+      })
+      if (!reset.ok) throw new Error('Unable to reset failed workshop registration')
+    }
     if (!created.ok) throw new Error(`Unable to create workshop registration: ${created.status}`)
 
     const apiUrl = process.env.ASAAS_API_URL || 'https://api.asaas.com/v3'
@@ -40,14 +57,20 @@ export default async function handler(request, response) {
     }
 
     const dueDate = new Date(); dueDate.setDate(dueDate.getDate() + 2)
-    const paymentResponse = await fetch(`${apiUrl}/payments`, {
-      method: 'POST', headers, body: JSON.stringify({
-        customer: customerId, billingType: 'UNDEFINED', value: Number(edition.valor), dueDate: dueDate.toISOString().slice(0, 10),
-        description: edition.titulo, externalReference: id,
-        callback: { successUrl: `${SITE_URL}${WORKSHOP_RETURN_PATH}?inscricao=${encodeURIComponent(id)}&token=${encodeURIComponent(token)}`, autoRedirect: true },
-      }),
-    })
-    const payment = await paymentResponse.json()
+    const paymentPayload = {
+      customer: customerId, billingType: 'UNDEFINED', value: Number(edition.valor), dueDate: dueDate.toISOString().slice(0, 10),
+      description: edition.titulo, externalReference: id,
+      callback: { successUrl: `${SITE_URL}${WORKSHOP_RETURN_PATH}?inscricao=${encodeURIComponent(id)}&token=${encodeURIComponent(token)}`, autoRedirect: true },
+    }
+    let paymentResponse = await fetch(`${apiUrl}/payments`, { method: 'POST', headers, body: JSON.stringify(paymentPayload) })
+    let payment = await paymentResponse.json()
+    const callbackDomainRejected = paymentResponse.status === 400 && payment.errors?.some((error) => error.code === 'invalid_object' && /URL|domínio/i.test(error.description || ''))
+    if (callbackDomainRejected) {
+      const paymentWithoutCallback = { ...paymentPayload }
+      delete paymentWithoutCallback.callback
+      paymentResponse = await fetch(`${apiUrl}/payments`, { method: 'POST', headers, body: JSON.stringify(paymentWithoutCallback) })
+      payment = await paymentResponse.json()
+    }
     if (!paymentResponse.ok || !payment.id || !payment.invoiceUrl) {
       console.error('asaas workshop payment rejected', { status: paymentResponse.status, errors: payment.errors })
       await supabase(`/rest/v1/workshop_registrations?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ status_pagamento: 'falhou' }) })
@@ -61,4 +84,3 @@ export default async function handler(request, response) {
     return json(response, 500, { error: 'Não foi possível iniciar sua inscrição agora.' })
   }
 }
-
