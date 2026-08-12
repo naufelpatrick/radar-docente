@@ -1,5 +1,5 @@
 import { json, supabase } from '../_lib/ebook.js'
-import { processWorkshopPayment } from '../webhooks/asaas.js'
+import { processWorkshopPayment, removePaidRegistrantFromWaitlist } from '../webhooks/asaas.js'
 
 const paidEvents = {
   RECEIVED: 'PAYMENT_RECEIVED',
@@ -14,6 +14,14 @@ export default async function handler(request, response) {
   }
 
   try {
+    const paidResponse = await supabase('/rest/v1/workshop_registrations?status_pagamento=eq.pago&select=email&order=created_at.desc&limit=1000')
+    if (!paidResponse.ok) throw new Error('Unable to list paid workshop registrations')
+    const paidRegistrations = await paidResponse.json()
+    let removedFromWaitlist = 0
+    for (const registration of paidRegistrations) {
+      removedFromWaitlist += await removePaidRegistrantFromWaitlist(registration.email)
+    }
+
     const pendingResponse = await supabase('/rest/v1/workshop_registrations?status_pagamento=eq.aguardando_pagamento&asaas_payment_id=not.is.null&select=id,asaas_payment_id&order=created_at.desc&limit=20')
     if (!pendingResponse.ok) throw new Error('Unable to list pending workshop registrations')
     const pending = await pendingResponse.json()
@@ -32,7 +40,7 @@ export default async function handler(request, response) {
       confirmed += 1
     }
 
-    return json(response, 200, { checked: pending.length, confirmed })
+    return json(response, 200, { checked: pending.length, confirmed, removedFromWaitlist })
   } catch (error) {
     console.error('workshop reconciliation error', error)
     return json(response, 500, { error: 'Falha ao reconciliar inscrições.' })

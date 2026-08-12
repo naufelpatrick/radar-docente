@@ -15,6 +15,18 @@ const workshopEventStatus = {
   PAYMENT_REFUNDED: 'cancelado',
 }
 
+export async function removePaidRegistrantFromWaitlist(email) {
+  const normalizedEmail = String(email || '').trim().toLowerCase()
+  if (!normalizedEmail) return
+  const removed = await supabase(`/rest/v1/workshop_waitlist?email=eq.${encodeURIComponent(normalizedEmail)}`, {
+    method: 'DELETE',
+    headers: { prefer: 'return=representation' },
+  })
+  if (!removed.ok) throw new Error('Unable to remove paid registrant from workshop waitlist')
+  const rows = await removed.json()
+  return Array.isArray(rows) ? rows.length : 0
+}
+
 export async function processWorkshopPayment(payload, eventId) {
   const paymentId = String(payload.payment?.id || '')
   const status = workshopEventStatus[payload.event]
@@ -44,6 +56,8 @@ export async function processWorkshopPayment(payload, eventId) {
     ;[registration] = await updated.json()
   }
   if (!registration || status !== 'pago') return true
+
+  await removePaidRegistrantFromWaitlist(registration.email)
 
   const claimed = await supabase(`/rest/v1/workshop_registrations?id=eq.${registration.id}&confirmation_email_sent_at=is.null&confirmation_email_claimed_at=is.null&select=id,nome,email,status_pagamento,valor,data_pagamento,access_token_secret,workshop_editions(*)`, {
     method: 'PATCH', headers: { prefer: 'return=representation' },
