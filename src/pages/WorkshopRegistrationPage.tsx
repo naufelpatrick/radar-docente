@@ -6,6 +6,7 @@ import { WorkshopRegistrationForm } from '../components/WorkshopRegistrationForm
 import { WorkshopWaitlistForm } from '../components/WorkshopWaitlistForm'
 import { loadWorkshopEdition } from '../services/workshopRegistrationService'
 import type { WorkshopEdition } from '../types/workshopRegistration'
+import '../workshopWaitlist.css'
 
 const fallback: WorkshopEdition = { id: '', slug: 'ia-pratica-docente-2026-08-29', titulo: 'WORKSHOP | IA para Prática Docente', descricao: 'Uma conversa prática para transformar tecnologia em decisões pedagógicas melhores.', inicio_em: '2026-08-29T11:30:00.000Z', fim_em: '2026-08-29T15:30:00.000Z', timezone: 'America/Sao_Paulo', valor: 50, carga_horaria: 4, status: 'inscricoes_abertas', limite_vagas: null }
 
@@ -39,4 +40,3 @@ export function WorkshopRegistrationPage() {
     <footer className="workshop-footer"><div className="workshop-shell"><div><a href="/"><BrandMark inverse /></a><p>Transforme fluência em prática docente.</p></div><div className="workshop-footer__links"><a href="https://www.radarpraxia.com">radarpraxia.com</a><a href="https://www.instagram.com/radarpraxia" target="_blank" rel="noreferrer"><Instagram aria-hidden="true" /> @radarpraxia</a><a href="https://www.linkedin.com/company/radarpraxia" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" /> LinkedIn</a></div></div><div className="workshop-shell workshop-footer__bottom"><span>© {new Date().getFullYear()} PraxIA</span><span><ReceiptText aria-hidden="true" /> Inscrição processada com segurança.</span></div></footer>
   </div>
 }
-
