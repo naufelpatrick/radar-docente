@@ -15,7 +15,7 @@ const workshopEventStatus = {
   PAYMENT_REFUNDED: 'cancelado',
 }
 
-async function processWorkshopPayment(payload, eventId) {
+export async function processWorkshopPayment(payload, eventId) {
   const paymentId = String(payload.payment?.id || '')
   const status = workshopEventStatus[payload.event]
   if (!paymentId || !status) return false
