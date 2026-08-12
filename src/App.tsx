@@ -78,6 +78,8 @@ const ChoosingAiToolArticlePage = lazy(() =>
 const WorkshopWaitlistPage = lazy(() =>
   import('./pages/WorkshopWaitlistPage').then((module) => ({ default: module.WorkshopWaitlistPage })),
 )
+const WorkshopRegistrationPage = lazy(() => import('./pages/WorkshopRegistrationPage').then((module) => ({ default: module.WorkshopRegistrationPage })))
+const WorkshopConfirmationPage = lazy(() => import('./pages/WorkshopConfirmationPage').then((module) => ({ default: module.WorkshopConfirmationPage })))
 
 export default function App() {
   return (
@@ -111,6 +113,8 @@ export default function App() {
           <Route path="/links" element={<LinksPage />} />
           <Route path="/lp/workshop-ia-2026" element={<WorkshopWaitlistPage />} />
           <Route path="/lp/workshop-ia-2026/inscrito" element={<WorkshopWaitlistPage registered />} />
+          <Route path="/lp/workshop-ia-2026/inscricoes" element={<WorkshopRegistrationPage />} />
+          <Route path="/lp/workshop-ia-2026/inscricoes/confirmacao" element={<WorkshopConfirmationPage />} />
           <Route path="/mentoria" element={<TeacherProductPage productId="mentoring" />} />
           <Route path="/para-instituicoes" element={<InstitutionsPage />} />
           <Route path="/radar/*" element={<RadarFlow />} />
