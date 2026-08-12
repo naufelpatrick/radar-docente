@@ -26,12 +26,23 @@ async function processWorkshopPayment(payload, eventId) {
   if (eventInsert.status !== 409 && !eventInsert.ok) throw new Error('Unable to register workshop event')
 
   const paidAt = status === 'pago' ? (payload.payment?.confirmedDate ? `${payload.payment.confirmedDate}T12:00:00Z` : new Date().toISOString()) : null
-  const updated = await supabase(`/rest/v1/workshop_registrations?asaas_payment_id=eq.${encodeURIComponent(paymentId)}&select=id,nome,email,status_pagamento,valor,data_pagamento,access_token_secret,workshop_editions(*)`, {
+  const fields = 'id,nome,email,status_pagamento,valor,data_pagamento,access_token_secret,workshop_editions(*)'
+  const updateBody = { status_pagamento: status, data_pagamento: paidAt, updated_at: new Date().toISOString() }
+  let updated = await supabase(`/rest/v1/workshop_registrations?asaas_payment_id=eq.${encodeURIComponent(paymentId)}&select=${fields}`, {
     method: 'PATCH', headers: { prefer: 'return=representation' },
-    body: JSON.stringify({ status_pagamento: status, data_pagamento: paidAt, updated_at: new Date().toISOString() }),
+    body: JSON.stringify(updateBody),
   })
   if (!updated.ok) throw new Error('Unable to update workshop registration')
-  const [registration] = await updated.json()
+  let [registration] = await updated.json()
+  const externalReference = String(payload.payment?.externalReference || '')
+  if (!registration && externalReference) {
+    updated = await supabase(`/rest/v1/workshop_registrations?id=eq.${encodeURIComponent(externalReference)}&select=${fields}`, {
+      method: 'PATCH', headers: { prefer: 'return=representation' },
+      body: JSON.stringify({ ...updateBody, asaas_payment_id: paymentId }),
+    })
+    if (!updated.ok) throw new Error('Unable to recover workshop registration from external reference')
+    ;[registration] = await updated.json()
+  }
   if (!registration || status !== 'pago') return true
 
   const claimed = await supabase(`/rest/v1/workshop_registrations?id=eq.${registration.id}&confirmation_email_sent_at=is.null&confirmation_email_claimed_at=is.null&select=id,nome,email,status_pagamento,valor,data_pagamento,access_token_secret,workshop_editions(*)`, {
@@ -88,4 +99,3 @@ export default async function handler(request, response) {
     return json(response, 500, { error: 'Falha ao processar webhook.' })
   }
 }
-
