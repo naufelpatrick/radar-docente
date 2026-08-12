@@ -4,17 +4,17 @@ const mocks = vi.hoisted(() => ({
   supabase: vi.fn(),
 }))
 
-vi.mock('../_lib/ebook.js', () => ({
+vi.mock('../api/_lib/ebook.js', () => ({
   json: vi.fn(),
   readJson: vi.fn(),
   supabase: mocks.supabase,
 }))
 
-vi.mock('../_lib/workshop.js', () => ({
+vi.mock('../api/_lib/workshop.js', () => ({
   sendConfirmationEmail: vi.fn(),
 }))
 
-import { removePaidRegistrantFromWaitlist } from './asaas.js'
+import { removePaidRegistrantFromWaitlist } from '../api/webhooks/asaas.js'
 
 describe('ASAAS workshop webhook', () => {
   beforeEach(() => mocks.supabase.mockReset())
