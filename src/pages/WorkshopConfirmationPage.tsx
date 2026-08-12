@@ -4,6 +4,7 @@ import { BrandMark } from '../components/BrandMark'
 import { Seo } from '../components/Seo'
 import { loadWorkshopRegistration } from '../services/workshopRegistrationService'
 import type { WorkshopRegistrationStatus } from '../types/workshopRegistration'
+import '../workshopWaitlist.css'
 
 export function WorkshopConfirmationPage() {
   const params = new URLSearchParams(window.location.search)
@@ -32,5 +33,12 @@ export function WorkshopConfirmationPage() {
       : !registration || (!paid && !failed) ? <section className="workshop-confirmation-card"><LoaderCircle className="spin" /><p className="workshop-kicker">PAGAMENTO EM ANÁLISE</p><h1>Estamos confirmando seu pagamento...</h1><p>Esta página será atualizada automaticamente assim que o ASAAS confirmar. Você não precisa mantê-la aberta: a confirmação também será enviada por e-mail.</p></section>
       : failed ? <section className="workshop-confirmation-card"><XCircle /><p className="workshop-kicker">PAGAMENTO NÃO CONCLUÍDO</p><h1>Sua inscrição ainda não foi confirmada.</h1><p>O pagamento foi cancelado, expirou ou não pôde ser processado. Você pode iniciar uma nova inscrição.</p><a href="/lp/workshop-ia-2026/inscricoes">Tentar novamente</a></section>
       : <section className="workshop-confirmation-card workshop-confirmation-card--paid"><CheckCircle2 /><p className="workshop-kicker">PAGAMENTO CONFIRMADO ✓</p><h1>Inscrição realizada. Sua vaga está garantida.</h1><p>Olá, {registration.nome}. O pagamento da sua inscrição no <strong>{registration.edition.titulo}</strong> foi confirmado.</p><div><span><MailCheck />Você receberá as instruções de acesso por e-mail em poucos instantes.</span><span>Fique atento também às pastas de spam, lixo eletrônico e promoções.</span></div><div><span><Clock3 />{schedule}</span><span>Online · {registration.edition.cargaHoraria} horas · Certificado após presença</span></div><div className="workshop-confirmation-actions"><a href={registration.edition.googleCalendarUrl} target="_blank" rel="noreferrer"><CalendarPlus />Adicionar ao Google Calendar</a><a href={ics}><CalendarPlus />Adicionar à agenda (.ics)</a></div><small>Se a mensagem não chegar, verifique se o e-mail informado na inscrição está correto.</small></section>}
-  </main></div>
+  </main>
+    {paid && registration && <aside className="workshop-diagnostic" aria-labelledby="titulo-diagnostico-confirmacao">
+      <div className="workshop-shell workshop-diagnostic__inner">
+        <div><p className="workshop-kicker">CONHEÇA SEU PONTO DE PARTIDA</p><h2 id="titulo-diagnostico-confirmacao">Antes do workshop, realize o <em>Diagnóstico PráxIA.</em></h2></div>
+        <div><p>Uma leitura gratuita da sua fluência digital e em IA, com forças, pontos de atenção e um próximo passo possível para a prática docente.</p><div className="workshop-diagnostic__actions"><a href="/radar-docente">Realizar o Diagnóstico <span aria-hidden="true">→</span></a><a className="workshop-diagnostic__secondary" href="/">Conhecer o site PráxIA <span aria-hidden="true">→</span></a></div></div>
+      </div>
+    </aside>}
+  </div>
 }
