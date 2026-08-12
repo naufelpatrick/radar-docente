@@ -1391,3 +1391,4 @@ h2 em, h1 em { color: var(--indigo); font-style: normal; }
 
 /* The shared workshop shell uses light text; restore dark text on the light registration section. */
 .workshop-registration-details { color: var(--graphite); }
+.workshop-registration-form__field-help { color: var(--muted); font-size: 10px; font-weight: 400; line-height: 1.4; }

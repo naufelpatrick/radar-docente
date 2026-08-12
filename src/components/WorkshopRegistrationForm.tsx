@@ -40,13 +40,12 @@ export function WorkshopRegistrationForm() {
     <label>Nome completo<input name="nome" autoComplete="name" required /></label>
     <label>E-mail<input name="email" type="email" inputMode="email" autoComplete="email" required /></label>
     <div className="workshop-registration-form__row">
-      <label>CPF<input name="cpf" inputMode="numeric" autoComplete="off" placeholder="000.000.000-00" required /></label>
+      <label>CPF<input name="cpf" inputMode="numeric" autoComplete="off" placeholder="000.000.000-00" aria-describedby="workshop-cpf-help" required /><small className="workshop-registration-form__field-help" id="workshop-cpf-help">O CPF é solicitado para gerar a cobrança no ASAAS.</small></label>
       <label>Telefone/WhatsApp<input name="telefone" type="tel" inputMode="tel" autoComplete="tel" placeholder="(00) 00000-0000" required /></label>
     </div>
     <p className="workshop-registration-form__privacy"><LockKeyhole aria-hidden="true" /> Seus dados são enviados com segurança e não aparecem na URL. Consulte a <a href="/privacidade">Política de Privacidade</a>.</p>
     <button type="submit" disabled={status === 'sending'}>{status === 'sending' ? <LoaderCircle className="spin" aria-hidden="true" /> : null}{status === 'sending' ? 'Preparando pagamento…' : 'QUERO ME INSCREVER — R$ 50'}{status !== 'sending' && <ArrowRight aria-hidden="true" />}</button>
     {error && <p className="workshop-registration-form__error" role="alert">{error}</p>}
-    <small>Pagamento via Pix ou cartão. A vaga é confirmada pelo webhook do ASAAS.</small>
+    <small>Pagamento via Pix ou cartão por meio de pagamento seguro do ASAAS.</small>
   </form>
 }
-
