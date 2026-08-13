@@ -76,6 +76,9 @@ const LinksPage = lazy(() =>
 const ChoosingAiToolArticlePage = lazy(() =>
   import('./pages/articles/ChoosingAiToolArticlePage').then((module) => ({ default: module.ChoosingAiToolArticlePage })),
 )
+const PlanningAiActivityArticlePage = lazy(() =>
+  import('./pages/articles/PlanningAiActivityArticlePage').then((module) => ({ default: module.PlanningAiActivityArticlePage })),
+)
 const WorkshopWaitlistPage = lazy(() =>
   import('./pages/WorkshopWaitlistPage').then((module) => ({ default: module.WorkshopWaitlistPage })),
 )
@@ -100,6 +103,7 @@ export default function App() {
           <Route path="/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia" element={<TeacherAiCompetenciesArticlePage />} />
           <Route path="/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia" element={<AssessingAiSupportedWorkArticlePage />} />
           <Route path="/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica" element={<ChoosingAiToolArticlePage />} />
+          <Route path="/blog/planejamento/como-planejar-uma-atividade-pedagogica-com-inteligencia-artificial" element={<PlanningAiActivityArticlePage />} />
           <Route path="/blog/categoria/:slug" element={<BlogCategoryPage />} />
           <Route path="/guias" element={<GuidesPage />} />
           <Route path="/competencias" element={<CompetenciesPage />} />

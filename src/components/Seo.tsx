@@ -20,7 +20,7 @@ const defaultImageAlt = 'PráxIA — fluência digital e inteligência artificia
 
 function formatPageTitle(title: string) {
   const pageName = title.replace(/\s*\|\s*Pr[áa]xIA\s*$/i, '').trim()
-  return `${pageName} | PraxIA`
+  return `${pageName} | PráxIA`
 }
 
 function setMeta(selector: string, attributes: Record<string, string>) {
