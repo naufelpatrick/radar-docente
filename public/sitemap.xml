@@ -11,6 +11,11 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://www.radarpraxia.com/fluencia-digital-para-professores</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://www.radarpraxia.com/radar-docente</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
