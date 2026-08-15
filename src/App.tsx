@@ -48,6 +48,9 @@ const ToolsPage = lazy(() =>
 const MethodologyPage = lazy(() =>
   import('./pages/MethodologyPage').then((module) => ({ default: module.MethodologyPage })),
 )
+const DigitalFluencyPage = lazy(() =>
+  import('./pages/DigitalFluencyPage').then((module) => ({ default: module.DigitalFluencyPage })),
+)
 const RadarDocentePage = lazy(() =>
   import('./pages/RadarDocentePage').then((module) => ({ default: module.RadarDocentePage })),
 )
@@ -101,6 +104,7 @@ export default function App() {
           <Route path="/ferramentas" element={<ToolsPage />} />
           <Route path="/blog/artigo" element={<Navigate to="/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta" replace />} />
           <Route path="/metodologia" element={<MethodologyPage />} />
+          <Route path="/fluencia-digital-para-professores" element={<DigitalFluencyPage />} />
           <Route path="/radar-docente" element={<RadarDocentePage />} />
           <Route path="/ebook" element={<TeacherProductPage productId="ebook" />} />
           <Route path="/ebook/obrigado" element={<EbookOrderPage />} />
