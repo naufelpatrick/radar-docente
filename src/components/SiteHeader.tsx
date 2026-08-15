@@ -25,6 +25,7 @@ export function SiteHeader() {
         </button>
         <nav id="site-navigation" className={open ? 'is-open' : ''} aria-label="Navegação principal">
           <Link to="/radar-docente" onClick={close}>Diagnóstico</Link>
+          <Link to="/fluencia-digital-para-professores" onClick={close}>Fluência Digital</Link>
           <Link to="/ebook" onClick={close}>E-book</Link>
           <Link to="/mentoria" onClick={close}>Mentoria</Link>
           <Link to="/para-instituicoes" onClick={close}>Para instituições</Link>
