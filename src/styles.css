@@ -56,7 +56,8 @@ h2 em, h1 em { color: var(--indigo); font-style: normal; }
 
 .hero { position: relative; min-height: 780px; overflow: hidden; background: var(--graphite); color: var(--white); }
 .hero__glow { position: absolute; width: 750px; height: 750px; right: -220px; top: -390px; border-radius: 50%; background: var(--indigo); filter: blur(120px); opacity: .27; }
-.site-header { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; height: 94px; border-bottom: 1px solid rgb(255 255 255 / 12%); }
+.site-header { position: relative; z-index: 3; height: 94px; border-bottom: 1px solid rgb(255 255 255 / 12%); }
+.site-header__inner { display: flex; height: 100%; align-items: center; justify-content: space-between; }
 .site-header__brand { text-decoration: none; }
 .site-header nav { display: flex; align-items: center; gap: 32px; font-size: 14px; }
 .site-header nav > a:not(.button-link) { color: rgb(255 255 255 / 74%); text-decoration: none; }
