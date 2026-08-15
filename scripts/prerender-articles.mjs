@@ -4,6 +4,10 @@ import { getPublishedBlogArticles } from '../src/data/blogArticles.ts'
 
 const distDirectory = path.resolve('dist')
 const baseHtml = await readFile(path.join(distDirectory, 'index.html'), 'utf8')
+const digitalFluencyPath = '/fluencia-digital-para-professores'
+const digitalFluencyUrl = `https://www.radarpraxia.com${digitalFluencyPath}`
+const digitalFluencyTitle = 'Fluência digital para professores: descubra seu nível | PraxIA'
+const digitalFluencyDescription = 'Entenda o que é fluência digital para professores, conheça suas dimensões e faça gratuitamente o Radar PraxIA para orientar seu desenvolvimento.'
 
 const removableHeadMarkers = [
   '<title>',
@@ -101,10 +105,46 @@ function renderArticleHtml(article) {
   return cleanedHtml.replace('  </head>', `${tags}\n  </head>`)
 }
 
+function renderDigitalFluencyHtml() {
+  const cleanedHtml = baseHtml.split('\n').filter((line) => !removableHeadMarkers.some((marker) => line.includes(marker))).join('\n')
+  const image = 'https://www.radarpraxia.com/social-graph-praxia.png'
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Fluência digital para professores: descubra seu nível e avance com intencionalidade',
+    description: digitalFluencyDescription,
+    mainEntityOfPage: digitalFluencyUrl,
+    url: digitalFluencyUrl,
+    inLanguage: 'pt-BR',
+    author: { '@type': 'Organization', name: 'PraxIA' },
+    publisher: { '@type': 'Organization', name: 'PraxIA', url: 'https://www.radarpraxia.com' },
+  }
+  const tags = [
+    `<title>${digitalFluencyTitle}</title>`,
+    `<meta name="description" content="${digitalFluencyDescription}" />`,
+    '<meta name="robots" content="index, follow" />',
+    `<link rel="canonical" href="${digitalFluencyUrl}" />`,
+    '<meta property="og:type" content="article" />',
+    '<meta property="og:site_name" content="PraxIA" />',
+    `<meta property="og:title" content="${digitalFluencyTitle}" />`,
+    `<meta property="og:description" content="${digitalFluencyDescription}" />`,
+    `<meta property="og:url" content="${digitalFluencyUrl}" />`,
+    `<meta property="og:image" content="${image}" />`,
+    '<meta name="twitter:card" content="summary_large_image" />',
+    `<meta name="twitter:title" content="${digitalFluencyTitle}" />`,
+    `<meta name="twitter:description" content="${digitalFluencyDescription}" />`,
+    `<meta name="twitter:image" content="${image}" />`,
+    `<script id="page-json-ld" type="application/ld+json">${JSON.stringify(structuredData).replaceAll('<', '\\u003c')}</script>`,
+  ].map((tag) => `    ${tag}`).join('\n')
+  return cleanedHtml.replace('  </head>', `${tags}\n  </head>`)
+}
+
 for (const article of getPublishedBlogArticles()) {
   const outputPath = path.join(distDirectory, `${article.path}.html`)
   await mkdir(path.dirname(outputPath), { recursive: true })
   await writeFile(outputPath, renderArticleHtml(article))
 }
+
+await writeFile(path.join(distDirectory, `${digitalFluencyPath}.html`), renderDigitalFluencyHtml())
 
 console.log(`Pré-renderização concluída para ${getPublishedBlogArticles().length} artigos.`)
