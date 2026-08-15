@@ -30,7 +30,7 @@ describe('fonte editorial do blog', () => {
     expect(articles.every((article) => article.canonicalUrl === buildSiteUrl(article.path))).toBe(true)
     expect(new Set(articles.map((article) => article.socialImage)).size).toBe(articles.length)
     expect(articles.every((article) => article.socialImage.startsWith('https://www.radarpraxia.com/social/'))).toBe(true)
-    expect(articles.every((article) => /\| PraxIA$|\| PráxIA$/.test(article.seoTitle))).toBe(true)
+    expect(articles.every((article) => /\| PraxIA$|\| PraxIA$/.test(article.seoTitle))).toBe(true)
   })
 
   it('mantém FAQ e capa acessível no artigo de competências docentes', () => {

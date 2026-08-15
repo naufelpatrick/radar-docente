@@ -67,7 +67,7 @@ describe('content distribution', () => {
     expect(hashtags.length).toBeLessThanOrEqual(maximum)
     expect(new Set(hashtags).size).toBe(hashtags.length)
     expect(hashtags).toContain('#AvaliaçãoDaAprendizagem')
-    expect(hashtags).toContain('#PráxIA')
+    expect(hashtags).toContain('#PraxIA')
   })
 
   it('fills the LinkedIn text for a draft created before the migration', () => {

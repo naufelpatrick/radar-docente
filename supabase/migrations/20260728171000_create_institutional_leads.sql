@@ -39,7 +39,7 @@ with check (
 );
 
 comment on table public.institutional_leads is
-  'Solicitações comerciais enviadas pelo formulário institucional da PráxIA. Sem leitura pública.';
+  'Solicitações comerciais enviadas pelo formulário institucional da PraxIA. Sem leitura pública.';
 
 create index if not exists institutional_leads_created_at_idx
   on public.institutional_leads (created_at desc);

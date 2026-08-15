@@ -15,7 +15,7 @@ export function CmsLoginPage() {
     try { await login(username, password); navigate('/admin') } catch (caught) { setError(caught instanceof Error ? caught.message : 'Não foi possível entrar') } finally { setBusy(false) }
   }
   return <main className="cms-login"><form onSubmit={submit}>
-    <BrandMark /><p className="eyebrow eyebrow--dark"><span />Área editorial</p><h1>Entrar no CMS</h1><p>Crie, revise e publique artigos da PráxIA.</p>
+    <BrandMark /><p className="eyebrow eyebrow--dark"><span />Área editorial</p><h1>Entrar no CMS</h1><p>Crie, revise e publique artigos da PraxIA.</p>
     {error && <p className="cms-alert cms-alert--error" role="alert">{error}</p>}
     <label htmlFor="cms-username">Usuário</label><input id="cms-username" autoComplete="username" value={username} onChange={(event) => setUsername(event.target.value)} required />
     <label htmlFor="cms-password">Senha</label><input id="cms-password" type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required />

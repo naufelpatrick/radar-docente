@@ -1,4 +1,4 @@
-# CMS editorial da PráxIA
+# CMS editorial da PraxIA
 
 ## Arquitetura
 

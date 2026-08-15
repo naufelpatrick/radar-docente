@@ -87,7 +87,7 @@ export function LinksPage() {
       <main className="links-page">
         <div className="links-page__shell">
           <header className="links-page__header">
-            <Link to="/" aria-label="PráxIA, ir para o site oficial"><BrandMark inverse /></Link>
+            <Link to="/" aria-label="PraxIA, ir para o site oficial"><BrandMark inverse /></Link>
             <p>Fluência Digital e em IA para professores.</p>
             <h1>A IA não substitui professores.<br /><em>Amplia quem está preparado.</em></h1>
           </header>
@@ -117,7 +117,7 @@ export function LinksPage() {
             </div>
           </section>
 
-          <section className="links-offers" aria-label="Produtos e serviços PráxIA">
+          <section className="links-offers" aria-label="Produtos e serviços PraxIA">
             {offers.map((offer, index) => {
               const Icon = offer.icon
               return (
@@ -136,7 +136,7 @@ export function LinksPage() {
           </section>
 
           <section className="links-social" aria-labelledby="links-social-title">
-            <h2 id="links-social-title">Acompanhe a PráxIA</h2>
+            <h2 id="links-social-title">Acompanhe a PraxIA</h2>
             <div>
               <a href={praxiaLinks.instagram} target="_blank" rel="noopener noreferrer" onClick={eventHandler('links_instagram_click', 'Instagram', praxiaLinks.instagram, 7)}>
                 <Instagram aria-hidden="true" /> Instagram <ExternalLink aria-hidden="true" />
@@ -153,7 +153,7 @@ export function LinksPage() {
           <section className="links-contact" aria-labelledby="links-contact-title">
             <Mail aria-hidden="true" />
             <div>
-              <h2 id="links-contact-title">Fale com o PráxIA</h2>
+              <h2 id="links-contact-title">Fale com o PraxIA</h2>
               <p>Entre em contato para contratar palestras, workshops, mentorias ou conversar sobre parcerias.</p>
             </div>
             <Link to={praxiaLinks.contact} onClick={eventHandler('links_contato_click', 'Contato', praxiaLinks.contact, 10)}>
@@ -164,15 +164,15 @@ export function LinksPage() {
           <section className="links-about" aria-labelledby="links-about-title">
             <span>QUEM SOMOS</span>
             <h2 id="links-about-title">Educação, tecnologia e prática docente.</h2>
-            <p>O PráxIA é uma iniciativa de Patrick Naufel e Giovani Letti voltada ao desenvolvimento da Fluência Digital e em IA de professores, escolas e instituições de ensino.</p>
-            <Link to={praxiaLinks.about}>Conheça a PráxIA <ArrowRight aria-hidden="true" /></Link>
+            <p>O PraxIA é uma iniciativa de Patrick Naufel e Giovani Letti voltada ao desenvolvimento da Fluência Digital e em IA de professores, escolas e instituições de ensino.</p>
+            <Link to={praxiaLinks.about}>Conheça a PraxIA <ArrowRight aria-hidden="true" /></Link>
           </section>
 
           <footer className="links-footer">
             <BrandMark inverse compact />
             <p>Patrick Naufel e Giovani Letti</p>
             <Link to={praxiaLinks.privacy}>Política de Privacidade</Link>
-            <small>© {new Date().getFullYear()} PráxIA.</small>
+            <small>© {new Date().getFullYear()} PraxIA.</small>
           </footer>
         </div>
       </main>

@@ -18,10 +18,10 @@ const criteria = [
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'CollectionPage', name: 'Ferramentas para a prática docente', url: 'https://radar-docente-pi.vercel.app/ferramentas', description: 'Critérios pedagógicos para escolher e revisar ferramentas digitais e de inteligência artificial.', inLanguage: 'pt-BR' },
+    { '@type': 'CollectionPage', name: 'Ferramentas para a prática docente', url: 'https://www.radarpraxia.com/ferramentas', description: 'Critérios pedagógicos para escolher e revisar ferramentas digitais e de inteligência artificial.', inLanguage: 'pt-BR' },
     { '@type': 'BreadcrumbList', itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-      { '@type': 'ListItem', position: 2, name: 'Ferramentas', item: 'https://radar-docente-pi.vercel.app/ferramentas' },
+      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Ferramentas', item: 'https://www.radarpraxia.com/ferramentas' },
     ] },
   ],
 }
@@ -29,7 +29,7 @@ const schema = {
 export function ToolsPage() {
   return (
     <>
-      <Seo title="Ferramentas digitais e IA: critérios para professores | PráxIA" description="Avalie ferramentas digitais e de IA por adequação pedagógica, privacidade, acessibilidade, autoria, viabilidade e evidências de aprendizagem." path="/ferramentas" jsonLd={schema} />
+      <Seo title="Ferramentas digitais e IA: critérios para professores | PraxIA" description="Avalie ferramentas digitais e de IA por adequação pedagógica, privacidade, acessibilidade, autoria, viabilidade e evidências de aprendizagem." path="/ferramentas" jsonLd={schema} />
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
       <InstitutionalHeader />
       <main id="conteudo-principal" className="tools-page">
@@ -46,7 +46,7 @@ export function ToolsPage() {
           { label: 'Revisar', title: 'Decida com evidências', text: 'Registre o que favoreceu aprendizagem, o que gerou barreiras e o que precisa mudar.' },
         ]} /></div></section>
 
-        <section className="tools-boundaries"><div className="shell"><div><ShieldCheck aria-hidden="true" /><p className="method-kicker">LIMITES DESTE ESPAÇO</p><h2>A PráxIA não certifica nem endossa ferramentas.</h2><p>Os conteúdos oferecem critérios educacionais para análise. Políticas de privacidade, termos, preços e funcionalidades devem ser verificados diretamente nas fontes oficiais antes de cada adoção.</p></div><ul><li><Compass aria-hidden="true" /><span><strong>Contexto antes da recomendação</strong>Uma ferramenta adequada para uma turma pode não ser adequada para outra.</span></li><li><SlidersHorizontal aria-hidden="true" /><span><strong>Configuração também é decisão</strong>O modo de uso pode alterar riscos, barreiras e possibilidades pedagógicas.</span></li><li><Wrench aria-hidden="true" /><span><strong>Revisão contínua</strong>Mudanças técnicas ou institucionais pedem uma nova análise.</span></li></ul></div></section>
+        <section className="tools-boundaries"><div className="shell"><div><ShieldCheck aria-hidden="true" /><p className="method-kicker">LIMITES DESTE ESPAÇO</p><h2>A PraxIA não certifica nem endossa ferramentas.</h2><p>Os conteúdos oferecem critérios educacionais para análise. Políticas de privacidade, termos, preços e funcionalidades devem ser verificados diretamente nas fontes oficiais antes de cada adoção.</p></div><ul><li><Compass aria-hidden="true" /><span><strong>Contexto antes da recomendação</strong>Uma ferramenta adequada para uma turma pode não ser adequada para outra.</span></li><li><SlidersHorizontal aria-hidden="true" /><span><strong>Configuração também é decisão</strong>O modo de uso pode alterar riscos, barreiras e possibilidades pedagógicas.</span></li><li><Wrench aria-hidden="true" /><span><strong>Revisão contínua</strong>Mudanças técnicas ou institucionais pedem uma nova análise.</span></li></ul></div></section>
 
         <section className="tools-next"><div className="shell"><article><h3>Comece pelos critérios</h3><p>Leia o guia sobre decisões que antecedem o uso de IA com estudantes.</p><Link to="/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta">Abrir artigo <ArrowRight aria-hidden="true" /></Link></article><article><h3>Reconheça seu ponto de partida</h3><p>O Radar ajuda a identificar qual dimensão pede atenção no próximo experimento.</p><Link to="/radar">Fazer o Radar <ArrowRight aria-hidden="true" /></Link></article></div></section>
         <section className="tools-cta"><div className="shell"><div><p className="method-kicker">A FERRAMENTA É PARTE DO CAMPO, NÃO O CENTRO.</p><h2>Faça escolhas coerentes com sua trajetória docente.</h2></div><ButtonLink href="/guias" variant="light" showArrow>Explorar os guias</ButtonLink></div></section>

@@ -50,7 +50,7 @@ export function RadarLeadForm({ result, completionId, onSubmitted }: { result: S
       <div className="radar-lead-form__heading">
         <p className="flow-eyebrow">ÚLTIMO PASSO</p>
         <h2>Para quem entregaremos o relatório?</h2>
-        <p>Informe seus dados para abrir gratuitamente o Score PráxIA e o relatório completo.</p>
+        <p>Informe seus dados para abrir gratuitamente o Score PraxIA e o relatório completo.</p>
       </div>
       <div className="radar-lead-form__grid">
         <label htmlFor="radar-lead-name">
@@ -79,7 +79,7 @@ export function RadarLeadForm({ result, completionId, onSubmitted }: { result: S
       </p>
       <label className="radar-lead-form__marketing">
         <input type="checkbox" checked={lead.marketingConsent} onChange={(event) => update('marketingConsent', event.target.checked)} />
-        <span>Quero receber conteúdos e novidades da PráxIA por e-mail. Esta autorização é opcional e pode ser revogada.</span>
+        <span>Quero receber conteúdos e novidades da PraxIA por e-mail. Esta autorização é opcional e pode ser revogada.</span>
       </label>
       {status === 'error' && <p className="radar-lead-form__error" role="alert">Não foi possível registrar seus dados. Verifique sua conexão e tente novamente.</p>}
       <button type="submit" className="flow-button" disabled={status === 'submitting'}>

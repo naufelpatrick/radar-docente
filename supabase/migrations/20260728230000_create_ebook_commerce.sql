@@ -22,7 +22,7 @@ create table if not exists public.ebook_webhook_events (
 alter table public.ebook_orders enable row level security;
 alter table public.ebook_webhook_events enable row level security;
 
-comment on table public.ebook_orders is 'Pedidos do e-book PráxIA. Acesso exclusivo pelo backend com service role.';
+comment on table public.ebook_orders is 'Pedidos do e-book PraxIA. Acesso exclusivo pelo backend com service role.';
 comment on column public.ebook_orders.privacy_notice_acknowledged is
   'Registro técnico de apresentação do aviso contextual de privacidade; não representa aceite contratual da política.';
 

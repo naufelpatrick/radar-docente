@@ -9,6 +9,23 @@ const digitalFluencyUrl = `https://www.radarpraxia.com${digitalFluencyPath}`
 const digitalFluencyTitle = 'Fluência digital para professores: descubra seu nível | PraxIA'
 const digitalFluencyDescription = 'Entenda o que é fluência digital para professores, conheça suas dimensões e faça gratuitamente o Radar PraxIA para orientar seu desenvolvimento.'
 
+const staticPages = [
+  ['/', 'Radar de Fluência Digital e IA | PraxIA', 'Descubra forças, pontos de atenção e um próximo passo possível para sua prática docente.', 'Transforme fluência digital e inteligência artificial em prática docente.'],
+  ['/sobre', 'Sobre a PraxIA', 'Conheça a história, o propósito e os valores da PraxIA.', 'Sobre a PraxIA'],
+  ['/blog', 'Blog: IA, competências digitais e prática docente | PraxIA', 'Conteúdos para professores sobre IA, competências digitais e prática docente.', 'Ideias, critérios e perguntas para ensinar em contextos digitais e com IA.'],
+  ['/contato', 'Contato | PraxIA', 'Entre em contato com a PraxIA.', 'Entre em contato com a PraxIA'],
+  ['/radar-docente', 'Radar Docente: fluência digital e IA na prática | PraxIA', 'Conheça o Radar Docente PraxIA e descubra seu nível de fluência digital e em IA.', 'Radar Docente: um olhar organizado sobre sua prática.'],
+  ['/metodologia', 'Metodologia do Radar Docente | PraxIA', 'Entenda as dimensões, o cálculo e os limites metodológicos do Radar Docente.', 'Metodologia do Radar Docente'],
+  ['/para-instituicoes', 'Palestras e workshops para professores | PraxIA', 'Soluções para instituições sobre fluência digital, IA e prática docente.', 'Soluções para instituições de ensino'],
+  ['/competencias', 'Competências docentes digitais e em IA | PraxIA', 'Conheça as seis dimensões da fluência digital e em IA na prática docente.', 'Competências docentes digitais e em IA'],
+  ['/guias', 'Guias para a prática docente | PraxIA', 'Percursos práticos para planejar, avaliar e utilizar tecnologia e IA.', 'Guias para a prática docente'],
+  ['/ferramentas', 'Ferramentas digitais e IA para professores | PraxIA', 'Avalie ferramentas digitais e de IA por critérios pedagógicos e éticos.', 'Ferramentas digitais e IA com critérios'],
+  ['/ebook', 'E-book IA na prática docente | PraxIA', 'Conheça o e-book da PraxIA para integrar IA à prática docente.', 'IA na prática docente'],
+  ['/mentoria', 'Mentoria para professores | PraxIA', 'Mentoria para transformar fluência digital e IA em prática docente.', 'Mentoria para a prática docente'],
+  ['/resultado', 'Resultado demonstrativo do Radar | PraxIA', 'Conheça a estrutura do resultado do Radar Docente.', 'Resultado demonstrativo do Radar Docente'],
+  ['/radar', 'Radar Docente | PraxIA', 'Aplicação de autorreflexão do Radar Docente PraxIA.', 'Radar Docente', 'noindex, follow'],
+]
+
 const removableHeadMarkers = [
   '<title>',
   'name="description"',
@@ -24,6 +41,18 @@ function escapeHtml(value) {
     .replaceAll('"', '&quot;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
+}
+
+function injectFallbackContent(html, heading, description) {
+  const content = `<main data-prerendered-content><h1>${escapeHtml(heading)}</h1><p>${escapeHtml(description)}</p><nav aria-label="Links principais"><a href="/radar-docente">Radar Docente</a> <a href="/blog">Blog</a> <a href="/metodologia">Metodologia</a></nav></main>`
+  return html.replace('<div id="root"></div>', `<div id="root">${content}</div>`)
+}
+
+function renderStaticPage(pathname, title, description, heading, robots = 'index, follow') {
+  const canonical = `https://www.radarpraxia.com${pathname === '/' ? '/' : pathname}`
+  const cleanedHtml = baseHtml.split('\n').filter((line) => !removableHeadMarkers.some((marker) => line.includes(marker))).join('\n')
+  const tags = [`<title>${escapeHtml(title)}</title>`, `<meta name="description" content="${escapeHtml(description)}" />`, `<meta name="robots" content="${robots}" />`, robots.startsWith('index') ? `<link rel="canonical" href="${canonical}" />` : '', `<meta property="og:url" content="${canonical}" />`].filter(Boolean).map((tag) => `    ${tag}`).join('\n')
+  return injectFallbackContent(cleanedHtml.replace('  </head>', `${tags}\n  </head>`), heading, description)
 }
 
 function createBlogPosting(article) {
@@ -102,7 +131,7 @@ function renderArticleHtml(article) {
     `<script id="page-json-ld" type="application/ld+json">${JSON.stringify(createStructuredData(article)).replaceAll('<', '\\u003c')}</script>`,
   ].map((tag) => `    ${tag}`).join('\n')
 
-  return cleanedHtml.replace('  </head>', `${tags}\n  </head>`)
+  return injectFallbackContent(cleanedHtml.replace('  </head>', `${tags}\n  </head>`), article.title, article.summary)
 }
 
 function renderDigitalFluencyHtml() {
@@ -136,13 +165,29 @@ function renderDigitalFluencyHtml() {
     `<meta name="twitter:image" content="${image}" />`,
     `<script id="page-json-ld" type="application/ld+json">${JSON.stringify(structuredData).replaceAll('<', '\\u003c')}</script>`,
   ].map((tag) => `    ${tag}`).join('\n')
-  return cleanedHtml.replace('  </head>', `${tags}\n  </head>`)
+  return injectFallbackContent(cleanedHtml.replace('  </head>', `${tags}\n  </head>`), 'Fluência digital para professores', digitalFluencyDescription)
+}
+
+for (const [pathname, title, description, heading, robots] of staticPages) {
+  const outputPath = pathname === '/' ? path.join(distDirectory, 'index.html') : path.join(distDirectory, `${pathname}.html`)
+  await mkdir(path.dirname(outputPath), { recursive: true })
+  await writeFile(outputPath, renderStaticPage(pathname, title, description, heading, robots))
 }
 
 for (const article of getPublishedBlogArticles()) {
   const outputPath = path.join(distDirectory, `${article.path}.html`)
   await mkdir(path.dirname(outputPath), { recursive: true })
   await writeFile(outputPath, renderArticleHtml(article))
+}
+
+const articlesByCategory = Map.groupBy(getPublishedBlogArticles(), (article) => article.categorySlug)
+for (const [categorySlug, articles] of articlesByCategory) {
+  const category = articles[0].category
+  const pathname = `/blog/categoria/${categorySlug}`
+  const description = `Artigos da PraxIA sobre ${category.toLocaleLowerCase('pt-BR')}, tecnologia e prática docente.`
+  const outputPath = path.join(distDirectory, `${pathname}.html`)
+  await mkdir(path.dirname(outputPath), { recursive: true })
+  await writeFile(outputPath, renderStaticPage(pathname, `${category} — Blog | PraxIA`, description, category))
 }
 
 await writeFile(path.join(distDirectory, `${digitalFluencyPath}.html`), renderDigitalFluencyHtml())

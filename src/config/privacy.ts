@@ -1,5 +1,5 @@
 export const privacyConfig = {
-  projectName: 'PráxIA',
+  projectName: 'PraxIA',
   controllerName: null,
   controllerDocument: null,
   controllerAddress: null,

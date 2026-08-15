@@ -22,7 +22,7 @@ import { useScrollMotion } from '../hooks/useScrollMotion'
 function DemoScoreGauge() {
   return (
     <div className="dynamic-gauge" style={{ '--result-score': 72, '--result-angle': '129.6deg' } as React.CSSProperties}>
-      <svg viewBox="0 0 360 230" role="img" aria-label="Score PráxIA demonstrativo: 72 de 100, faixa Integração">
+      <svg viewBox="0 0 360 230" role="img" aria-label="Score PraxIA demonstrativo: 72 de 100, faixa Integração">
         <path className="dynamic-gauge__track" d="M40 190 A140 140 0 0 1 320 190" pathLength="100" />
         <path className="dynamic-gauge__accent" d="M62 190 A118 118 0 0 1 298 190" pathLength="100" />
         <path className="dynamic-gauge__progress" d="M40 190 A140 140 0 0 1 320 190" pathLength="100" />
@@ -120,7 +120,7 @@ const demoFaq = [
   },
   {
     question: 'Meu resultado terá exatamente estas recomendações?',
-    answer: 'Não. O Score PráxIA, o radar, as interpretações e o plano variam conforme suas respostas às seis dimensões.',
+    answer: 'Não. O Score PraxIA, o radar, as interpretações e o plano variam conforme suas respostas às seis dimensões.',
   },
   {
     question: 'Como recebo minha própria devolutiva?',
@@ -133,17 +133,17 @@ const resultSchema = {
   '@graph': [
     {
       '@type': 'WebPage',
-      name: 'Exemplo de resultado do Radar Docente PráxIA',
-      description: 'Veja como o Score PráxIA, o radar de seis dimensões e o plano de desenvolvimento aparecem em uma devolutiva demonstrativa.',
-      url: 'https://radar-docente-pi.vercel.app/resultado',
+      name: 'Exemplo de resultado do Radar Docente PraxIA',
+      description: 'Veja como o Score PraxIA, o radar de seis dimensões e o plano de desenvolvimento aparecem em uma devolutiva demonstrativa.',
+      url: 'https://www.radarpraxia.com/resultado',
       inLanguage: 'pt-BR',
-      isPartOf: { '@type': 'WebSite', name: 'PráxIA', url: 'https://radar-docente-pi.vercel.app/' },
+      isPartOf: { '@type': 'WebSite', name: 'PraxIA', url: 'https://www.radarpraxia.com/' },
     },
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-        { '@type': 'ListItem', position: 2, name: 'Exemplo de resultado', item: 'https://radar-docente-pi.vercel.app/resultado' },
+        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Exemplo de resultado', item: 'https://www.radarpraxia.com/resultado' },
       ],
     },
     {
@@ -164,8 +164,8 @@ export function DemoResultPage() {
   return (
     <>
       <Seo
-        title="Exemplo de resultado: Score PráxIA e Radar Docente"
-        description="Explore uma devolutiva demonstrativa com Score PráxIA, radar de seis dimensões, interpretação e plano de desenvolvimento."
+        title="Exemplo de resultado: Score PraxIA e Radar Docente"
+        description="Explore uma devolutiva demonstrativa com Score PraxIA, radar de seis dimensões, interpretação e plano de desenvolvimento."
         path="/resultado"
         jsonLd={resultSchema}
       />
@@ -186,7 +186,7 @@ export function DemoResultPage() {
               <Link to="/">Início</Link><ChevronRight aria-hidden="true" /><span aria-current="page">Exemplo de resultado</span>
             </nav>
             <p className="flow-eyebrow">SCORE PRÁXIA • EXEMPLO</p>
-            <h1>Score PráxIA:<br /><em>72 de 100.</em></h1>
+            <h1>Score PraxIA:<br /><em>72 de 100.</em></h1>
             <p>{demoResult.band.message}</p>
             <span>Faixa Integração · Dados fictícios · Leitura orientativa</span>
           </div>
@@ -299,7 +299,7 @@ export function DemoResultPage() {
             <p className="method-kicker">AGORA É COM A SUA PRÁTICA</p>
             <h2>Este é apenas um exemplo. Sua devolutiva será construída a partir das suas respostas.</h2>
             <p>Reserve aproximadamente oito minutos para responder ao Radar e receber score, dimensões e plano personalizados.</p>
-            <ButtonLink href="/radar" variant="light" showArrow>Gerar meu Score PráxIA</ButtonLink>
+            <ButtonLink href="/radar" variant="light" showArrow>Gerar meu Score PraxIA</ButtonLink>
           </div>
         </section>
 

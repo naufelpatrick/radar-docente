@@ -1,8 +1,8 @@
-# Produto PráxIA
+# Produto PraxIA
 
 ## Posicionamento
 
-A PráxIA é um Radar de Fluência Digital e IA para professores. Ajuda cada pessoa a reconhecer como sua fluência se manifesta no cotidiano docente e a escolher um próximo passo possível.
+A PraxIA é um Radar de Fluência Digital e IA para professores. Ajuda cada pessoa a reconhecer como sua fluência se manifesta no cotidiano docente e a escolher um próximo passo possível.
 
 O produto evita a lógica de prova ou ranking. A devolutiva é orientativa, contextual e baseada em autorrelato.
 
@@ -34,7 +34,7 @@ O produto evita a lógica de prova ou ranking. A devolutiva é orientativa, cont
 5. integração pedagógica da IA;
 6. ética, segurança e autoria.
 
-## Score PráxIA
+## Score PraxIA
 
 O resultado principal usa uma escala de 0 a 100, apresentada por um medidor semicircular de arcos. O número, a faixa textual, a interpretação e o próximo passo permanecem disponíveis sem depender de cor.
 
@@ -53,7 +53,7 @@ A devolutiva também relaciona a combinação das dimensões a manifestações p
 - fluxo completo em `/radar`, com consentimento, perfil, 30 itens e revisão;
 - persistência local e retomada do progresso;
 - cálculo determinístico e resultado personalizado;
-- Score PráxIA e radar complementar das seis dimensões;
+- Score PraxIA e radar complementar das seis dimensões;
 - componentes e tokens reutilizáveis;
 - testes unitários das regras de pontuação;
 - base compatível com publicação futura na Vercel;

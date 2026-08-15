@@ -57,16 +57,16 @@ const aboutSchema = {
   '@graph': [
     {
       '@type': 'AboutPage',
-      name: 'Sobre a PráxIA',
-      description: 'Conheça a história, o propósito, a missão, a visão e os valores da PráxIA.',
-      url: 'https://radar-docente-pi.vercel.app/sobre',
+      name: 'Sobre a PraxIA',
+      description: 'Conheça a história, o propósito, a missão, a visão e os valores da PraxIA.',
+      url: 'https://www.radarpraxia.com/sobre',
       inLanguage: 'pt-BR',
-      isPartOf: { '@type': 'WebSite', name: 'PráxIA', url: 'https://radar-docente-pi.vercel.app/' },
+      isPartOf: { '@type': 'WebSite', name: 'PraxIA', url: 'https://www.radarpraxia.com/' },
       about: {
         '@type': 'Organization',
-        name: 'PráxIA',
+        name: 'PraxIA',
         slogan: 'Transforme fluência em prática docente.',
-        url: 'https://radar-docente-pi.vercel.app/',
+        url: 'https://www.radarpraxia.com/',
         member: team.map((member) => ({
           '@type': 'Person',
           name: member.name,
@@ -77,8 +77,8 @@ const aboutSchema = {
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-        { '@type': 'ListItem', position: 2, name: 'Sobre', item: 'https://radar-docente-pi.vercel.app/sobre' },
+        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Sobre', item: 'https://www.radarpraxia.com/sobre' },
       ],
     },
   ],
@@ -91,7 +91,7 @@ export function AboutPage() {
     <>
       <Seo
         title="Sobre nós"
-        description="Conheça a história, o propósito e os valores da PráxIA, iniciativa que aproxima fluência digital, inteligência artificial e prática pedagógica."
+        description="Conheça a história, o propósito e os valores da PraxIA, iniciativa que aproxima fluência digital, inteligência artificial e prática pedagógica."
         path="/sobre"
         jsonLd={aboutSchema}
       />
@@ -108,7 +108,7 @@ export function AboutPage() {
               <div>
                 <p className="method-kicker">SOBRE A PRÁXIA</p>
                 <h1>Tecnologia faz sentido quando encontra <em>contexto, intenção e prática.</em></h1>
-                <p>A PráxIA é uma iniciativa independente criada para ajudar professores a compreender como sua fluência digital e em inteligência artificial se manifesta no cotidiano — e a transformar essa leitura em escolhas pedagógicas conscientes.</p>
+                <p>A PraxIA é uma iniciativa independente criada para ajudar professores a compreender como sua fluência digital e em inteligência artificial se manifesta no cotidiano — e a transformar essa leitura em escolhas pedagógicas conscientes.</p>
               </div>
               <div className="about-hero__manifesto" data-reveal="scale">
                 <Sparkles aria-hidden="true" />
@@ -138,7 +138,7 @@ export function AboutPage() {
             </div>
             <div className="about-story__content" data-reveal="right">
               <p className="about-story__lead">Como apoiar professores a desenvolver fluência digital e em IA sem reduzir a docência ao uso de ferramentas?</p>
-              <p>A PráxIA nasce dessa inquietação. Em vez de partir da novidade tecnológica, o projeto começa pelas decisões que sustentam uma experiência de aprendizagem: o que planejar, como mediar, quais evidências observar, como oferecer feedback e quais cuidados éticos preservar.</p>
+              <p>A PraxIA nasce dessa inquietação. Em vez de partir da novidade tecnológica, o projeto começa pelas decisões que sustentam uma experiência de aprendizagem: o que planejar, como mediar, quais evidências observar, como oferecer feedback e quais cuidados éticos preservar.</p>
               <p>O primeiro produto dessa trajetória é o Radar Docente — um instrumento de autorreflexão que organiza a prática em seis dimensões e oferece uma recomendação possível para continuar avançando.</p>
               <p>O nome reúne duas ideias centrais: <strong>práxis</strong>, como relação entre reflexão e ação, e <strong>IA</strong>, como uma tecnologia que precisa ser situada dentro de escolhas humanas e pedagógicas.</p>
             </div>
@@ -154,7 +154,7 @@ export function AboutPage() {
             <div data-reveal="right">
               <p className="method-kicker">PROPÓSITO</p>
               <h2>Aproximar tecnologia e pedagogia sem afastar o professor de sua autoria.</h2>
-              <p>A PráxIA existe para tornar decisões digitais e de IA mais compreensíveis, intencionais e responsáveis. Isso significa oferecer linguagem, critérios e percursos que apoiem autonomia — não receitas prontas.</p>
+              <p>A PraxIA existe para tornar decisões digitais e de IA mais compreensíveis, intencionais e responsáveis. Isso significa oferecer linguagem, critérios e percursos que apoiem autonomia — não receitas prontas.</p>
               <ul className="about-purpose__list">
                 <li><Compass aria-hidden="true" /><span><strong>Orientar sem prescrever.</strong> Cada contexto pede escolhas próprias.</span></li>
                 <li><BookOpenCheck aria-hidden="true" /><span><strong>Explicar sem banalizar.</strong> Clareza pode conviver com profundidade.</span></li>
@@ -189,7 +189,7 @@ export function AboutPage() {
           <div className="shell">
             <div className="method-heading" data-reveal="up">
               <div><p className="method-kicker">VALORES</p><h2>Princípios que orientam produto, conteúdo e relação com professores.</h2></div>
-              <p>Esses valores aparecem tanto no que a PráxIA oferece quanto no que escolhe não prometer.</p>
+              <p>Esses valores aparecem tanto no que a PraxIA oferece quanto no que escolhe não prometer.</p>
             </div>
             <div className="about-values__grid">
               {values.map(({ icon: Icon, title, text }, index) => (

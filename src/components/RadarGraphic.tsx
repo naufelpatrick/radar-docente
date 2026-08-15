@@ -10,7 +10,7 @@ export function RadarGraphic({ className = '', labelled = false }: RadarGraphicP
     <img
       className={className}
       src={brandSymbol}
-      alt={labelled ? 'Símbolo PráxIA: arcos e pontos representando desenvolvimento' : ''}
+      alt={labelled ? 'Símbolo PraxIA: arcos e pontos representando desenvolvimento' : ''}
       aria-hidden={labelled ? undefined : true}
     />
   )

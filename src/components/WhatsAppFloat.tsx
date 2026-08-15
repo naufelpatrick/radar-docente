@@ -14,7 +14,7 @@ export function WhatsAppFloat() {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Conversar com a PráxIA pelo WhatsApp"
+      aria-label="Conversar com a PraxIA pelo WhatsApp"
     >
       <MessageCircle aria-hidden="true" />
       <span>WhatsApp</span>

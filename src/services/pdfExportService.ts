@@ -33,7 +33,7 @@ function addPageFooter(doc: PdfDocument) {
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(8)
   doc.setTextColor(...colors.muted)
-  doc.text('PráxIA - Radar de Fluência Digital e IA', 18, 288)
+  doc.text('PraxIA - Radar de Fluência Digital e IA', 18, 288)
   doc.text(`Página ${page}`, 192, 288, { align: 'right' })
 }
 
@@ -83,13 +83,13 @@ function addCoverPage(doc: PdfDocument, result: ScoreResult, narrative: ResultNa
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(17)
   doc.setTextColor(...colors.white)
-  doc.text('PráxIA', 18, 20)
+  doc.text('PraxIA', 18, 20)
   doc.setFontSize(8)
   doc.setTextColor(...colors.lime)
   doc.text('SEU RESULTADO - BETA 0.1', 18, 36)
   doc.setFontSize(31)
   doc.setTextColor(...colors.white)
-  doc.text('Score PráxIA', 18, 55)
+  doc.text('Score PraxIA', 18, 55)
   doc.setFontSize(48)
   doc.setTextColor(...colors.lime)
   doc.text(String(result.displayedOverallScore), 18, 85)
@@ -398,7 +398,7 @@ function addClosingPage(doc: PdfDocument, result: ScoreResult, narrative: Result
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(15)
   doc.setTextColor(...colors.graphite)
-  doc.text('Mentoria PráxIA', 116, y + 27)
+  doc.text('Mentoria PraxIA', 116, y + 27)
   addWrappedText(doc, 'Acompanhamento individual para interpretar o resultado e construir um plano contextualizado.', 116, y + 38, 67, 8.8, 4.3)
   y += 78
 
@@ -436,10 +436,10 @@ export async function createResultPdf(result: ScoreResult, narrative: ResultNarr
   const { jsPDF } = await import('jspdf')
   const doc = new jsPDF({ unit: 'mm', format: 'a4', compress: true })
   doc.setProperties({
-    title: `Relatório completo PráxIA - ${result.displayedOverallScore}/100`,
+    title: `Relatório completo PraxIA - ${result.displayedOverallScore}/100`,
     subject: 'Radar de Fluência Digital e IA',
-    author: 'PráxIA',
-    creator: 'PráxIA',
+    author: 'PraxIA',
+    creator: 'PraxIA',
   })
   addCoverPage(doc, result, narrative)
   addOverviewPage(doc, result, narrative)

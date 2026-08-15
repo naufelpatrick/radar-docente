@@ -272,10 +272,10 @@ export function prepareArticle({ title = '', content_json: contentJson, content_
     category_id: category?.id || null,
     category_slug: category?.slug || categorySlug,
     slug: slugify(title),
-    meta_title: `${title.slice(0, 52).trim()} | PráxIA`,
+    meta_title: `${title.slice(0, 52).trim()} | PraxIA`,
     meta_description: metaDescription,
     excerpt,
-    cover_image_alt: `Capa do artigo ${title}, da PráxIA`,
+    cover_image_alt: `Capa do artigo ${title}, da PraxIA`,
     faq_json: questions.slice(0, 8),
   }
 }

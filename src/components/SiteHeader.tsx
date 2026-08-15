@@ -10,7 +10,7 @@ export function SiteHeader() {
   return (
     <header className="site-header" ref={rootRef}>
       <div className="shell site-header__inner">
-        <Link to="/" className="site-header__brand" aria-label="PráxIA, página inicial">
+        <Link to="/" className="site-header__brand" aria-label="PraxIA, página inicial">
           <BrandMark inverse />
         </Link>
         <button

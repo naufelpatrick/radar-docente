@@ -70,10 +70,10 @@ export function generateChannelHashtags(article, channel) {
   const topic = Object.entries(CATEGORY_HASHTAGS)
     .find(([key]) => category.includes(key))?.[1] || ['#PráticaDocente', '#IAnaEducação']
   const recurring = channel === 'instagram'
-    ? ['#PráxIA', '#InteligênciaArtificial', '#Educação', '#TecnologiaNaEducação', '#FormaçãoDocente']
+    ? ['#PraxIA', '#InteligênciaArtificial', '#Educação', '#TecnologiaNaEducação', '#FormaçãoDocente']
     : channel === 'facebook'
-      ? ['#PráxIA', '#Educação', '#TecnologiaNaEducação']
-      : ['#PráxIA', '#InteligênciaArtificial', '#FormaçãoDocente']
+      ? ['#PraxIA', '#Educação', '#TecnologiaNaEducação']
+      : ['#PraxIA', '#InteligênciaArtificial', '#FormaçãoDocente']
   const unique = [...new Set([...topic, ...recurring])]
   return unique.slice(0, HASHTAG_LIMITS[channel] || 5)
 }

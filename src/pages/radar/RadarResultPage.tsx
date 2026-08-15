@@ -43,7 +43,7 @@ export function RadarResultPage() {
         <div className="result-hero__copy">
           <PdfExportButton result={result} narrative={narrative} />
           <p className="flow-eyebrow">SEU RESULTADO • BETA 0.1</p>
-          <h1>Seu Score PráxIA é<br /><em>{result.displayedOverallScore} de 100.</em></h1>
+          <h1>Seu Score PraxIA é<br /><em>{result.displayedOverallScore} de 100.</em></h1>
           <p>{result.band.message}</p>
           <span>Resultado orientativo e baseado em autorrelato.</span>
         </div>
@@ -210,7 +210,7 @@ export function RadarResultPage() {
         <span>{getDimensionName(result.recommendationDimension)}</span>
       </section>
 
-      <section className="result-aggregate-consent" aria-label="Contribuição opcional para o Radar PráxIA">
+      <section className="result-aggregate-consent" aria-label="Contribuição opcional para o Radar PraxIA">
         <label>
           <input
             type="checkbox"
@@ -220,7 +220,7 @@ export function RadarResultPage() {
               anonymousImprovementAccepted: event.target.checked,
             })}
           />
-          <span>Autorizo o uso anônimo e agregado das minhas respostas para aperfeiçoar o Radar PráxIA. Essa autorização não identifica você e é opcional.</span>
+          <span>Autorizo o uso anônimo e agregado das minhas respostas para aperfeiçoar o Radar PraxIA. Essa autorização não identifica você e é opcional.</span>
         </label>
       </section>
 

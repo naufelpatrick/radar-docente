@@ -13,14 +13,15 @@ interface SeoProps {
   imageAlt?: string
   jsonLd?: JsonLd
   robots?: string
+  omitCanonical?: boolean
 }
 
 const socialImage = `${SITE_URL}/social-graph-praxia.png`
-const defaultImageAlt = 'PráxIA — fluência digital e inteligência artificial para a prática docente'
+const defaultImageAlt = 'PraxIA — fluência digital e inteligência artificial para a prática docente'
 
 function formatPageTitle(title: string) {
   const pageName = title.replace(/\s*\|\s*Pr[áa]xIA\s*$/i, '').trim()
-  return `${pageName} | PráxIA`
+  return `${pageName} | PraxIA`
 }
 
 function setMeta(selector: string, attributes: Record<string, string>) {
@@ -34,7 +35,7 @@ function setMeta(selector: string, attributes: Record<string, string>) {
   Object.entries(attributes).forEach(([name, value]) => element?.setAttribute(name, value))
 }
 
-export function Seo({ title, socialTitle = title, description, path, type = 'website', image = socialImage, imageAlt = defaultImageAlt, jsonLd, robots = 'index, follow' }: SeoProps) {
+export function Seo({ title, socialTitle = title, description, path, type = 'website', image = socialImage, imageAlt = defaultImageAlt, jsonLd, robots = 'index, follow', omitCanonical = false }: SeoProps) {
   useEffect(() => {
     const canonicalUrl = new URL(path, SITE_URL).toString()
     document.title = formatPageTitle(title)
@@ -45,7 +46,7 @@ export function Seo({ title, socialTitle = title, description, path, type = 'web
     setMeta('meta[property="og:description"]', { property: 'og:description', content: description })
     setMeta('meta[property="og:type"]', { property: 'og:type', content: type })
     setMeta('meta[property="og:url"]', { property: 'og:url', content: canonicalUrl })
-    setMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'PráxIA' })
+    setMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'PraxIA' })
     setMeta('meta[property="og:locale"]', { property: 'og:locale', content: 'pt_BR' })
     setMeta('meta[property="og:image"]', { property: 'og:image', content: image })
     setMeta('meta[property="og:image:secure_url"]', { property: 'og:image:secure_url', content: image })
@@ -61,12 +62,16 @@ export function Seo({ title, socialTitle = title, description, path, type = 'web
     setMeta('meta[name="twitter:image:alt"]', { name: 'twitter:image:alt', content: imageAlt })
 
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.rel = 'canonical'
-      document.head.appendChild(canonical)
+    if (omitCanonical) {
+      canonical?.remove()
+    } else {
+      if (!canonical) {
+        canonical = document.createElement('link')
+        canonical.rel = 'canonical'
+        document.head.appendChild(canonical)
+      }
+      canonical.href = canonicalUrl
     }
-    canonical.href = canonicalUrl
 
     const scriptId = 'page-json-ld'
     document.getElementById(scriptId)?.remove()
@@ -79,7 +84,7 @@ export function Seo({ title, socialTitle = title, description, path, type = 'web
     }
 
     return () => document.getElementById(scriptId)?.remove()
-  }, [description, image, imageAlt, jsonLd, path, robots, socialTitle, title, type])
+  }, [description, image, imageAlt, jsonLd, omitCanonical, path, robots, socialTitle, title, type])
 
   return null
 }

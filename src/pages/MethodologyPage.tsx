@@ -44,7 +44,7 @@ const faqItems = [
     answer: 'Não. É um instrumento de autorreflexão. Ele organiza percepções sobre práticas relatadas pelo próprio professor e não mede competência absoluta, desempenho profissional ou qualidade do ensino.',
   },
   {
-    question: 'O Score PráxIA compara professores?',
+    question: 'O Score PraxIA compara professores?',
     answer: 'Não. O score sintetiza as respostas individuais em uma escala de 0 a 100. Não existe ranking, nota de aprovação ou comparação com uma amostra de docentes.',
   },
   {
@@ -64,8 +64,8 @@ const faqItems = [
 const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-    { '@type': 'ListItem', position: 2, name: 'Metodologia', item: 'https://radar-docente-pi.vercel.app/metodologia' },
+    { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Metodologia', item: 'https://www.radarpraxia.com/metodologia' },
   ],
 }
 
@@ -86,14 +86,14 @@ export function MethodologyPage() {
     '@graph': [
       {
         '@type': 'WebPage',
-        name: 'Metodologia do Radar Docente PráxIA',
-        description: 'Conheça as seis dimensões, a escala de maturidade, o cálculo e os limites metodológicos do Radar Docente e do Score PráxIA.',
-        url: 'https://radar-docente-pi.vercel.app/metodologia',
+        name: 'Metodologia do Radar Docente PraxIA',
+        description: 'Conheça as seis dimensões, a escala de maturidade, o cálculo e os limites metodológicos do Radar Docente e do Score PraxIA.',
+        url: 'https://www.radarpraxia.com/metodologia',
         inLanguage: 'pt-BR',
         isPartOf: {
           '@type': 'WebSite',
-          name: 'PráxIA',
-          url: 'https://radar-docente-pi.vercel.app/',
+          name: 'PraxIA',
+          url: 'https://www.radarpraxia.com/',
         },
       },
       breadcrumbSchema,
@@ -104,8 +104,8 @@ export function MethodologyPage() {
   return (
     <>
       <Seo
-        title="Metodologia do Radar Docente e Score PráxIA"
-        description="Entenda como o Radar Docente avalia seis dimensões da fluência digital e em IA, calcula o Score PráxIA e transforma autorrelato em próximos passos."
+        title="Metodologia do Radar Docente e Score PraxIA"
+        description="Entenda como o Radar Docente avalia seis dimensões da fluência digital e em IA, calcula o Score PraxIA e transforma autorrelato em próximos passos."
         path="/metodologia"
         jsonLd={schema}
       />
@@ -242,7 +242,7 @@ export function MethodologyPage() {
             <div data-reveal="left">
               <p className="method-kicker">COMO O SCORE PRÁXIA FUNCIONA</p>
               <h2>Uma síntese legível, acompanhada do contexto.</h2>
-              <p className="method-score__lead">Cada dimensão reúne cinco respostas com valores internos de 1 a 5. A soma é convertida para uma escala de 0 a 100. O Score PráxIA é a média aritmética dos seis resultados dimensionais.</p>
+              <p className="method-score__lead">Cada dimensão reúne cinco respostas com valores internos de 1 a 5. A soma é convertida para uma escala de 0 a 100. O Score PraxIA é a média aritmética dos seis resultados dimensionais.</p>
               <div className="formula" aria-label="Fórmula do score dimensional">
                 <span>score da dimensão</span>
                 <strong>((soma das respostas − 5) ÷ 20) × 100</strong>
@@ -311,7 +311,7 @@ export function MethodologyPage() {
           <div className="shell" data-reveal="up">
             <p className="method-kicker">DA METODOLOGIA À SUA PRÁTICA</p>
             <h2 id="method-cta-title">Reserve oito minutos para olhar sua prática por seis ângulos.</h2>
-            <p>Você recebe uma leitura orientativa, um Score PráxIA explicado e um próximo passo que cabe no cotidiano docente.</p>
+            <p>Você recebe uma leitura orientativa, um Score PraxIA explicado e um próximo passo que cabe no cotidiano docente.</p>
             <ButtonLink href="/radar" variant="light" showArrow>Começar o Radar Docente</ButtonLink>
             <small>Gratuito · Sem ranking · Respostas mantidas no navegador</small>
           </div>

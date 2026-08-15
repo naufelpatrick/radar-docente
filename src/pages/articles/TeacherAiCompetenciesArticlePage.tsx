@@ -182,8 +182,8 @@ export function TeacherAiCompetenciesArticlePage() {
 
         <section className="article-cta">
           <h2>Quais competências já estão consolidadas na sua prática?</h2>
-          <p>O Radar Docente da PráxIA analisa sua prática em seis dimensões e apresenta um caminho de evolução coerente com seu momento atual.</p>
-          <ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PráxIA</ButtonLink>
+          <p>O Radar Docente da PraxIA analisa sua prática em seis dimensões e apresenta um caminho de evolução coerente com seu momento atual.</p>
+          <ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PraxIA</ButtonLink>
         </section>
 
         <FaqSection items={articleFaq} title="Perguntas frequentes" />

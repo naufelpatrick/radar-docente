@@ -21,7 +21,7 @@ create policy "public can submit contact leads"
 on public.lead_contato for insert to anon, authenticated
 with check (privacy_consent = true and source_page = '/contato' and status = 'new');
 comment on table public.lead_contato is
-  'Mensagens enviadas pelo formulário geral de contato da PráxIA. Sem leitura pública.';
+  'Mensagens enviadas pelo formulário geral de contato da PraxIA. Sem leitura pública.';
 create index if not exists lead_contato_created_at_idx on public.lead_contato (created_at desc);
 create index if not exists lead_contato_status_idx on public.lead_contato (status);
 
@@ -49,6 +49,6 @@ create policy "public can submit mentoring leads"
 on public.lead_mentoria for insert to anon, authenticated
 with check (privacy_consent = true and source_page = '/mentoria' and status = 'new');
 comment on table public.lead_mentoria is
-  'Manifestações de interesse na Mentoria PráxIA. Sem leitura pública.';
+  'Manifestações de interesse na Mentoria PraxIA. Sem leitura pública.';
 create index if not exists lead_mentoria_created_at_idx on public.lead_mentoria (created_at desc);
 create index if not exists lead_mentoria_status_idx on public.lead_mentoria (status);

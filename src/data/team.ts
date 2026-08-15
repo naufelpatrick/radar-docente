@@ -1,6 +1,6 @@
 import type { TeamMember } from '../types/team'
 
-export const teamIntroduction = 'A PráxIA reúne experiência em educação, tecnologia, design e inovação para apoiar professores e instituições na integração crítica e pedagogicamente intencional da inteligência artificial.'
+export const teamIntroduction = 'A PraxIA reúne experiência em educação, tecnologia, design e inovação para apoiar professores e instituições na integração crítica e pedagogicamente intencional da inteligência artificial.'
 
 export const team: TeamMember[] = [
   {

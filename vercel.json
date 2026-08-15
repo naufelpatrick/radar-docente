@@ -12,6 +12,14 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "radar-docente-pi.vercel.app" }],
+      "destination": "https://www.radarpraxia.com/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/api/workshops/:action", "destination": "/api/workshops?action=:action" },
     { "source": "/api/ebook/:action", "destination": "/api/ebook?action=:action" },
@@ -20,7 +28,27 @@
     { "source": "/api/cms/setup", "destination": "/api/cms/auth?action=setup" },
     { "source": "/rss.xml", "destination": "/api/cms/public?mode=rss" },
     { "source": "/sitemap.xml", "destination": "/api/cms/public?mode=sitemap" },
+    { "source": "/blog/categoria/:slug", "destination": "/" },
     { "source": "/blog/:category/:slug", "destination": "/api/cms/public?mode=article-page&category=:category&slug=:slug" },
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/sobre", "destination": "/" },
+    { "source": "/blog", "destination": "/" },
+    { "source": "/contato", "destination": "/" },
+    { "source": "/privacidade", "destination": "/" },
+    { "source": "/resultado", "destination": "/" },
+    { "source": "/guias", "destination": "/" },
+    { "source": "/competencias", "destination": "/" },
+    { "source": "/ferramentas", "destination": "/" },
+    { "source": "/metodologia", "destination": "/" },
+    { "source": "/radar-docente", "destination": "/" },
+    { "source": "/para-instituicoes", "destination": "/" },
+    { "source": "/ebook", "destination": "/" },
+    { "source": "/ebook/obrigado", "destination": "/" },
+    { "source": "/mentoria", "destination": "/" },
+    { "source": "/radar/:path*", "destination": "/" },
+    { "source": "/certificados/:path*", "destination": "/" },
+    { "source": "/admin/:path*", "destination": "/" },
+    { "source": "/links", "destination": "/" },
+    { "source": "/lp/:path*", "destination": "/" },
+    { "source": "/:path*", "destination": "/api/not-found" }
   ]
 }

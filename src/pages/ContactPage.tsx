@@ -58,14 +58,14 @@ const contactReasons = [
 const contactFaq = [
   {
     question: 'O formulário envia minha mensagem diretamente pelo site?',
-    answer: 'Sim. A mensagem é registrada de forma segura para que a equipe PráxIA possa responder pelo e-mail informado.',
+    answer: 'Sim. A mensagem é registrada de forma segura para que a equipe PraxIA possa responder pelo e-mail informado.',
   },
   {
     question: 'Posso enviar dúvidas sobre meu resultado?',
     answer: 'Sim. Para proteger sua privacidade, evite incluir respostas individuais ou informações pessoais de estudantes. Se necessário, descreva apenas a parte da devolutiva sobre a qual deseja conversar.',
   },
   {
-    question: 'A PráxIA recebe propostas de parceria?',
+    question: 'A PraxIA recebe propostas de parceria?',
     answer: 'Sim. Propostas são bem-vindas quando estão alinhadas ao desenvolvimento docente, à clareza metodológica e ao uso responsável de tecnologia e IA.',
   },
   {
@@ -79,15 +79,15 @@ const contactSchema = {
   '@graph': [
     {
       '@type': 'ContactPage',
-      name: 'Contato PráxIA',
-      description: 'Entre em contato com a PráxIA para dúvidas sobre o Radar Docente, metodologia, formação, pesquisa ou parcerias.',
-      url: 'https://radar-docente-pi.vercel.app/contato',
+      name: 'Contato PraxIA',
+      description: 'Entre em contato com a PraxIA para dúvidas sobre o Radar Docente, metodologia, formação, pesquisa ou parcerias.',
+      url: 'https://www.radarpraxia.com/contato',
       inLanguage: 'pt-BR',
       mainEntity: {
         '@type': 'Organization',
-        name: 'PráxIA',
+        name: 'PraxIA',
         email: contactEmail,
-        url: 'https://radar-docente-pi.vercel.app/',
+        url: 'https://www.radarpraxia.com/',
         contactPoint: {
           '@type': 'ContactPoint',
           email: contactEmail,
@@ -99,8 +99,8 @@ const contactSchema = {
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-        { '@type': 'ListItem', position: 2, name: 'Contato', item: 'https://radar-docente-pi.vercel.app/contato' },
+        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Contato', item: 'https://www.radarpraxia.com/contato' },
       ],
     },
     {
@@ -146,7 +146,7 @@ export function ContactPage() {
     <>
       <Seo
         title="Contato"
-        description="Fale com a PráxIA sobre o Radar Docente, metodologia, pesquisa, formação, privacidade ou propostas de parceria."
+        description="Fale com a PraxIA sobre o Radar Docente, metodologia, pesquisa, formação, privacidade ou propostas de parceria."
         path="/contato"
         jsonLd={contactSchema}
       />
@@ -207,7 +207,7 @@ export function ContactPage() {
             <div data-reveal="left">
               <p className="method-kicker">ESCREVA SUA MENSAGEM</p>
               <h2>Conte o suficiente para situar a conversa.</h2>
-              <p>Sua mensagem será registrada para que a equipe PráxIA possa responder pelo e-mail informado. Compartilhe apenas os dados necessários para contextualizar a conversa.</p>
+              <p>Sua mensagem será registrada para que a equipe PraxIA possa responder pelo e-mail informado. Compartilhe apenas os dados necessários para contextualizar a conversa.</p>
               <div className="contact-compose__tip"><Lightbulb aria-hidden="true" /><span>Para dúvidas sobre resultado, indique a dimensão ou seção do relatório sem compartilhar respostas individuais.</span></div>
             </div>
             <form className="contact-form" onSubmit={handleSubmit}>

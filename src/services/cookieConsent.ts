@@ -8,7 +8,7 @@ const GOOGLE_TAG_SELECTOR = `script[src*="googletagmanager.com/gtag/js?id=${GA_I
 const ANALYTICS_INITIALIZED_ATTRIBUTE = 'data-praxia-analytics-initialized'
 
 function analyticsDebug(message: string, details?: Record<string, unknown>) {
-  if (import.meta.env.DEV) console.info(`[PráxIA analytics] ${message}`, details ?? {})
+  if (import.meta.env.DEV) console.info(`[PraxIA analytics] ${message}`, details ?? {})
 }
 
 export function readCookiePreference(): CookiePreference | null {

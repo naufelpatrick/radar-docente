@@ -84,7 +84,7 @@ export function PlanningAiActivityArticlePage() {
         <h2>Use o roteiro OPAERA</h2>
         <p>Um roteiro simples ajuda a transformar intenção em desenho pedagógico. Escreva o objetivo com verbo observável, explicite o papel da tecnologia e conecte ação, evidência, riscos e avaliação.</p>
         <OpaeraFramework />
-        <section className="article-cta article-cta--intermediate"><h2>Como essas decisões aparecem na sua prática?</h2><p>O Radar Docente ajuda a reconhecer como planejamento, ética, crítica e avaliação se articulam no seu uso da IA.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PráxIA</ButtonLink></section>
+        <section className="article-cta article-cta--intermediate"><h2>Como essas decisões aparecem na sua prática?</h2><p>O Radar Docente ajuda a reconhecer como planejamento, ética, crítica e avaliação se articulam no seu uso da IA.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PraxIA</ButtonLink></section>
       </section>
 
       <section id="exemplo">
@@ -144,7 +144,7 @@ export function PlanningAiActivityArticlePage() {
       </section>
 
       <ArticleShare article={article} />
-      <section className="article-cta"><h2>Ao planejar, você começa pela ferramenta ou pelo que o estudante precisa aprender?</h2><p>O Radar Docente da PráxIA ajuda a identificar como suas decisões de planejamento, ética, crítica e avaliação se articulam no uso da inteligência artificial.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PráxIA</ButtonLink></section>
+      <section className="article-cta"><h2>Ao planejar, você começa pela ferramenta ou pelo que o estudante precisa aprender?</h2><p>O Radar Docente da PraxIA ajuda a identificar como suas decisões de planejamento, ética, crítica e avaliação se articulam no uso da inteligência artificial.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PraxIA</ButtonLink></section>
       <FaqSection items={articleFaq} title="Perguntas frequentes" />
       <section className="article-related"><p className="method-kicker">CONTINUE A LEITURA</p><h2>Conteúdos relacionados</h2><div>
         <Link to="/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem">Da possibilidade tecnológica ao objetivo de aprendizagem <ArrowRight aria-hidden="true" /></Link>

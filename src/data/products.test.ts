@@ -3,7 +3,7 @@ import { calculateScore } from '../services/scoringService'
 import { instrument } from './instrument'
 import { getRecommendedProduct, institutionalProducts, OFFICIAL_EBOOK_NAME, products, teacherProducts } from './products'
 
-describe('ecossistema comercial PráxIA', () => {
+describe('ecossistema comercial PraxIA', () => {
   it('usa o nome oficial do e-book', () => {
     expect(OFFICIAL_EBOOK_NAME).toBe('IA na Prática Docente')
     expect(products.find(({ id }) => id === 'ebook')?.name).toBe(OFFICIAL_EBOOK_NAME)

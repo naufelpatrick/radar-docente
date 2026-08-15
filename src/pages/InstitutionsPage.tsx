@@ -15,10 +15,10 @@ import { useScrollMotion } from '../hooks/useScrollMotion'
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: 'Palestras e workshops PráxIA para instituições',
+  name: 'Palestras e workshops PraxIA para instituições',
   provider: {
     '@type': 'Organization',
-    name: 'PráxIA',
+    name: 'PraxIA',
     url: 'https://radarpraxia.com/',
     member: team.map((member) => ({
       '@type': 'Person',
@@ -37,7 +37,7 @@ export function InstitutionsPage() {
 
   return (
     <>
-      <Seo title="Palestras e Workshops para Professores | PráxIA" description="Palestras e workshops sobre fluência digital, inteligência artificial e prática docente para escolas, faculdades e organizações educacionais." path="/para-instituicoes" jsonLd={schema} />
+      <Seo title="Palestras e Workshops para Professores | PraxIA" description="Palestras e workshops sobre fluência digital, inteligência artificial e prática docente para escolas, faculdades e organizações educacionais." path="/para-instituicoes" jsonLd={schema} />
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
       <InstitutionalHeader currentPage="institutions" />
       <main id="conteudo-principal" className="institutions-page">

@@ -6,7 +6,7 @@ const SENT_COMPLETION_PREFIX = 'praxia:ga4:radar-complete:'
 const CONFIRMED_COMPLETION_KEY = 'praxia:radar:confirmed-completion'
 
 function analyticsDebug(message: string, details?: Record<string, unknown>) {
-  if (import.meta.env.DEV) console.info(`[PráxIA analytics] ${message}`, details ?? {})
+  if (import.meta.env.DEV) console.info(`[PraxIA analytics] ${message}`, details ?? {})
 }
 
 type CompletionParameters = { totalQuestions: number; completionTimeSeconds: number; scoreRange: string }

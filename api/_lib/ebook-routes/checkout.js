@@ -59,7 +59,7 @@ export default async function handler(request, response) {
         items: [{
           externalReference: 'ebook-ia-na-pratica-docente-01',
           name: 'IA na prática docente',
-          description: 'Caderno PráxIA com 12 atividades, 3 sequências didáticas e instrumentos.',
+          description: 'Caderno PraxIA com 12 atividades, 3 sequências didáticas e instrumentos.',
           quantity: 1,
           value: EBOOK_PRICE,
         }],

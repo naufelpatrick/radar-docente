@@ -14,10 +14,10 @@ const guideTracks = [
 const guideSchema = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'CollectionPage', name: 'Guias PráxIA', description: 'Guias práticos para professores sobre fluência digital, inteligência artificial, planejamento, avaliação, ética e autoria.', url: 'https://radar-docente-pi.vercel.app/guias', inLanguage: 'pt-BR' },
+    { '@type': 'CollectionPage', name: 'Guias PraxIA', description: 'Guias práticos para professores sobre fluência digital, inteligência artificial, planejamento, avaliação, ética e autoria.', url: 'https://www.radarpraxia.com/guias', inLanguage: 'pt-BR' },
     { '@type': 'BreadcrumbList', itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-      { '@type': 'ListItem', position: 2, name: 'Guias', item: 'https://radar-docente-pi.vercel.app/guias' },
+      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Guias', item: 'https://www.radarpraxia.com/guias' },
     ] },
   ],
 }

@@ -2,8 +2,7 @@ import { getPublicArticles, getSession } from '../_lib/cms.js'
 import { json, supabase } from '../_lib/ebook.js'
 
 const SITE_URL = process.env.PUBLIC_SITE_URL || 'https://www.radarpraxia.com'
-const staticPaths = ['/', '/metodologia', '/fluencia-digital-para-professores', '/radar-docente', '/sobre', '/blog', '/contato', '/privacidade', '/resultado', '/guias', '/competencias', '/ferramentas']
-const categoryPaths = ['ia-para-professores', 'competencias-docentes', 'fluencia-digital', 'ferramentas', 'planejamento', 'avaliacao', 'etica', 'pesquisa', 'estudos-de-caso']
+const staticPaths = ['/', '/metodologia', '/fluencia-digital-para-professores', '/radar-docente', '/sobre', '/blog', '/contato', '/privacidade', '/resultado', '/guias', '/competencias', '/ferramentas', '/para-instituicoes', '/ebook', '/mentoria']
 const legacyArticlePaths = [
   '/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta',
   '/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem',
@@ -30,7 +29,7 @@ async function rss(response) {
   const [legacyResponse, articles] = await Promise.all([fetch(`${SITE_URL}/feed.xml`, { headers: { accept: 'application/rss+xml' } }), getPublicArticles()])
   const legacy = legacyResponse.ok ? await legacyResponse.text() : ''
   const legacyItems = [...legacy.matchAll(/<item>[\s\S]*?<\/item>/gi)].map((match) => match[0]).join('\n')
-  const body = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:media="http://search.yahoo.com/mrss/">\n  <channel>\n    <title>Blog PráxIA</title>\n    <link>${SITE_URL}/blog</link>\n    <description>Conteúdos para professores sobre inteligência artificial, competências digitais e prática docente.</description>\n    <language>pt-BR</language>\n    <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />\n${cmsRssItems(articles)}\n${legacyItems}\n  </channel>\n</rss>`
+  const body = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:media="http://search.yahoo.com/mrss/">\n  <channel>\n    <title>Blog PraxIA</title>\n    <link>${SITE_URL}/blog</link>\n    <description>Conteúdos para professores sobre inteligência artificial, competências digitais e prática docente.</description>\n    <language>pt-BR</language>\n    <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />\n${cmsRssItems(articles)}\n${legacyItems}\n  </channel>\n</rss>`
   response.status(200).setHeader('content-type', 'application/rss+xml; charset=utf-8').setHeader('cache-control', 'public, s-maxage=60, stale-while-revalidate=300').end(body)
 }
 
@@ -38,6 +37,10 @@ function sitemapEntry(path, lastmod, priority = '0.7') { return `  <url><loc>${S
 
 async function sitemap(response) {
   const articles = await getPublicArticles()
+  const categoryPaths = [...new Set([
+    ...legacyArticlePaths.map((path) => path.split('/')[2]),
+    ...articles.map((article) => article.cms_categories?.slug).filter(Boolean),
+  ])]
   const rows = [...staticPaths.map((path) => sitemapEntry(path, null, path === '/' ? '1.0' : '0.7')), ...categoryPaths.map((slug) => sitemapEntry(`/blog/categoria/${slug}`)), ...legacyArticlePaths.map((path) => sitemapEntry(path, null, '0.8')), ...articles.map((article) => sitemapEntry(new URL(article.canonical_url).pathname, article.updated_at, '0.8'))]
   response.status(200).setHeader('content-type', 'application/xml; charset=utf-8').setHeader('cache-control', 'public, s-maxage=300').end(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join('\n')}\n</urlset>`)
 }
@@ -46,14 +49,14 @@ async function articlePage(request, response) {
   const { category, slug } = request.query || {}
   const articles = await getPublicArticles()
   const article = articles.find((item) => item.slug === slug && item.cms_categories?.slug === category)
-  if (!article) return response.status(404).setHeader('content-type', 'text/html; charset=utf-8').end('<!doctype html><html lang="pt-BR"><title>Artigo não encontrado | PráxIA</title><body><h1>Artigo não encontrado</h1><p><a href="/blog">Voltar ao blog</a></p></body></html>')
+  if (!article) return response.status(404).setHeader('content-type', 'text/html; charset=utf-8').end('<!doctype html><html lang="pt-BR"><title>Artigo não encontrado | PraxIA</title><body><h1>Artigo não encontrado</h1><p><a href="/blog">Voltar ao blog</a></p></body></html>')
   const shellResponse = await fetch(`${SITE_URL}/index.html`, { headers: { accept: 'text/html' } })
   if (!shellResponse.ok) throw new Error('Não foi possível carregar a aplicação')
   const canonical = article.canonical_url
   const author = article.cms_profiles?.display_name || article.author?.display_name
   const faq = Array.isArray(article.faq_json) ? article.faq_json.filter((item) => item.question && item.answer) : []
   const graph = [
-    { '@type': 'BlogPosting', headline: article.title, description: article.meta_description, image: { '@type': 'ImageObject', url: article.cover_image_url, width: 1200, height: 630 }, author: { '@type': 'Person', name: author }, publisher: { '@type': 'Organization', name: 'PráxIA', url: `${SITE_URL}/`, logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.png` } }, datePublished: article.published_at, dateModified: article.updated_at, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical }, articleSection: article.cms_categories?.name, inLanguage: 'pt-BR' },
+    { '@type': 'BlogPosting', headline: article.title, description: article.meta_description, image: { '@type': 'ImageObject', url: article.cover_image_url, width: 1200, height: 630 }, author: { '@type': 'Person', name: author }, publisher: { '@type': 'Organization', name: 'PraxIA', url: `${SITE_URL}/`, logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.png` } }, datePublished: article.published_at, dateModified: article.updated_at, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical }, articleSection: article.cms_categories?.name, inLanguage: 'pt-BR' },
     { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Início', item: `${SITE_URL}/` }, { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog` }, { '@type': 'ListItem', position: 3, name: article.cms_categories?.name, item: `${SITE_URL}/blog/categoria/${category}` }, { '@type': 'ListItem', position: 4, name: article.title, item: canonical }] },
   ]
   if (faq.length) graph.push({ '@type': 'FAQPage', mainEntity: faq.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })) })

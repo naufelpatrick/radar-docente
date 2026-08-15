@@ -18,10 +18,10 @@ const dimensions = [
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'WebPage', name: 'Competências docentes digitais e em IA', url: 'https://radar-docente-pi.vercel.app/competencias', description: 'As seis dimensões de competências observadas pelo Radar Docente PráxIA.', inLanguage: 'pt-BR' },
+    { '@type': 'WebPage', name: 'Competências docentes digitais e em IA', url: 'https://www.radarpraxia.com/competencias', description: 'As seis dimensões de competências observadas pelo Radar Docente PraxIA.', inLanguage: 'pt-BR' },
     { '@type': 'BreadcrumbList', itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-      { '@type': 'ListItem', position: 2, name: 'Competências', item: 'https://radar-docente-pi.vercel.app/competencias' },
+      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Competências', item: 'https://www.radarpraxia.com/competencias' },
     ] },
   ],
 }
@@ -29,15 +29,15 @@ const schema = {
 export function CompetenciesPage() {
   return (
     <>
-      <Seo title="Competências docentes digitais e em IA | PráxIA" description="Conheça as seis dimensões que ajudam professores a observar sua fluência digital e em IA como prática situada, integrada e em desenvolvimento." path="/competencias" jsonLd={schema} />
+      <Seo title="Competências docentes digitais e em IA | PraxIA" description="Conheça as seis dimensões que ajudam professores a observar sua fluência digital e em IA como prática situada, integrada e em desenvolvimento." path="/competencias" jsonLd={schema} />
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
       <InstitutionalHeader />
       <main id="conteudo-principal" className="knowledge-page">
-        <header className="knowledge-hero"><div className="shell"><nav className="breadcrumb" aria-label="Navegação estrutural"><Link to="/">Início</Link><ChevronRight aria-hidden="true" /><span aria-current="page">Competências</span></nav><div className="knowledge-hero__grid"><div><p className="method-kicker">COMPETÊNCIAS DOCENTES</p><h1>Fluência não é acumular ferramentas. É <em>articular decisões.</em></h1><p>As seis dimensões da PráxIA ajudam a observar como intenção pedagógica, mediação, avaliação, criação, IA e ética aparecem juntas na prática.</p></div><div className="knowledge-orbit" aria-hidden="true"><Hexagon /><strong>6</strong><span>dimensões conectadas</span><i /><i /><i /></div></div></div></header>
+        <header className="knowledge-hero"><div className="shell"><nav className="breadcrumb" aria-label="Navegação estrutural"><Link to="/">Início</Link><ChevronRight aria-hidden="true" /><span aria-current="page">Competências</span></nav><div className="knowledge-hero__grid"><div><p className="method-kicker">COMPETÊNCIAS DOCENTES</p><h1>Fluência não é acumular ferramentas. É <em>articular decisões.</em></h1><p>As seis dimensões da PraxIA ajudam a observar como intenção pedagógica, mediação, avaliação, criação, IA e ética aparecem juntas na prática.</p></div><div className="knowledge-orbit" aria-hidden="true"><Hexagon /><strong>6</strong><span>dimensões conectadas</span><i /><i /><i /></div></div></div></header>
 
         <section className="knowledge-intro"><div className="shell method-heading"><div><p className="method-kicker">UMA LEITURA INTEGRADA</p><h2>Competência aparece quando conhecimento se transforma em ação situada.</h2></div><p>Por isso, o Radar não pergunta apenas se o professor conhece um recurso. Ele procura indícios de intenção, escolha, acompanhamento, revisão e responsabilidade em contextos reais.</p></div></section>
 
-        <section className="knowledge-dimensions"><div className="shell"><div className="method-heading"><div><p className="method-kicker">AS SEIS DIMENSÕES</p><h2>Campos distintos, trajetórias que se encontram.</h2></div><p>Cada dimensão explica uma parte do Score PráxIA. Nenhuma, isoladamente, resume a prática docente.</p></div><div className="knowledge-dimensions__grid">{dimensions.map(([title, text], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p><Link to="/metodologia">Ver na metodologia <ArrowRight aria-hidden="true" /></Link></article>)}</div></div></section>
+        <section className="knowledge-dimensions"><div className="shell"><div className="method-heading"><div><p className="method-kicker">AS SEIS DIMENSÕES</p><h2>Campos distintos, trajetórias que se encontram.</h2></div><p>Cada dimensão explica uma parte do Score PraxIA. Nenhuma, isoladamente, resume a prática docente.</p></div><div className="knowledge-dimensions__grid">{dimensions.map(([title, text], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p><Link to="/metodologia">Ver na metodologia <ArrowRight aria-hidden="true" /></Link></article>)}</div></div></section>
 
         <section className="knowledge-observation"><div className="shell"><div><p className="method-kicker">COMO OBSERVAR</p><h2>Da intenção à evidência, sem transformar desenvolvimento em julgamento.</h2></div><Timeline ariaLabel="Trajetória de observação de uma competência" items={[
           { label: 'Intenção', title: 'O que se pretende favorecer?', text: 'A decisão começa no objetivo de aprendizagem e nas condições da turma.' },

@@ -213,7 +213,7 @@ export function DistributionAdminPage() {
         <div className="shell">
           <BrandMark />
           <div>
-            <p className="eyebrow"><span />Agente PráxIA</p>
+            <p className="eyebrow"><span />Agente PraxIA</p>
             <h1>Distribuição de conteúdo</h1>
             <p>Revise, aprove e publique artigos no Instagram, Facebook e LinkedIn.</p>
           </div>
