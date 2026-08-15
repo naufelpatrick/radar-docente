@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { getPublishedBlogArticles } from '../src/data/blogArticles.ts'
+import { team } from '../src/data/team.ts'
 
 const distDirectory = path.resolve('dist')
 const baseHtml = await readFile(path.join(distDirectory, 'index.html'), 'utf8')
@@ -28,6 +29,24 @@ const staticPages = [
   ['/mentoria', 'Mentoria para professores | PraxIA', 'Mentoria para transformar fluência digital e IA em prática docente.', 'Mentoria para a prática docente'],
   ['/resultado', 'Resultado demonstrativo do Radar | PraxIA', 'Conheça a estrutura do resultado do Radar Docente.', 'Resultado demonstrativo do Radar Docente'],
   ['/radar', 'Radar Docente | PraxIA', 'Aplicação de autorreflexão do Radar Docente PraxIA.', 'Radar Docente', 'noindex, follow'],
+  ...team.map((member) => {
+    const pathname = `/autores/${member.id}`
+    return [pathname, `${member.name} — autor | PraxIA`, member.shortBio, member.name, 'index, follow', {
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      name: `${member.name} — autor na PraxIA`,
+      url: `https://www.radarpraxia.com${pathname}`,
+      inLanguage: 'pt-BR',
+      mainEntity: {
+        '@type': 'Person',
+        name: member.name,
+        description: member.fullBio,
+        image: `https://www.radarpraxia.com${member.photo.src}`,
+        url: `https://www.radarpraxia.com${pathname}`,
+        sameAs: member.links.map((link) => link.href),
+      },
+    }]
+  }),
 ]
 
 const removableHeadMarkers = [
@@ -52,14 +71,15 @@ function injectFallbackContent(html, heading, description) {
   return html.replace('<div id="root"></div>', `<div id="root">${content}</div>`)
 }
 
-function renderStaticPage(pathname, title, description, heading, robots = 'index, follow') {
+function renderStaticPage(pathname, title, description, heading, robots = 'index, follow', jsonLd) {
   const canonical = `https://www.radarpraxia.com${pathname === '/' ? '/' : pathname}`
   const cleanedHtml = baseHtml.split('\n').filter((line) => !removableHeadMarkers.some((marker) => line.includes(marker))).join('\n')
-  const tags = [`<title>${escapeHtml(title)}</title>`, `<meta name="description" content="${escapeHtml(description)}" />`, `<meta name="robots" content="${robots}" />`, robots.startsWith('index') ? `<link rel="canonical" href="${canonical}" />` : '', `<meta property="og:url" content="${canonical}" />`].filter(Boolean).map((tag) => `    ${tag}`).join('\n')
+  const tags = [`<title>${escapeHtml(title)}</title>`, `<meta name="description" content="${escapeHtml(description)}" />`, `<meta name="robots" content="${robots}" />`, robots.startsWith('index') ? `<link rel="canonical" href="${canonical}" />` : '', `<meta property="og:url" content="${canonical}" />`, jsonLd ? `<script id="page-json-ld" type="application/ld+json">${JSON.stringify(jsonLd).replaceAll('<', '\\u003c')}</script>` : ''].filter(Boolean).map((tag) => `    ${tag}`).join('\n')
   return injectFallbackContent(cleanedHtml.replace('  </head>', `${tags}\n  </head>`), heading, description)
 }
 
 function createBlogPosting(article) {
+  const author = team.find((member) => member.name === article.author)
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -76,7 +96,7 @@ function createBlogPosting(article) {
     author: {
       '@type': 'Person',
       name: article.author,
-      url: 'http://lattes.cnpq.br/0026328778886854',
+      ...(author ? { url: `https://www.radarpraxia.com/autores/${author.id}`, sameAs: author.links.map((link) => link.href) } : {}),
     },
     publisher: {
       '@type': 'Organization',
@@ -173,10 +193,10 @@ function renderDigitalFluencyHtml() {
   return injectFallbackContent(cleanedHtml.replace('  </head>', `${tags}\n  </head>`), 'Fluência digital para professores', digitalFluencyDescription)
 }
 
-for (const [pathname, title, description, heading, robots] of staticPages) {
+for (const [pathname, title, description, heading, robots, jsonLd] of staticPages) {
   const outputPath = pathname === '/' ? path.join(distDirectory, 'index.html') : path.join(distDirectory, `${pathname}.html`)
   await mkdir(path.dirname(outputPath), { recursive: true })
-  await writeFile(outputPath, renderStaticPage(pathname, title, description, heading, robots))
+  await writeFile(outputPath, renderStaticPage(pathname, title, description, heading, robots, jsonLd))
 }
 
 for (const article of getPublishedBlogArticles()) {

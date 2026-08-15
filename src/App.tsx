@@ -101,6 +101,9 @@ const WhatIsDigitalFluencyArticlePage = lazy(() =>
 const NotFoundPage = lazy(() =>
   import('./pages/NotFoundPage').then((module) => ({ default: module.NotFoundPage })),
 )
+const AuthorPage = lazy(() =>
+  import('./pages/AuthorPage').then((module) => ({ default: module.AuthorPage })),
+)
 
 function PrerenderReady() {
   useEffect(() => {
@@ -142,6 +145,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/sobre" element={<AboutPage />} />
+          <Route path="/autores/patrick-naufel" element={<AuthorPage memberId="patrick-naufel" />} />
+          <Route path="/autores/giovani-letti" element={<AuthorPage memberId="giovani-letti" />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/contato" element={<ContactPage />} />
           <Route path="/privacidade" element={<PrivacyPage />} />

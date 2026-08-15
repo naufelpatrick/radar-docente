@@ -1,6 +1,10 @@
 import type { BlogArticle } from '../data/blogArticles'
+import { buildSiteUrl } from '../config/site'
+import { getAuthorPath, getTeamMemberByName } from '../data/team'
 
 export function createBlogPostingSchema(article: BlogArticle) {
+  const author = getTeamMemberByName(article.author)
+  const authorPath = getAuthorPath(article.author)
   return {
     '@type': 'BlogPosting',
     headline: article.title,
@@ -21,7 +25,8 @@ export function createBlogPostingSchema(article: BlogArticle) {
     author: {
       '@type': 'Person',
       name: article.author,
-      url: 'http://lattes.cnpq.br/0026328778886854',
+      ...(authorPath ? { url: buildSiteUrl(authorPath) } : {}),
+      ...(author ? { sameAs: author.links.map((link) => link.href) } : {}),
     },
     publisher: {
       '@type': 'Organization',

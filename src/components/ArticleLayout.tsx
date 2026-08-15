@@ -6,6 +6,7 @@ import { InstitutionalHeader } from './InstitutionalHeader'
 import { ArticleShare } from './ArticleShare'
 import type { BlogArticle } from '../data/blogArticles'
 import { GoogleSwgBasic } from './GoogleSwgBasic'
+import { getAuthorPath } from '../data/team'
 
 type TocItem = { id: string; label: string }
 
@@ -17,6 +18,7 @@ interface ArticleLayoutProps {
 }
 
 export function ArticleLayout({ article, categoryPath, toc, children }: ArticleLayoutProps) {
+  const authorPath = getAuthorPath(article.author)
   return (
     <>
       <GoogleSwgBasic />
@@ -32,7 +34,7 @@ export function ArticleLayout({ article, categoryPath, toc, children }: ArticleL
             <h1>{article.title}</h1>
             <p className="article-hero__description">{article.metaDescription}</p>
             <div className="article-meta">
-              <span><UserRound aria-hidden="true" />{article.author}</span>
+              <span><UserRound aria-hidden="true" />{authorPath ? <Link to={authorPath}>{article.author}</Link> : article.author}</span>
               <span><CalendarDays aria-hidden="true" />{article.displayDate}</span>
               <span><Clock3 aria-hidden="true" />{article.readingTime}</span>
               <ArticleShare article={article} variant="compact" />

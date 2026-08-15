@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { team } from './team'
+import { getAuthorPath, getTeamMember, getTeamMemberByName, team } from './team'
 
 describe('equipe PraxIA', () => {
   it('apresenta Patrick Naufel e Giovani Letti com a mesma estrutura', () => {
@@ -17,5 +17,11 @@ describe('equipe PraxIA', () => {
 
   it('preserva a ordem explícita de exibição', () => {
     expect(team.map(({ displayOrder }) => displayOrder)).toEqual([1, 2])
+  })
+
+  it('resolve autores para páginas internas', () => {
+    expect(getTeamMember('patrick-naufel')?.name).toBe('Patrick Naufel')
+    expect(getTeamMemberByName('Giovani Letti')?.id).toBe('giovani-letti')
+    expect(getAuthorPath('Patrick Naufel')).toBe('/autores/patrick-naufel')
   })
 })
