@@ -1,0 +1,3 @@
+-- Migration previously applied directly to the production project.
+-- This local marker preserves the remote migration history so subsequent
+-- migrations can be applied without altering or replaying production schema.

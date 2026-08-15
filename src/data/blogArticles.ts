@@ -28,6 +28,37 @@ export type BlogArticle = {
 
 const blogArticleEntries: Array<Omit<BlogArticle, 'canonicalUrl'>> = [
   {
+    slug: 'privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas',
+    path: '/blog/etica/privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas',
+    category: 'Ética',
+    categorySlug: 'etica',
+    editorialLabel: 'PRIVACIDADE E PROTEÇÃO',
+    title: 'Privacidade e dados no uso educacional de ferramentas generativas',
+    summary: 'Um protocolo prático para decidir o que pode ser enviado, o que precisa ser anonimizado e quando é melhor não utilizar uma ferramenta generativa.',
+    seoTitle: 'Privacidade e dados no uso de IA na educação | PráxIA',
+    metaDescription: 'Saiba o que avaliar antes de inserir dados de estudantes, atividades e documentos institucionais em ferramentas de inteligência artificial.',
+    readingTime: '10 min de leitura',
+    publishedAt: '2026-08-02T15:00:00-03:00',
+    modifiedAt: '2026-08-02',
+    publishedDate: '2 ago. 2026',
+    displayDate: '2 de agosto de 2026',
+    socialImage: 'https://www.radarpraxia.com/social/privacidade-dados-uso-educacional-ferramentas-generativas-1200x630.jpg',
+    socialImageAlt: 'Professora revisa documentos educacionais enquanto dados identificáveis são bloqueados ou anonimizados antes do uso em uma ferramenta generativa',
+    author: 'Patrick Naufel',
+    status: 'published',
+    coverImage: {
+      src: '/social/privacidade-dados-uso-educacional-ferramentas-generativas-1200x630.webp',
+      alt: 'Professora protege e anonimiza dados educacionais antes de utilizar uma ferramenta generativa',
+    },
+    faq: [
+      { question: 'Posso colar uma atividade de estudante na IA para pedir feedback?', answer: 'Prefira um trecho anonimizado e sem informações que permitam identificar a pessoa. Verifique as regras da instituição e os termos da ferramenta. Para feedback oficial ou decisões avaliativas, mantenha revisão humana.' },
+      { question: 'Apagar o nome torna o texto anônimo?', answer: 'Nem sempre. Turma, escola, idade, situação familiar, diagnóstico ou acontecimentos específicos podem permitir a identificação indireta.' },
+      { question: 'Posso pedir que estudantes criem uma conta em uma ferramenta de IA?', answer: 'Somente depois de verificar idade mínima, termos, privacidade, orientação institucional e alternativas de acesso. A participação não deve depender de fornecer dados desnecessários.' },
+      { question: 'É seguro usar uma conta gratuita?', answer: 'O preço não determina a segurança. Analise política de dados, configurações, armazenamento, treinamento de modelos, idade mínima e controles disponíveis.' },
+      { question: 'Posso enviar uma planilha sem nomes?', answer: 'Talvez, mas é preciso verificar se combinações de informações permitem reconhecer as pessoas. Para a maioria das atividades, uma base fictícia ou agregada é mais prudente.' },
+    ],
+  },
+  {
     slug: 'como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica',
     path: '/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica',
     category: 'Ferramentas',

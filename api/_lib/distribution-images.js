@@ -1,14 +1,24 @@
+import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { Resvg } from '@resvg/resvg-js'
 import sharp from 'sharp'
 
 const FONT_PATH = fileURLToPath(new URL('./Sora-Variable.ttf', import.meta.url))
+const LOGO_PATH = fileURLToPath(new URL('../../src/assets/logo-praxia-negative.svg', import.meta.url))
+const OFFICIAL_LOGO = readFileSync(LOGO_PATH, 'utf8')
+  .replace(/^<svg[^>]*>/, '<svg x="0" y="0" width="500" height="136" viewBox="0 0 500 136">')
 
 const CHANNELS = {
   instagram: { width: 1080, height: 1350, suffix: 'instagram-1080x1350' },
   facebook: { width: 1200, height: 630, suffix: 'facebook-1200x630' },
 }
-export const IMAGE_GENERATION_VERSION = 'v2'
+export const IMAGE_GENERATION_VERSION = 'v3'
+
+function officialLogo(x, y, width) {
+  const height = Math.round(width * 136 / 500)
+  return OFFICIAL_LOGO
+    .replace('x="0" y="0" width="500" height="136"', `x="${x}" y="${y}" width="${width}" height="${height}"`)
+}
 
 function escapeXml(value = '') {
   return value
@@ -59,12 +69,12 @@ export function renderChannelSvg(item, channel) {
       <path d="M760 705a260 260 0 1 1-185 78" fill="none" stroke="#c8f03e" stroke-width="9"/>
       <path d="M742 770a190 190 0 1 1-130 57" fill="none" stroke="#5142e8" stroke-width="34"/>
       <circle cx="770" cy="965" r="20" fill="#22c7d6"/><circle cx="927" cy="1050" r="13" fill="#c8f03e"/>
-      <text x="82" y="110" fill="#f8f9fc" font-family="Sora" font-size="50" font-weight="700">PráxIA</text>
-      <text x="82" y="158" fill="#c8f03e" font-family="Sora" font-size="20" font-weight="700" letter-spacing="2">INTELIGÊNCIA APLICADA À DOCÊNCIA</text>
+      ${officialLogo(82, 58, 300)}
+      <text x="82" y="180" fill="#c8f03e" font-family="Sora" font-size="20" font-weight="700" letter-spacing="2">INTELIGÊNCIA APLICADA À DOCÊNCIA</text>
       <rect x="82" y="240" width="500" height="52" rx="26" fill="#c8f03e"/>
       <text x="110" y="274" fill="#111721" font-family="Sora" font-size="19" font-weight="700">${category}</text>
       ${titleMarkup(lines, 82, 390, 64, 76)}
-      <text x="82" y="1248" fill="#9ba6b7" font-family="Sora" font-size="24">radarpraxia.com  ·  PráxIA</text>
+      <text x="82" y="1248" fill="#9ba6b7" font-family="Sora" font-size="24">radarpraxia.com</text>
     </svg>`
   }
 
@@ -78,10 +88,10 @@ export function renderChannelSvg(item, channel) {
     <circle cx="1010" cy="315" r="150" fill="none" stroke="#5142e8" stroke-width="24"/>
     <path d="M850 385L950 280l90 65 90-135" fill="none" stroke="#c8f03e" stroke-width="8"/>
     <circle cx="950" cy="280" r="12" fill="#22c7d6"/><circle cx="1040" cy="345" r="12" fill="#c8f03e"/>
-    <text x="72" y="76" fill="#f8f9fc" font-family="Sora" font-size="34" font-weight="700">PráxIA</text>
-    <text x="72" y="112" fill="#c8f03e" font-family="Sora" font-size="14" font-weight="700" letter-spacing="1.5">${category}</text>
+    ${officialLogo(72, 30, 230)}
+    <text x="72" y="122" fill="#c8f03e" font-family="Sora" font-size="14" font-weight="700" letter-spacing="1.5">${category}</text>
     ${titleMarkup(lines, 72, 220, 48, 57)}
-    <text x="72" y="565" fill="#9ba6b7" font-family="Sora" font-size="17">radarpraxia.com  ·  PráxIA</text>
+    <text x="72" y="565" fill="#9ba6b7" font-family="Sora" font-size="17">radarpraxia.com</text>
   </svg>`
 }
 

@@ -9,7 +9,8 @@ Para cada novo artigo:
 - criar uma composição visual exclusiva, coerente com o tema do conteúdo e com a identidade PráxIA;
 - tratar educação, prática docente e contexto como protagonistas; a tecnologia deve aparecer como recurso, não como fim;
 - utilizar prioritariamente graphite, indigo, lime e cyan; coral somente como ponto de atenção;
-- incluir na peça o título do artigo, a categoria e a assinatura ou logo correto da PráxIA;
+- incluir na peça o título do artigo e a categoria;
+- não incluir logo, assinatura ou marca nominativa da PráxIA na imagem;
 - garantir legibilidade em miniatura e contraste adequado;
 - não utilizar fotografias genéricas, logos incorretos, marcas de ferramentas ou imagens reutilizadas de outros artigos;
 - gerar a imagem em `1200 × 630 px`;

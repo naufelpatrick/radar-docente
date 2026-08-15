@@ -1,10 +1,13 @@
 import { ArrowRight, BookOpen, ChevronRight, Compass, Sparkles } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { ButtonLink } from '../components/ButtonLink'
 import { Footer } from '../components/Footer'
 import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { Seo } from '../components/Seo'
 import { getPublishedArticlesByCategory } from '../data/blogArticles'
+import { loadPublicArticles } from '../services/cmsApi'
+import type { CmsArticle } from '../types/cms'
 
 const categories = {
   'ia-para-professores': {
@@ -40,6 +43,8 @@ type CategorySlug = keyof typeof categories
 
 export function BlogCategoryPage() {
   const { slug } = useParams()
+  const [cmsArticles, setCmsArticles] = useState<CmsArticle[]>([])
+  useEffect(() => { void loadPublicArticles().then((result) => setCmsArticles(result.articles.filter((article) => article.cms_categories?.slug === slug))).catch(() => undefined) }, [slug])
   if (!slug || !(slug in categories)) return <Navigate to="/blog" replace />
   const category = categories[slug as CategorySlug]
   const articles = getPublishedArticlesByCategory(slug)
@@ -81,8 +86,11 @@ export function BlogCategoryPage() {
         <section className="category-content" aria-labelledby="category-content-title">
           <div className="shell">
             <div className="method-heading"><div><p className="method-kicker">CONTEÚDOS</p><h2 id="category-content-title">Leituras em {category.name}.</h2></div><p>Artigos integrais, com autoria, referências, tempo de leitura e continuidade para a prática.</p></div>
-            {articles.length > 0 ? (
+            {articles.length > 0 || cmsArticles.length > 0 ? (
               <div className="category-articles">
+                {cmsArticles.map((article) => (
+                  <article key={article.id}><div><span>{category.name}</span><small>{article.published_at ? new Date(article.published_at).toLocaleDateString('pt-BR') : ''} · {article.reading_time_minutes} min de leitura</small></div><h3><Link to={new URL(article.canonical_url).pathname}>{article.title}</Link></h3><p>{article.excerpt}</p><Link to={new URL(article.canonical_url).pathname}>Ler artigo <ArrowRight aria-hidden="true" /></Link></article>
+                ))}
                 {articles.map((article) => (
                   <article key={article.path}>
                     <div><span>{category.name}</span><small>{article.publishedDate} · {article.readingTime}</small></div>

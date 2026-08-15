@@ -10,7 +10,6 @@ const feed = generateRssXml(articles)
 await mkdir(distDirectory, { recursive: true })
 await Promise.all([
   writeFile(path.join(distDirectory, 'feed.xml'), feed),
-  writeFile(path.join(distDirectory, 'rss.xml'), feed),
 ])
 
 console.log(`RSS gerado com ${articles.length} artigos publicados.`)

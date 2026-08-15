@@ -128,6 +128,15 @@ publicação já concluída na outra rede. O Make pode responder opcionalmente
 `error`, além dos respectivos campos de erro; sem essa resposta, uma aceitação HTTP 2xx
 marca como publicados apenas os canais solicitados.
 
+## CMS editorial
+
+A área protegida em `/admin` permite criar, revisar, visualizar e publicar
+artigos sem novo deploy. Os artigos históricos continuam no código e os novos
+artigos são armazenados no Supabase; blog, RSS e sitemap leem as duas fontes.
+
+Configuração, criação dos usuários iniciais, testes e operação estão descritos
+em [docs/editorial-cms.md](docs/editorial-cms.md).
+
 Na Vercel, confirme as variáveis server-side `SUPABASE_URL`,
 `SUPABASE_SERVICE_ROLE_KEY`, `DISTRIBUTION_ADMIN_KEY`, `CRON_SECRET`,
 `MAKE_WEBHOOK_URL` e `MAKE_WEBHOOK_API_KEY`. Não use o prefixo `VITE_` para
@@ -138,6 +147,20 @@ segredos.
 As respostas e o andamento ficam somente no `localStorage` do navegador. O MVP não possui autenticação, banco de dados, analytics de respostas ou rastreamento individual. Uma interface de repositório isola a persistência para permitir uma integração futura com Supabase sem acoplar o domínio ao fornecedor.
 
 O consentimento opcional para melhoria anônima apenas registra a preferência local nesta versão; nenhum dado é enviado.
+
+## Certificados de workshops
+
+A rota pública `/certificados/[codigo]` valida credenciais pelo código aleatório e exibe apenas os dados públicos do certificado. Administradores do CMS podem acessar `/admin/certificados` para emitir, listar, baixar o PDF com QR Code e revogar certificados. O PDF aponta para `https://radarpraxia.com/certificados/[codigo]` e a página validada oferece o fluxo de credencial do LinkedIn e a cópia dos dados.
+
+Antes do deploy, aplique `supabase/migrations/20260808190000_create_certificates.sql`. A tabela usa RLS forçada, não possui policy pública de leitura e a função `validar_certificado(text)` é a única consulta disponível para visitantes.
+
+Variáveis de ambiente server-side:
+
+- `SUPABASE_URL`: URL do projeto Supabase;
+- `SUPABASE_SERVICE_ROLE_KEY`: usada apenas pelas funções serverless; nunca adicione o prefixo `VITE_`;
+- `PUBLIC_SITE_URL`: URL canônica opcional, recomendada como `https://radarpraxia.com`.
+
+Fluxo de emissão: entre no CMS com um perfil `admin`, abra **Certificados**, informe o nome completo e a data do workshop e selecione **Emitir e baixar PDF**. A emissão é auditada. Para invalidar uma credencial, use **Revogar certificado** na mesma tela; a revogação também fica no log de auditoria.
 
 ## Referência visual
 

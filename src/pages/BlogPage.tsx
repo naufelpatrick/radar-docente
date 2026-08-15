@@ -15,6 +15,7 @@ import {
   Wrench,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { ButtonLink } from '../components/ButtonLink'
 import { FaqSection } from '../components/FaqSection'
 import { Footer } from '../components/Footer'
@@ -22,6 +23,8 @@ import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { Seo } from '../components/Seo'
 import { getPublishedBlogArticles } from '../data/blogArticles'
 import { useScrollMotion } from '../hooks/useScrollMotion'
+import { loadPublicArticles } from '../services/cmsApi'
+import type { CmsArticle } from '../types/cms'
 
 const categories = [
   {
@@ -76,8 +79,8 @@ const categories = [
 
 const publishedArticles = getPublishedBlogArticles()
 
-function getCategoryStatus(categorySlug: string) {
-  const count = publishedArticles.filter((article) => article.categorySlug === categorySlug).length
+function getCategoryStatus(categorySlug: string, cmsArticles: CmsArticle[]) {
+  const count = publishedArticles.filter((article) => article.categorySlug === categorySlug).length + cmsArticles.filter((article) => article.cms_categories?.slug === categorySlug).length
   if (count === 0) return 'Explorar categoria'
   return `${count} ${count === 1 ? 'artigo publicado' : 'artigos publicados'}`
 }
@@ -133,6 +136,8 @@ const blogSchema = {
 
 export function BlogPage() {
   useScrollMotion()
+  const [cmsArticles, setCmsArticles] = useState<CmsArticle[]>([])
+  useEffect(() => { void loadPublicArticles().then((result) => setCmsArticles(result.articles)).catch(() => undefined) }, [])
 
   return (
     <>
@@ -196,6 +201,11 @@ export function BlogPage() {
               <p>Reflexões, referências e práticas para professores que desejam integrar tecnologia e inteligência artificial à docência com mais consciência pedagógica.</p>
             </div>
             <div className="blog-roadmap__grid">
+              {cmsArticles.map((article, index) => (
+                <Link className="blog-roadmap__card" to={new URL(article.canonical_url).pathname} key={article.id} data-reveal="up" aria-label={`Ler artigo: ${article.title}`}>
+                  <div><span>CONTEÚDO PRÁXIA</span><small>{String(index + 1).padStart(2, '0')}</small></div><h3>{article.title}</h3><p>{article.excerpt}</p><span className="blog-roadmap__link">Ler artigo <ArrowRight aria-hidden="true" /></span><footer><span>{article.cms_categories?.name}</span><span>{article.published_at ? new Date(article.published_at).toLocaleDateString('pt-BR') : ''} · {article.reading_time_minutes} min de leitura</span></footer>
+                </Link>
+              ))}
               {publishedArticles.map((article, index) => (
                 <Link
                   className="blog-roadmap__card"
@@ -230,7 +240,7 @@ export function BlogPage() {
                   <div><Icon aria-hidden="true" /><span>0{index + 1}</span></div>
                   <h3><Link to={`/blog/categoria/${slug}`}>{name}</Link></h3>
                   <p>{description}</p>
-                  <Link className="blog-category-status" to={`/blog/categoria/${slug}`}>{getCategoryStatus(slug)} <ArrowRight aria-hidden="true" /></Link>
+                  <Link className="blog-category-status" to={`/blog/categoria/${slug}`}>{getCategoryStatus(slug, cmsArticles)} <ArrowRight aria-hidden="true" /></Link>
                 </article>
               ))}
             </div>

@@ -120,8 +120,18 @@ describe('content distribution', () => {
       facebook_image_url: 'https://cdn.example.com/facebook.jpg',
     })).toEqual(['instagram'])
     expect(missingImageChannels({
-      instagram_image_url: 'https://project.supabase.co/storage/v1/object/public/distribution-images/article-instagram-1080x1350-v2-123.jpg',
+      instagram_image_url: 'https://project.supabase.co/storage/v1/object/public/distribution-images/article-instagram-1080x1350-v3-123.jpg',
       facebook_image_url: 'https://cdn.example.com/facebook.jpg',
+    })).toEqual([])
+    expect(missingImageChannels({
+      status: 'draft',
+      instagram_image_url: 'https://project.supabase.co/storage/v1/object/public/distribution-images/article-instagram-1080x1350-v2-123.jpg',
+      facebook_image_url: 'https://project.supabase.co/storage/v1/object/public/distribution-images/article-facebook-1200x630-v2-123.jpg',
+    })).toEqual(['instagram', 'facebook'])
+    expect(missingImageChannels({
+      status: 'published',
+      instagram_image_url: 'https://project.supabase.co/storage/v1/object/public/distribution-images/article-instagram-1080x1350-v2-123.jpg',
+      facebook_image_url: 'https://project.supabase.co/storage/v1/object/public/distribution-images/article-facebook-1200x630-v2-123.jpg',
     })).toEqual([])
   })
 

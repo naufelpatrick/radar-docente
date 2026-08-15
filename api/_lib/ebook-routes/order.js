@@ -1,4 +1,4 @@
-import { getOrder, json } from '../_lib/ebook.js'
+import { getOrder, json } from '../ebook.js'
 
 export default async function handler(request, response) {
   if (request.method !== 'GET') return json(response, 405, { error: 'Método não permitido.' })

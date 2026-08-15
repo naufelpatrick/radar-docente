@@ -6,7 +6,7 @@ Auditoria realizada em 28 de julho de 2026. Este documento descreve o código e 
 
 | Fluxo | Dados | Destino | Persistência |
 |---|---|---|---|
-| Radar Docente | perfil docente, 30 respostas, opções da introdução, horário de início, scores e dimensões calculadas | navegador da pessoa | `localStorage`, chave `praxia:radar-session:beta-0.1`, sem expiração automática |
+| Radar Docente | consentimento obrigatório, perfil docente, 30 respostas, autorização agregada opcional no resultado, horário de início, scores e dimensões calculadas | navegador da pessoa | `localStorage`, chave `praxia:radar-session:beta-0.1`, sem expiração automática |
 | Contato | nome, e-mail, assunto, mensagem, origem, data/hora e status | Supabase, `lead_contato` | prazo formal pendente |
 | Mentoria | nome, e-mail, WhatsApp, contexto de atuação, desafio, origem, data/hora e status | Supabase, `lead_mentoria` | prazo formal pendente |
 | Proposta institucional | nome, instituição, função, e-mail, WhatsApp, cidade, estado, modalidade, solução, participantes, período, necessidade, origem, data/hora e status | Supabase, `institutional_leads` | prazo formal pendente |
@@ -23,7 +23,7 @@ Auditoria realizada em 28 de julho de 2026. Este documento descreve o código e 
 - Não foi encontrado envio de respostas, perfil, scores ou dimensões para Supabase, GA4, APIs de IA, e-mail ou qualquer outro backend.
 - O PDF é montado e baixado localmente com jsPDF.
 - O Radar não coleta nome, e-mail ou telefone e não associa o resultado aos leads dos formulários.
-- O texto “dados agregados e anônimos” na introdução descreve uso futuro opcional; nesta versão nenhuma resposta é transmitida.
+- A autorização para uso anônimo e agregado aparece opcionalmente no resultado; nesta versão nenhuma resposta é transmitida.
 
 ## Analytics
 

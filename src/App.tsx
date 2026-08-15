@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ScrollToTop } from './components/ScrollToTop'
 import { CookiePreferences } from './components/CookiePreferences'
@@ -78,6 +78,49 @@ const LinksPage = lazy(() =>
 const ChoosingAiToolArticlePage = lazy(() =>
   import('./pages/articles/ChoosingAiToolArticlePage').then((module) => ({ default: module.ChoosingAiToolArticlePage })),
 )
+const PrivacyAndEducationalDataArticlePage = lazy(() =>
+  import('./pages/articles/PrivacyAndEducationalDataArticlePage').then((module) => ({ default: module.PrivacyAndEducationalDataArticlePage })),
+)
+const CmsLoginPage = lazy(() => import('./pages/cms/CmsLoginPage').then((module) => ({ default: module.CmsLoginPage })))
+const CmsDashboardPage = lazy(() => import('./pages/cms/CmsDashboardPage').then((module) => ({ default: module.CmsDashboardPage })))
+const CmsArticleEditorPage = lazy(() => import('./pages/cms/CmsArticleEditorPage').then((module) => ({ default: module.CmsArticleEditorPage })))
+const CmsSettingsPage = lazy(() => import('./pages/cms/CmsSettingsPage').then((module) => ({ default: module.CmsSettingsPage })))
+const CmsPublicArticlePage = lazy(() => import('./pages/cms/CmsPublicArticlePage').then((module) => ({ default: module.CmsPublicArticlePage })))
+const WorkshopWaitlistPage = lazy(() => import('./pages/WorkshopWaitlistPage').then((module) => ({ default: module.WorkshopWaitlistPage })))
+const WorkshopRegistrationPage = lazy(() => import('./pages/WorkshopRegistrationPage').then((module) => ({ default: module.WorkshopRegistrationPage })))
+const WorkshopConfirmationPage = lazy(() => import('./pages/WorkshopConfirmationPage').then((module) => ({ default: module.WorkshopConfirmationPage })))
+const CertificatePage = lazy(() => import('./pages/CertificatePage').then((module) => ({ default: module.CertificatePage })))
+const CertificatesAdminPage = lazy(() => import('./pages/cms/CertificatesAdminPage').then((module) => ({ default: module.CertificatesAdminPage })))
+
+function PrerenderReady() {
+  useEffect(() => {
+    let frame = 0
+    let cancelled = false
+
+    const signalWhenReady = () => {
+      if (cancelled) return
+      const routeIsLoading = document.querySelector('.route-loading')
+      const pageContent = document.querySelector('main h1, article h1')
+
+      if (!routeIsLoading && pageContent) {
+        frame = window.requestAnimationFrame(() => {
+          document.dispatchEvent(new Event('render-event'))
+        })
+        return
+      }
+
+      frame = window.requestAnimationFrame(signalWhenReady)
+    }
+
+    frame = window.requestAnimationFrame(signalWhenReady)
+    return () => {
+      cancelled = true
+      window.cancelAnimationFrame(frame)
+    }
+  }, [])
+
+  return null
+}
 
 export default function App() {
   return (
@@ -98,6 +141,7 @@ export default function App() {
           <Route path="/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia" element={<TeacherAiCompetenciesArticlePage />} />
           <Route path="/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia" element={<AssessingAiSupportedWorkArticlePage />} />
           <Route path="/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica" element={<ChoosingAiToolArticlePage />} />
+          <Route path="/blog/etica/privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas" element={<PrivacyAndEducationalDataArticlePage />} />
           <Route path="/blog/categoria/:slug" element={<BlogCategoryPage />} />
           <Route path="/guias" element={<GuidesPage />} />
           <Route path="/competencias" element={<CompetenciesPage />} />
@@ -109,11 +153,27 @@ export default function App() {
           <Route path="/ebook" element={<TeacherProductPage productId="ebook" />} />
           <Route path="/ebook/obrigado" element={<EbookOrderPage />} />
           <Route path="/admin/distribuicao" element={<DistributionAdminPage />} />
+          <Route path="/admin/login" element={<CmsLoginPage />} />
+          <Route path="/admin" element={<CmsDashboardPage />} />
+          <Route path="/admin/artigos" element={<CmsDashboardPage />} />
+          <Route path="/admin/artigos/novo" element={<CmsArticleEditorPage />} />
+          <Route path="/admin/artigos/:id" element={<CmsArticleEditorPage />} />
+          <Route path="/admin/artigos/:id/preview" element={<CmsPublicArticlePage preview />} />
+          <Route path="/admin/configuracoes" element={<CmsSettingsPage />} />
+          <Route path="/admin/certificados" element={<CertificatesAdminPage />} />
           <Route path="/links" element={<LinksPage />} />
+          <Route path="/lp/workshop-ia-2026" element={<WorkshopWaitlistPage />} />
+          <Route path="/lp/workshop-ia-2026/inscrito" element={<WorkshopWaitlistPage registered />} />
+          <Route path="/lp/workshop-ia-2026/inscricoes" element={<WorkshopRegistrationPage />} />
+          <Route path="/lp/workshop-ia-2026/inscricoes/confirmacao" element={<WorkshopConfirmationPage />} />
           <Route path="/mentoria" element={<TeacherProductPage productId="mentoring" />} />
           <Route path="/para-instituicoes" element={<InstitutionsPage />} />
           <Route path="/radar/*" element={<RadarFlow />} />
+          <Route path="/certificados" element={<CertificatePage />} />
+          <Route path="/certificados/:codigo" element={<CertificatePage />} />
+          <Route path="/blog/:category/:slug" element={<CmsPublicArticlePage />} />
         </Routes>
+        <PrerenderReady />
       </Suspense>
     </>
   )

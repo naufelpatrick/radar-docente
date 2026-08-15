@@ -11,7 +11,7 @@ import { buildResultNarrative } from '../../services/resultNarrativeService'
 import { calculateScore } from '../../services/scoringService'
 
 export function RadarResultPage() {
-  const { session } = useRadarSession()
+  const { session, setConsent } = useRadarSession()
   const isLocalDemo = import.meta.env.DEV && new URLSearchParams(window.location.search).get('demo') === '1'
   const teachingProfile = session.teachingProfile ?? (isLocalDemo ? 'higher_postgraduate' : null)
   const answers = isLocalDemo
@@ -208,6 +208,20 @@ export function RadarResultPage() {
         <p className="flow-eyebrow">PERGUNTA PARA LEVAR COM VOCÊ</p>
         <blockquote>“{narrative.reflectionQuestion}”</blockquote>
         <span>{getDimensionName(result.recommendationDimension)}</span>
+      </section>
+
+      <section className="result-aggregate-consent" aria-label="Contribuição opcional para o Radar PráxIA">
+        <label>
+          <input
+            type="checkbox"
+            checked={session.consent.anonymousImprovementAccepted}
+            onChange={(event) => setConsent({
+              ...session.consent,
+              anonymousImprovementAccepted: event.target.checked,
+            })}
+          />
+          <span>Autorizo o uso anônimo e agregado das minhas respostas para aperfeiçoar o Radar PráxIA. Essa autorização não identifica você e é opcional.</span>
+        </label>
       </section>
 
       <ResultCommercialOffers bandId={result.band.id} sourcePage="result" />

@@ -1,4 +1,5 @@
 {
+  "framework": "vite",
   "cleanUrls": true,
   "crons": [
     { "path": "/api/cron/distribution", "schedule": "0 12 * * *" }
@@ -12,6 +13,14 @@
     }
   ],
   "rewrites": [
+    { "source": "/api/workshops/:action", "destination": "/api/workshops?action=:action" },
+    { "source": "/api/ebook/:action", "destination": "/api/ebook?action=:action" },
+    { "source": "/api/admin/certificates", "destination": "/api/certificates?scope=admin" },
+    { "source": "/api/certificates/:codigo", "destination": "/api/certificates?codigo=:codigo" },
+    { "source": "/api/cms/setup", "destination": "/api/cms/auth?action=setup" },
+    { "source": "/rss.xml", "destination": "/api/cms/public?mode=rss" },
+    { "source": "/sitemap.xml", "destination": "/api/cms/public?mode=sitemap" },
+    { "source": "/blog/:category/:slug", "destination": "/api/cms/public?mode=article-page&category=:category&slug=:slug" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }

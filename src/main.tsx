@@ -7,10 +7,17 @@ import './styles.css'
 
 initializeAnalyticsFromStoredConsent()
 
-createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root')!
+const application = (
   <StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </StrictMode>,
+  </StrictMode>
 )
+
+// Puppeteer captures the DOM after visual effects have settled. Reusing that
+// mutated tree for hydration would produce mismatches with React's initial
+// render, so the client takes ownership of the root before mounting normally.
+if (rootElement.hasChildNodes()) rootElement.replaceChildren()
+createRoot(rootElement).render(application)

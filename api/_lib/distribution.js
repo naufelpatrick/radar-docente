@@ -163,10 +163,10 @@ export async function syncRss() {
 
 export function missingImageChannels(item) {
   return ['instagram', 'facebook'].filter((channel) => {
+    if (item.status === 'published' || item[`${channel}_status`] === 'published') return false
     const imageUrl = item[`${channel}_image_url`]
     if (!imageUrl) return true
-    return channel === 'instagram'
-      && imageUrl.includes('/distribution-images/')
+    return imageUrl.includes('/distribution-images/')
       && !imageUrl.includes(`-${IMAGE_GENERATION_VERSION}-`)
   })
 }

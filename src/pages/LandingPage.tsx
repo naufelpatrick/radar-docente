@@ -72,14 +72,22 @@ const homeSchema = {
     {
       '@type': 'WebSite',
       name: 'PráxIA',
-      url: 'https://radar-docente-pi.vercel.app/',
+      url: 'https://www.radarpraxia.com/',
       inLanguage: 'pt-BR',
       description: 'Radar de Fluência Digital e IA para professores.',
     },
     {
+      '@type': 'WebApplication',
+      name: 'PráxIA',
+      description: 'Radar gratuito de fluência digital e IA para transformar conhecimento em prática docente.',
+      url: 'https://www.radarpraxia.com/',
+      applicationCategory: 'EducationalApplication',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'BRL' },
+    },
+    {
       '@type': 'Organization',
       name: 'PráxIA',
-      url: 'https://radar-docente-pi.vercel.app/',
+      url: 'https://www.radarpraxia.com/',
       member: team.map((member) => ({
         '@type': 'Person',
         name: member.name,
@@ -89,9 +97,9 @@ const homeSchema = {
     {
       '@type': 'WebPage',
       name: 'PráxIA — Radar de Fluência Digital e IA',
-      url: 'https://radar-docente-pi.vercel.app/',
+      url: 'https://www.radarpraxia.com/',
       inLanguage: 'pt-BR',
-      isPartOf: { '@type': 'WebSite', name: 'PráxIA', url: 'https://radar-docente-pi.vercel.app/' },
+      isPartOf: { '@type': 'WebSite', name: 'PráxIA', url: 'https://www.radarpraxia.com/' },
     },
     {
       '@type': 'FAQPage',
@@ -150,6 +158,18 @@ export function LandingPage() {
             <strong>Ensino Superior</strong>
           </div>
         </div>
+
+        <section className="home-workshop" aria-labelledby="home-workshop-title">
+          <div className="shell home-workshop__inner" data-reveal="up">
+            <div className="home-workshop__signal" aria-hidden="true"><Sparkles /></div>
+            <div className="home-workshop__copy">
+              <p className="eyebrow"><span /> 29/08 - 8h30 <i /> VAGAS LIMITADAS</p>
+              <h2 id="home-workshop-title">Workshop na <em>Prática Docente</em></h2>
+              <p>Um encontro para transformar possibilidades da IA em escolhas pedagógicas mais conscientes, aplicáveis e coerentes com a realidade de quem ensina.</p>
+            </div>
+            <ButtonLink href="/lp/workshop-ia-2026/inscricoes" variant="light" showArrow>Inscreva-se já</ButtonLink>
+          </div>
+        </section>
 
         <section className="section section--benefits" id="o-que-voce-recebe">
           <div className="shell">
