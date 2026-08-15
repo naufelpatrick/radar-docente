@@ -28,6 +28,36 @@ export type BlogArticle = {
 
 const blogArticleEntries: Array<Omit<BlogArticle, 'canonicalUrl'>> = [
   {
+    slug: 'o-que-e-fluencia-digital-para-professores',
+    path: '/blog/fluencia-digital/o-que-e-fluencia-digital-para-professores',
+    category: 'Fluência Digital',
+    categorySlug: 'fluencia-digital',
+    editorialLabel: 'FLUÊNCIA DIGITAL',
+    title: 'O que é fluência digital para professores?',
+    summary: 'Entenda por que fluência digital vai além de dominar ferramentas e como transformar tecnologia em escolhas pedagógicas mais conscientes.',
+    seoTitle: 'O que é fluência digital para professores? | PraxIA',
+    metaDescription: 'Entenda o que é fluência digital docente, por que ela vai além de dominar ferramentas e como transformar tecnologia em escolhas pedagógicas mais conscientes.',
+    readingTime: '8 min de leitura',
+    publishedAt: '2026-08-14T23:15:00-03:00',
+    modifiedAt: '2026-08-14',
+    publishedDate: '14 ago. 2026',
+    displayDate: '14 de agosto de 2026',
+    socialImage: 'https://www.radarpraxia.com/social/fluencia-digital-professores-1200x630.jpg',
+    socialImageAlt: 'Professora planeja uma aula com materiais impressos e notebook sob o título O que é fluência digital para professores?',
+    author: 'Patrick Naufel',
+    status: 'published',
+    coverImage: {
+      src: '/social/fluencia-digital-professores-1200x630.webp',
+      alt: 'Professora analisa materiais de aula e utiliza um notebook como apoio ao planejamento pedagógico',
+    },
+    faq: [
+      { question: 'O que é fluência digital docente?', answer: 'É a capacidade de escolher, utilizar, avaliar e adaptar tecnologias de forma crítica e coerente com objetivos pedagógicos, contexto e necessidades dos estudantes.' },
+      { question: 'Fluência digital é o mesmo que saber usar ferramentas?', answer: 'Não. O domínio técnico é útil, mas a fluência vai além: envolve intencionalidade, curadoria, acessibilidade, ética e capacidade de aprender continuamente.' },
+      { question: 'A inteligência artificial faz parte da fluência digital?', answer: 'Sim. A IA é uma dimensão importante da prática contemporânea, mas precisa ser utilizada com critérios pedagógicos, verificação, atenção a vieses e preservação da autoria.' },
+      { question: 'Por onde um professor pode começar?', answer: 'Por um desafio real da sua prática. Defina o objetivo de aprendizagem, experimente uma alternativa viável e avalie o que mudou.' },
+    ],
+  },
+  {
     slug: 'privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas',
     path: '/blog/etica/privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas',
     category: 'Ética',

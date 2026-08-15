@@ -25,7 +25,7 @@ export function createBlogPostingSchema(article: BlogArticle) {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'PráxIA',
+      name: 'PraxIA',
       url: 'https://www.radarpraxia.com/',
       logo: {
         '@type': 'ImageObject',

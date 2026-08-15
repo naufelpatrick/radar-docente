@@ -3,7 +3,7 @@ import { json, supabase } from '../_lib/ebook.js'
 
 const SITE_URL = process.env.PUBLIC_SITE_URL || 'https://www.radarpraxia.com'
 const staticPaths = ['/', '/metodologia', '/fluencia-digital-para-professores', '/radar-docente', '/sobre', '/blog', '/contato', '/privacidade', '/resultado', '/guias', '/competencias', '/ferramentas']
-const categoryPaths = ['ia-para-professores', 'competencias-docentes', 'ferramentas', 'planejamento', 'avaliacao', 'etica', 'pesquisa', 'estudos-de-caso']
+const categoryPaths = ['ia-para-professores', 'competencias-docentes', 'fluencia-digital', 'ferramentas', 'planejamento', 'avaliacao', 'etica', 'pesquisa', 'estudos-de-caso']
 const legacyArticlePaths = [
   '/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta',
   '/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem',
@@ -12,6 +12,7 @@ const legacyArticlePaths = [
   '/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia',
   '/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica',
   '/blog/etica/privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas',
+  '/blog/fluencia-digital/o-que-e-fluencia-digital-para-professores',
 ]
 
 function escapeXml(value = '') { return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&apos;') }

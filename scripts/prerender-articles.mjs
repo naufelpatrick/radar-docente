@@ -47,7 +47,7 @@ function createBlogPosting(article) {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'PráxIA',
+      name: 'PraxIA',
       url: 'https://www.radarpraxia.com/',
     },
     mainEntityOfPage: {
@@ -84,7 +84,7 @@ function renderArticleHtml(article) {
     `<meta name="description" content="${escapeHtml(article.metaDescription)}" />`,
     `<link rel="canonical" href="${escapeHtml(article.canonicalUrl)}" />`,
     '<meta property="og:type" content="article" />',
-    '<meta property="og:site_name" content="PráxIA" />',
+    '<meta property="og:site_name" content="PraxIA" />',
     `<meta property="og:title" content="${escapeHtml(article.title)}" />`,
     `<meta property="og:description" content="${escapeHtml(article.metaDescription)}" />`,
     `<meta property="og:url" content="${escapeHtml(article.canonicalUrl)}" />`,

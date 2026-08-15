@@ -95,6 +95,9 @@ const CertificatesAdminPage = lazy(() => import('./pages/cms/CertificatesAdminPa
 const PlanningAiActivityArticlePage = lazy(() =>
   import('./pages/articles/PlanningAiActivityArticlePage').then((module) => ({ default: module.PlanningAiActivityArticlePage })),
 )
+const WhatIsDigitalFluencyArticlePage = lazy(() =>
+  import('./pages/articles/WhatIsDigitalFluencyArticlePage').then((module) => ({ default: module.WhatIsDigitalFluencyArticlePage })),
+)
 
 function PrerenderReady() {
   useEffect(() => {
@@ -148,6 +151,7 @@ export default function App() {
           <Route path="/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica" element={<ChoosingAiToolArticlePage />} />
           <Route path="/blog/etica/privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas" element={<PrivacyAndEducationalDataArticlePage />} />
           <Route path="/blog/planejamento/como-planejar-uma-atividade-pedagogica-com-inteligencia-artificial" element={<PlanningAiActivityArticlePage />} />
+          <Route path="/blog/fluencia-digital/o-que-e-fluencia-digital-para-professores" element={<WhatIsDigitalFluencyArticlePage />} />
           <Route path="/blog/categoria/:slug" element={<BlogCategoryPage />} />
           <Route path="/guias" element={<GuidesPage />} />
           <Route path="/competencias" element={<CompetenciesPage />} />
