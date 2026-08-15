@@ -1,7 +1,7 @@
 import { getPublicArticles, getSession } from '../_lib/cms.js'
 import { json, supabase } from '../_lib/ebook.js'
 
-const SITE_URL = process.env.PUBLIC_SITE_URL || 'https://www.radarpraxia.com'
+const SITE_URL = 'https://www.radarpraxia.com'
 const staticPaths = ['/', '/metodologia', '/fluencia-digital-para-professores', '/radar-docente', '/sobre', '/blog', '/contato', '/privacidade', '/resultado', '/guias', '/competencias', '/ferramentas', '/para-instituicoes', '/ebook', '/mentoria']
 const legacyArticlePaths = [
   '/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta',

@@ -2,7 +2,7 @@ import { createHash, randomBytes, randomUUID } from 'node:crypto'
 
 export const EBOOK_PRICE = 19.9
 export const EBOOK_FILE = 'ebooks/ia-na-pratica-docente-edicao-01.pdf'
-export const SITE_URL = process.env.PUBLIC_SITE_URL || 'https://www.radarpraxia.com'
+export const SITE_URL = 'https://www.radarpraxia.com'
 
 function required(name) {
   const value = process.env[name]

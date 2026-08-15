@@ -8,7 +8,7 @@ export const SESSION_COOKIE = 'praxia_cms_session'
 export const SESSION_TTL_MS = 8 * 60 * 60 * 1000
 const MAX_LOGIN_ATTEMPTS = 5
 const LOGIN_WINDOW_MS = 15 * 60 * 1000
-const SITE_URL = process.env.PUBLIC_SITE_URL || 'https://www.radarpraxia.com'
+const SITE_URL = 'https://www.radarpraxia.com'
 
 export const DEFAULT_DOC = { type: 'doc', content: [{ type: 'paragraph', content: [] }] }
 
