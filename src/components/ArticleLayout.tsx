@@ -5,6 +5,7 @@ import { Footer } from './Footer'
 import { InstitutionalHeader } from './InstitutionalHeader'
 import { ArticleShare } from './ArticleShare'
 import type { BlogArticle } from '../data/blogArticles'
+import { GoogleSwgBasic } from './GoogleSwgBasic'
 
 type TocItem = { id: string; label: string }
 
@@ -18,6 +19,7 @@ interface ArticleLayoutProps {
 export function ArticleLayout({ article, categoryPath, toc, children }: ArticleLayoutProps) {
   return (
     <>
+      <GoogleSwgBasic />
       <a className="skip-link" href="#conteudo-artigo">Pular para o artigo</a>
       <InstitutionalHeader currentPage="blog" />
       <main className="article-page">
