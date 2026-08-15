@@ -63,7 +63,7 @@ export function BlogCategoryPage() {
 
   return (
     <>
-      <Seo title={`${category.name} | Blog PráxIA`} description={category.description} path={canonicalPath} jsonLd={schema} />
+      <Seo title={`${category.name} — Blog`} description={category.description} path={canonicalPath} jsonLd={schema} />
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
       <InstitutionalHeader currentPage="blog" />
       <main id="conteudo-principal" className="category-page">

@@ -25,7 +25,7 @@ const guideSchema = {
 export function GuidesPage() {
   return (
     <>
-      <Seo title="Guias PráxIA para a prática docente" description="Percursos práticos para planejar, avaliar e utilizar tecnologia e IA com intenção, critérios, autoria e responsabilidade." path="/guias" jsonLd={guideSchema} />
+      <Seo title="Guias para a prática docente" description="Percursos práticos para planejar, avaliar e utilizar tecnologia e IA com intenção, critérios, autoria e responsabilidade." path="/guias" jsonLd={guideSchema} />
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
       <InstitutionalHeader />
       <main id="conteudo-principal" className="guides-page">

@@ -38,7 +38,7 @@ export function RadarResultPage() {
 
   return (
     <main className="result-page">
-      {!isLocalDemo && <RadarCompletionTracker completionId={session.startedAt} />}
+      {!isLocalDemo && <RadarCompletionTracker completionId={session.startedAt} totalQuestions={instrument.length} completionTimeSeconds={result.completionTimeSeconds} scoreRange={result.band.id} />}
       <section className="result-hero">
         <div className="result-hero__copy">
           <PdfExportButton result={result} narrative={narrative} />

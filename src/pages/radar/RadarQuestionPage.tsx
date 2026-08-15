@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { instrument } from '../../data/instrument'
 import { useRadarSession } from '../../context/radarSessionContextValue'
+import { trackRadarQuestion } from '../../services/radarFunnelAnalytics'
 
 export function RadarQuestionPage() {
   const { session, setAnswer } = useRadarSession()
@@ -15,7 +16,8 @@ export function RadarQuestionPage() {
 
   useEffect(() => {
     document.querySelector<HTMLElement>('.question-card h1')?.focus()
-  }, [index])
+    trackRadarQuestion(session.startedAt, index + 1, instrument.length)
+  }, [index, session.startedAt])
 
   if (!session.teachingProfile) {
     return <Navigate to="/radar/perfil" replace />

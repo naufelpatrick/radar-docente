@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ScrollToTop } from './components/ScrollToTop'
 import { CookiePreferences } from './components/CookiePreferences'
+import { WhatsAppFloat } from './components/WhatsAppFloat'
 
 const LandingPage = lazy(() =>
   import('./pages/LandingPage').then((module) => ({ default: module.LandingPage })),
@@ -91,6 +92,9 @@ const WorkshopRegistrationPage = lazy(() => import('./pages/WorkshopRegistration
 const WorkshopConfirmationPage = lazy(() => import('./pages/WorkshopConfirmationPage').then((module) => ({ default: module.WorkshopConfirmationPage })))
 const CertificatePage = lazy(() => import('./pages/CertificatePage').then((module) => ({ default: module.CertificatePage })))
 const CertificatesAdminPage = lazy(() => import('./pages/cms/CertificatesAdminPage').then((module) => ({ default: module.CertificatesAdminPage })))
+const PlanningAiActivityArticlePage = lazy(() =>
+  import('./pages/articles/PlanningAiActivityArticlePage').then((module) => ({ default: module.PlanningAiActivityArticlePage })),
+)
 
 function PrerenderReady() {
   useEffect(() => {
@@ -127,6 +131,7 @@ export default function App() {
     <>
       <ScrollToTop />
       <CookiePreferences />
+      <WhatsAppFloat />
       <Suspense fallback={<div className="route-loading" role="status">Carregando conteúdo…</div>}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -142,6 +147,7 @@ export default function App() {
           <Route path="/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia" element={<AssessingAiSupportedWorkArticlePage />} />
           <Route path="/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica" element={<ChoosingAiToolArticlePage />} />
           <Route path="/blog/etica/privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas" element={<PrivacyAndEducationalDataArticlePage />} />
+          <Route path="/blog/planejamento/como-planejar-uma-atividade-pedagogica-com-inteligencia-artificial" element={<PlanningAiActivityArticlePage />} />
           <Route path="/blog/categoria/:slug" element={<BlogCategoryPage />} />
           <Route path="/guias" element={<GuidesPage />} />
           <Route path="/competencias" element={<CompetenciesPage />} />

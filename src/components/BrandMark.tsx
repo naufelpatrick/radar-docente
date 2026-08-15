@@ -12,8 +12,8 @@ export function BrandMark({ compact = false, inverse = false }: BrandMarkProps) 
       className={`brand-mark ${compact ? 'brand-mark--compact' : ''}`}
       src={inverse ? logoNegative : logoPositive}
       alt="PráxIA"
-      width={inverse ? 500 : 408}
-      height="136"
+      width="384"
+      height="102"
     />
   )
 }

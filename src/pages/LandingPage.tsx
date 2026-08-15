@@ -72,22 +72,14 @@ const homeSchema = {
     {
       '@type': 'WebSite',
       name: 'PráxIA',
-      url: 'https://www.radarpraxia.com/',
+      url: 'https://radar-docente-pi.vercel.app/',
       inLanguage: 'pt-BR',
       description: 'Radar de Fluência Digital e IA para professores.',
     },
     {
-      '@type': 'WebApplication',
-      name: 'PráxIA',
-      description: 'Radar gratuito de fluência digital e IA para transformar conhecimento em prática docente.',
-      url: 'https://www.radarpraxia.com/',
-      applicationCategory: 'EducationalApplication',
-      offers: { '@type': 'Offer', price: '0', priceCurrency: 'BRL' },
-    },
-    {
       '@type': 'Organization',
       name: 'PráxIA',
-      url: 'https://www.radarpraxia.com/',
+      url: 'https://radar-docente-pi.vercel.app/',
       member: team.map((member) => ({
         '@type': 'Person',
         name: member.name,
@@ -97,9 +89,9 @@ const homeSchema = {
     {
       '@type': 'WebPage',
       name: 'PráxIA — Radar de Fluência Digital e IA',
-      url: 'https://www.radarpraxia.com/',
+      url: 'https://radar-docente-pi.vercel.app/',
       inLanguage: 'pt-BR',
-      isPartOf: { '@type': 'WebSite', name: 'PráxIA', url: 'https://www.radarpraxia.com/' },
+      isPartOf: { '@type': 'WebSite', name: 'PráxIA', url: 'https://radar-docente-pi.vercel.app/' },
     },
     {
       '@type': 'FAQPage',
@@ -118,7 +110,7 @@ export function LandingPage() {
   return (
     <>
       <Seo
-        title="PráxIA: Radar de Fluência Digital e IA para professores"
+        title="Radar de Fluência Digital e IA para professores"
         description="Reconheça como tecnologia e IA aparecem na sua prática docente. Receba um score explicado, radar de seis dimensões e próximo passo gratuito."
         path="/"
         jsonLd={homeSchema}
@@ -163,11 +155,11 @@ export function LandingPage() {
           <div className="shell home-workshop__inner" data-reveal="up">
             <div className="home-workshop__signal" aria-hidden="true"><Sparkles /></div>
             <div className="home-workshop__copy">
-              <p className="eyebrow"><span /> 29/08 - 8h30 <i /> VAGAS LIMITADAS</p>
-              <h2 id="home-workshop-title">Workshop na <em>Prática Docente</em></h2>
+              <p className="eyebrow"><span /> EM BREVE · LISTA DE ESPERA</p>
+              <h2 id="home-workshop-title">Workshop: <em>IA na prática docente</em></h2>
               <p>Um encontro para transformar possibilidades da IA em escolhas pedagógicas mais conscientes, aplicáveis e coerentes com a realidade de quem ensina.</p>
             </div>
-            <ButtonLink href="/lp/workshop-ia-2026/inscricoes" variant="light" showArrow>Inscreva-se já</ButtonLink>
+            <ButtonLink href="/lp/workshop-ia-2026" variant="light" showArrow>Conhecer o workshop</ButtonLink>
           </div>
         </section>
 

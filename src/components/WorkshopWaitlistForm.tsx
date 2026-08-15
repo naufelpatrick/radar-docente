@@ -82,7 +82,7 @@ export function WorkshopWaitlistForm({ compact = false, submitLabel = 'Entrar na
       </div>
       <label htmlFor={`${id}-etapa`}>Você é professor(a) de qual etapa? <b aria-hidden="true">*</b>
         <select id={`${id}-etapa`} name="etapa_ensino" value={lead.etapaEnsino} onChange={(e) => update('etapaEnsino', e.target.value as WorkshopWaitlistLead['etapaEnsino'])} aria-invalid={!!errors.etapaEnsino} aria-describedby={errors.etapaEnsino ? `${id}-etapaEnsino-error` : undefined}>
-          <option value="">Selecione uma opção</option><option value="fundamental">Ensino Fundamental</option><option value="medio">Ensino Médio</option><option value="superior">Ensino Superior</option><option value="tecnico">Ensino Técnico</option><option value="outro">Outro</option>
+          <option value="">Selecione uma opção</option><option value="fundamental">Ensino Fundamental</option><option value="medio">Ensino Médio</option><option value="superior_graduacao">Ensino Superior — Graduação</option><option value="superior_pos_graduacao">Ensino Superior — Pós-Graduação</option><option value="tecnico">Ensino Técnico</option><option value="outro">Outro</option>
         </select>
         {fieldError('etapaEnsino')}
       </label>
@@ -90,7 +90,7 @@ export function WorkshopWaitlistForm({ compact = false, submitLabel = 'Entrar na
         <textarea id={`${id}-duvida`} name="duvida_principal" rows={4} value={lead.duvidaPrincipal} onChange={(e) => update('duvidaPrincipal', e.target.value)} placeholder="Sua resposta também nos ajuda a definir o conteúdo do workshop." maxLength={2000} />
       </label>}
       <fieldset>
-        <legend>Você toparia pagar um valor simbólico (R$ 20–30) para participar? <b aria-hidden="true">*</b></legend>
+        <legend>Você toparia pagar um valor simbólico (R$ 45–55) para participar? <b aria-hidden="true">*</b></legend>
         <div className="workshop-form__radios">
           {([['sim', 'Sim'], ['nao', 'Não'], ['depende', 'Depende do conteúdo']] as const).map(([value, label]) => <label key={value}><input type="radio" name={`${id}-topa-pagar`} value={value} checked={lead.topaPagar === value} onChange={() => update('topaPagar', value)} /> <span>{label}</span></label>)}
         </div>
