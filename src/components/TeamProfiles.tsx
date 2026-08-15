@@ -1,5 +1,6 @@
 import { FileText, Linkedin } from 'lucide-react'
 import { team } from '../data/team'
+import { Link } from 'react-router-dom'
 
 interface TeamProfilesProps {
   compact?: boolean
@@ -17,7 +18,7 @@ export function TeamProfiles({ compact = false, showPhotos = false }: TeamProfil
               : <><span>{member.initials}</span><i /><i /></>}
           </div>
           <div className="team-profile__content">
-            <h3>{member.name}</h3>
+            <h3><Link to={`/autores/${member.id}`}>{member.name}</Link></h3>
             <p>{compact ? member.shortBio : member.fullBio}</p>
             {!compact && (
               <div className="team-profile__links">

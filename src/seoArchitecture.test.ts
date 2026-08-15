@@ -3,6 +3,7 @@ import { spawnSync } from 'node:child_process'
 import { describe, expect, it } from 'vitest'
 import { SITE_URL, buildSiteUrl } from './config/site'
 import { getPublishedBlogArticles } from './data/blogArticles'
+import { createBlogPostingSchema } from './services/articleSeo'
 
 describe('arquitetura de SEO', () => {
   it('usa somente a origem canônica oficial', () => {
@@ -32,5 +33,18 @@ describe('arquitetura de SEO', () => {
     for (const file of ['../api/cms/public.js', '../api/_lib/cms.js', '../api/_lib/ebook.js']) {
       expect(readFileSync(new URL(file, import.meta.url), 'utf8')).not.toContain('PUBLIC_SITE_URL')
     }
+  })
+
+  it('liga artigos a páginas internas de autor', () => {
+    const schema = createBlogPostingSchema(getPublishedBlogArticles()[0])
+    expect(schema.author.url).toBe('https://www.radarpraxia.com/autores/patrick-naufel')
+    expect(schema.author.sameAs).toContain('https://www.linkedin.com/in/patricknaufel')
+  })
+
+  it('renderiza o conteúdo do CMS no HTML inicial', () => {
+    const cmsPublic = readFileSync(new URL('../api/cms/public.js', import.meta.url), 'utf8')
+    expect(cmsPublic).toContain('renderCmsArticleContent(article, author)')
+    expect(cmsPublic).toContain('article.content_html')
+    expect(cmsPublic).toContain('data-prerendered-content')
   })
 })

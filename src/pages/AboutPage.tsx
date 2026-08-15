@@ -70,6 +70,7 @@ const aboutSchema = {
         member: team.map((member) => ({
           '@type': 'Person',
           name: member.name,
+          url: `https://www.radarpraxia.com/autores/${member.id}`,
           sameAs: member.links.map((link) => link.href),
         })),
       },

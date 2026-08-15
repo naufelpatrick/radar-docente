@@ -42,3 +42,16 @@ export const team: TeamMember[] = [
     displayOrder: 2,
   },
 ]
+
+export function getTeamMember(id: string) {
+  return team.find((member) => member.id === id)
+}
+
+export function getTeamMemberByName(name: string) {
+  return team.find((member) => member.name === name)
+}
+
+export function getAuthorPath(name: string) {
+  const member = getTeamMemberByName(name)
+  return member ? `/autores/${member.id}` : undefined
+}

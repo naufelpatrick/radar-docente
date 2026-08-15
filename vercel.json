@@ -31,6 +31,8 @@
     { "source": "/blog/categoria/:slug", "destination": "/" },
     { "source": "/blog/:category/:slug", "destination": "/api/cms/public?mode=article-page&category=:category&slug=:slug" },
     { "source": "/sobre", "destination": "/" },
+    { "source": "/autores/patrick-naufel", "destination": "/" },
+    { "source": "/autores/giovani-letti", "destination": "/" },
     { "source": "/blog", "destination": "/" },
     { "source": "/contato", "destination": "/" },
     { "source": "/privacidade", "destination": "/" },

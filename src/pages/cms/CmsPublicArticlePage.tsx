@@ -11,6 +11,8 @@ import { loadPreviewArticle, loadPublicArticle, loadPublicArticles } from '../..
 import { cmsHeadings } from '../../services/cmsContent'
 import type { CmsArticle } from '../../types/cms'
 import { getPublishedBlogArticles } from '../../data/blogArticles'
+import { buildSiteUrl } from '../../config/site'
+import { getAuthorPath, getTeamMemberByName } from '../../data/team'
 
 function articleView(article: CmsArticle): BlogArticle {
   const date = article.published_at ? new Date(article.published_at) : new Date(article.updated_at)
@@ -41,7 +43,9 @@ export function CmsPublicArticlePage({ preview = false }: { preview?: boolean })
   if (!article) return <main className="cms-loading">Carregando artigo…</main>
   const view = articleView(article)
   const faq = article.faq_json?.filter((item) => item.question && item.answer) || []
-  const graph: Record<string, unknown>[] = [{ '@type': 'BlogPosting', headline: article.title, description: article.meta_description, image: article.cover_image_url, author: { '@type': 'Person', name: view.author }, publisher: { '@type': 'Organization', name: 'PraxIA', url: 'https://www.radarpraxia.com/', logo: { '@type': 'ImageObject', url: 'https://www.radarpraxia.com/favicon.png' } }, datePublished: article.published_at, dateModified: article.updated_at, mainEntityOfPage: article.canonical_url }, { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Blog', item: 'https://www.radarpraxia.com/blog' }, { '@type': 'ListItem', position: 2, name: view.category, item: `https://www.radarpraxia.com/blog/categoria/${view.categorySlug}` }, { '@type': 'ListItem', position: 3, name: view.title, item: view.canonicalUrl }] }]
+  const teamAuthor = getTeamMemberByName(view.author)
+  const authorPath = getAuthorPath(view.author)
+  const graph: Record<string, unknown>[] = [{ '@type': 'BlogPosting', headline: article.title, description: article.meta_description, image: article.cover_image_url, author: { '@type': 'Person', name: view.author, ...(authorPath ? { url: buildSiteUrl(authorPath) } : {}), ...(teamAuthor ? { sameAs: teamAuthor.links.map((link) => link.href) } : {}) }, publisher: { '@type': 'Organization', name: 'PraxIA', url: 'https://www.radarpraxia.com/', logo: { '@type': 'ImageObject', url: 'https://www.radarpraxia.com/favicon.png' } }, datePublished: article.published_at, dateModified: article.updated_at, mainEntityOfPage: article.canonical_url }, { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Blog', item: 'https://www.radarpraxia.com/blog' }, { '@type': 'ListItem', position: 2, name: view.category, item: `https://www.radarpraxia.com/blog/categoria/${view.categorySlug}` }, { '@type': 'ListItem', position: 3, name: view.title, item: view.canonicalUrl }] }]
   if (faq.length) graph.push({ '@type': 'FAQPage', mainEntity: faq.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })) })
   return <>
     <Seo title={preview ? `Prévia: ${view.title} | PraxIA` : view.seoTitle} description={view.metaDescription} path={view.path} type="article" image={view.socialImage} imageAlt={view.socialImageAlt} robots={preview ? 'noindex, nofollow' : 'index, follow'} jsonLd={{ '@context': 'https://schema.org', '@graph': graph }} />
