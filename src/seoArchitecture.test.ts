@@ -27,4 +27,10 @@ describe('arquitetura de SEO', () => {
     expect(config).toContain('radar-docente-pi.vercel.app')
     expect(config).toContain('/api/not-found')
   })
+
+  it('não permite que variáveis de preview alterem URLs públicas', () => {
+    for (const file of ['../api/cms/public.js', '../api/_lib/cms.js', '../api/_lib/ebook.js']) {
+      expect(readFileSync(new URL(file, import.meta.url), 'utf8')).not.toContain('PUBLIC_SITE_URL')
+    }
+  })
 })
