@@ -8,6 +8,10 @@ const digitalFluencyPath = '/fluencia-digital-para-professores'
 const digitalFluencyUrl = `https://www.radarpraxia.com${digitalFluencyPath}`
 const digitalFluencyTitle = 'Fluência digital para professores: descubra seu nível | PraxIA'
 const digitalFluencyDescription = 'Entenda o que é fluência digital para professores, conheça suas dimensões e faça gratuitamente o Radar PraxIA para orientar seu desenvolvimento.'
+const googleSwgTags = [
+  '<script async type="application/javascript" src="https://news.google.com/swg/js/v1/swg-basic.js"></script>',
+  '<script>self.__praxiaSwgBasicInitialized=true;(self.SWG_BASIC=self.SWG_BASIC||[]).push(basicSubscriptions=>{basicSubscriptions.init({type:"NewsArticle",isPartOfType:["Product"],isPartOfProductId:"CAowyK7hCw:openaccess",clientOptions:{theme:"light",lang:"pt-BR"}});});</script>',
+]
 
 const staticPages = [
   ['/', 'Radar de Fluência Digital e IA | PraxIA', 'Descubra forças, pontos de atenção e um próximo passo possível para sua prática docente.', 'Transforme fluência digital e inteligência artificial em prática docente.'],
@@ -129,6 +133,7 @@ function renderArticleHtml(article) {
     `<meta name="twitter:image" content="${escapeHtml(article.socialImage)}" />`,
     `<meta name="twitter:image:alt" content="${escapeHtml(article.socialImageAlt)}" />`,
     `<script id="page-json-ld" type="application/ld+json">${JSON.stringify(createStructuredData(article)).replaceAll('<', '\\u003c')}</script>`,
+    ...googleSwgTags,
   ].map((tag) => `    ${tag}`).join('\n')
 
   return injectFallbackContent(cleanedHtml.replace('  </head>', `${tags}\n  </head>`), article.title, article.summary)
