@@ -9,6 +9,8 @@ describe('fonte editorial do blog', () => {
     expect(articles.length).toBeGreaterThan(0)
     expect(articles.every((article) => article.status === 'published')).toBe(true)
     expect(articles.every((article) => article.publishedAt && !Number.isNaN(Date.parse(article.publishedAt)))).toBe(true)
+    expect(articles.every((article) => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/.test(article.publishedAt!))).toBe(true)
+    expect(articles.every((article) => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}-03:00$/.test(article.modifiedAt))).toBe(true)
   })
 
   it('ordena artigos da publicação mais recente para a mais antiga', () => {
