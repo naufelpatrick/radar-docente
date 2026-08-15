@@ -98,6 +98,9 @@ const PlanningAiActivityArticlePage = lazy(() =>
 const WhatIsDigitalFluencyArticlePage = lazy(() =>
   import('./pages/articles/WhatIsDigitalFluencyArticlePage').then((module) => ({ default: module.WhatIsDigitalFluencyArticlePage })),
 )
+const NotFoundPage = lazy(() =>
+  import('./pages/NotFoundPage').then((module) => ({ default: module.NotFoundPage })),
+)
 
 function PrerenderReady() {
   useEffect(() => {
@@ -182,6 +185,7 @@ export default function App() {
           <Route path="/certificados" element={<CertificatePage />} />
           <Route path="/certificados/:codigo" element={<CertificatePage />} />
           <Route path="/blog/:category/:slug" element={<CmsPublicArticlePage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <PrerenderReady />
       </Suspense>

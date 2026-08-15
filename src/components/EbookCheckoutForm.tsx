@@ -80,7 +80,7 @@ export function EbookCheckoutForm() {
       <input id="ebook-phone" name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="(00) 00000-0000" required />
       <label className="form-consent" htmlFor="ebook-messaging-consent">
         <input id="ebook-messaging-consent" name="messagingConsent" type="checkbox" required />
-        <span>Concordo em receber mensagens da PráxIA por e-mail e telefone/WhatsApp sobre conteúdos, produtos e eventos. Posso cancelar a qualquer momento.</span>
+        <span>Concordo em receber mensagens da PraxIA por e-mail e telefone/WhatsApp sobre conteúdos, produtos e eventos. Posso cancelar a qualquer momento.</span>
       </label>
       <input className="form-honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
       <p className="form-privacy-notice">

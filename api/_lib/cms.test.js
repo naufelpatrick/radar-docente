@@ -31,7 +31,7 @@ describe('núcleo seguro do CMS', () => {
     expect(cookie).toContain('Expires=')
   })
 
-  it('aceita mutações nos domínios públicos da PráxIA e recusa origens externas', () => {
+  it('aceita mutações nos domínios públicos da PraxIA e recusa origens externas', () => {
     expect(validateMutationOrigin({ headers: { origin: 'https://www.radarpraxia.com' } })).toBe(true)
     expect(validateMutationOrigin({ headers: { origin: 'https://radarpraxia.com' } })).toBe(true)
     expect(validateMutationOrigin({ headers: { origin: 'https://site-malicioso.example' } })).toBe(false)
@@ -74,7 +74,7 @@ describe('núcleo seguro do CMS', () => {
   it('prepara SEO, categoria e FAQ sem publicar', () => {
     const result = prepareArticle({ title: 'Privacidade e dados na escola', content_text: 'Este artigo explica como proteger dados de estudantes em ferramentas digitais.\nQuais dados posso enviar?\nUse apenas informações autorizadas e minimizadas.', categories: [{ id: 'ethics', slug: 'etica' }] })
     expect(result.category_slug).toBe('etica')
-    expect(result.meta_title).toContain('| PráxIA')
+    expect(result.meta_title).toContain('| PraxIA')
     expect(result.faq_json).toHaveLength(1)
     expect(result).not.toHaveProperty('status')
   })

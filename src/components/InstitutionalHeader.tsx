@@ -14,7 +14,7 @@ export function InstitutionalHeader({ currentPage }: InstitutionalHeaderProps) {
   return (
     <header className="institutional-header" ref={rootRef}>
       <div className="shell institutional-header__inner">
-        <Link to="/" className="institutional-header__brand" aria-label="PráxIA, página inicial">
+        <Link to="/" className="institutional-header__brand" aria-label="PraxIA, página inicial">
           <BrandMark inverse />
         </Link>
         <button

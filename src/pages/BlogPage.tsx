@@ -28,6 +28,12 @@ import type { CmsArticle } from '../types/cms'
 
 const categories = [
   {
+    slug: 'fluencia-digital',
+    icon: Sparkles,
+    name: 'Fluência Digital',
+    description: 'Conceitos e práticas para escolher, avaliar e adaptar tecnologias com intencionalidade pedagógica.',
+  },
+  {
     slug: 'ia-para-professores',
     icon: Bot,
     name: 'IA para Professores',
@@ -92,7 +98,7 @@ const blogFaq = [
   },
   {
     question: 'Como as referências serão apresentadas?',
-    answer: 'Artigos baseados em estudos ou documentos indicarão as fontes consultadas e diferenciarão evidência, interpretação e recomendação prática. A PráxIA não apresentará afirmações científicas sem referência verificável.',
+    answer: 'Artigos baseados em estudos ou documentos indicarão as fontes consultadas e diferenciarão evidência, interpretação e recomendação prática. A PraxIA não apresentará afirmações científicas sem referência verificável.',
   },
   {
     question: 'Os textos substituirão formação ou orientação institucional?',
@@ -109,18 +115,18 @@ const blogSchema = {
   '@graph': [
     {
       '@type': 'CollectionPage',
-      name: 'Blog PráxIA',
+      name: 'Blog PraxIA',
       description: 'Conteúdos para professores sobre inteligência artificial, competências digitais, planejamento, avaliação, ferramentas, ética e pesquisa.',
-      url: 'https://radar-docente-pi.vercel.app/blog',
+      url: 'https://www.radarpraxia.com/blog',
       inLanguage: 'pt-BR',
-      isPartOf: { '@type': 'WebSite', name: 'PráxIA', url: 'https://radar-docente-pi.vercel.app/' },
+      isPartOf: { '@type': 'WebSite', name: 'PraxIA', url: 'https://www.radarpraxia.com/' },
       about: categories.map((category) => category.name),
     },
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://radar-docente-pi.vercel.app/blog' },
+        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.radarpraxia.com/blog' },
       ],
     },
     {
@@ -138,6 +144,10 @@ export function BlogPage() {
   useScrollMotion()
   const [cmsArticles, setCmsArticles] = useState<CmsArticle[]>([])
   useEffect(() => { void loadPublicArticles().then((result) => setCmsArticles(result.articles)).catch(() => undefined) }, [])
+  const publishedCategories = categories.filter(({ slug }) =>
+    publishedArticles.some((article) => article.categorySlug === slug)
+    || cmsArticles.some((article) => article.cms_categories?.slug === slug),
+  )
 
   return (
     <>
@@ -189,7 +199,7 @@ export function BlogPage() {
             </div>
             <div data-reveal="right">
               <p className="blog-intro__lead">Entre o entusiasmo e a recusa, professores precisam de espaço para compreender o que muda, o que permanece e quais perguntas precisam ser feitas.</p>
-              <p>Os conteúdos da PráxIA aproximam conceitos, referenciais e situações concretas. O foco não está em prescrever uma ferramenta, mas em apoiar escolhas coerentes com objetivos de aprendizagem, contexto, participação, autoria e segurança.</p>
+              <p>Os conteúdos da PraxIA aproximam conceitos, referenciais e situações concretas. O foco não está em prescrever uma ferramenta, mas em apoiar escolhas coerentes com objetivos de aprendizagem, contexto, participação, autoria e segurança.</p>
             </div>
           </div>
         </section>
@@ -235,7 +245,7 @@ export function BlogPage() {
               <p>A arquitetura está preparada para páginas próprias de categoria e para relações entre artigos, dimensões e próximos passos.</p>
             </div>
             <div className="blog-categories__grid">
-              {categories.map(({ slug, icon: Icon, name, description }, index) => (
+              {publishedCategories.map(({ slug, icon: Icon, name, description }, index) => (
                 <article key={slug} data-reveal="up">
                   <div><Icon aria-hidden="true" /><span>0{index + 1}</span></div>
                   <h3><Link to={`/blog/categoria/${slug}`}>{name}</Link></h3>

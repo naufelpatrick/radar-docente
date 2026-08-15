@@ -31,7 +31,7 @@ export default async function handler(request, response) {
         email,
         phone,
         messaging_consent: true,
-        messaging_consent_text: 'Mensagens da PráxIA por e-mail e telefone/WhatsApp sobre conteúdos, produtos e eventos.',
+        messaging_consent_text: 'Mensagens da PraxIA por e-mail e telefone/WhatsApp sobre conteúdos, produtos e eventos.',
         consented_at: new Date().toISOString(),
         source_page: '/ebook',
       }),

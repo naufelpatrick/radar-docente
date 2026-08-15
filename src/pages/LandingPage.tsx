@@ -58,7 +58,7 @@ const homeFaq = [
   },
   {
     question: 'Quanto tempo leva e o que recebo ao final?',
-    answer: 'A experiência leva aproximadamente oito minutos. Ao final, você recebe o Score PráxIA, um radar com seis dimensões, interpretações contextualizadas e um próximo experimento, além da opção de exportar o relatório completo em PDF.',
+    answer: 'A experiência leva aproximadamente oito minutos. Ao final, você recebe o Score PraxIA, um radar com seis dimensões, interpretações contextualizadas e um próximo experimento, além da opção de exportar o relatório completo em PDF.',
   },
   {
     question: 'Minhas respostas ficam armazenadas?',
@@ -71,15 +71,15 @@ const homeSchema = {
   '@graph': [
     {
       '@type': 'WebSite',
-      name: 'PráxIA',
-      url: 'https://radar-docente-pi.vercel.app/',
+      name: 'PraxIA',
+      url: 'https://www.radarpraxia.com/',
       inLanguage: 'pt-BR',
       description: 'Radar de Fluência Digital e IA para professores.',
     },
     {
       '@type': 'Organization',
-      name: 'PráxIA',
-      url: 'https://radar-docente-pi.vercel.app/',
+      name: 'PraxIA',
+      url: 'https://www.radarpraxia.com/',
       member: team.map((member) => ({
         '@type': 'Person',
         name: member.name,
@@ -88,10 +88,10 @@ const homeSchema = {
     },
     {
       '@type': 'WebPage',
-      name: 'PráxIA — Radar de Fluência Digital e IA',
-      url: 'https://radar-docente-pi.vercel.app/',
+      name: 'PraxIA — Radar de Fluência Digital e IA',
+      url: 'https://www.radarpraxia.com/',
       inLanguage: 'pt-BR',
-      isPartOf: { '@type': 'WebSite', name: 'PráxIA', url: 'https://radar-docente-pi.vercel.app/' },
+      isPartOf: { '@type': 'WebSite', name: 'PraxIA', url: 'https://www.radarpraxia.com/' },
     },
     {
       '@type': 'FAQPage',
@@ -270,10 +270,10 @@ export function LandingPage() {
             <div className="home-team__heading" data-reveal="up">
               <p className="eyebrow eyebrow--dark">QUEM SOMOS</p>
               <h2>Educação, tecnologia e prática docente</h2>
-              <p>A PráxIA é conduzida pelos professores Patrick Naufel e Giovani Letti, reunindo experiências em educação, comunicação, design, tecnologia e inovação.</p>
+              <p>A PraxIA é conduzida pelos professores Patrick Naufel e Giovani Letti, reunindo experiências em educação, comunicação, design, tecnologia e inovação.</p>
             </div>
             <TeamProfiles compact showPhotos />
-            <ButtonLink href="/para-instituicoes#quem-somos" showArrow>Conheça a PráxIA</ButtonLink>
+            <ButtonLink href="/para-instituicoes#quem-somos" showArrow>Conheça a PraxIA</ButtonLink>
           </div>
         </section>
 

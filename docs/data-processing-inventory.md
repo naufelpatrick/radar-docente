@@ -1,4 +1,4 @@
-# Inventário técnico de tratamento de dados — PráxIA
+# Inventário técnico de tratamento de dados — PraxIA
 
 Auditoria realizada em 28 de julho de 2026. Este documento descreve o código e as configurações observáveis no projeto; não substitui avaliação jurídica.
 

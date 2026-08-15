@@ -17,7 +17,7 @@ export function TeacherProductPage({ productId }: TeacherProductPageProps) {
   useScrollMotion()
   const product = getProduct(productId)!
   const isEbook = productId === 'ebook'
-  const title = `${product.name} | PráxIA`
+  const title = `${product.name} | PraxIA`
 
   return (
     <>

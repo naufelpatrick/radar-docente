@@ -47,7 +47,7 @@ export function EbookOrderPage() {
   }
   return (
     <>
-      <Seo title="Acesso ao e-book | PráxIA" description="Confirmação e acesso ao e-book IA na prática docente." path="/ebook/obrigado" />
+      <Seo title="Acesso ao e-book | PraxIA" description="Confirmação e acesso ao e-book IA na prática docente." path="/ebook/obrigado" />
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
       <InstitutionalHeader currentPage="ebook" />
       <main id="conteudo-principal" className="ebook-order-page">
@@ -73,9 +73,9 @@ export function EbookOrderPage() {
               <RefreshCw aria-hidden="true" />Verificar novamente
             </button>
           )}
-          {paid && <small>Após iniciar o download, você voltará à página inicial da PráxIA.</small>}
+          {paid && <small>Após iniciar o download, você voltará à página inicial da PraxIA.</small>}
           {(status === 'invalid' || status === 'failed' || status === 'canceled' || status === 'expired') && (
-            <p className="ebook-order-card__alert">Não foi possível liberar o arquivo. <Link to="/contato">Fale com a PráxIA</Link> informando o e-mail usado na compra.</p>
+            <p className="ebook-order-card__alert">Não foi possível liberar o arquivo. <Link to="/contato">Fale com a PraxIA</Link> informando o e-mail usado na compra.</p>
           )}
         </section>
       </main>

@@ -17,7 +17,7 @@ export function RadarFlowLayout({ children }: { children: ReactNode }) {
   return (
     <div className="radar-flow">
       <header className="radar-flow__header">
-        <Link to="/" aria-label="PráxIA, voltar à página inicial"><BrandMark /></Link>
+        <Link to="/" aria-label="PraxIA, voltar à página inicial"><BrandMark /></Link>
         <button type="button" className="radar-flow__reset" onClick={handleReset}>
           <RotateCcw aria-hidden="true" /> Reiniciar
         </button>

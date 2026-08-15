@@ -1,4 +1,4 @@
-# Identidade visual da PráxIA
+# Identidade visual da PraxIA
 
 ## Conceito
 
@@ -39,8 +39,8 @@ Os tokens estão centralizados em `src/styles.css`.
 - Evitar estética infantil, escolar genérica ou excessivamente tecnológica.
 - Não usar robôs, cérebros eletrônicos, circuitos ou imagens futuristas genéricas.
 - Não usar as cores de alerta para sugerir diagnóstico, aprovação ou reprovação.
-- No Score PráxIA, priorizar indigo, lime e cyan. Reservar coral para pontos de atenção, nunca para comunicar fracasso.
+- No Score PraxIA, priorizar indigo, lime e cyan. Reservar coral para pontos de atenção, nunca para comunicar fracasso.
 
 ## Marca
 
-O wordmark deve ser escrito como **PráxIA**, preservando acento e capitalização. A promessa é “Transforme fluência em prática docente.”
+O wordmark deve ser escrito como **PraxIA**, preservando acento e capitalização. A promessa é “Transforme fluência em prática docente.”

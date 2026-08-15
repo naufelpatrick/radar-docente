@@ -20,7 +20,7 @@ function wrapTitle(title, max = 26) {
 function coverOverlay(article) {
   const lines = wrapTitle(article.title)
   const title = lines.map((line, index) => `<text x="72" y="${220 + index * 58}" fill="#fff" font-family="Arial,sans-serif" font-size="48" font-weight="700">${escapeXml(line)}</text>`).join('')
-  return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><defs><linearGradient id="g"><stop stop-color="#080b11"/><stop offset=".48" stop-color="#080b11" stop-opacity=".94"/><stop offset=".78" stop-color="#080b11" stop-opacity=".08"/></linearGradient></defs><rect width="1200" height="630" fill="url(#g)"/><text x="72" y="72" fill="#fff" font-family="Arial,sans-serif" font-size="34" font-weight="700">PráxIA</text><text x="72" y="107" fill="#c8f03e" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2">INTELIGÊNCIA APLICADA À DOCÊNCIA</text><circle cx="77" cy="156" r="5" fill="#23c8d0"/><text x="93" y="161" fill="#c8f03e" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2">${escapeXml((article.cms_categories?.name || article.category_name || 'PRÁTICA DOCENTE').toUpperCase())}</text>${title}<text x="72" y="558" fill="#8c94a3" font-family="Arial,sans-serif" font-size="13">radarpraxia.com · PráxIA</text></svg>`)
+  return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><defs><linearGradient id="g"><stop stop-color="#080b11"/><stop offset=".48" stop-color="#080b11" stop-opacity=".94"/><stop offset=".78" stop-color="#080b11" stop-opacity=".08"/></linearGradient></defs><rect width="1200" height="630" fill="url(#g)"/><text x="72" y="72" fill="#fff" font-family="Arial,sans-serif" font-size="34" font-weight="700">PraxIA</text><text x="72" y="107" fill="#c8f03e" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2">INTELIGÊNCIA APLICADA À DOCÊNCIA</text><circle cx="77" cy="156" r="5" fill="#23c8d0"/><text x="93" y="161" fill="#c8f03e" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2">${escapeXml((article.cms_categories?.name || article.category_name || 'PRÁTICA DOCENTE').toUpperCase())}</text>${title}<text x="72" y="558" fill="#8c94a3" font-family="Arial,sans-serif" font-size="13">radarpraxia.com · PraxIA</text></svg>`)
 }
 
 async function brandedImages(source, article) {
@@ -65,7 +65,7 @@ async function generate(article, session) {
   const apiKey = process.env.OPENAI_API_KEY
   if (!apiKey) throw new Error('A geração de imagem ainda não está configurada. Defina OPENAI_API_KEY no servidor.')
   const settings = await getSettings()
-  const prompt = `${settings.image_directive || ''}\n\nTítulo do artigo: ${article.title}\nResumo: ${article.excerpt}\nInstrução específica: ${article.image_instruction}\n\nCrie somente a ilustração de base, sem nenhum texto ou logotipo. Reserve a metade esquerda com poucos detalhes para a composição editorial da PráxIA.`
+  const prompt = `${settings.image_directive || ''}\n\nTítulo do artigo: ${article.title}\nResumo: ${article.excerpt}\nInstrução específica: ${article.image_instruction}\n\nCrie somente a ilustração de base, sem nenhum texto ou logotipo. Reserve a metade esquerda com poucos detalhes para a composição editorial da PraxIA.`
   const generated = await fetch('https://api.openai.com/v1/images/generations', {
     method: 'POST',
     headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },

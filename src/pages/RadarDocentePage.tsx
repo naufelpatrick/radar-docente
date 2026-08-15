@@ -71,18 +71,18 @@ const schema = {
   '@graph': [
     {
       '@type': 'WebPage',
-      name: 'Radar Docente PráxIA',
-      description: 'Entenda o Radar Docente PráxIA, para quem ele serve e como interpretar o score e o radar de fluência digital e em IA.',
-      url: 'https://radar-docente-pi.vercel.app/radar-docente',
+      name: 'Radar Docente PraxIA',
+      description: 'Entenda o Radar Docente PraxIA, para quem ele serve e como interpretar o score e o radar de fluência digital e em IA.',
+      url: 'https://www.radarpraxia.com/radar-docente',
       inLanguage: 'pt-BR',
       isPartOf: {
         '@type': 'WebSite',
-        name: 'PráxIA',
-        url: 'https://radar-docente-pi.vercel.app/',
+        name: 'PraxIA',
+        url: 'https://www.radarpraxia.com/',
       },
       mainEntity: {
         '@type': 'SoftwareApplication',
-        name: 'Radar Docente PráxIA',
+        name: 'Radar Docente PraxIA',
         applicationCategory: 'EducationalApplication',
         operatingSystem: 'Web',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'BRL' },
@@ -91,8 +91,8 @@ const schema = {
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-        { '@type': 'ListItem', position: 2, name: 'Radar Docente', item: 'https://radar-docente-pi.vercel.app/radar-docente' },
+        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Radar Docente', item: 'https://www.radarpraxia.com/radar-docente' },
       ],
     },
     {
@@ -113,7 +113,7 @@ export function RadarDocentePage() {
     <>
       <Seo
         title="Radar Docente: fluência digital e IA na prática"
-        description="Conheça o Radar Docente PráxIA: uma leitura gratuita de seis dimensões da fluência digital e em IA, com score explicado e próximo passo."
+        description="Conheça o Radar Docente PraxIA: uma leitura gratuita de seis dimensões da fluência digital e em IA, com score explicado e próximo passo."
         path="/radar-docente"
         jsonLd={schema}
       />
@@ -187,7 +187,7 @@ export function RadarDocentePage() {
             <ol className="radar-experience__steps">
               <li data-reveal="up"><span>01</span><UserRoundSearch aria-hidden="true" /><div><h3>Contextualize</h3><p>Informe seu nível e área de atuação. O perfil não altera a pontuação.</p></div></li>
               <li data-reveal="up"><span>02</span><ClipboardCheck aria-hidden="true" /><div><h3>Responda</h3><p>Reflita sobre 30 itens: 24 comportamentos e seis situações pedagógicas.</p></div></li>
-              <li data-reveal="up"><span>03</span><Gauge aria-hidden="true" /><div><h3>Compreenda</h3><p>Leia o Score PráxIA e o radar complementar das seis dimensões.</p></div></li>
+              <li data-reveal="up"><span>03</span><Gauge aria-hidden="true" /><div><h3>Compreenda</h3><p>Leia o Score PraxIA e o radar complementar das seis dimensões.</p></div></li>
               <li data-reveal="up"><span>04</span><Route aria-hidden="true" /><div><h3>Experimente</h3><p>Leve uma recomendação concreta para a próxima atividade docente.</p></div></li>
             </ol>
           </div>
@@ -216,12 +216,12 @@ export function RadarDocentePage() {
             </div>
             <div className="radar-reading__grid">
               <article data-reveal="up">
-                <div className="mini-score" aria-label="Exemplo de Score PráxIA: 72 de 100, faixa Integração">
+                <div className="mini-score" aria-label="Exemplo de Score PraxIA: 72 de 100, faixa Integração">
                   <svg viewBox="0 0 220 140" aria-hidden="true"><path d="M25 120a85 85 0 0 1 170 0" /><path className="mini-score__progress" d="M25 120a85 85 0 0 1 170 0" /></svg>
                   <strong>72</strong><small>Integração</small>
                 </div>
                 <span>CAMADA 01</span>
-                <h3>Score PráxIA</h3>
+                <h3>Score PraxIA</h3>
                 <p>Apresenta a média das seis dimensões em uma escala de 0 a 100, acompanhada de faixa textual e interpretação em linguagem humana.</p>
                 <Link to="/metodologia#score">Entenda o cálculo do score</Link>
               </article>
@@ -258,7 +258,7 @@ export function RadarDocentePage() {
             </div>
             <div className="radar-benefits__summary" data-reveal="up">
               <Sparkles aria-hidden="true" />
-              <div><strong>Ao concluir, você recebe</strong><p>Score PráxIA, radar de seis dimensões, interpretação, competências fortes, zonas de desenvolvimento e plano de evolução.</p></div>
+              <div><strong>Ao concluir, você recebe</strong><p>Score PraxIA, radar de seis dimensões, interpretação, competências fortes, zonas de desenvolvimento e plano de evolução.</p></div>
               <ButtonLink href="/radar" showArrow>Começar agora</ButtonLink>
             </div>
           </div>

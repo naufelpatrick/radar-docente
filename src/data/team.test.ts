@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { team } from './team'
 
-describe('equipe PráxIA', () => {
+describe('equipe PraxIA', () => {
   it('apresenta Patrick Naufel e Giovani Letti com a mesma estrutura', () => {
     expect(team.map(({ name }) => name)).toEqual(['Patrick Naufel', 'Giovani Letti'])
     expect(team.every(({ role, photo }) => role === null && photo?.src.startsWith('/team/'))).toBe(true)

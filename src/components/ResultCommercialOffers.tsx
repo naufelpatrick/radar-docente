@@ -15,7 +15,7 @@ export function ResultCommercialOffers({ bandId, sourcePage }: ResultCommercialO
     <section className="result-commercial" aria-labelledby={`${sourcePage}-commercial-title`}>
       <div className="result-commercial__heading">
         <p className="flow-eyebrow">PRÓXIMOS CAMINHOS</p>
-        <h2 id={`${sourcePage}-commercial-title`}>Continue sua trajetória com a PráxIA</h2>
+        <h2 id={`${sourcePage}-commercial-title`}>Continue sua trajetória com a PraxIA</h2>
         <p>Seu resultado é um ponto de partida. Escolha uma forma de transformar essa leitura em desenvolvimento e prática docente.</p>
       </div>
       <div className="result-commercial__individual">
@@ -46,7 +46,7 @@ export function ResultCommercialOffers({ bandId, sourcePage }: ResultCommercialO
         <div>
           <span>PARA ESCOLAS, FACULDADES E ORGANIZAÇÕES</span>
           <h3>Quer desenvolver toda a equipe docente?</h3>
-          <p>A PráxIA oferece palestras e workshops para escolas, faculdades e organizações educacionais.</p>
+          <p>A PraxIA oferece palestras e workshops para escolas, faculdades e organizações educacionais.</p>
           <p>Leve a discussão sobre fluência digital, inteligência artificial, autoria e transformação da aprendizagem para sua instituição.</p>
         </div>
         <div className="result-commercial__actions">

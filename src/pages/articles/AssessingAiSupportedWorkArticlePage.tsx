@@ -246,7 +246,7 @@ export function AssessingAiSupportedWorkArticlePage() {
 
         <section className="article-cta">
           <h2>Sua avaliação torna visíveis as decisões dos estudantes?</h2>
-          <p>O Radar Docente da PráxIA ajuda a identificar forças e oportunidades em planejamento, avaliação, ética e uso crítico da tecnologia.</p>
+          <p>O Radar Docente da PraxIA ajuda a identificar forças e oportunidades em planejamento, avaliação, ética e uso crítico da tecnologia.</p>
           <ButtonLink href="/radar" variant="light" showArrow>Fazer meu Radar Docente</ButtonLink>
         </section>
 

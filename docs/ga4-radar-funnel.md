@@ -1,4 +1,4 @@
-# Funil do Radar PráxIA no GA4
+# Funil do Radar PraxIA no GA4
 
 O rastreamento usa `src/services/radarFunnelAnalytics.ts`, respeita a preferência analítica da Política de Cookies e não envia dados pessoais, respostas individuais, identificadores do banco ou score numérico.
 

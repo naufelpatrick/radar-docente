@@ -22,7 +22,7 @@ create table if not exists public.content_distribution (
 alter table public.content_distribution enable row level security;
 
 comment on table public.content_distribution is
-  'Fila privada de distribuição dos artigos da PráxIA. Acesso somente pelas funções serverless com service role.';
+  'Fila privada de distribuição dos artigos da PraxIA. Acesso somente pelas funções serverless com service role.';
 
 create index if not exists content_distribution_status_schedule_idx
   on public.content_distribution (status, scheduled_for);

@@ -24,12 +24,12 @@ export const products: PraxiaProduct[] = [
   },
   {
     id: 'mentoring',
-    name: 'Mentoria PráxIA para Professores',
+    name: 'Mentoria PraxIA para Professores',
     audience: 'teachers',
     category: 'mentoring',
     description: 'Uma sessão individual para interpretar seu resultado, discutir desafios reais e construir um plano de desenvolvimento aplicável à sua prática docente.',
     benefits: [
-      'Leitura orientada do resultado PráxIA',
+      'Leitura orientada do resultado PraxIA',
       'Conversa sobre desafios reais',
       'Priorização de competências',
       'Construção de um plano de desenvolvimento',

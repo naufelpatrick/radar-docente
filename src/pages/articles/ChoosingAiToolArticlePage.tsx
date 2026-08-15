@@ -84,7 +84,7 @@ export function ChoosingAiToolArticlePage() {
           {matrixRows.map(([criterion, description], index) => <div className="tool-comparison-matrix__row" key={criterion}><strong>{criterion}{[3, 4, 6].includes(index) && <small> eliminatório</small>}</strong><span>{description}</span><i>1–5</i><i>1–5</i><i>1–5</i></div>)}
           <figcaption>Matriz para comparar ferramentas de inteligência artificial antes do uso em uma atividade pedagógica.</figcaption>
         </figure>
-        <section className="article-cta article-cta--intermediate"><h2>Como você toma decisões sobre ferramentas?</h2><p>O Radar Docente ajuda a reconhecer seus critérios e as competências que podem fortalecer sua prática.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PráxIA</ButtonLink></section>
+        <section className="article-cta article-cta--intermediate"><h2>Como você toma decisões sobre ferramentas?</h2><p>O Radar Docente ajuda a reconhecer seus critérios e as competências que podem fortalecer sua prática.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PraxIA</ButtonLink></section>
       </section>
 
       <section id="eliminatorios">
@@ -133,7 +133,7 @@ export function ChoosingAiToolArticlePage() {
       </section>
 
       <ArticleShare article={article} />
-      <section className="article-cta"><h2>Você escolhe ferramentas pelo recurso mais chamativo ou por critérios?</h2><p>O Radar Docente da PráxIA ajuda a identificar como você toma decisões e quais competências podem fortalecer sua prática.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PráxIA</ButtonLink></section>
+      <section className="article-cta"><h2>Você escolhe ferramentas pelo recurso mais chamativo ou por critérios?</h2><p>O Radar Docente da PraxIA ajuda a identificar como você toma decisões e quais competências podem fortalecer sua prática.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PraxIA</ButtonLink></section>
       <FaqSection items={articleFaq} title="Perguntas frequentes" />
       <section className="article-related"><p className="method-kicker">CONTINUE A LEITURA</p><h2>Conteúdos relacionados</h2><div>
         <Link to="/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem">Da possibilidade tecnológica ao objetivo de aprendizagem <ArrowRight aria-hidden="true" /></Link>

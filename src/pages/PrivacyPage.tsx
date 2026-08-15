@@ -11,7 +11,7 @@ const sections = [
   ['sobre', 'Sobre esta política'],
   ['responsavel', 'Responsável pelo tratamento'],
   ['dados', 'Dados tratados'],
-  ['diagnostico', 'Diagnóstico PráxIA'],
+  ['diagnostico', 'Diagnóstico PraxIA'],
   ['formularios', 'Formulários'],
   ['finalidades', 'Finalidades e bases legais'],
   ['fornecedores', 'Serviços envolvidos'],
@@ -30,8 +30,8 @@ export function PrivacyPage() {
   return (
     <>
       <Seo
-        title="Política de Privacidade | PráxIA"
-        description="Entenda como a PráxIA trata dados pessoais, utiliza cookies e protege a privacidade de professores e representantes de instituições."
+        title="Política de Privacidade | PraxIA"
+        description="Entenda como a PraxIA trata dados pessoais, utiliza cookies e protege a privacidade de professores e representantes de instituições."
         path="/privacidade"
       />
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
@@ -41,8 +41,8 @@ export function PrivacyPage() {
           <div className="shell">
             <nav className="breadcrumb" aria-label="Navegação estrutural"><Link to="/">Início</Link><ChevronRight aria-hidden="true" /><span aria-current="page">Privacidade</span></nav>
             <p className="method-kicker">PRIVACIDADE NA PRÁTICA</p>
-            <h1>Política de Privacidade da PráxIA</h1>
-            <p className="privacy-hero__lead">A PráxIA valoriza a privacidade de professores, representantes de instituições e demais pessoas que utilizam seus serviços. Esta política explica quais dados podem ser tratados, para quais finalidades e quais escolhas estão disponíveis.</p>
+            <h1>Política de Privacidade da PraxIA</h1>
+            <p className="privacy-hero__lead">A PraxIA valoriza a privacidade de professores, representantes de instituições e demais pessoas que utilizam seus serviços. Esta política explica quais dados podem ser tratados, para quais finalidades e quais escolhas estão disponíveis.</p>
             <div className="privacy-dates"><span>VIGÊNCIA<br /><strong>{privacyConfig.effectiveDate}</strong></span><span>ÚLTIMA ATUALIZAÇÃO<br /><strong>{privacyConfig.lastUpdated}</strong></span></div>
           </div>
         </header>
@@ -51,7 +51,7 @@ export function PrivacyPage() {
           <div className="shell">
             <ShieldCheck aria-hidden="true" />
             <div><p className="method-kicker">EM POUCAS PALAVRAS</p><h2>As respostas ficam no navegador. O cadastro e o resumo do relatório vão para o Supabase. O Analytics é opcional.</h2></div>
-            <p>As 30 respostas permanecem no armazenamento local deste navegador. Para liberar o relatório gratuito, a PráxIA registra nome, e-mail, contexto opcional e pontuações resumidas, sem enviar respostas individuais.</p>
+            <p>As 30 respostas permanecem no armazenamento local deste navegador. Para liberar o relatório gratuito, a PraxIA registra nome, e-mail, contexto opcional e pontuações resumidas, sem enviar respostas individuais.</p>
           </div>
         </section>
 
@@ -69,12 +69,12 @@ export function PrivacyPage() {
 
             <section id="sobre">
               <span>01</span><h2>Sobre esta política</h2>
-              <p>Esta política abrange o site, o Radar Docente, a página de resultado e os formulários de contato, e-book, mentoria e proposta institucional da PráxIA. Ela não substitui os avisos específicos apresentados no momento de cada coleta.</p>
+              <p>Esta política abrange o site, o Radar Docente, a página de resultado e os formulários de contato, e-book, mentoria e proposta institucional da PraxIA. Ela não substitui os avisos específicos apresentados no momento de cada coleta.</p>
             </section>
 
             <section id="responsavel">
               <span>02</span><h2>Quem é responsável pelo tratamento</h2>
-              <p>A definição jurídica formal do controlador ainda está em andamento. Patrick Naufel e Giovani Letti integram a PráxIA, mas esta política não os declara automaticamente controladores, encarregados, representantes legais ou sócios.</p>
+              <p>A definição jurídica formal do controlador ainda está em andamento. Patrick Naufel e Giovani Letti integram a PraxIA, mas esta política não os declara automaticamente controladores, encarregados, representantes legais ou sócios.</p>
               <p>Enquanto essa definição é concluída, dúvidas e solicitações de privacidade são recebidas pelo canal oficial: <a href={`mailto:${privacyConfig.privacyEmail}`} aria-label={`Enviar solicitação de privacidade para ${privacyConfig.privacyEmail}`}>{privacyConfig.privacyEmail}</a>.</p>
             </section>
 
@@ -85,14 +85,14 @@ export function PrivacyPage() {
               <h3>Download gratuito do e-book</h3><p>Nome, perfil de atuação, e-mail, telefone, registro do consentimento para mensagens, data, horário e origem da página.</p>
               <h3>Inscrição em workshops</h3><p>Nome completo, e-mail, CPF, telefone, turma escolhida, valor, situação e identificação técnica do pagamento, presença e vínculo com certificado. CPF e telefone não são incluídos em URLs públicas.</p>
               <h3>Proposta institucional</h3><p>Nome, instituição, cargo ou função, e-mail, WhatsApp, cidade, estado, modalidade, interesse em palestra ou workshop, quantidade aproximada de participantes, período pretendido, descrição da necessidade, data e horário, origem e estado de atendimento.</p>
-              <h3>Relatório gratuito do Radar</h3><p>Nome, e-mail, cidade e instituição quando informadas, perfil docente, Score PráxIA, faixa de desenvolvimento, pontuações resumidas das seis dimensões, versão do instrumento, tempo de conclusão, opção de receber comunicações, data e horário.</p>
-              <h3>Dados técnicos</h3><p>Vercel, Supabase e Google Analytics podem tratar informações técnicas de acesso conforme suas configurações e políticas. A PráxIA não adiciona nome, e-mail, telefone, instituição, cidade ou campos livres aos eventos de Analytics.</p>
+              <h3>Relatório gratuito do Radar</h3><p>Nome, e-mail, cidade e instituição quando informadas, perfil docente, Score PraxIA, faixa de desenvolvimento, pontuações resumidas das seis dimensões, versão do instrumento, tempo de conclusão, opção de receber comunicações, data e horário.</p>
+              <h3>Dados técnicos</h3><p>Vercel, Supabase e Google Analytics podem tratar informações técnicas de acesso conforme suas configurações e políticas. A PraxIA não adiciona nome, e-mail, telefone, instituição, cidade ou campos livres aos eventos de Analytics.</p>
             </section>
 
             <section id="diagnostico" className="privacy-highlight">
-              <span>04</span><h2>Como funciona o diagnóstico PráxIA</h2>
-              <p>Perfil docente, respostas aos 30 itens, escolhas apresentadas na introdução, horário de início, scores e dimensões são processados no navegador. O progresso é salvo em <code>localStorage</code> sob uma chave da PráxIA e permanece até ser substituído, apagado pela própria pessoa ou removido pela limpeza dos dados do navegador.</p>
-              <p>As respostas individuais não são enviadas ao Supabase, ao Google Analytics ou a APIs de inteligência artificial. Antes de abrir o relatório, são enviados ao Supabase os dados de identificação informados, o perfil docente, o Score PráxIA, a faixa e as seis pontuações dimensionais resumidas. Esses dados não aparecem na URL. O PDF continua sendo gerado localmente.</p>
+              <span>04</span><h2>Como funciona o diagnóstico PraxIA</h2>
+              <p>Perfil docente, respostas aos 30 itens, escolhas apresentadas na introdução, horário de início, scores e dimensões são processados no navegador. O progresso é salvo em <code>localStorage</code> sob uma chave da PraxIA e permanece até ser substituído, apagado pela própria pessoa ou removido pela limpeza dos dados do navegador.</p>
+              <p>As respostas individuais não são enviadas ao Supabase, ao Google Analytics ou a APIs de inteligência artificial. Antes de abrir o relatório, são enviados ao Supabase os dados de identificação informados, o perfil docente, o Score PraxIA, a faixa e as seis pontuações dimensionais resumidas. Esses dados não aparecem na URL. O PDF continua sendo gerado localmente.</p>
               <p>Como o armazenamento é local, outras pessoas com acesso ao mesmo perfil de navegador podem visualizar o progresso. Use um dispositivo confiável ou limpe os dados do site após concluir.</p>
             </section>
 
@@ -144,12 +144,12 @@ export function PrivacyPage() {
             <section id="direitos">
               <span>11</span><h2>Direitos dos titulares e como exercê-los</h2>
               <p>Conforme aplicável, você pode solicitar confirmação e acesso, correção, anonimização, bloqueio ou eliminação, portabilidade, informação sobre compartilhamento, oposição, revogação de consentimento e revisão de decisões automatizadas.</p>
-              <p>Envie a solicitação para <a href={`mailto:${privacyConfig.privacyEmail}?subject=${encodeURIComponent('Solicitação de privacidade — PráxIA')}`}>{privacyConfig.privacyEmail}</a>, informando o e-mail usado no formulário e o tipo de contato. Poderemos solicitar informações adicionais para confirmar a identidade e localizar o registro. O atendimento não é automático e depende da análise do pedido.</p>
+              <p>Envie a solicitação para <a href={`mailto:${privacyConfig.privacyEmail}?subject=${encodeURIComponent('Solicitação de privacidade — PraxIA')}`}>{privacyConfig.privacyEmail}</a>, informando o e-mail usado no formulário e o tipo de contato. Poderemos solicitar informações adicionais para confirmar a identidade e localizar o registro. O atendimento não é automático e depende da análise do pedido.</p>
             </section>
 
             <section id="criancas">
               <span>12</span><h2>Crianças e adolescentes</h2>
-              <p>A PráxIA é dirigida a professores e instituições. Os formulários não são destinados à coleta de dados pessoais de estudantes. Não envie, nos campos de mensagem, nomes, avaliações, diagnósticos, condições de saúde ou outras informações pessoais de estudantes.</p>
+              <p>A PraxIA é dirigida a professores e instituições. Os formulários não são destinados à coleta de dados pessoais de estudantes. Não envie, nos campos de mensagem, nomes, avaliações, diagnósticos, condições de saúde ou outras informações pessoais de estudantes.</p>
             </section>
 
             <section id="transferencia">

@@ -1,6 +1,6 @@
-# PráxIA — Radar de Fluência Digital e IA
+# PraxIA — Radar de Fluência Digital e IA
 
-A PráxIA ajuda professores a reconhecer como sua fluência digital e em inteligência artificial aparece na prática docente, identificar forças e pontos de atenção e escolher um próximo passo possível.
+A PraxIA ajuda professores a reconhecer como sua fluência digital e em inteligência artificial aparece na prática docente, identificar forças e pontos de atenção e escolher um próximo passo possível.
 
 > Transforme fluência em prática docente.
 
@@ -18,7 +18,7 @@ O Radar oferece uma leitura orientativa baseada em autorrelato. O score não é 
 - 30 itens oficiais, apresentados um por tela;
 - progresso salvo localmente e revisão antes do envio;
 - cálculo determinístico do score geral e das seis dimensões;
-- Score PráxIA, radar hexagonal, forças, zonas de desenvolvimento, sinais de atenção e próximo passo;
+- Score PraxIA, radar hexagonal, forças, zonas de desenvolvimento, sinais de atenção e próximo passo;
 - exportação do relatório completo e personalizado em PDF;
 - ofertas futuras de conteúdo e mentoria claramente marcadas como indisponíveis.
 
@@ -52,7 +52,7 @@ npm run build
 npm run preview
 ```
 
-## Agente de distribuição PráxIA
+## Agente de distribuição PraxIA
 
 O painel privado em `/admin/distribuicao` sincroniza os artigos de
 `https://www.radarpraxia.com/rss.xml`, gera rascunhos para Instagram,

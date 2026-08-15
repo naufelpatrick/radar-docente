@@ -80,7 +80,7 @@ export function PrivacyAndEducationalDataArticlePage() {
       <section id="protocolo">
         <h2>Um protocolo de cinco decisões antes de enviar dados</h2>
         <div className="privacy-protocol">{protocol.map(([title, text], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}</div>
-        <section className="article-cta article-cta--intermediate"><h2>Como privacidade aparece nas suas decisões?</h2><p>O Radar Docente ajuda a reconhecer critérios éticos, pedagógicos e críticos já presentes na sua prática.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PráxIA</ButtonLink></section>
+        <section className="article-cta article-cta--intermediate"><h2>Como privacidade aparece nas suas decisões?</h2><p>O Radar Docente ajuda a reconhecer critérios éticos, pedagógicos e críticos já presentes na sua prática.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PraxIA</ButtonLink></section>
       </section>
 
       <section id="nunca-enviar">
@@ -127,7 +127,7 @@ export function PrivacyAndEducationalDataArticlePage() {
       </section>
 
       <ArticleShare article={article} />
-      <section className="article-cta"><h2>Você considera apenas o recurso ou também privacidade e limites?</h2><p>O Radar Docente da PráxIA ajuda a identificar como você toma decisões pedagógicas, éticas e críticas diante da inteligência artificial.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PráxIA</ButtonLink></section>
+      <section className="article-cta"><h2>Você considera apenas o recurso ou também privacidade e limites?</h2><p>O Radar Docente da PraxIA ajuda a identificar como você toma decisões pedagógicas, éticas e críticas diante da inteligência artificial.</p><ButtonLink href="/radar" variant="light" showArrow>Descobrir meu Score PraxIA</ButtonLink></section>
       <FaqSection items={articleFaq} title="Perguntas frequentes" />
       <section className="article-related"><p className="method-kicker">CONTINUE A LEITURA</p><h2>Conteúdos relacionados</h2><div>
         <Link to="/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica">Como escolher uma ferramenta de IA para uma atividade pedagógica <ArrowRight aria-hidden="true" /></Link>

@@ -11,12 +11,12 @@ export function Footer() {
           <div className="footer__brand">
             <BrandMark inverse />
             <p>Transforme fluência em prática docente.</p>
-            <nav className="footer__social" aria-label="Redes sociais da PráxIA">
-              <a href="https://www.instagram.com/radarpraxia/" target="_blank" rel="noopener noreferrer" aria-label="Acompanhar a PráxIA no Instagram">
+            <nav className="footer__social" aria-label="Redes sociais da PraxIA">
+              <a href="https://www.instagram.com/radarpraxia/" target="_blank" rel="noopener noreferrer" aria-label="Acompanhar a PraxIA no Instagram">
                 <Instagram aria-hidden="true" />
                 <span>Instagram</span>
               </a>
-              <a href="https://www.facebook.com/radarpraxia" target="_blank" rel="noopener noreferrer" aria-label="Acompanhar a PráxIA no Facebook">
+              <a href="https://www.facebook.com/radarpraxia" target="_blank" rel="noopener noreferrer" aria-label="Acompanhar a PraxIA no Facebook">
                 <Facebook aria-hidden="true" />
                 <span>Facebook</span>
               </a>
@@ -42,7 +42,7 @@ export function Footer() {
               <Link to="/blog">Blog</Link>
               <Link to="/guias">Guias</Link>
               <Link to="/ferramentas">Ferramentas</Link>
-              <a href="/feed.xml" type="application/rss+xml" aria-label="Assinar o feed RSS do Blog PráxIA">RSS</a>
+              <a href="/feed.xml" type="application/rss+xml" aria-label="Assinar o feed RSS do Blog PraxIA">RSS</a>
               <Link to="/ebook">E-book</Link>
               <Link to="/mentoria">Mentoria</Link>
             </div>
@@ -51,7 +51,7 @@ export function Footer() {
         <div className="footer__bottom">
           <span>Projeto independente de Patrick Naufel e Giovani Letti.</span>
           <span><Link to="/privacidade">Política de Privacidade</Link> · <button type="button" onClick={openCookiePreferences}>Preferências de cookies</button></span>
-          <span>© {new Date().getFullYear()} PráxIA.</span>
+          <span>© {new Date().getFullYear()} PraxIA.</span>
         </div>
       </div>
     </footer>

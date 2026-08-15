@@ -33,7 +33,7 @@ export function ScorePraxia() {
       id="score-praxia"
       data-reveal="scale"
       data-animate="score"
-      aria-label={`Score PráxIA demonstrativo: ${score} de 100, faixa Integração`}
+      aria-label={`Score PraxIA demonstrativo: ${score} de 100, faixa Integração`}
     >
       <header className="score-praxia__header">
         <div>
@@ -46,7 +46,7 @@ export function ScorePraxia() {
       <div className="score-praxia__primary">
         <div className="score-meter" style={meterStyle}>
           <svg viewBox="0 0 360 230" role="img" aria-labelledby="score-meter-title score-meter-description">
-            <title id="score-meter-title">Score PráxIA: 72 de 100</title>
+            <title id="score-meter-title">Score PraxIA: 72 de 100</title>
             <desc id="score-meter-description">Medidor semicircular na faixa Integração, que vai de 60 a 79 pontos.</desc>
             <path className="score-meter__field score-meter__field--outer" d="M40 190 A140 140 0 0 1 320 190" pathLength="100" />
             <path className="score-meter__field score-meter__field--middle" d="M62 190 A118 118 0 0 1 298 190" pathLength="100" />

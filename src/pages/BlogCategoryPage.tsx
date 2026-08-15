@@ -6,6 +6,7 @@ import { Footer } from '../components/Footer'
 import { InstitutionalHeader } from '../components/InstitutionalHeader'
 import { Seo } from '../components/Seo'
 import { getPublishedArticlesByCategory } from '../data/blogArticles'
+import { buildSiteUrl } from '../config/site'
 import { loadPublicArticles } from '../services/cmsApi'
 import type { CmsArticle } from '../types/cms'
 
@@ -44,19 +45,21 @@ type CategorySlug = keyof typeof categories
 export function BlogCategoryPage() {
   const { slug } = useParams()
   const [cmsArticles, setCmsArticles] = useState<CmsArticle[]>([])
-  useEffect(() => { void loadPublicArticles().then((result) => setCmsArticles(result.articles.filter((article) => article.cms_categories?.slug === slug))).catch(() => undefined) }, [slug])
+  const [cmsLoaded, setCmsLoaded] = useState(false)
+  useEffect(() => { void loadPublicArticles().then((result) => setCmsArticles(result.articles.filter((article) => article.cms_categories?.slug === slug))).catch(() => undefined).finally(() => setCmsLoaded(true)) }, [slug])
   if (!slug || !(slug in categories)) return <Navigate to="/blog" replace />
   const category = categories[slug as CategorySlug]
   const articles = getPublishedArticlesByCategory(slug)
+  if (articles.length === 0 && cmsLoaded && cmsArticles.length === 0) return <Navigate to="/blog" replace />
   const canonicalPath = `/blog/categoria/${slug}`
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'CollectionPage', name: `${category.name} | Blog PráxIA`, description: category.description, url: `https://radar-docente-pi.vercel.app${canonicalPath}`, inLanguage: 'pt-BR' },
+      { '@type': 'CollectionPage', name: `${category.name} | Blog PraxIA`, description: category.description, url: buildSiteUrl(canonicalPath), inLanguage: 'pt-BR' },
       { '@type': 'BreadcrumbList', itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://radar-docente-pi.vercel.app/' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://radar-docente-pi.vercel.app/blog' },
-        { '@type': 'ListItem', position: 3, name: category.name, item: `https://radar-docente-pi.vercel.app${canonicalPath}` },
+        { '@type': 'ListItem', position: 1, name: 'Início', item: buildSiteUrl('/') },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: buildSiteUrl('/blog') },
+        { '@type': 'ListItem', position: 3, name: category.name, item: buildSiteUrl(canonicalPath) },
       ] },
     ],
   }
