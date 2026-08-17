@@ -24,4 +24,18 @@ const html = source
 
 await mkdir(outputDirectory, { recursive: true })
 await writeFile(resolve(outputDirectory, 'index.html'), html)
+
+const registrationDirectory = resolve(outputDirectory, 'inscricoes')
+const registrationTitle = 'Inscrições do Workshop IA para Prática Docente | PraxIA'
+const registrationDescription = 'Inscreva-se no Workshop IA para Prática Docente, online, em 29 de agosto de 2026. Formação de 4 horas com certificado.'
+const registrationCanonical = 'https://www.radarpraxia.com/lp/workshop-ia-2026/inscricoes'
+const registrationHtml = source
+  .replace(/<title>[^<]*<\/title>/, `<title>${registrationTitle}</title>`)
+  .replace(/<meta name="description"[^>]*>/, `<meta name="description" content="${registrationDescription}" />`)
+  .replace(/<meta property="og:title"[^>]*>/, `<meta property="og:title" content="${registrationTitle}" />`)
+  .replace(/<meta property="og:description"[^>]*>/, `<meta property="og:description" content="${registrationDescription}" />`)
+  .replace('</head>', `    <link rel="canonical" href="${registrationCanonical}" />\n    <meta property="og:url" content="${registrationCanonical}" />\n  </head>`)
+
+await mkdir(registrationDirectory, { recursive: true })
+await writeFile(resolve(registrationDirectory, 'index.html'), registrationHtml)
 console.log('Landing page do workshop pré-renderizada.')
