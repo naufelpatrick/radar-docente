@@ -4,12 +4,18 @@ import { describe, expect, it } from 'vitest'
 import { SITE_URL, buildSiteUrl } from './config/site'
 import { getPublishedBlogArticles } from './data/blogArticles'
 import { createBlogPostingSchema } from './services/articleSeo'
+import { buildCanonicalUrl } from './services/seoUrl'
 
 describe('arquitetura de SEO', () => {
   it('usa somente a origem canônica oficial', () => {
     expect(SITE_URL).toBe('https://www.radarpraxia.com')
     expect(buildSiteUrl('/blog')).toBe('https://www.radarpraxia.com/blog')
     expect(getPublishedBlogArticles().every((article) => article.canonicalUrl.startsWith(SITE_URL))).toBe(true)
+  })
+
+  it('normaliza URLs canônicas sem querystring ou hash', () => {
+    expect(buildCanonicalUrl('/blog')).toBe('https://www.radarpraxia.com/blog')
+    expect(buildCanonicalUrl('/blog/artigo?utm_source=instagram#leitura')).toBe('https://www.radarpraxia.com/blog/artigo')
   })
 
   it('não contém o domínio antigo no código de produção', () => {

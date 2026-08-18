@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { SITE_URL } from '../config/site'
+import { buildCanonicalUrl } from '../services/seoUrl'
 
 type JsonLd = Record<string, unknown> | Record<string, unknown>[]
 
@@ -37,7 +38,7 @@ function setMeta(selector: string, attributes: Record<string, string>) {
 
 export function Seo({ title, socialTitle = title, description, path, type = 'website', image = socialImage, imageAlt = defaultImageAlt, jsonLd, robots = 'index, follow', omitCanonical = false }: SeoProps) {
   useEffect(() => {
-    const canonicalUrl = new URL(path, SITE_URL).toString()
+    const canonicalUrl = buildCanonicalUrl(path)
     document.title = formatPageTitle(title)
 
     setMeta('meta[name="description"]', { name: 'description', content: description })
@@ -58,6 +59,7 @@ export function Seo({ title, socialTitle = title, description, path, type = 'web
     setMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' })
     setMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: socialTitle })
     setMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description })
+    setMeta('meta[name="twitter:url"]', { name: 'twitter:url', content: canonicalUrl })
     setMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: image })
     setMeta('meta[name="twitter:image:alt"]', { name: 'twitter:image:alt', content: imageAlt })
 
