@@ -207,13 +207,13 @@ export function BlogPage() {
         <section className="blog-section blog-roadmap" id="artigos-recentes">
           <div className="shell">
             <div className="method-heading method-heading--light" data-reveal="up">
-              <div><p className="method-kicker">CONTEÚDOS PRÁXIA</p><h2>Artigos recentes.</h2></div>
+              <div><p className="method-kicker">CONTEÚDOS PRAXIA</p><h2>Artigos recentes.</h2></div>
               <p>Reflexões, referências e práticas para professores que desejam integrar tecnologia e inteligência artificial à docência com mais consciência pedagógica.</p>
             </div>
             <div className="blog-roadmap__grid">
               {cmsArticles.map((article, index) => (
                 <Link className="blog-roadmap__card" to={new URL(article.canonical_url).pathname} key={article.id} data-reveal="up" aria-label={`Ler artigo: ${article.title}`}>
-                  <div><span>CONTEÚDO PRÁXIA</span><small>{String(index + 1).padStart(2, '0')}</small></div><h3>{article.title}</h3><p>{article.excerpt}</p><span className="blog-roadmap__link">Ler artigo <ArrowRight aria-hidden="true" /></span><footer><span>{article.cms_categories?.name}</span><span>{article.published_at ? new Date(article.published_at).toLocaleDateString('pt-BR') : ''} · {article.reading_time_minutes} min de leitura</span></footer>
+                  <div><span>CONTEÚDO PRAXIA</span><small>{String(index + 1).padStart(2, '0')}</small></div><h3>{article.title}</h3><p>{article.excerpt}</p><span className="blog-roadmap__link">Ler artigo <ArrowRight aria-hidden="true" /></span><footer><span>{article.cms_categories?.name}</span><span>{article.published_at ? new Date(article.published_at).toLocaleDateString('pt-BR') : ''} · {article.reading_time_minutes} min de leitura</span></footer>
                 </Link>
               ))}
               {publishedArticles.map((article, index) => (

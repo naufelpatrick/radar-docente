@@ -27,7 +27,7 @@ export function RadarIntroPage() {
   return (
     <main className="radar-screen radar-intro">
       <div className="radar-screen__content">
-        <p className="flow-eyebrow">RADAR PRÁXIA • BETA 0.1</p>
+        <p className="flow-eyebrow">RADAR PRAXIA • BETA 0.1</p>
         <h1>Olhe sua prática por<br /><em>novos ângulos.</em></h1>
         <p className="radar-screen__lead">Instrumento de autorreflexão fundamentado em referenciais internacionais. Versão beta em processo de validação.</p>
         <div className="radar-intro__facts">

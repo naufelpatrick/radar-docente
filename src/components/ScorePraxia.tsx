@@ -37,7 +37,7 @@ export function ScorePraxia() {
     >
       <header className="score-praxia__header">
         <div>
-          <p className="mono-label">SCORE PRÁXIA</p>
+          <p className="mono-label">SCORE PRAXIA</p>
           <p className="score-praxia__demo">Exemplo demonstrativo</p>
         </div>
         <span className="score-praxia__range"><i aria-hidden="true" /> Faixa: <strong>Integração</strong></span>

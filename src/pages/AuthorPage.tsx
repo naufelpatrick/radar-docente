@@ -51,7 +51,7 @@ export function AuthorPage({ memberId }: { memberId: string }) {
             <nav className="breadcrumb" aria-label="Navegação estrutural"><Link to="/">Início</Link><ChevronRight aria-hidden="true" /><Link to="/sobre">Sobre</Link><ChevronRight aria-hidden="true" /><span aria-current="page">{member.name}</span></nav>
             <div className="author-hero__grid">
               <img src={member.photo!.src} alt={member.photo!.alt} width={member.photo!.width} height={member.photo!.height} />
-              <div><p className="method-kicker">AUTOR E EQUIPE PRÁXIA</p><h1>{member.name}</h1><p className="author-hero__lead">{member.shortBio}</p><p>{member.fullBio}</p><div className="author-links">{member.links.map((link) => { const Icon = link.type === 'linkedin' ? Linkedin : FileText; return <a key={link.type} href={link.href} target="_blank" rel="noopener noreferrer"><Icon aria-hidden="true" />{link.label}</a> })}</div></div>
+              <div><p className="method-kicker">AUTOR E EQUIPE PRAXIA</p><h1>{member.name}</h1><p className="author-hero__lead">{member.shortBio}</p><p>{member.fullBio}</p><div className="author-links">{member.links.map((link) => { const Icon = link.type === 'linkedin' ? Linkedin : FileText; return <a key={link.type} href={link.href} target="_blank" rel="noopener noreferrer"><Icon aria-hidden="true" />{link.label}</a> })}</div></div>
             </div>
           </div>
         </header>
