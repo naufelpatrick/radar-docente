@@ -185,7 +185,7 @@ export function DemoResultPage() {
             <nav className="breadcrumb" aria-label="Navegação estrutural">
               <Link to="/">Início</Link><ChevronRight aria-hidden="true" /><span aria-current="page">Exemplo de resultado</span>
             </nav>
-            <p className="flow-eyebrow">SCORE PRÁXIA • EXEMPLO</p>
+            <p className="flow-eyebrow">SCORE PRAXIA • EXEMPLO</p>
             <h1>Score PraxIA:<br /><em>72 de 100.</em></h1>
             <p>{demoResult.band.message}</p>
             <span>Faixa Integração · Dados fictícios · Leitura orientativa</span>

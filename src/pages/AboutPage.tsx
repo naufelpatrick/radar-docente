@@ -107,7 +107,7 @@ export function AboutPage() {
             </nav>
             <div className="about-hero__grid">
               <div>
-                <p className="method-kicker">SOBRE A PRÁXIA</p>
+                <p className="method-kicker">SOBRE A PRAXIA</p>
                 <h1>Tecnologia faz sentido quando encontra <em>contexto, intenção e prática.</em></h1>
                 <p>A PraxIA é uma iniciativa independente criada para ajudar professores a compreender como sua fluência digital e em inteligência artificial se manifesta no cotidiano — e a transformar essa leitura em escolhas pedagógicas conscientes.</p>
               </div>
@@ -205,7 +205,7 @@ export function AboutPage() {
         <section className="about-section about-founder" id="quem-esta-por-tras">
           <div className="shell">
             <div className="about-founder__heading" data-reveal="up">
-              <p className="method-kicker">QUEM ESTÁ À FRENTE DA PRÁXIA</p>
+              <p className="method-kicker">QUEM ESTÁ À FRENTE DA PRAXIA</p>
               <h2>Educação, tecnologia e prática docente</h2>
               <p>{teamIntroduction}</p>
             </div>

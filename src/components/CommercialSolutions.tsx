@@ -26,7 +26,7 @@ export function CommercialSolutions() {
     <section className="section commercial-solutions" ref={sectionRef} aria-labelledby="solucoes-title">
       <div className="shell">
         <div className="commercial-solutions__heading" data-reveal="up">
-          <p className="eyebrow eyebrow--dark">SOLUÇÕES PRÁXIA</p>
+          <p className="eyebrow eyebrow--dark">SOLUÇÕES PRAXIA</p>
           <h2 id="solucoes-title">Soluções para transformar<br /><em>fluência em prática.</em></h2>
           <p>A PraxIA ajuda professores e instituições de ensino a compreender, desenvolver e aplicar competências digitais e de inteligência artificial com intencionalidade pedagógica.</p>
         </div>

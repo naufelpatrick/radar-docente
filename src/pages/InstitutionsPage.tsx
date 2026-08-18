@@ -45,7 +45,7 @@ export function InstitutionsPage() {
           <div className="shell institutions-hero__grid">
             <div>
               <nav className="breadcrumb" aria-label="Navegação estrutural"><Link to="/">Início</Link><span>/</span><span aria-current="page">Para instituições</span></nav>
-              <p className="eyebrow">PRÁXIA PARA INSTITUIÇÕES</p>
+              <p className="eyebrow">PRAXIA PARA INSTITUIÇÕES</p>
               <h1>Formação docente para transformar tecnologia em <em>prática pedagógica.</em></h1>
               <p>Palestras e workshops para escolas, faculdades e organizações que desejam desenvolver fluência digital, pensamento crítico e integração responsável da inteligência artificial à educação.</p>
               <div className="institutions-hero__actions"><ButtonLink href="#solicitar-proposta" variant="light" showArrow>Solicitar uma proposta</ButtonLink><ButtonLink href="#formatos" variant="secondary">Conhecer os formatos<ArrowDown aria-hidden="true" /></ButtonLink></div>
@@ -88,7 +88,7 @@ export function InstitutionsPage() {
         <section className="section institutional-authority" id="quem-somos">
           <div className="shell">
             <div className="institutional-authority__heading" data-reveal="up">
-              <p className="eyebrow eyebrow--dark">QUEM ESTÁ À FRENTE DA PRÁXIA</p>
+              <p className="eyebrow eyebrow--dark">QUEM ESTÁ À FRENTE DA PRAXIA</p>
               <h2>Educação, tecnologia e prática docente</h2>
               <p>{teamIntroduction}</p>
             </div>

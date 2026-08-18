@@ -107,7 +107,7 @@ export function LinksPage() {
           <section className="links-blog" aria-labelledby="links-blog-title">
             {latestArticle?.coverImage && <img src={latestArticle.coverImage.src} alt={latestArticle.coverImage.alt} loading="lazy" />}
             <div>
-              <span>{latestArticle ? `ARTIGO RECENTE · ${latestArticle.category}` : 'CONTEÚDOS PRÁXIA'}</span>
+              <span>{latestArticle ? `ARTIGO RECENTE · ${latestArticle.category}` : 'CONTEÚDOS PRAXIA'}</span>
               <h2 id="links-blog-title">Conteúdos para a prática docente</h2>
               <p>Artigos sobre Fluência Digital, inteligência artificial, inovação educacional e uso consciente de tecnologia por professores.</p>
               {latestArticle && <strong>{latestArticle.title}</strong>}

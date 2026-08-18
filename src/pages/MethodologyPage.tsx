@@ -240,7 +240,7 @@ export function MethodologyPage() {
         <section className="method-section method-score" id="score">
           <div className="shell method-score__grid">
             <div data-reveal="left">
-              <p className="method-kicker">COMO O SCORE PRÁXIA FUNCIONA</p>
+              <p className="method-kicker">COMO O SCORE PRAXIA FUNCIONA</p>
               <h2>Uma síntese legível, acompanhada do contexto.</h2>
               <p className="method-score__lead">Cada dimensão reúne cinco respostas com valores internos de 1 a 5. A soma é convertida para uma escala de 0 a 100. O Score PraxIA é a média aritmética dos seis resultados dimensionais.</p>
               <div className="formula" aria-label="Fórmula do score dimensional">
