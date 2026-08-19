@@ -44,9 +44,24 @@ describe('privacy implementation contracts', () => {
     expect(read('./pages/radar/RadarResultPage.tsx')).toContain('RadarCompletionTracker')
   })
 
-  it('does not load Google Analytics statically', () => {
-    expect(read('../index.html')).not.toContain('googletagmanager.com/gtag/js')
-    expect(read('./services/cookieConsent.ts')).toContain("readCookiePreference() === 'accepted'")
+  it('does not load Google or Meta tracking statically', () => {
+    const html = read('../index.html')
+    expect(html).not.toContain('googletagmanager.com/gtag/js')
+    expect(html).not.toContain('connect.facebook.net')
+    const consent = read('./services/cookieConsent.ts')
+    expect(consent).toContain('analyticsAllowed')
+    expect(consent).toContain('marketingAllowed')
+    expect(consent).toContain('Do not infer marketing consent')
+  })
+
+  it('gates Meta Pixel behind marketing consent and uses the configured dataset id', () => {
+    const meta = read('./services/metaPixel.ts')
+    expect(meta).toContain("META_PIXEL_ID = '1758001775245327'")
+    expect(meta).toContain('marketingAllowed()')
+    expect(meta).toContain("'RadarComplete'")
+    expect(meta).not.toContain('email')
+    expect(meta).not.toContain('score')
+    expect(meta).not.toContain('answer')
   })
 
   it('does not add personal or diagnostic data to commercial analytics parameters', () => {
@@ -54,6 +69,14 @@ describe('privacy implementation contracts', () => {
     for (const field of ['email', 'phone', 'name', 'message', 'city', 'score', 'answer', 'dimension']) {
       expect(analytics).not.toContain(`${field}?:`)
     }
+  })
+
+  it('documents Meta Pixel and granular consent in the privacy policy', () => {
+    const page = read('./pages/PrivacyPage.tsx')
+    const config = read('./config/privacy.ts')
+    expect(page).toContain('Meta Pixel')
+    expect(page).toContain('Marketing precisa ser escolhido explicitamente')
+    expect(config).toContain("name: 'Meta Pixel'")
   })
 
   it('does not publish legal placeholders or claim a definitive policy', () => {
