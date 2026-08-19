@@ -12,11 +12,13 @@ const legacyArticlePaths = [
   '/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia',
   '/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica',
   '/blog/etica/privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas',
+  '/blog/planejamento/como-planejar-uma-atividade-pedagogica-com-inteligencia-artificial',
   '/blog/fluencia-digital/o-que-e-fluencia-digital-para-professores',
 ]
 
 function escapeXml(value = '') { return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&apos;') }
 function escapeHtml(value = '') { return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;') }
+function decodeXml(value = '') { return String(value).replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&apos;', "'").replaceAll('&amp;', '&') }
 
 const knownAuthors = {
   'Patrick Naufel': { path: '/autores/patrick-naufel', sameAs: ['https://www.linkedin.com/in/patricknaufel', 'http://lattes.cnpq.br/0026328778886854'] },
@@ -55,6 +57,55 @@ async function sitemap(response) {
   ])]
   const rows = [...staticPaths.map((path) => sitemapEntry(path, null, path === '/' ? '1.0' : '0.7')), ...categoryPaths.map((slug) => sitemapEntry(`/blog/categoria/${slug}`)), ...legacyArticlePaths.map((path) => sitemapEntry(path, null, '0.8')), ...articles.map((article) => sitemapEntry(new URL(article.canonical_url).pathname, article.updated_at, '0.8'))]
   response.status(200).setHeader('content-type', 'application/xml; charset=utf-8').setHeader('cache-control', 'public, s-maxage=300').end(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join('\n')}\n</urlset>`)
+}
+
+function rssField(block, tag) {
+  const match = block.match(new RegExp(`<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${tag}>`, 'i'))
+  return match ? decodeXml(match[1].replace(/^<!\[CDATA\[|\]\]>$/g, '').trim()) : ''
+}
+
+async function getLegacyBlogIndexItems() {
+  try {
+    const response = await fetch(`${SITE_URL}/feed.xml`, { headers: { accept: 'application/rss+xml' } })
+    if (!response.ok) return []
+    const xml = await response.text()
+    return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].map((match) => {
+      const block = match[1]
+      const link = rssField(block, 'link')
+      let path = ''
+      try { path = new URL(link).pathname } catch { path = link }
+      return { path, title: rssField(block, 'title'), summary: rssField(block, 'description'), category: rssField(block, 'category') || 'Blog' }
+    }).filter((item) => item.path && item.title)
+  } catch {
+    return []
+  }
+}
+
+function renderBlogIndex(items) {
+  const list = items.map((item) => `<li><article><p>${escapeHtml(item.category)}</p><h2><a href="${escapeHtml(item.path)}">${escapeHtml(item.title)}</a></h2>${item.summary ? `<p>${escapeHtml(item.summary)}</p>` : ''}</article></li>`).join('')
+  return `<div id="root"><main data-prerendered-content><header><h1>Ideias, critérios e perguntas para ensinar em contextos digitais e com IA.</h1><p>Conteúdos para professores sobre IA, competências digitais e prática docente.</p></header><section aria-labelledby="blog-artigos"><h2 id="blog-artigos">Artigos publicados</h2><ul>${list}</ul></section></main></div>`
+}
+
+async function blogPage(response) {
+  const [shellResponse, cmsArticles, legacyArticles] = await Promise.all([
+    fetch(`${SITE_URL}/index.html`, { headers: { accept: 'text/html' } }),
+    getPublicArticles().catch(() => []),
+    getLegacyBlogIndexItems(),
+  ])
+  if (!shellResponse.ok) throw new Error('Não foi possível carregar a aplicação')
+  const itemsByPath = new Map(legacyArticles.map((item) => [item.path, item]))
+  for (const article of cmsArticles) {
+    let path = ''
+    try { path = new URL(article.canonical_url).pathname } catch { continue }
+    itemsByPath.set(path, { path, title: article.title, summary: article.excerpt || article.meta_description || '', category: article.cms_categories?.name || 'Blog' })
+  }
+  const title = 'Blog: IA, competências digitais e prática docente | PraxIA'
+  const description = 'Conteúdos para professores sobre IA, competências digitais e prática docente.'
+  const canonical = `${SITE_URL}/blog`
+  const tags = `<title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}"><meta name="robots" content="index, follow"><link rel="canonical" href="${canonical}"><meta property="og:type" content="website"><meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:url" content="${canonical}">`
+  let html = await shellResponse.text()
+  html = html.replace(/<title>[\s\S]*?<\/title>/i, '').replace(/<meta name="description"[^>]*>/i, '').replace(/<link rel="canonical"[^>]*>/i, '').replace('</head>', `${tags}</head>`).replace(/<div id="root">[\s\S]*?<\/div>/i, renderBlogIndex([...itemsByPath.values()]))
+  response.status(200).setHeader('content-type', 'text/html; charset=utf-8').setHeader('cache-control', 'public, s-maxage=60, stale-while-revalidate=300').end(html)
 }
 
 async function articlePage(request, response) {
@@ -98,6 +149,7 @@ export default async function handler(request, response) {
   try {
     if (request.query?.mode === 'rss') return await rss(response)
     if (request.query?.mode === 'sitemap') return await sitemap(response)
+    if (request.query?.mode === 'blog-page') return await blogPage(response)
     if (request.query?.mode === 'article-page') return await articlePage(request, response)
     response.setHeader('cache-control', request.query?.preview ? 'private, no-store' : 'public, s-maxage=60, stale-while-revalidate=300')
     if (request.query?.preview && request.query?.id) {

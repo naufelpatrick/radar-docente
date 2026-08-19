@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import handler from '../certificates.js'
+import handler from '../api/certificates.js'
 
 function response() {
   return { statusCode: 0, status(code) { this.statusCode = code; return this }, setHeader() { return this }, end(body) { this.body = JSON.parse(body) } }

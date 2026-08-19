@@ -33,7 +33,7 @@
     { "source": "/sobre", "destination": "/" },
     { "source": "/autores/patrick-naufel", "destination": "/" },
     { "source": "/autores/giovani-letti", "destination": "/" },
-    { "source": "/blog", "destination": "/" },
+    { "source": "/blog", "destination": "/api/cms/public?mode=blog-page" },
     { "source": "/contato", "destination": "/" },
     { "source": "/privacidade", "destination": "/" },
     { "source": "/resultado", "destination": "/" },
