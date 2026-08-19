@@ -5,7 +5,7 @@ export const privacyConfig = {
   controllerAddress: null,
   privacyEmail: 'praxia@radarpraxia.com',
   effectiveDate: '28 de julho de 2026',
-  lastUpdated: '29 de julho de 2026',
+  lastUpdated: '19 de agosto de 2026',
   retentionPeriods: {
     contact: null,
     mentoring: null,
@@ -30,9 +30,16 @@ export const privacyConfig = {
     },
     {
       name: 'Google Analytics e Google Ads',
-      purpose: 'Medição opcional de uso, conclusões do Radar, desempenho e conversões de compra',
-      data: 'Eventos de navegação, indicador de conclusão sem score ou respostas, identificador técnico do pedido e valor da compra, somente após autorização',
+      purpose: 'Medição opcional de uso e, quando autorizado para marketing, atribuição de campanhas e conversões',
+      data: 'Eventos de navegação e conclusão sem respostas ou score; conversões de compra somente após a autorização correspondente',
       privacyUrl: 'https://policies.google.com/privacy',
+      internationalProcessing: true,
+    },
+    {
+      name: 'Meta Pixel',
+      purpose: 'Medição de campanhas, atribuição de conversões e criação de públicos de publicidade, somente com consentimento de marketing',
+      data: 'PageView, visualização de artigo, clique do artigo para o Radar, início e conclusão do Radar, sem respostas, score, CPF ou conteúdo de formulários',
+      privacyUrl: 'https://www.facebook.com/privacy/policy/',
       internationalProcessing: true,
     },
     {
