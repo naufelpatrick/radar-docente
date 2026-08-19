@@ -1,4 +1,5 @@
 import { analyticsAllowed, loadGoogleAnalytics } from './cookieConsent'
+import { trackMetaRadarComplete, trackMetaRadarStart } from './metaPixel'
 
 export const RADAR_FUNNEL_VERSION = 'beta-0.1'
 const EVENT_PREFIX = 'praxia:ga4:radar-funnel:'
@@ -137,6 +138,7 @@ export function trackRadarLanding(attemptId: string) {
 }
 
 export function trackRadarStart(attemptId: string, ctaId: string, ctaLocation: string) {
+  trackMetaRadarStart(ctaLocation)
   return trackRadarEventOnce('radar_start_click', attemptId, { cta_id: ctaId, cta_location: ctaLocation })
 }
 
@@ -213,6 +215,7 @@ export function trackExpiredRadarAbandon(now = Date.now()) {
 }
 
 export function trackRadarComplete(attemptId: string, parameters: RadarEventParameters = {}) {
+  trackMetaRadarComplete(attemptId)
   return trackRadarEventOnce('radar_complete', attemptId, { source: 'radar_praxia', ...parameters })
 }
 
