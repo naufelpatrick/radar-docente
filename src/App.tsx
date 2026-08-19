@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ScrollToTop } from './components/ScrollToTop'
 import { CookiePreferences } from './components/CookiePreferences'
+import { MetaPageViewTracker } from './components/MetaPageViewTracker'
 import { WhatsAppFloat } from './components/WhatsAppFloat'
 
 const LandingPage = lazy(() =>
@@ -140,6 +141,7 @@ export default function App() {
     <>
       <ScrollToTop />
       <CookiePreferences />
+      <MetaPageViewTracker />
       <WhatsAppFloat />
       <Suspense fallback={<div className="route-loading" role="status">Carregando conteúdo…</div>}>
         <Routes>

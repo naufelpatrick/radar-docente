@@ -15,7 +15,7 @@ const sections = [
   ['formularios', 'Formulários'],
   ['finalidades', 'Finalidades e bases legais'],
   ['fornecedores', 'Serviços envolvidos'],
-  ['cookies', 'Cookies e Analytics'],
+  ['cookies', 'Cookies, Analytics e marketing'],
   ['retencao', 'Armazenamento e retenção'],
   ['seguranca', 'Segurança'],
   ['direitos', 'Seus direitos'],
@@ -50,7 +50,7 @@ export function PrivacyPage() {
         <section className="privacy-summary" aria-label="Síntese em linguagem simples">
           <div className="shell">
             <ShieldCheck aria-hidden="true" />
-            <div><p className="method-kicker">EM POUCAS PALAVRAS</p><h2>As respostas ficam no navegador. O cadastro e o resumo do relatório vão para o Supabase. O Analytics é opcional.</h2></div>
+            <div><p className="method-kicker">EM POUCAS PALAVRAS</p><h2>As respostas ficam no navegador. O cadastro e o resumo do relatório vão para o Supabase. Analytics e marketing são opcionais.</h2></div>
             <p>As 30 respostas permanecem no armazenamento local deste navegador. Para liberar o relatório gratuito, a PraxIA registra nome, e-mail, contexto opcional e pontuações resumidas, sem enviar respostas individuais.</p>
           </div>
         </section>
@@ -86,13 +86,13 @@ export function PrivacyPage() {
               <h3>Inscrição em workshops</h3><p>Nome completo, e-mail, CPF, telefone, turma escolhida, valor, situação e identificação técnica do pagamento, presença e vínculo com certificado. CPF e telefone não são incluídos em URLs públicas.</p>
               <h3>Proposta institucional</h3><p>Nome, instituição, cargo ou função, e-mail, WhatsApp, cidade, estado, modalidade, interesse em palestra ou workshop, quantidade aproximada de participantes, período pretendido, descrição da necessidade, data e horário, origem e estado de atendimento.</p>
               <h3>Relatório gratuito do Radar</h3><p>Nome, e-mail, cidade e instituição quando informadas, perfil docente, Score PraxIA, faixa de desenvolvimento, pontuações resumidas das seis dimensões, versão do instrumento, tempo de conclusão, opção de receber comunicações, data e horário.</p>
-              <h3>Dados técnicos</h3><p>Vercel, Supabase e Google Analytics podem tratar informações técnicas de acesso conforme suas configurações e políticas. A PraxIA não adiciona nome, e-mail, telefone, instituição, cidade ou campos livres aos eventos de Analytics.</p>
+              <h3>Dados técnicos</h3><p>Vercel, Supabase, Google Analytics, Google Ads e Meta Pixel podem tratar informações técnicas de acesso conforme suas configurações e políticas. A PraxIA não adiciona nome, e-mail, telefone, instituição, cidade, respostas do Radar, score ou campos livres aos eventos de Analytics ou publicidade.</p>
             </section>
 
             <section id="diagnostico" className="privacy-highlight">
               <span>04</span><h2>Como funciona o diagnóstico PraxIA</h2>
               <p>Perfil docente, respostas aos 30 itens, escolhas apresentadas na introdução, horário de início, scores e dimensões são processados no navegador. O progresso é salvo em <code>localStorage</code> sob uma chave da PraxIA e permanece até ser substituído, apagado pela própria pessoa ou removido pela limpeza dos dados do navegador.</p>
-              <p>As respostas individuais não são enviadas ao Supabase, ao Google Analytics ou a APIs de inteligência artificial. Antes de abrir o relatório, são enviados ao Supabase os dados de identificação informados, o perfil docente, o Score PraxIA, a faixa e as seis pontuações dimensionais resumidas. Esses dados não aparecem na URL. O PDF continua sendo gerado localmente.</p>
+              <p>As respostas individuais não são enviadas ao Supabase, ao Google Analytics, ao Google Ads, ao Meta Pixel ou a APIs de inteligência artificial. Antes de abrir o relatório, são enviados ao Supabase os dados de identificação informados, o perfil docente, o Score PraxIA, a faixa e as seis pontuações dimensionais resumidas. Esses dados não aparecem na URL. O PDF continua sendo gerado localmente.</p>
               <p>Como o armazenamento é local, outras pessoas com acesso ao mesmo perfil de navegador podem visualizar o progresso. Use um dispositivo confiável ou limpe os dados do site após concluir.</p>
             </section>
 
@@ -119,13 +119,14 @@ export function PrivacyPage() {
                   </div>
                 ))}
               </div>
-              <p>Não foram encontrados pixels de publicidade, serviços de pagamento, ferramentas externas de formulário, antispam ou monitoramento de sessão no código auditado.</p>
+              <p>Não foram encontrados outros pixels de publicidade, ferramentas externas de formulário, antispam ou monitoramento de sessão no código auditado.</p>
             </section>
 
             <section id="cookies">
-              <span>08</span><h2>Cookies, armazenamento local e Analytics</h2>
-              <p>A aplicação usa <code>localStorage</code> para manter o progresso do Radar e registrar sua preferência de cookies. O Google Analytics é carregado apenas depois de “Aceitar todos” ou ativar Analytics em “Personalizar”. Recusar não essenciais não impede o uso do site nem do Radar.</p>
-              <p>Quando autorizado, o Google Analytics pode definir identificadores e cookies próprios para medição. A escolha pode ser revista a qualquer momento.</p>
+              <span>08</span><h2>Cookies, armazenamento local, Analytics e marketing</h2>
+              <p>A aplicação usa <code>localStorage</code> para manter o progresso do Radar e registrar suas preferências. Cookies e tecnologias não essenciais ficam separados em duas escolhas: <strong>Analytics</strong>, para Google Analytics, e <strong>Marketing</strong>, para Meta Pixel e Google Ads. Recusar não essenciais não impede o uso do site nem do Radar.</p>
+              <p>Quando Analytics é autorizado, podem ser medidos navegação, leitura e conclusão do Radar sem respostas individuais ou score. Quando Marketing é autorizado, Meta Pixel e Google Ads podem medir campanhas, atribuir conversões e apoiar a criação de públicos. O Meta Pixel recebe eventos como visualização de página e artigo, clique para o Radar, início e conclusão do Radar, sem CPF, respostas, score ou conteúdo de formulários.</p>
+              <p>Quem havia aceitado a versão anterior do banner mantém apenas a autorização de Analytics; Marketing precisa ser escolhido explicitamente. As preferências podem ser revistas a qualquer momento.</p>
               <button type="button" className="privacy-preferences-button" onClick={openCookiePreferences}>Alterar preferências de cookies</button>
             </section>
 
@@ -137,7 +138,7 @@ export function PrivacyPage() {
 
             <section id="seguranca">
               <span>10</span><h2>Segurança da informação</h2>
-              <p>A aplicação utiliza HTTPS em produção, validações no formulário e no banco, políticas de segurança em nível de linha no Supabase e uma chave pública restrita a inserções. A chave administrativa do Supabase não é usada no frontend. Eventos comerciais possuem um conjunto limitado de parâmetros.</p>
+              <p>A aplicação utiliza HTTPS em produção, validações no formulário e no banco, políticas de segurança em nível de linha no Supabase e uma chave pública restrita a inserções. A chave administrativa do Supabase não é usada no frontend. Eventos de medição e publicidade possuem um conjunto limitado de parâmetros e não incluem respostas individuais do Radar.</p>
               <p>Essas medidas reduzem riscos, mas nenhum ambiente conectado à internet oferece segurança absoluta. Não divulgamos detalhes operacionais que possam facilitar ataques.</p>
             </section>
 
@@ -154,7 +155,7 @@ export function PrivacyPage() {
 
             <section id="transferencia">
               <span>13</span><h2>Transferência internacional</h2>
-              <p>Os fornecedores confirmados operam infraestrutura e serviços que podem processar dados fora do Brasil. O projeto Supabase auditado está configurado na região Leste dos Estados Unidos. Vercel e Google também podem realizar tratamento internacional conforme suas políticas.</p>
+              <p>Os fornecedores confirmados operam infraestrutura e serviços que podem processar dados fora do Brasil. O projeto Supabase auditado está configurado na região Leste dos Estados Unidos. Vercel, Google e Meta também podem realizar tratamento internacional conforme suas políticas.</p>
             </section>
 
             <section id="alteracoes">

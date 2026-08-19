@@ -1,4 +1,4 @@
-import { analyticsAllowed, loadGoogleAnalytics } from './cookieConsent'
+import { loadGoogleAds, marketingAllowed } from './cookieConsent'
 
 export const GOOGLE_ADS_ID = 'AW-18356888280'
 export const EBOOK_CONVERSION_DESTINATION = `${GOOGLE_ADS_ID}/pVj0CLfDotgcENjFn7FE`
@@ -12,7 +12,7 @@ interface EbookPurchase {
 
 function sendPurchase({ transactionId, value }: EbookPurchase) {
   if (!transactionId || window.localStorage.getItem(`${SENT_PURCHASE_PREFIX}${transactionId}`)) return
-  loadGoogleAnalytics()
+  loadGoogleAds()
   if (typeof window.gtag !== 'function') return
 
   window.gtag('event', 'conversion', {
@@ -28,7 +28,7 @@ function sendPurchase({ transactionId, value }: EbookPurchase) {
 export function trackEbookPurchase(transactionId: string, value = 19.9) {
   if (typeof window === 'undefined' || !transactionId) return
   const purchase = { transactionId, value }
-  if (!analyticsAllowed()) {
+  if (!marketingAllowed()) {
     window.localStorage.setItem(PENDING_PURCHASE_KEY, JSON.stringify(purchase))
     return
   }
@@ -36,7 +36,7 @@ export function trackEbookPurchase(transactionId: string, value = 19.9) {
 }
 
 export function flushPendingEbookPurchase() {
-  if (typeof window === 'undefined' || !analyticsAllowed()) return
+  if (typeof window === 'undefined' || !marketingAllowed()) return
   try {
     const pending = window.localStorage.getItem(PENDING_PURCHASE_KEY)
     if (pending) sendPurchase(JSON.parse(pending) as EbookPurchase)

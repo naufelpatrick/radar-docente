@@ -2,10 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
-import { initializeAnalyticsFromStoredConsent } from './services/cookieConsent'
+import { initializeAnalyticsFromStoredConsent, initializeMarketingFromStoredConsent } from './services/cookieConsent'
+import { loadMetaPixel } from './services/metaPixel'
 import './styles.css'
 
 initializeAnalyticsFromStoredConsent()
+initializeMarketingFromStoredConsent()
+loadMetaPixel()
 
 const rootElement = document.getElementById('root')!
 const application = (

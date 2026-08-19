@@ -1,5 +1,6 @@
 import type { BlogArticle } from '../data/blogArticles'
 import { analyticsAllowed, loadGoogleAnalytics } from './cookieConsent'
+import { trackMetaArticleView, trackMetaBlogRadarCtaClick } from './metaPixel'
 
 export type BlogScrollDepth = 50 | 90
 export type BlogRadarCtaLocation = 'intermediate' | 'final' | 'inline'
@@ -42,7 +43,10 @@ function trackOnce(article: BlogArticle, suffix: string, name: string, parameter
 }
 
 export function trackBlogArticleView(article: BlogArticle) {
-  return trackOnce(article, 'view', 'blog_article_view')
+  if (article.status !== 'published') return false
+  const ga = trackOnce(article, 'view', 'blog_article_view')
+  const meta = trackMetaArticleView(article.slug, article.categorySlug)
+  return ga || meta
 }
 
 export function trackBlogScrollDepth(article: BlogArticle, depth: BlogScrollDepth) {
@@ -51,9 +55,11 @@ export function trackBlogScrollDepth(article: BlogArticle, depth: BlogScrollDept
 
 export function trackBlogRadarCtaClick(article: BlogArticle, ctaLocation: BlogRadarCtaLocation, destinationPath: string) {
   if (article.status !== 'published') return false
-  return dispatch('blog_radar_cta_click', {
+  const ga = dispatch('blog_radar_cta_click', {
     ...eventParameters(article),
     cta_location: ctaLocation,
     destination_path: destinationPath,
   })
+  const meta = trackMetaBlogRadarCtaClick(article.slug, ctaLocation)
+  return ga || meta
 }

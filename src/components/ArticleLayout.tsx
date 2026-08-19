@@ -13,7 +13,7 @@ import {
   trackBlogScrollDepth,
   type BlogRadarCtaLocation,
 } from '../services/blogGrowthAnalytics'
-import { ANALYTICS_CONSENT_GRANTED_EVENT } from '../services/cookieConsent'
+import { ANALYTICS_CONSENT_GRANTED_EVENT, MARKETING_CONSENT_GRANTED_EVENT } from '../services/cookieConsent'
 
 type TocItem = { id: string; label: string }
 
@@ -64,18 +64,21 @@ export function ArticleLayout({ article, categoryPath, toc, children }: ArticleL
       trackBlogArticleView(article)
       evaluateScrollDepth()
     }
+    const handleMarketingConsent = () => trackBlogArticleView(article)
 
     trackBlogArticleView(article)
     evaluateScrollDepth()
     window.addEventListener('scroll', evaluateScrollDepth, { passive: true })
     window.addEventListener('resize', evaluateScrollDepth, { passive: true })
     window.addEventListener(ANALYTICS_CONSENT_GRANTED_EVENT, handleAnalyticsConsent)
+    window.addEventListener(MARKETING_CONSENT_GRANTED_EVENT, handleMarketingConsent)
     articleContent.addEventListener('click', handleArticleClick)
 
     return () => {
       window.removeEventListener('scroll', evaluateScrollDepth)
       window.removeEventListener('resize', evaluateScrollDepth)
       window.removeEventListener(ANALYTICS_CONSENT_GRANTED_EVENT, handleAnalyticsConsent)
+      window.removeEventListener(MARKETING_CONSENT_GRANTED_EVENT, handleMarketingConsent)
       articleContent.removeEventListener('click', handleArticleClick)
     }
   }, [article])
