@@ -64,9 +64,11 @@ export function saveCookiePreferences(preferences: CookiePreferencesState) {
 }
 
 export function saveCookiePreference(preference: CookiePreference) {
+  // Backward-compatible API: historical "accepted" meant measurement only.
+  // Marketing consent must always come from the granular v2 preferences UI.
   saveCookiePreferences({
     analytics: preference === 'accepted',
-    marketing: preference === 'accepted',
+    marketing: false,
   })
 }
 
