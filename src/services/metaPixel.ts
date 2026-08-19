@@ -92,8 +92,9 @@ export function trackMetaBlogRadarCtaClick(articleSlug: string, ctaLocation: str
   })
 }
 
-export function trackMetaRadarStart(ctaLocation: string) {
-  return trackOnce(`radar:start:${ctaLocation}`, 'trackCustom', 'RadarStart', {
+export function trackMetaRadarStart(attemptId: string, ctaLocation: string) {
+  if (!attemptId) return false
+  return trackOnce(`radar:start:${attemptId}`, 'trackCustom', 'RadarStart', {
     cta_location: ctaLocation,
   })
 }
