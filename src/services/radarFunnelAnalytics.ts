@@ -138,7 +138,7 @@ export function trackRadarLanding(attemptId: string) {
 }
 
 export function trackRadarStart(attemptId: string, ctaId: string, ctaLocation: string) {
-  trackMetaRadarStart(ctaLocation)
+  trackMetaRadarStart(attemptId, ctaLocation)
   return trackRadarEventOnce('radar_start_click', attemptId, { cta_id: ctaId, cta_location: ctaLocation })
 }
 
