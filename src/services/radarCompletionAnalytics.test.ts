@@ -7,19 +7,30 @@ import {
 } from './radarCompletionAnalytics'
 
 function createWindow(preference?: 'accepted' | 'essential_only') {
-  const values = new Map<string, string>()
-  if (preference) values.set('praxia:cookie-preference:v1', preference)
+  const localValues = new Map<string, string>()
+  const sessionValues = new Map<string, string>()
+  if (preference) localValues.set('praxia:cookie-preference:v1', preference)
   const gtag = vi.fn()
   return {
-    values,
+    values: localValues,
     gtag,
     window: {
       gtag,
       dataLayer: [],
+      innerWidth: 390,
+      location: {
+        pathname: '/radar/resultado',
+        search: '?utm_source=linkedin&utm_medium=organic_social&utm_campaign=blog_growth_sprint01&utm_content=fluencia_provocacao_a',
+      },
       localStorage: {
-        getItem: (key: string) => values.get(key) ?? null,
-        setItem: (key: string, value: string) => values.set(key, value),
-        removeItem: (key: string) => values.delete(key),
+        getItem: (key: string) => localValues.get(key) ?? null,
+        setItem: (key: string, value: string) => localValues.set(key, value),
+        removeItem: (key: string) => localValues.delete(key),
+      },
+      sessionStorage: {
+        getItem: (key: string) => sessionValues.get(key) ?? null,
+        setItem: (key: string, value: string) => sessionValues.set(key, value),
+        removeItem: (key: string) => sessionValues.delete(key),
       },
     },
   }
@@ -28,16 +39,20 @@ function createWindow(preference?: 'accepted' | 'essential_only') {
 describe('conclusão do Radar no GA4', () => {
   afterEach(() => vi.unstubAllGlobals())
 
-  it('envia radar_complete com a origem prevista', () => {
+  it('envia radar_complete com a origem prevista e a variação da campanha', () => {
     const context = createWindow('accepted')
     vi.stubGlobal('window', context.window)
-    vi.stubGlobal('document', { querySelector: () => ({}) })
+    vi.stubGlobal('document', { querySelector: () => ({}), documentElement: { setAttribute: vi.fn() } })
 
     trackRadarCompletion('session-2026-07-29')
 
-    expect(context.gtag).toHaveBeenCalledWith('event', 'radar_complete', {
+    expect(context.gtag).toHaveBeenCalledWith('event', 'radar_complete', expect.objectContaining({
       source: 'radar_praxia',
-    })
+      traffic_source: 'linkedin',
+      traffic_medium: 'organic_social',
+      traffic_campaign: 'blog_growth_sprint01',
+      traffic_content: 'fluencia_provocacao_a',
+    }))
   })
 
   it('não envia novamente a mesma conclusão', () => {
@@ -53,7 +68,7 @@ describe('conclusão do Radar no GA4', () => {
   it('aguarda autorização e envia uma única vez depois dela', () => {
     const context = createWindow()
     vi.stubGlobal('window', context.window)
-    vi.stubGlobal('document', { querySelector: () => ({}) })
+    vi.stubGlobal('document', { querySelector: () => ({}), documentElement: { setAttribute: vi.fn() } })
 
     trackRadarCompletion('session-2')
     expect(context.gtag).not.toHaveBeenCalled()
@@ -69,7 +84,7 @@ describe('conclusão do Radar no GA4', () => {
   it('não mede uma visita direta ao resultado sem confirmação do Supabase', () => {
     const context = createWindow('accepted')
     vi.stubGlobal('window', context.window)
-    vi.stubGlobal('document', { querySelector: () => ({}) })
+    vi.stubGlobal('document', { querySelector: () => ({}), documentElement: { setAttribute: vi.fn() } })
 
     trackRadarCompletionAfterReport('session-direta')
 
@@ -79,7 +94,7 @@ describe('conclusão do Radar no GA4', () => {
   it('consome a confirmação após o relatório montar e não repete no reload', () => {
     const context = createWindow('accepted')
     vi.stubGlobal('window', context.window)
-    vi.stubGlobal('document', { querySelector: () => ({}) })
+    vi.stubGlobal('document', { querySelector: () => ({}), documentElement: { setAttribute: vi.fn() } })
 
     markRadarCompletionSaved('session-confirmada')
     trackRadarCompletionAfterReport('session-confirmada')
