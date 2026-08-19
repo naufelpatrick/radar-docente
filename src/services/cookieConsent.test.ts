@@ -2,39 +2,76 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   analyticsAllowed,
   COOKIE_PREFERENCE_KEY,
+  COOKIE_PREFERENCES_KEY,
   initializeAnalyticsFromStoredConsent,
   loadGoogleAnalytics,
-  readCookiePreference,
-  saveCookiePreference,
+  marketingAllowed,
+  readCookiePreferences,
+  saveCookiePreferences,
 } from './cookieConsent'
+
+function storageStub(initial: Record<string, string> = {}) {
+  const values = new Map(Object.entries(initial))
+  return {
+    values,
+    storage: {
+      getItem: (key: string) => values.get(key) ?? null,
+      setItem: (key: string, value: string) => values.set(key, value),
+      removeItem: (key: string) => values.delete(key),
+    },
+  }
+}
+
+function documentStub() {
+  return {
+    querySelector: () => ({}),
+    createElement: () => ({ dataset: {} }),
+    head: { appendChild: vi.fn() },
+    documentElement: { setAttribute: vi.fn() },
+  }
+}
 
 describe('cookie preferences', () => {
   afterEach(() => vi.unstubAllGlobals())
 
-  it('starts without analytics permission and stores refusal', () => {
-    const values = new Map<string, string>()
-    vi.stubGlobal('window', { localStorage: {
-      getItem: (key: string) => values.get(key) ?? null,
-      setItem: (key: string, value: string) => values.set(key, value),
-    } })
-    expect(readCookiePreference()).toBeNull()
+  it('starts without permissions and stores granular refusal', () => {
+    const { values, storage } = storageStub()
+    vi.stubGlobal('window', { localStorage: storage, dispatchEvent: vi.fn() })
+
+    expect(readCookiePreferences()).toBeNull()
     expect(analyticsAllowed()).toBe(false)
-    saveCookiePreference('essential_only')
-    expect(values.get(COOKIE_PREFERENCE_KEY)).toBe('essential_only')
-    expect(analyticsAllowed()).toBe(false)
+    expect(marketingAllowed()).toBe(false)
+
+    saveCookiePreferences({ analytics: false, marketing: false })
+    expect(JSON.parse(values.get(COOKIE_PREFERENCES_KEY) || '{}')).toEqual({ analytics: false, marketing: false })
   })
 
-  it('allows analytics only after explicit acceptance', () => {
-    vi.stubGlobal('window', { localStorage: { getItem: () => 'accepted', setItem: vi.fn() } })
+  it('migrates historical acceptance to analytics without inferring marketing consent', () => {
+    const { storage } = storageStub({ [COOKIE_PREFERENCE_KEY]: 'accepted' })
+    vi.stubGlobal('window', { localStorage: storage })
+
+    expect(readCookiePreferences()).toEqual({ analytics: true, marketing: false })
     expect(analyticsAllowed()).toBe(true)
+    expect(marketingAllowed()).toBe(false)
   })
 
-  it('initializes dataLayer and gtag even when the Google script already exists', () => {
-    const windowStub = {
-      localStorage: { getItem: () => 'accepted', setItem: vi.fn() },
-    } as unknown as Window
+  it('allows analytics and marketing independently', () => {
+    const { storage } = storageStub({
+      [COOKIE_PREFERENCES_KEY]: JSON.stringify({ analytics: false, marketing: true }),
+    })
+    vi.stubGlobal('window', { localStorage: storage })
+
+    expect(analyticsAllowed()).toBe(false)
+    expect(marketingAllowed()).toBe(true)
+  })
+
+  it('initializes dataLayer and GA4 only after analytics consent', () => {
+    const { storage } = storageStub({
+      [COOKIE_PREFERENCES_KEY]: JSON.stringify({ analytics: true, marketing: false }),
+    })
+    const windowStub = { localStorage: storage } as unknown as Window
     vi.stubGlobal('window', windowStub)
-    vi.stubGlobal('document', { querySelector: () => ({}) })
+    vi.stubGlobal('document', documentStub())
 
     loadGoogleAnalytics()
 
@@ -47,10 +84,12 @@ describe('cookie preferences', () => {
   })
 
   it('does not initialize Google globals before analytics consent', () => {
-    const windowStub = {
-      localStorage: { getItem: () => 'essential_only', setItem: vi.fn() },
-    } as unknown as Window
+    const { storage } = storageStub({
+      [COOKIE_PREFERENCES_KEY]: JSON.stringify({ analytics: false, marketing: false }),
+    })
+    const windowStub = { localStorage: storage } as unknown as Window
     vi.stubGlobal('window', windowStub)
+    vi.stubGlobal('document', documentStub())
 
     loadGoogleAnalytics()
 
@@ -58,12 +97,13 @@ describe('cookie preferences', () => {
     expect(windowStub.gtag).toBeUndefined()
   })
 
-  it('initializes GA4 synchronously for a previously accepted preference', () => {
-    const windowStub = {
-      localStorage: { getItem: () => 'accepted', setItem: vi.fn() },
-    } as unknown as Window
+  it('initializes GA4 synchronously for stored analytics consent', () => {
+    const { storage } = storageStub({
+      [COOKIE_PREFERENCES_KEY]: JSON.stringify({ analytics: true, marketing: false }),
+    })
+    const windowStub = { localStorage: storage } as unknown as Window
     vi.stubGlobal('window', windowStub)
-    vi.stubGlobal('document', { querySelector: () => ({}) })
+    vi.stubGlobal('document', documentStub())
 
     expect(initializeAnalyticsFromStoredConsent()).toBe(true)
     expect(typeof windowStub.gtag).toBe('function')
