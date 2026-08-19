@@ -11,6 +11,7 @@ import {
 import { flushPendingEbookPurchase } from '../services/ebookConversion'
 import { flushPendingRadarCompletion } from '../services/radarCompletionAnalytics'
 import { flushPendingRadarEvents } from '../services/radarFunnelAnalytics'
+import { captureTrafficAttribution } from '../services/trafficAttribution'
 
 export function CookiePreferences() {
   const [visible, setVisible] = useState(() => readCookiePreference() === null)
@@ -20,6 +21,7 @@ export function CookiePreferences() {
 
   useEffect(() => {
     if (initializeAnalyticsFromStoredConsent()) {
+      captureTrafficAttribution()
       flushPendingEbookPurchase()
       flushPendingRadarCompletion()
       flushPendingRadarEvents()
@@ -41,6 +43,7 @@ export function CookiePreferences() {
     saveCookiePreference(preference)
     if (preference === 'accepted') {
       loadGoogleAnalytics()
+      captureTrafficAttribution()
       flushPendingEbookPurchase()
       flushPendingRadarCompletion()
       flushPendingRadarEvents()

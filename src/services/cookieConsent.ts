@@ -2,6 +2,7 @@ export type CookiePreference = 'accepted' | 'essential_only'
 
 export const COOKIE_PREFERENCE_KEY = 'praxia:cookie-preference:v1'
 export const COOKIE_PREFERENCES_EVENT = 'praxia:open-cookie-preferences'
+export const ANALYTICS_CONSENT_GRANTED_EVENT = 'praxia:analytics-consent-granted'
 const GA_ID = 'G-9JR9Q9KSV6'
 const GOOGLE_ADS_ID = 'AW-18356888280'
 const GOOGLE_TAG_SELECTOR = `script[src*="googletagmanager.com/gtag/js?id=${GA_ID}"], script[data-praxia-analytics="${GA_ID}"]`
@@ -22,6 +23,7 @@ export function readCookiePreference(): CookiePreference | null {
 
 export function saveCookiePreference(preference: CookiePreference) {
   window.localStorage.setItem(COOKIE_PREFERENCE_KEY, preference)
+  if (preference === 'accepted') window.dispatchEvent(new Event(ANALYTICS_CONSENT_GRANTED_EVENT))
 }
 
 export function analyticsAllowed() {

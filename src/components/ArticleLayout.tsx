@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { CalendarDays, Clock3, List, UserRound } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Footer } from './Footer'
@@ -7,6 +7,13 @@ import { ArticleShare } from './ArticleShare'
 import type { BlogArticle } from '../data/blogArticles'
 import { GoogleSwgBasic } from './GoogleSwgBasic'
 import { getAuthorPath } from '../data/team'
+import {
+  trackBlogArticleView,
+  trackBlogRadarCtaClick,
+  trackBlogScrollDepth,
+  type BlogRadarCtaLocation,
+} from '../services/blogGrowthAnalytics'
+import { ANALYTICS_CONSENT_GRANTED_EVENT } from '../services/cookieConsent'
 
 type TocItem = { id: string; label: string }
 
@@ -17,8 +24,62 @@ interface ArticleLayoutProps {
   children: ReactNode
 }
 
+function ctaLocation(anchor: HTMLAnchorElement): BlogRadarCtaLocation {
+  const cta = anchor.closest('.article-cta')
+  if (!cta) return 'inline'
+  return cta.classList.contains('article-cta--intermediate') ? 'intermediate' : 'final'
+}
+
 export function ArticleLayout({ article, categoryPath, toc, children }: ArticleLayoutProps) {
   const authorPath = getAuthorPath(article.author)
+
+  useEffect(() => {
+    if (article.status !== 'published') return
+    const articleContent = document.getElementById('conteudo-artigo')
+    if (!articleContent) return
+
+    const evaluateScrollDepth = () => {
+      const rect = articleContent.getBoundingClientRect()
+      const articleTop = window.scrollY + rect.top
+      const articleHeight = Math.max(articleContent.scrollHeight, rect.height, 1)
+      const viewportBottom = window.scrollY + window.innerHeight
+      const depth = ((viewportBottom - articleTop) / articleHeight) * 100
+      if (depth >= 50) trackBlogScrollDepth(article, 50)
+      if (depth >= 90) trackBlogScrollDepth(article, 90)
+    }
+
+    const handleArticleClick = (event: Event) => {
+      const target = event.target
+      if (!(target instanceof Element)) return
+      const anchor = target.closest('a[href]')
+      if (!(anchor instanceof HTMLAnchorElement) || !articleContent.contains(anchor)) return
+      const href = anchor.getAttribute('href')
+      if (!href) return
+      const destination = new URL(href, window.location.origin)
+      if (destination.origin !== window.location.origin || !destination.pathname.startsWith('/radar')) return
+      trackBlogRadarCtaClick(article, ctaLocation(anchor), destination.pathname)
+    }
+
+    const handleAnalyticsConsent = () => {
+      trackBlogArticleView(article)
+      evaluateScrollDepth()
+    }
+
+    trackBlogArticleView(article)
+    evaluateScrollDepth()
+    window.addEventListener('scroll', evaluateScrollDepth, { passive: true })
+    window.addEventListener('resize', evaluateScrollDepth, { passive: true })
+    window.addEventListener(ANALYTICS_CONSENT_GRANTED_EVENT, handleAnalyticsConsent)
+    articleContent.addEventListener('click', handleArticleClick)
+
+    return () => {
+      window.removeEventListener('scroll', evaluateScrollDepth)
+      window.removeEventListener('resize', evaluateScrollDepth)
+      window.removeEventListener(ANALYTICS_CONSENT_GRANTED_EVENT, handleAnalyticsConsent)
+      articleContent.removeEventListener('click', handleArticleClick)
+    }
+  }, [article])
+
   return (
     <>
       <GoogleSwgBasic />
