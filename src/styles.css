@@ -1021,7 +1021,7 @@ h2 em, h1 em { color: var(--indigo); font-style: normal; }
 .method-hero__visual ol { position: absolute; inset: 70px 35px; display: grid; align-content: center; gap: 14px; margin: 0; padding: 0; list-style: none; }
 .method-hero__visual li { display: grid; grid-template-columns: 38px 1fr; align-items: center; gap: 12px; padding: 15px 18px; border: 1px solid rgb(255 255 255 / 12%); border-radius: 10px; background: rgb(21 27 39 / 88%); backdrop-filter: blur(8px); }
 .method-hero__visual li span { color: var(--lime); font: 600 10px var(--font-mono); }.method-hero__visual li strong { font: 600 14px var(--font-display); }
-.method-index { position: sticky; z-index: 10; top: 0; border-bottom: 1px solid var(--line); background: rgb(255 255 255 / 93%); backdrop-filter: blur(12px); }
+.method-index { position: sticky; z-index: 1100; top: 88px; border-bottom: 1px solid var(--line); background: rgb(255 255 255 / 93%); backdrop-filter: blur(12px); }
 .method-index .shell { display: flex; min-height: 64px; align-items: center; gap: 24px; overflow-x: auto; scrollbar-width: none; }
 .method-index .shell::-webkit-scrollbar { display: none; }.method-index span { flex: 0 0 auto; color: var(--muted); font: 600 10px var(--font-mono); text-transform: uppercase; letter-spacing: .08em; }
 .method-index a { flex: 0 0 auto; color: var(--graphite); font-size: 13px; font-weight: 600; text-decoration: none; }.method-index a:hover { color: var(--indigo); }
@@ -1086,6 +1086,7 @@ h2 em, h1 em { color: var(--indigo); font-style: normal; }
 }
 
 @media (max-width: 720px) {
+  .method-index { top: 80px; }
   .method-hero { min-height: auto; padding: 128px 0 76px; }.breadcrumb { margin-bottom: 38px; }.method-hero__grid { grid-template-columns: 1fr; }.method-hero h1 { font-size: clamp(43px, 13vw, 60px); }.method-hero__lead { font-size: 17px; }.method-hero__actions { align-items: stretch; flex-direction: column; }.method-hero__actions .button-link { width: 100%; }.method-hero__visual { min-height: 350px; margin-top: 16px; }.method-hero__visual ol { inset: 62px 24px; }
   .method-index .shell { width: 100%; padding: 0 16px; }.method-index span { display: none; }
   .method-section { padding: 76px 0; }.method-section__split, .method-heading, .method-score__grid { grid-template-columns: 1fr; gap: 34px; }.method-prose__lead { font-size: 20px; }
