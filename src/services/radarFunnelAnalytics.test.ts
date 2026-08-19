@@ -38,7 +38,10 @@ describe('funil do Radar no GA4', () => {
       localStorage,
       sessionStorage,
       innerWidth: 390,
-      location: { pathname: '/radar', search: '?utm_source=google&utm_medium=cpc&utm_campaign=radar' },
+      location: {
+        pathname: '/radar',
+        search: '?utm_source=linkedin&utm_medium=organic_social&utm_campaign=blog_growth_sprint01&utm_content=fluencia_provocacao_a',
+      },
     })
     vi.stubGlobal('document', { querySelector: () => ({}), documentElement: { setAttribute: vi.fn() } })
   })
@@ -61,7 +64,13 @@ describe('funil do Radar no GA4', () => {
       'radar_profile_complete',
     ])
     const landing = gtag.mock.calls.find((call) => call[1] === 'radar_landing_view')
-    expect(landing?.[2]).toMatchObject({ traffic_source: 'google', traffic_medium: 'cpc', device_type: 'mobile' })
+    expect(landing?.[2]).toMatchObject({
+      traffic_source: 'linkedin',
+      traffic_medium: 'organic_social',
+      traffic_campaign: 'blog_growth_sprint01',
+      traffic_content: 'fluencia_provocacao_a',
+      device_type: 'mobile',
+    })
   })
 
   it('envia apenas os marcos 1, 10, 20 e 30 uma vez, mesmo ao voltar', () => {
@@ -84,14 +93,19 @@ describe('funil do Radar no GA4', () => {
     expect(gtag.mock.calls.filter((call) => call[1] === 'radar_landing_view')).toHaveLength(1)
   })
 
-  it('envia conclusão e resultado uma única vez e sem score individual', () => {
+  it('envia conclusão e resultado uma única vez, preservando a variação da campanha e sem score individual', () => {
     trackRadarResult('attempt-4', 30, 480, 'integration')
     trackRadarResult('attempt-4', 30, 480, 'integration')
 
     expect(gtag.mock.calls.filter((call) => call[1] === 'radar_complete')).toHaveLength(1)
     expect(gtag.mock.calls.filter((call) => call[1] === 'radar_result_view')).toHaveLength(1)
     const parameters = gtag.mock.calls.find((call) => call[1] === 'radar_complete')?.[2]
-    expect(parameters).toMatchObject({ total_questions: 30, completion_time_seconds: 480, score_range: 'integration' })
+    expect(parameters).toMatchObject({
+      total_questions: 30,
+      completion_time_seconds: 480,
+      score_range: 'integration',
+      traffic_content: 'fluencia_provocacao_a',
+    })
     expect(parameters).not.toHaveProperty('score')
   })
 

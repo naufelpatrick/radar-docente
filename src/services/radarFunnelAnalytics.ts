@@ -63,8 +63,9 @@ function readTraffic() {
     traffic_source: query.get('utm_source') || undefined,
     traffic_medium: query.get('utm_medium') || undefined,
     traffic_campaign: query.get('utm_campaign') || undefined,
+    traffic_content: query.get('utm_content') || undefined,
   }
-  if (current.traffic_source || current.traffic_medium || current.traffic_campaign) {
+  if (current.traffic_source || current.traffic_medium || current.traffic_campaign || current.traffic_content) {
     window.sessionStorage?.setItem(TRAFFIC_KEY, JSON.stringify(current))
     return current
   }
@@ -211,9 +212,12 @@ export function trackExpiredRadarAbandon(now = Date.now()) {
   return tracked
 }
 
+export function trackRadarComplete(attemptId: string, parameters: RadarEventParameters = {}) {
+  return trackRadarEventOnce('radar_complete', attemptId, { source: 'radar_praxia', ...parameters })
+}
+
 export function trackRadarResult(attemptId: string, totalQuestions: number, completionTimeSeconds: number, scoreRange: string) {
-  trackRadarEventOnce('radar_complete', attemptId, {
-    source: 'radar_praxia',
+  trackRadarComplete(attemptId, {
     total_questions: totalQuestions,
     completion_time_seconds: completionTimeSeconds,
     score_range: scoreRange,

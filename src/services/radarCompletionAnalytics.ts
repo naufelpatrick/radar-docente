@@ -1,5 +1,5 @@
 import { analyticsAllowed, loadGoogleAnalytics } from './cookieConsent'
-import { trackRadarResult } from './radarFunnelAnalytics'
+import { trackRadarComplete, trackRadarResult } from './radarFunnelAnalytics'
 
 const PENDING_COMPLETION_KEY = 'praxia:ga4:pending-radar-complete'
 const SENT_COMPLETION_PREFIX = 'praxia:ga4:radar-complete:'
@@ -25,7 +25,7 @@ function sendRadarCompletion(completionId: string, parameters?: CompletionParame
   }
 
   if (parameters) trackRadarResult(completionId, parameters.totalQuestions, parameters.completionTimeSeconds, parameters.scoreRange)
-  else window.gtag('event', 'radar_complete', { source: 'radar_praxia' })
+  else trackRadarComplete(completionId)
   window.localStorage.setItem(`${SENT_COMPLETION_PREFIX}${completionId}`, 'sent')
   window.localStorage.removeItem(PENDING_COMPLETION_KEY)
   analyticsDebug('radar_complete enviado com sucesso')
