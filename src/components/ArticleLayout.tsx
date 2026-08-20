@@ -24,6 +24,9 @@ interface ArticleLayoutProps {
   children: ReactNode
 }
 
+const assessmentRubricPath = '/blog/avaliacao/como-criar-criterios-de-avaliacao-para-atividades-com-ia'
+const assessmentEvidenceSlug = 'como-avaliar-atividades-produzidas-com-apoio-de-ia'
+
 function ctaLocation(anchor: HTMLAnchorElement): BlogRadarCtaLocation {
   const cta = anchor.closest('.article-cta')
   if (!cta) return 'inline'
@@ -109,6 +112,7 @@ export function ArticleLayout({ article, categoryPath, toc, children }: ArticleL
           <aside className="article-toc" aria-labelledby="toc-title">
             <div><List aria-hidden="true" /><strong id="toc-title">Neste artigo</strong></div>
             <ol>{toc.map((item) => <li key={item.id}><a href={`#${item.id}`}>{item.label}</a></li>)}</ol>
+            {article.slug === assessmentEvidenceSlug && <p><strong>Próximo passo</strong><br /><Link to={assessmentRubricPath}>Criar critérios e uma rubrica de avaliação para atividades com IA</Link></p>}
           </aside>
           <article id="conteudo-artigo" className="article-content">{children}</article>
         </div>
