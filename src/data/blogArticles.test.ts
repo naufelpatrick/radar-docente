@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { buildSiteUrl } from '../config/site'
 import { blogArticles, getPublishedArticlesByCategory, getPublishedBlogArticles } from './blogArticles'
@@ -25,6 +26,17 @@ describe('fonte editorial do blog', () => {
     expect(getPublishedArticlesByCategory('competencias-docentes')).toHaveLength(1)
   })
 
+  it('mantém toda rota estática de artigo registrada na fonte editorial', () => {
+    const appSource = readFileSync(new URL('../App.tsx', import.meta.url), 'utf8')
+    const staticArticlePaths = [...appSource.matchAll(/<Route path="(\/blog\/[^":]+\/[^":]+)"/g)]
+      .map((match) => match[1])
+      .filter((path) => !path.includes(':'))
+    const editorialPaths = new Set(blogArticles.map((article) => article.path))
+
+    expect(staticArticlePaths.length).toBeGreaterThan(0)
+    expect(staticArticlePaths.every((path) => editorialPaths.has(path))).toBe(true)
+  })
+
   it('mantém SEO e imagens sociais exclusivos para cada artigo publicado', () => {
     const articles = getPublishedBlogArticles()
 
@@ -50,6 +62,16 @@ describe('fonte editorial do blog', () => {
     expect(article?.faq).toHaveLength(5)
     expect(article?.socialImage).toContain('avaliar-atividades-com-ia-1200x630.jpg')
     expect(article?.coverImage?.src).toContain('avaliar-atividades-com-ia-1200x630.webp')
+  })
+
+  it('publica o artigo de planejamento com imagem e FAQ próprias', () => {
+    const article = blogArticles.find((item) => item.slug === 'como-planejar-uma-atividade-pedagogica-com-inteligencia-artificial')
+
+    expect(article?.status).toBe('published')
+    expect(article?.categorySlug).toBe('planejamento')
+    expect(article?.faq).toHaveLength(5)
+    expect(article?.socialImage).toContain('como-planejar-atividade-pedagogica-inteligencia-artificial-1200x630.jpg')
+    expect(article?.coverImage?.src).toContain('como-planejar-atividade-pedagogica-inteligencia-artificial-1200x630.webp')
   })
 
   it('publica o artigo de escolha de ferramenta com imagem e FAQ próprias', () => {
