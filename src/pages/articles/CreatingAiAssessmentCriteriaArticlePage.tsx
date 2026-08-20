@@ -28,7 +28,7 @@ const dimensions = [
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [
-    { ...createBlogPostingSchema(article), keywords: ['critérios de avaliação com IA', 'avaliação acadêmica', 'inteligência artificial na educação', 'autoria estudantil', 'rubrica de avaliação'] },
+    { ...createBlogPostingSchema(article), keywords: ['critérios de avaliação com IA', 'rubrica para atividades com IA', 'inteligência artificial na educação', 'autoria estudantil', 'rubrica de avaliação'] },
     { '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Blog', item: 'https://www.radarpraxia.com/blog' },
       { '@type': 'ListItem', position: 2, name: 'Avaliação', item: 'https://www.radarpraxia.com/blog/categoria/avaliacao' },
@@ -42,11 +42,11 @@ export function CreatingAiAssessmentCriteriaArticlePage() {
   return <>
     <Seo title={article.seoTitle} socialTitle={article.title} description={article.metaDescription} path={article.path} type="article" image={article.socialImage} imageAlt={article.socialImageAlt} jsonLd={schema} />
     <ArticleLayout article={article} categoryPath="/blog/categoria/avaliacao" toc={toc}>
-      <p className="article-lead">Planejar uma atividade com inteligência artificial é apenas parte do desafio. O problema seguinte costuma ser mais difícil: como avaliar o que o estudante produziu quando uma ferramenta de IA participou do processo?</p>
+      <p className="article-lead"><Link to="/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem">Planejar uma atividade com inteligência artificial</Link> é apenas parte do desafio. O problema seguinte costuma ser mais difícil: como avaliar o que o estudante produziu quando uma ferramenta de IA participou do processo?</p>
       <p>Durante muito tempo, boa parte da avaliação acadêmica esteve concentrada no produto final. Um texto, uma apresentação, um relatório ou uma solução eram utilizados como evidências da aprendizagem.</p>
       <p>A IA generativa torna essa relação menos direta.</p>
       <p>Um texto formalmente excelente já não significa necessariamente que o estudante compreendeu profundamente o assunto. Da mesma forma, proibir qualquer utilização de IA não garante autoria, aprendizagem ou pensamento crítico.</p>
-      <p>O desafio passa a ser outro: avaliar o raciocínio, as decisões e a capacidade do estudante de utilizar recursos digitais de maneira consciente.</p>
+      <p>O desafio passa a ser outro: avaliar o raciocínio, as decisões e a capacidade do estudante de <Link to="/fluencia-digital-para-professores">utilizar recursos digitais de maneira consciente</Link>.</p>
       <figure className="article-cover"><img src={article.coverImage?.src} alt={article.coverImage?.alt} width="1200" height="630" loading="eager" /></figure>
 
       <section id="processo">
