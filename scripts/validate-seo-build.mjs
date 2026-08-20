@@ -30,6 +30,24 @@ function schemaTypes(value, types = new Set()) {
   return types
 }
 
+function samePaths(first, second) {
+  return first.size === second.size && [...first].every((item) => second.has(item))
+}
+
+const editorialPaths = new Set(articles.map((article) => article.path))
+const appSource = await readFile(path.resolve('src/App.tsx'), 'utf8')
+const staticArticleRoutes = new Set(
+  [...appSource.matchAll(/<Route path="(\/blog\/[^":]+\/[^":]+)"/g)]
+    .map((match) => match[1])
+    .filter((pathname) => !pathname.includes(':')),
+)
+assert(samePaths(editorialPaths, staticArticleRoutes), 'Blog: rotas estáticas e fonte editorial estão divergentes')
+
+const cmsPublicSource = await readFile(path.resolve('api/cms/public.js'), 'utf8')
+const legacyBlock = cmsPublicSource.match(/const legacyArticlePaths = \[([\s\S]*?)\]/)?.[1] || ''
+const sitemapLegacyPaths = new Set([...legacyBlock.matchAll(/'([^']+)'/g)].map((match) => match[1]))
+assert(samePaths(editorialPaths, sitemapLegacyPaths), 'Blog: fonte editorial e sitemap legado estão divergentes')
+
 for (const pathname of indexablePaths) {
   const html = await readFile(fileFor(pathname), 'utf8')
   const expectedCanonical = new URL(pathname, SITE_URL).toString()
