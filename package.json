@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/prerender-articles.mjs && node scripts/prerender-workshop.mjs && node scripts/generate-rss.mjs",
+    "build": "tsc -b && vite build && node scripts/prerender-articles.mjs && vite build --ssr scripts/prerender-content.tsx --outDir .prerender && node .prerender/prerender-content.js && node scripts/prerender-workshop.mjs && node scripts/generate-rss.mjs && node scripts/validate-seo-build.mjs",
     "lint": "eslint .",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",

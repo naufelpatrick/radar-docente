@@ -5,7 +5,7 @@ describe('conversão do e-book', () => {
   afterEach(() => vi.unstubAllGlobals())
 
   it('envia uma compra confirmada com valor, moeda e transação', () => {
-    const values = new Map<string, string>([['praxia:cookie-preference:v1', 'accepted']])
+    const values = new Map<string, string>([['praxia:cookie-preferences:v2', JSON.stringify({ analytics: true, marketing: true })]])
     const gtag = vi.fn()
     vi.stubGlobal('window', {
       gtag,
