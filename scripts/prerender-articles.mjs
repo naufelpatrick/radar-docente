@@ -9,6 +9,8 @@ const digitalFluencyPath = '/fluencia-digital-para-professores'
 const digitalFluencyUrl = `https://www.radarpraxia.com${digitalFluencyPath}`
 const digitalFluencyTitle = 'Fluência digital para professores: descubra seu nível | PraxIA'
 const digitalFluencyDescription = 'Entenda o que é fluência digital para professores, conheça suas dimensões e faça gratuitamente o Radar PraxIA para orientar seu desenvolvimento.'
+const defaultSocialImage = 'https://www.radarpraxia.com/social-graph-praxia.png'
+const defaultSocialImageAlt = 'PraxIA — fluência digital e inteligência artificial para a prática docente'
 const googleSwgTags = [
   '<script async type="application/javascript" src="https://news.google.com/swg/js/v1/swg-basic.js"></script>',
   '<script>self.__praxiaSwgBasicInitialized=true;(self.SWG_BASIC=self.SWG_BASIC||[]).push(basicSubscriptions=>{basicSubscriptions.init({type:"NewsArticle",isPartOfType:["Product"],isPartOfProductId:"CAowyK7hCw:openaccess",clientOptions:{theme:"light",lang:"pt-BR"}});});</script>',
@@ -19,6 +21,7 @@ const staticPages = [
   ['/sobre', 'Sobre a PraxIA', 'Conheça a história, o propósito e os valores da PraxIA.', 'Sobre a PraxIA'],
   ['/blog', 'Blog: IA, competências digitais e prática docente | PraxIA', 'Conteúdos para professores sobre IA, competências digitais e prática docente.', 'Ideias, critérios e perguntas para ensinar em contextos digitais e com IA.'],
   ['/contato', 'Contato | PraxIA', 'Entre em contato com a PraxIA.', 'Entre em contato com a PraxIA'],
+  ['/privacidade', 'Política de Privacidade | PraxIA', 'Entenda como a PraxIA trata dados pessoais, utiliza cookies e protege a privacidade de professores e representantes de instituições.', 'Política de Privacidade da PraxIA'],
   ['/radar-docente', 'Radar Docente: fluência digital e IA na prática | PraxIA', 'Conheça o Radar Docente PraxIA e descubra seu nível de fluência digital e em IA.', 'Radar Docente: um olhar organizado sobre sua prática.'],
   ['/metodologia', 'Metodologia do Radar Docente | PraxIA', 'Entenda as dimensões, o cálculo e os limites metodológicos do Radar Docente.', 'Metodologia do Radar Docente'],
   ['/para-instituicoes', 'Palestras e workshops para professores | PraxIA', 'Soluções para instituições sobre fluência digital, IA e prática docente.', 'Soluções para instituições de ensino'],
@@ -74,7 +77,31 @@ function injectFallbackContent(html, heading, description) {
 function renderStaticPage(pathname, title, description, heading, robots = 'index, follow', jsonLd) {
   const canonical = `https://www.radarpraxia.com${pathname === '/' ? '/' : pathname}`
   const cleanedHtml = baseHtml.split('\n').filter((line) => !removableHeadMarkers.some((marker) => line.includes(marker))).join('\n')
-  const tags = [`<title>${escapeHtml(title)}</title>`, `<meta name="description" content="${escapeHtml(description)}" />`, `<meta name="robots" content="${robots}" />`, robots.startsWith('index') ? `<link rel="canonical" href="${canonical}" />` : '', `<meta property="og:url" content="${canonical}" />`, jsonLd ? `<script id="page-json-ld" type="application/ld+json">${JSON.stringify(jsonLd).replaceAll('<', '\\u003c')}</script>` : ''].filter(Boolean).map((tag) => `    ${tag}`).join('\n')
+  const tags = [
+    `<title>${escapeHtml(title)}</title>`,
+    `<meta name="description" content="${escapeHtml(description)}" />`,
+    `<meta name="robots" content="${robots}" />`,
+    robots.startsWith('index') ? `<link rel="canonical" href="${canonical}" />` : '',
+    '<meta property="og:type" content="website" />',
+    '<meta property="og:site_name" content="PraxIA" />',
+    '<meta property="og:locale" content="pt_BR" />',
+    `<meta property="og:title" content="${escapeHtml(title)}" />`,
+    `<meta property="og:description" content="${escapeHtml(description)}" />`,
+    `<meta property="og:url" content="${canonical}" />`,
+    `<meta property="og:image" content="${defaultSocialImage}" />`,
+    `<meta property="og:image:secure_url" content="${defaultSocialImage}" />`,
+    '<meta property="og:image:type" content="image/png" />',
+    '<meta property="og:image:width" content="1200" />',
+    '<meta property="og:image:height" content="630" />',
+    `<meta property="og:image:alt" content="${defaultSocialImageAlt}" />`,
+    '<meta name="twitter:card" content="summary_large_image" />',
+    `<meta name="twitter:title" content="${escapeHtml(title)}" />`,
+    `<meta name="twitter:description" content="${escapeHtml(description)}" />`,
+    `<meta name="twitter:url" content="${canonical}" />`,
+    `<meta name="twitter:image" content="${defaultSocialImage}" />`,
+    `<meta name="twitter:image:alt" content="${defaultSocialImageAlt}" />`,
+    jsonLd ? `<script id="page-json-ld" type="application/ld+json">${JSON.stringify(jsonLd).replaceAll('<', '\\u003c')}</script>` : '',
+  ].filter(Boolean).map((tag) => `    ${tag}`).join('\n')
   return injectFallbackContent(cleanedHtml.replace('  </head>', `${tags}\n  </head>`), heading, description)
 }
 
@@ -111,7 +138,16 @@ function createBlogPosting(article) {
 }
 
 function createStructuredData(article) {
-  const graph = [createBlogPosting(article)]
+  const graph = [createBlogPosting(article), {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.radarpraxia.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.radarpraxia.com/blog' },
+      { '@type': 'ListItem', position: 3, name: article.category, item: `https://www.radarpraxia.com/blog/categoria/${article.categorySlug}` },
+      { '@type': 'ListItem', position: 4, name: article.title, item: article.canonicalUrl },
+    ],
+  }]
   if (article.faq?.length) {
     graph.push({
       '@context': 'https://schema.org',
@@ -150,6 +186,7 @@ function renderArticleHtml(article) {
     '<meta name="twitter:card" content="summary_large_image" />',
     `<meta name="twitter:title" content="${escapeHtml(article.title)}" />`,
     `<meta name="twitter:description" content="${escapeHtml(article.metaDescription)}" />`,
+    `<meta name="twitter:url" content="${escapeHtml(article.canonicalUrl)}" />`,
     `<meta name="twitter:image" content="${escapeHtml(article.socialImage)}" />`,
     `<meta name="twitter:image:alt" content="${escapeHtml(article.socialImageAlt)}" />`,
     `<script id="page-json-ld" type="application/ld+json">${JSON.stringify(createStructuredData(article)).replaceAll('<', '\\u003c')}</script>`,
@@ -161,7 +198,7 @@ function renderArticleHtml(article) {
 
 function renderDigitalFluencyHtml() {
   const cleanedHtml = baseHtml.split('\n').filter((line) => !removableHeadMarkers.some((marker) => line.includes(marker))).join('\n')
-  const image = 'https://www.radarpraxia.com/social-graph-praxia.png'
+  const image = defaultSocialImage
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -187,6 +224,7 @@ function renderDigitalFluencyHtml() {
     '<meta name="twitter:card" content="summary_large_image" />',
     `<meta name="twitter:title" content="${digitalFluencyTitle}" />`,
     `<meta name="twitter:description" content="${digitalFluencyDescription}" />`,
+    `<meta name="twitter:url" content="${digitalFluencyUrl}" />`,
     `<meta name="twitter:image" content="${image}" />`,
     `<script id="page-json-ld" type="application/ld+json">${JSON.stringify(structuredData).replaceAll('<', '\\u003c')}</script>`,
   ].map((tag) => `    ${tag}`).join('\n')
