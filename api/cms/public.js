@@ -7,6 +7,7 @@ const staticPaths = ['/', '/metodologia', '/fluencia-digital-para-professores', 
 const legacyArticlePaths = [
   '/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta',
   '/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem',
+  '/blog/planejamento/como-planejar-uma-atividade-pedagogica-com-inteligencia-artificial',
   '/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia',
   '/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia',
   '/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia',
