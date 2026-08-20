@@ -11,6 +11,12 @@ import { loadPublicArticles } from '../services/cmsApi'
 import type { CmsArticle } from '../types/cms'
 
 const categories = {
+  'fluencia-digital': {
+    name: 'Fluência Digital',
+    eyebrow: 'FLUÊNCIA DIGITAL',
+    description: 'Conceitos e práticas para escolher, avaliar e adaptar tecnologias com intencionalidade pedagógica.',
+    questions: ['O que é fluência digital docente?', 'Fluência digital é o mesmo que saber usar ferramentas?', 'Por onde um professor pode começar?'],
+  },
   'ia-para-professores': {
     name: 'IA para Professores',
     eyebrow: 'COMPREENDER ANTES DE APLICAR',
