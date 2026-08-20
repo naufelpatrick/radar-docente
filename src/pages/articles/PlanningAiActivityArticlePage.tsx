@@ -150,6 +150,7 @@ export function PlanningAiActivityArticlePage() {
         <Link to="/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem">Da possibilidade tecnológica ao objetivo de aprendizagem <ArrowRight aria-hidden="true" /></Link>
         <Link to="/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta">Usar IA com estudantes começa antes da ferramenta <ArrowRight aria-hidden="true" /></Link>
         <Link to="/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica">Como escolher uma ferramenta de IA para uma atividade pedagógica <ArrowRight aria-hidden="true" /></Link>
+        <Link to="/blog/avaliacao/como-criar-criterios-de-avaliacao-para-atividades-com-ia">Como criar uma rubrica de avaliação para atividades com IA <ArrowRight aria-hidden="true" /></Link>
         <Link to="/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia">Como avaliar atividades produzidas com apoio de IA <ArrowRight aria-hidden="true" /></Link>
       </div></section>
     </ArticleLayout>
