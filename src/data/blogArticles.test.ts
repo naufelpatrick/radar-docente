@@ -37,6 +37,15 @@ describe('fonte editorial do blog', () => {
     expect(staticArticlePaths.every((path) => editorialPaths.has(path))).toBe(true)
   })
 
+  it('mantém o sitemap legado alinhado à fonte editorial estática', () => {
+    const cmsPublicSource = readFileSync(new URL('../../api/cms/public.js', import.meta.url), 'utf8')
+    const legacyBlock = cmsPublicSource.match(/const legacyArticlePaths = \[([\s\S]*?)\]/)?.[1] ?? ''
+    const sitemapPaths = [...legacyBlock.matchAll(/'([^']+)'/g)].map((match) => match[1])
+    const editorialPaths = blogArticles.map((article) => article.path)
+
+    expect(new Set(sitemapPaths)).toEqual(new Set(editorialPaths))
+  })
+
   it('mantém SEO e imagens sociais exclusivos para cada artigo publicado', () => {
     const articles = getPublishedBlogArticles()
 
