@@ -48,6 +48,16 @@ const legacyBlock = cmsPublicSource.match(/const legacyArticlePaths = \[([\s\S]*
 const sitemapLegacyPaths = new Set([...legacyBlock.matchAll(/'([^']+)'/g)].map((match) => match[1]))
 assert(samePaths(editorialPaths, sitemapLegacyPaths), 'Blog: fonte editorial e sitemap legado estão divergentes')
 
+const vercelConfig = JSON.parse(await readFile(path.resolve('vercel.json'), 'utf8'))
+const rewrites = Array.isArray(vercelConfig.rewrites) ? vercelConfig.rewrites : []
+const cmsArticleRewriteIndex = rewrites.findIndex((rewrite) => rewrite.source === '/blog/:category/:slug')
+assert(cmsArticleRewriteIndex >= 0, 'Blog: rewrite genérico do CMS ausente')
+for (const article of articles) {
+  const rewriteIndex = rewrites.findIndex((rewrite) => rewrite.source === article.path && rewrite.destination === `${article.path}.html`)
+  assert(rewriteIndex >= 0, `Blog: rewrite pré-renderizado ausente para ${article.path}`)
+  assert(rewriteIndex < cmsArticleRewriteIndex, `Blog: rewrite pré-renderizado precisa preceder o CMS em ${article.path}`)
+}
+
 for (const pathname of indexablePaths) {
   const html = await readFile(fileFor(pathname), 'utf8')
   const expectedCanonical = new URL(pathname, SITE_URL).toString()
@@ -76,7 +86,7 @@ assert(/fundamentação metodológica/i.test(methodologyHtml), '/metodologia: fu
 for (const article of articles) {
   const html = await readFile(fileFor(article.path), 'utf8')
   assert((html.match(/<h2[\s>]/g) || []).length >= 2, `${article.path}: headings do artigo ausentes`)
-  assert(/<a [^>]*href="\/(?:blog|radar|metodologia|ferramentas|competencias)/i.test(html), `${article.path}: links internos ausentes`)
+  assert(/<a [^>]*href="\/(?:blog|radar|metodologia|ferramentas|competencias|fluencia-digital-para-professores)/i.test(html), `${article.path}: links internos ausentes`)
   const json = headValue(html, /<script id="page-json-ld" type="application\/ld\+json">([\s\S]*?)<\/script>/i)
   assert(json, `${article.path}: JSON-LD ausente`)
   const schema = JSON.parse(json)
