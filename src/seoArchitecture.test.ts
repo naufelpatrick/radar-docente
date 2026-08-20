@@ -53,4 +53,12 @@ describe('arquitetura de SEO', () => {
     expect(cmsPublic).toContain('article.content_html')
     expect(cmsPublic).toContain('data-prerendered-content')
   })
+
+  it('mantém no sitemap somente artigos estáticos realmente publicados', () => {
+    const cmsPublic = readFileSync(new URL('../api/cms/public.js', import.meta.url), 'utf8')
+    const legacyBlock = cmsPublic.match(/const legacyArticlePaths = \[([\s\S]*?)\]/)?.[1] || ''
+    const sitemapArticlePaths = [...legacyBlock.matchAll(/'([^']+)'/g)].map((match) => match[1]).sort()
+    const publishedArticlePaths = getPublishedBlogArticles().map((article) => article.path).sort()
+    expect(sitemapArticlePaths).toEqual(publishedArticlePaths)
+  })
 })

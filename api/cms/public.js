@@ -12,7 +12,6 @@ const legacyArticlePaths = [
   '/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia',
   '/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica',
   '/blog/etica/privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas',
-  '/blog/planejamento/como-planejar-uma-atividade-pedagogica-com-inteligencia-artificial',
   '/blog/fluencia-digital/o-que-e-fluencia-digital-para-professores',
 ]
 
