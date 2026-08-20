@@ -24,6 +24,7 @@ import { AssessingAiSupportedWorkArticlePage } from '../src/pages/articles/Asses
 import { CreatingAiAssessmentCriteriaArticlePage } from '../src/pages/articles/CreatingAiAssessmentCriteriaArticlePage'
 import { AuthorshipWithAiArticlePage } from '../src/pages/articles/AuthorshipWithAiArticlePage'
 import { ChoosingAiToolArticlePage } from '../src/pages/articles/ChoosingAiToolArticlePage'
+import { PlanningAiActivityArticlePage } from '../src/pages/articles/PlanningAiActivityArticlePage'
 import { PrivacyAndEducationalDataArticlePage } from '../src/pages/articles/PrivacyAndEducationalDataArticlePage'
 import { TeacherAiCompetenciesArticlePage } from '../src/pages/articles/TeacherAiCompetenciesArticlePage'
 import { TechnologyToLearningArticlePage } from '../src/pages/articles/TechnologyToLearningArticlePage'
@@ -54,6 +55,7 @@ const pages = new Map<string, ReactElement>([
   ['/radar', <Routes><Route path="/radar/*" element={<RadarFlow />} /></Routes>],
   ['/blog/ia-para-professores/usar-ia-com-estudantes-comeca-antes-da-ferramenta', <AiBeforeToolArticlePage />],
   ['/blog/planejamento/da-possibilidade-tecnologica-ao-objetivo-de-aprendizagem', <TechnologyToLearningArticlePage />],
+  ['/blog/planejamento/como-planejar-uma-atividade-pedagogica-com-inteligencia-artificial', <PlanningAiActivityArticlePage />],
   ['/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia', <AuthorshipWithAiArticlePage />],
   ['/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia', <TeacherAiCompetenciesArticlePage />],
   ['/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia', <AssessingAiSupportedWorkArticlePage />],
