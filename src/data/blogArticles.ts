@@ -28,6 +28,35 @@ export type BlogArticle = {
 
 const blogArticleEntries: Array<Omit<BlogArticle, 'canonicalUrl'>> = [
   {
+    slug: 'como-criar-criterios-de-avaliacao-para-atividades-com-ia',
+    path: '/blog/avaliacao/como-criar-criterios-de-avaliacao-para-atividades-com-ia',
+    category: 'Avaliação',
+    categorySlug: 'avaliacao',
+    editorialLabel: 'AVALIAÇÃO E APRENDIZAGEM',
+    title: 'Como criar critérios de avaliação para atividades que envolvem IA',
+    summary: 'Critérios para avaliar compreensão, processo, pensamento crítico e autoria quando a inteligência artificial participa de uma atividade.',
+    seoTitle: 'Como avaliar atividades acadêmicas que usam IA | PraxIA',
+    metaDescription: 'Veja como criar critérios de avaliação para atividades com inteligência artificial sem reduzir a análise ao uso ou não da ferramenta.',
+    readingTime: '9 min de leitura',
+    publishedAt: '2026-08-20T11:00:00-03:00',
+    modifiedAt: '2026-08-20T11:00:00-03:00',
+    publishedDate: '20 ago. 2026',
+    displayDate: '20 de agosto de 2026',
+    socialImage: 'https://www.radarpraxia.com/social/criterios-avaliacao-atividades-com-ia-1200x630.jpg',
+    socialImageAlt: 'Professora compara trabalhos de estudantes e critérios visuais de avaliação em uma mesa com notebook',
+    author: 'Patrick Naufel',
+    status: 'published',
+    coverImage: {
+      src: '/social/criterios-avaliacao-atividades-com-ia-1200x630.webp',
+      alt: 'Professora analisa produções de estudantes com materiais acadêmicos e um notebook como apoio',
+    },
+    faq: [
+      { question: 'Como avaliar uma atividade quando o estudante utilizou IA?', answer: 'Avalie não apenas o produto final, mas também compreensão, processo, pensamento crítico, autoria e capacidade de justificar decisões.' },
+      { question: 'É necessário criar um critério específico para uso de IA?', answer: 'Não necessariamente. O uso crítico da tecnologia pode ser incorporado a critérios educacionais mais amplos, como argumentação, autoria e tomada de decisão.' },
+      { question: 'Devo proibir IA para garantir autoria?', answer: 'A proibição, por si só, não garante autoria. Dependendo do objetivo de aprendizagem, pode ser mais útil solicitar evidências de compreensão e transparência sobre o processo.' },
+    ],
+  },
+  {
     slug: 'o-que-e-fluencia-digital-para-professores',
     path: '/blog/fluencia-digital/o-que-e-fluencia-digital-para-professores',
     category: 'Fluência Digital',

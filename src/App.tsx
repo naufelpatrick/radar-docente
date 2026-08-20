@@ -35,6 +35,9 @@ const TeacherAiCompetenciesArticlePage = lazy(() =>
 const AssessingAiSupportedWorkArticlePage = lazy(() =>
   import('./pages/articles/AssessingAiSupportedWorkArticlePage').then((module) => ({ default: module.AssessingAiSupportedWorkArticlePage })),
 )
+const CreatingAiAssessmentCriteriaArticlePage = lazy(() =>
+  import('./pages/articles/CreatingAiAssessmentCriteriaArticlePage').then((module) => ({ default: module.CreatingAiAssessmentCriteriaArticlePage })),
+)
 const BlogCategoryPage = lazy(() =>
   import('./pages/BlogCategoryPage').then((module) => ({ default: module.BlogCategoryPage })),
 )
@@ -158,6 +161,7 @@ export default function App() {
           <Route path="/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia" element={<AuthorshipWithAiArticlePage />} />
           <Route path="/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia" element={<TeacherAiCompetenciesArticlePage />} />
           <Route path="/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia" element={<AssessingAiSupportedWorkArticlePage />} />
+          <Route path="/blog/avaliacao/como-criar-criterios-de-avaliacao-para-atividades-com-ia" element={<CreatingAiAssessmentCriteriaArticlePage />} />
           <Route path="/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica" element={<ChoosingAiToolArticlePage />} />
           <Route path="/blog/etica/privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas" element={<PrivacyAndEducationalDataArticlePage />} />
           <Route path="/blog/planejamento/como-planejar-uma-atividade-pedagogica-com-inteligencia-artificial" element={<PlanningAiActivityArticlePage />} />

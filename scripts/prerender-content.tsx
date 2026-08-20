@@ -21,6 +21,7 @@ import { TeacherProductPage } from '../src/pages/TeacherProductPage'
 import { ToolsPage } from '../src/pages/ToolsPage'
 import { AiBeforeToolArticlePage } from '../src/pages/articles/AiBeforeToolArticlePage'
 import { AssessingAiSupportedWorkArticlePage } from '../src/pages/articles/AssessingAiSupportedWorkArticlePage'
+import { CreatingAiAssessmentCriteriaArticlePage } from '../src/pages/articles/CreatingAiAssessmentCriteriaArticlePage'
 import { AuthorshipWithAiArticlePage } from '../src/pages/articles/AuthorshipWithAiArticlePage'
 import { ChoosingAiToolArticlePage } from '../src/pages/articles/ChoosingAiToolArticlePage'
 import { PrivacyAndEducationalDataArticlePage } from '../src/pages/articles/PrivacyAndEducationalDataArticlePage'
@@ -56,6 +57,7 @@ const pages = new Map<string, ReactElement>([
   ['/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia', <AuthorshipWithAiArticlePage />],
   ['/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia', <TeacherAiCompetenciesArticlePage />],
   ['/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia', <AssessingAiSupportedWorkArticlePage />],
+  ['/blog/avaliacao/como-criar-criterios-de-avaliacao-para-atividades-com-ia', <CreatingAiAssessmentCriteriaArticlePage />],
   ['/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica', <ChoosingAiToolArticlePage />],
   ['/blog/etica/privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas', <PrivacyAndEducationalDataArticlePage />],
   ['/blog/fluencia-digital/o-que-e-fluencia-digital-para-professores', <WhatIsDigitalFluencyArticlePage />],

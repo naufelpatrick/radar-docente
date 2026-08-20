@@ -10,6 +10,7 @@ const legacyArticlePaths = [
   '/blog/etica/como-conversar-sobre-autoria-em-atividades-com-ia',
   '/blog/competencias-docentes/o-que-sao-competencias-docentes-para-uso-de-ia',
   '/blog/avaliacao/como-avaliar-atividades-produzidas-com-apoio-de-ia',
+  '/blog/avaliacao/como-criar-criterios-de-avaliacao-para-atividades-com-ia',
   '/blog/ferramentas/como-escolher-uma-ferramenta-de-ia-para-uma-atividade-pedagogica',
   '/blog/etica/privacidade-e-dados-no-uso-educacional-de-ferramentas-generativas',
   '/blog/fluencia-digital/o-que-e-fluencia-digital-para-professores',
