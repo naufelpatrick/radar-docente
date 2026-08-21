@@ -13,6 +13,7 @@ describe('feed RSS do blog', () => {
     articles.forEach((article) => {
       expect(xml).toContain(`<guid isPermaLink="true">${article.canonicalUrl}</guid>`)
       expect(xml).toContain(`url="${article.socialImage}"`)
+      expect(xml).toContain(`<atom:updated>${new Date(article.modifiedAt).toISOString()}</atom:updated>`)
     })
   })
 

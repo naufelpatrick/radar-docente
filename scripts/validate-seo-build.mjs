@@ -109,7 +109,16 @@ assert(robots.includes('Disallow: /admin'), 'robots.txt: área administrativa n�
 assert(robots.includes(`Sitemap: ${SITE_URL}/sitemap.xml`), 'robots.txt: sitemap incorreto')
 
 const rss = await readFile(path.join(distDirectory, 'feed.xml'), 'utf8')
-for (const article of articles) assert(rss.includes(article.canonicalUrl), `RSS: artigo ausente ${article.path}`)
+for (const article of articles) {
+  assert(rss.includes(article.canonicalUrl), `RSS: artigo ausente ${article.path}`)
+  assert(rss.includes(`<atom:updated>${new Date(article.modifiedAt).toISOString()}</atom:updated>`), `RSS: data de modificação ausente ${article.path}`)
+}
 assert(!/(?:\.vercel\.app|localhost|[?&]utm_)/i.test(rss), 'RSS: URL técnica ou contaminada')
+
+const homeHtml = await readFile(fileFor('/'), 'utf8')
+const homeJson = JSON.parse(headValue(homeHtml, /<script id="page-json-ld" type="application\/ld\+json">([\s\S]*?)<\/script>/i))
+const homeTypes = schemaTypes(homeJson)
+assert(homeTypes.has('Organization'), '/: Organization ausente')
+assert(homeTypes.has('WebSite'), '/: WebSite ausente')
 
 console.log(`SEO do build validado em ${indexablePaths.length} páginas indexáveis e ${articles.length} artigos.`)
