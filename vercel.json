@@ -1,6 +1,7 @@
 {
   "framework": "vite",
   "cleanUrls": true,
+  "trailingSlash": false,
   "crons": [
     { "path": "/api/cron/distribution", "schedule": "0 12 * * *" }
   ],
