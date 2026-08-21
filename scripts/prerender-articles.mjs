@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { getPublishedBlogArticles } from '../src/data/blogArticles.ts'
 import { team } from '../src/data/team.ts'
+import { praxiaOrganizationSchema, praxiaWebsiteSchema } from '../src/services/siteStructuredData.ts'
 
 const distDirectory = path.resolve('dist')
 const baseHtml = await readFile(path.join(distDirectory, 'index.html'), 'utf8')
@@ -17,7 +18,10 @@ const googleSwgTags = [
 ]
 
 const staticPages = [
-  ['/', 'Radar de Fluência Digital e IA | PraxIA', 'Descubra forças, pontos de atenção e um próximo passo possível para sua prática docente.', 'Transforme fluência digital e inteligência artificial em prática docente.'],
+  ['/', 'Radar de Fluência Digital e IA | PraxIA', 'Descubra forças, pontos de atenção e um próximo passo possível para sua prática docente.', 'Transforme fluência digital e inteligência artificial em prática docente.', 'index, follow', {
+    '@context': 'https://schema.org',
+    '@graph': [praxiaWebsiteSchema, praxiaOrganizationSchema],
+  }],
   ['/sobre', 'Sobre a PraxIA', 'Conheça a história, o propósito e os valores da PraxIA.', 'Sobre a PraxIA'],
   ['/blog', 'Blog: IA, competências digitais e prática docente | PraxIA', 'Conteúdos para professores sobre IA, competências digitais e prática docente.', 'Ideias, critérios e perguntas para ensinar em contextos digitais e com IA.'],
   ['/contato', 'Contato | PraxIA', 'Entre em contato com a PraxIA.', 'Entre em contato com a PraxIA'],

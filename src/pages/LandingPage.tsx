@@ -18,8 +18,8 @@ import { Seo } from '../components/Seo'
 import { CommercialSolutions } from '../components/CommercialSolutions'
 import { RecentArticles } from '../components/RecentArticles'
 import { TeamProfiles } from '../components/TeamProfiles'
-import { team } from '../data/team'
 import { useScrollMotion } from '../hooks/useScrollMotion'
+import { organizationId, praxiaOrganizationSchema, praxiaWebsiteSchema, websiteId } from '../services/siteStructuredData'
 
 const benefits = [
   { icon: Gauge, title: 'Score de Fluência', text: 'Uma síntese clara do seu momento atual — sem comparação com outros professores.' },
@@ -69,29 +69,15 @@ const homeFaq = [
 const homeSchema = {
   '@context': 'https://schema.org',
   '@graph': [
-    {
-      '@type': 'WebSite',
-      name: 'PraxIA',
-      url: 'https://www.radarpraxia.com/',
-      inLanguage: 'pt-BR',
-      description: 'Radar de Fluência Digital e IA para professores.',
-    },
-    {
-      '@type': 'Organization',
-      name: 'PraxIA',
-      url: 'https://www.radarpraxia.com/',
-      member: team.map((member) => ({
-        '@type': 'Person',
-        name: member.name,
-        sameAs: member.links.map((link) => link.href),
-      })),
-    },
+    praxiaWebsiteSchema,
+    praxiaOrganizationSchema,
     {
       '@type': 'WebPage',
       name: 'PraxIA — Radar de Fluência Digital e IA',
       url: 'https://www.radarpraxia.com/',
       inLanguage: 'pt-BR',
-      isPartOf: { '@type': 'WebSite', name: 'PraxIA', url: 'https://www.radarpraxia.com/' },
+      isPartOf: { '@id': websiteId },
+      about: { '@id': organizationId },
     },
     {
       '@type': 'FAQPage',

@@ -36,7 +36,7 @@ function cmsRssItems(articles) {
   return articles.map((article) => {
     const category = article.cms_categories?.name || ''
     const author = article.cms_profiles?.display_name || article.author?.display_name || ''
-    return ['    <item>', `      <title>${escapeXml(article.title)}</title>`, `      <link>${escapeXml(article.canonical_url)}</link>`, `      <guid isPermaLink="true">${escapeXml(article.canonical_url)}</guid>`, `      <description>${escapeXml(article.excerpt)}</description>`, `      <category>${escapeXml(category)}</category>`, `      <dc:creator>${escapeXml(author)}</dc:creator>`, `      <pubDate>${new Date(article.published_at).toUTCString()}</pubDate>`, article.cover_image_url ? `      <media:content url="${escapeXml(article.cover_image_url)}" type="image/jpeg" medium="image" width="1200" height="630" />` : '', article.cover_image_alt ? `      <media:description>${escapeXml(article.cover_image_alt)}</media:description>` : '', `      <content:encoded><![CDATA[${article.content_html || ''}]]></content:encoded>`, '    </item>'].filter(Boolean).join('\n')
+    return ['    <item>', `      <title>${escapeXml(article.title)}</title>`, `      <link>${escapeXml(article.canonical_url)}</link>`, `      <guid isPermaLink="true">${escapeXml(article.canonical_url)}</guid>`, `      <description>${escapeXml(article.excerpt)}</description>`, `      <category>${escapeXml(category)}</category>`, `      <dc:creator>${escapeXml(author)}</dc:creator>`, `      <pubDate>${new Date(article.published_at).toUTCString()}</pubDate>`, `      <atom:updated>${new Date(article.updated_at || article.published_at).toISOString()}</atom:updated>`, article.cover_image_url ? `      <media:content url="${escapeXml(article.cover_image_url)}" type="image/jpeg" medium="image" width="1200" height="630" />` : '', article.cover_image_alt ? `      <media:description>${escapeXml(article.cover_image_alt)}</media:description>` : '', `      <content:encoded><![CDATA[${article.content_html || ''}]]></content:encoded>`, '    </item>'].filter(Boolean).join('\n')
   }).join('\n')
 }
 
@@ -48,19 +48,64 @@ async function rss(response) {
   response.status(200).setHeader('content-type', 'application/rss+xml; charset=utf-8').setHeader('cache-control', 'public, s-maxage=60, stale-while-revalidate=300').end(body)
 }
 
-function sitemapEntry(path, lastmod, priority = '0.7') { return `  <url><loc>${SITE_URL}${path}</loc>${lastmod ? `<lastmod>${lastmod.slice(0, 10)}</lastmod>` : ''}<changefreq>${path.startsWith('/blog') ? 'weekly' : 'monthly'}</changefreq><priority>${priority}</priority></url>` }
+function sitemapDate(value) {
+  if (!value) return ''
+  const timestamp = Date.parse(value)
+  return Number.isNaN(timestamp) ? '' : new Date(timestamp).toISOString().slice(0, 10)
+}
+
+function sitemapEntry(path, lastmod, priority = '0.7') {
+  const date = sitemapDate(lastmod)
+  return `  <url><loc>${SITE_URL}${path}</loc>${date ? `<lastmod>${date}</lastmod>` : ''}<changefreq>${path.startsWith('/blog') ? 'weekly' : 'monthly'}</changefreq><priority>${priority}</priority></url>`
+}
+
+async function getLegacySitemapArticles() {
+  try {
+    const response = await fetch(`${SITE_URL}/feed.xml`, { headers: { accept: 'application/rss+xml' } })
+    if (!response.ok) return []
+    const xml = await response.text()
+    return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].map((match) => {
+      const block = match[1]
+      const canonical = rssField(block, 'guid') || rssField(block, 'link')
+      try {
+        const path = new URL(canonical).pathname
+        return { path, categorySlug: path.split('/')[2], modifiedAt: rssField(block, 'atom:updated') || rssField(block, 'pubDate') }
+      } catch {
+        return null
+      }
+    }).filter(Boolean)
+  } catch {
+    return []
+  }
+}
+
+function latestDate(values) {
+  return values.map((value) => Date.parse(value || '')).filter(Number.isFinite).sort((first, second) => second - first)[0]
+}
 
 async function sitemap(response) {
-  const articles = await getPublicArticles()
+  const [articles, legacyArticles] = await Promise.all([getPublicArticles(), getLegacySitemapArticles()])
   const categoryPaths = [...new Set([
     ...legacyArticlePaths.map((path) => path.split('/')[2]),
     ...articles.map((article) => article.cms_categories?.slug).filter(Boolean),
   ])]
   const entries = new Map()
   const addEntry = (path, lastmod, priority) => entries.set(path, sitemapEntry(path, lastmod, priority))
-  staticPaths.forEach((path) => addEntry(path, null, path === '/' ? '1.0' : '0.7'))
-  categoryPaths.forEach((slug) => addEntry(`/blog/categoria/${slug}`, null, '0.7'))
-  legacyArticlePaths.forEach((path) => addEntry(path, null, '0.8'))
+  const allArticleDates = [
+    ...legacyArticles.map((article) => article.modifiedAt),
+    ...articles.map((article) => article.updated_at || article.published_at),
+  ]
+  const latestArticleTimestamp = latestDate(allArticleDates)
+  staticPaths.forEach((path) => addEntry(path, path === '/blog' && latestArticleTimestamp ? new Date(latestArticleTimestamp).toISOString() : null, path === '/' ? '1.0' : '0.7'))
+  categoryPaths.forEach((slug) => {
+    const categoryTimestamp = latestDate([
+      ...legacyArticles.filter((article) => article.categorySlug === slug).map((article) => article.modifiedAt),
+      ...articles.filter((article) => article.cms_categories?.slug === slug).map((article) => article.updated_at || article.published_at),
+    ])
+    addEntry(`/blog/categoria/${slug}`, categoryTimestamp ? new Date(categoryTimestamp).toISOString() : null, '0.7')
+  })
+  const legacyByPath = new Map(legacyArticles.map((article) => [article.path, article]))
+  legacyArticlePaths.forEach((path) => addEntry(path, legacyByPath.get(path)?.modifiedAt, '0.8'))
   articles.forEach((article) => addEntry(new URL(article.canonical_url).pathname, article.updated_at, '0.8'))
   const rows = [...entries.values()]
   response.status(200).setHeader('content-type', 'application/xml; charset=utf-8').setHeader('cache-control', 'public, s-maxage=300').end(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join('\n')}\n</urlset>`)

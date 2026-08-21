@@ -23,6 +23,7 @@ export function generateRssXml(articles: BlogArticle[]) {
       `      <guid isPermaLink="true">${escapeXml(article.canonicalUrl)}</guid>`,
       `      <description>${escapeXml(article.summary)}</description>`,
       `      <pubDate>${new Date(article.publishedAt).toUTCString()}</pubDate>`,
+      `      <atom:updated>${new Date(article.modifiedAt).toISOString()}</atom:updated>`,
       `      <dc:creator>${escapeXml(article.author)}</dc:creator>`,
       `      <category>${escapeXml(article.category)}</category>`,
       `      <media:content url="${escapeXml(article.socialImage)}" type="image/jpeg" medium="image" width="1200" height="630" />`,
@@ -31,8 +32,12 @@ export function generateRssXml(articles: BlogArticle[]) {
     ].join('\n')
   }).join('\n')
 
-  const latestPublication = articles[0]?.publishedAt
-    ? new Date(articles[0].publishedAt).toUTCString()
+  const latestModification = articles
+    .map((article) => Date.parse(article.modifiedAt))
+    .filter(Number.isFinite)
+    .sort((first, second) => second - first)[0]
+  const latestPublication = latestModification
+    ? new Date(latestModification).toUTCString()
     : new Date(0).toUTCString()
 
   return [

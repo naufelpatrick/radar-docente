@@ -61,4 +61,14 @@ describe('arquitetura de SEO', () => {
     const publishedArticlePaths = getPublishedBlogArticles().map((article) => article.path).sort()
     expect(sitemapArticlePaths).toEqual(publishedArticlePaths)
   })
+
+  it('usa datas editoriais verificáveis no lastmod do sitemap', () => {
+    const cmsPublic = readFileSync(new URL('../api/cms/public.js', import.meta.url), 'utf8')
+    const rssFeed = readFileSync(new URL('./services/rssFeed.ts', import.meta.url), 'utf8')
+
+    expect(rssFeed).toContain('<atom:updated>')
+    expect(cmsPublic).toContain("rssField(block, 'atom:updated')")
+    expect(cmsPublic).toContain('<lastmod>')
+    expect(cmsPublic).toContain('article.updated_at || article.published_at')
+  })
 })
