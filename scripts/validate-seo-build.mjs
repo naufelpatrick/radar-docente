@@ -50,12 +50,10 @@ assert(samePaths(editorialPaths, sitemapLegacyPaths), 'Blog: fonte editorial e s
 
 const vercelConfig = JSON.parse(await readFile(path.resolve('vercel.json'), 'utf8'))
 const rewrites = Array.isArray(vercelConfig.rewrites) ? vercelConfig.rewrites : []
-const cmsArticleRewriteIndex = rewrites.findIndex((rewrite) => rewrite.source === '/blog/:category/:slug')
-assert(cmsArticleRewriteIndex >= 0, 'Blog: rewrite genérico do CMS ausente')
+assert(vercelConfig.cleanUrls === true, 'Blog: cleanUrls precisa permanecer ativo para servir HTML pré-renderizado sem extensão')
+assert(rewrites.some((rewrite) => rewrite.source === '/blog/:category/:slug'), 'Blog: rewrite genérico do CMS ausente')
 for (const article of articles) {
-  const rewriteIndex = rewrites.findIndex((rewrite) => rewrite.source === article.path && rewrite.destination === `${article.path}.html`)
-  assert(rewriteIndex >= 0, `Blog: rewrite pré-renderizado ausente para ${article.path}`)
-  assert(rewriteIndex < cmsArticleRewriteIndex, `Blog: rewrite pré-renderizado precisa preceder o CMS em ${article.path}`)
+  assert(!rewrites.some((rewrite) => rewrite.source === article.path), `Blog: artigo pré-renderizado não deve ser reescrito antes da checagem do filesystem: ${article.path}`)
 }
 
 for (const pathname of indexablePaths) {
